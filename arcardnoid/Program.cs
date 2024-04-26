@@ -1,6 +1,5 @@
-﻿
-using System;
+﻿using System;
 
-using var game = new arcardnoid.Game1();
+using var game = new arcardnoid.ArCardNoidGame();
 game.Run();
 Environment.Exit(0);

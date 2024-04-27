@@ -89,6 +89,7 @@
       "rows": 1,
       "speed": 120,
       "offsetX": 34,
+      "offsetY": -16,
       "path": "map/building/wood-tower-red"
     },
     {
@@ -148,7 +149,18 @@
       "speed": 120,
       "path": "map/units/torch-red-idle",
       "offsetX": 32,
-      "offsetY": 0
+      "offsetY": -16
+    },
+    {
+      "id": 18,
+      "name": "Goblin TNT",
+      "type": "spritesheet",
+      "columns": 6,
+      "rows": 1,
+      "speed": 120,
+      "path": "map/units/tnt-red-idle",
+      "offsetX": 16,
+      "offsetY": -16
     }
   ],
   "layers": [
@@ -252,7 +264,7 @@
         " , , , , , , , , , , ",
         " , , , , , , , , , , ",
         " , , , , , , , , , , ",
-        " , , , , , , , , , , ",
+        " , , , , ,18, , , , , ",
         " , , , , , , , ",
         " , , , , , , , , , , "
       ]

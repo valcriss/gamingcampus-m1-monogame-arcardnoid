@@ -14,6 +14,23 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin fonts/band_0.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:fonts/band_0.png
+
+#begin fonts/band.fnt
+/importer:BitmapFontImporter
+/processor:BitmapFontProcessor
+/build:fonts/band.fnt
+
 #begin fonts/subtitle-font_0.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -456,6 +473,18 @@
 /processorParam:TextureFormat=Color
 /build:map/units/sheep-idle.png
 
+#begin map/units/tnt-red-idle.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:map/units/tnt-red-idle.png
+
 #begin map/units/torch-red-idle.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -491,4 +520,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:map/water_splash.png
+
+#begin ui/bandeau.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ui/bandeau.png
 

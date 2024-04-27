@@ -33,7 +33,7 @@ namespace arcardnoid.Models.Framework.Components.Texts
 
         public override void Draw()
         {
-            Vector2 position = Position;
+            Vector2 position = RealBounds.Position;
             Size2 size = _bitmapFont.MeasureString(_text);
             if (_horizontalAlign == TextHorizontalAlign.Center)
             {
@@ -60,6 +60,16 @@ namespace arcardnoid.Models.Framework.Components.Texts
         {
             _bitmapFont = Game.Content.Load<BitmapFont>(_fontAsset);
             base.Load();
+        }
+
+        public void SetText(string text)
+        {
+            _text = text;
+        }
+
+        public Size2 MeasureString()
+        {
+            return _bitmapFont.MeasureString(_text);
         }
 
         #endregion Public Methods

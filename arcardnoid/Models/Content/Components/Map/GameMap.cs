@@ -1,4 +1,5 @@
-﻿using arcardnoid.Models.Framework.Scenes;
+﻿using arcardnoid.Models.Framework;
+using arcardnoid.Models.Framework.Scenes;
 using arcardnoid.Models.Framework.Tools;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,8 +14,6 @@ namespace arcardnoid.Models.Content.Components.Map
     {
         #region Private Fields
 
-        private const bool DEBUG = false;
-
         private string _mapAsset;
         private MapItem _mapItem;
         private List<Texture2D> _mapTextures;
@@ -23,7 +22,7 @@ namespace arcardnoid.Models.Content.Components.Map
 
         #region Public Constructors
 
-        public GameMap(string mapAsset, int x, int y) : base(x, y)
+        public GameMap(string mapAsset, int x, int y) : base("GameMap", x, y)
         {
             _mapAsset = mapAsset;
             _mapTextures = new List<Texture2D>();
@@ -36,22 +35,9 @@ namespace arcardnoid.Models.Content.Components.Map
         public override void Draw()
         {
             base.Draw();
-            if (DEBUG)
+            if (BaseGame.DebugMode)
             {
                 DrawGrid();
-            }
-
-        }
-
-        private void DrawGrid()
-        {
-            for (int x = 0; x <= _mapItem.Width; x++)
-            {
-                Primitives2D.DrawLine(Game.SpriteBatch, (int)Position.X + (x * _mapItem.Size), (int)Position.Y, (int)Position.X + (x * _mapItem.Size), (int)Position.Y + (_mapItem.Height * _mapItem.Size), Color.White);
-            }
-            for (int y = 0; y <= _mapItem.Height; y++)
-            {
-                Primitives2D.DrawLine(Game.SpriteBatch, (int)Position.X, (int)Position.Y + (y * _mapItem.Size), (int)Position.X + (_mapItem.Width * _mapItem.Size), (int)Position.Y + (y * _mapItem.Size), Color.White);
             }
         }
 
@@ -78,19 +64,19 @@ namespace arcardnoid.Models.Content.Components.Map
                             Texture2D texture = _mapTextures[assetIndex];
                             if (mapAsset.Type == "spritesheet")
                             {
-                                AddComponent(new AnimatedCell(texture, mapAsset.Columns, mapAsset.Rows, mapAsset.Speed, x, y, (x * _mapItem.Size) + (_mapItem.Size / 2), (y * _mapItem.Size) + (_mapItem.Size / 2), mapAsset.OffsetX, mapAsset.OffsetY));
+                                AddComponent(new AnimatedCell($"animated-cell-{x}-{y}", texture, mapAsset.Columns, mapAsset.Rows, mapAsset.Speed, x, y, (x * _mapItem.Size) + (_mapItem.Size / 2), (y * _mapItem.Size) + (_mapItem.Size / 2), mapAsset.OffsetX, mapAsset.OffsetY));
                             }
                             else if (mapAsset.Type == "multi")
                             {
-                                AddComponent(new MultiCell(texture, x, y, (x * _mapItem.Size) + (_mapItem.Size / 2), (y * _mapItem.Size) + (_mapItem.Size / 2), _mapItem.Size, mapAsset.OffsetX, mapAsset.OffsetY, MultiCell.GetMultiCellType(dataLines, x, y, _mapItem.Width, _mapItem.Height)));
+                                AddComponent(new MultiCell($"multi-cell-{x}-{y}", texture, x, y, (x * _mapItem.Size) + (_mapItem.Size / 2), (y * _mapItem.Size) + (_mapItem.Size / 2), _mapItem.Size, mapAsset.OffsetX, mapAsset.OffsetY, MultiCell.GetMultiCellType(dataLines, x, y, _mapItem.Width, _mapItem.Height)));
                             }
                             else if (mapAsset.Type == "multi2")
                             {
-                                AddComponent(new MultiCell2(texture, x, y, (x * _mapItem.Size) + (_mapItem.Size / 2), (y * _mapItem.Size) + (_mapItem.Size / 2), _mapItem.Size, mapAsset.OffsetX, mapAsset.OffsetY, MultiCell2.GetMultiCellType(dataLines, x, y, _mapItem.Width, _mapItem.Height)));
+                                AddComponent(new MultiCell2($"multi-cell2-{x}-{y}", texture, x, y, (x * _mapItem.Size) + (_mapItem.Size / 2), (y * _mapItem.Size) + (_mapItem.Size / 2), _mapItem.Size, mapAsset.OffsetX, mapAsset.OffsetY, MultiCell2.GetMultiCellType(dataLines, x, y, _mapItem.Width, _mapItem.Height)));
                             }
                             else
                             {
-                                AddComponent(new MapCell(texture, x, y, (x * _mapItem.Size) + (_mapItem.Size / 2), (y * _mapItem.Size) + (_mapItem.Size / 2), mapAsset.OffsetX, mapAsset.OffsetY));
+                                AddComponent(new MapCell($"map-cell-{x}-{y}", texture, x, y, (x * _mapItem.Size) + (_mapItem.Size / 2), (y * _mapItem.Size) + (_mapItem.Size / 2), mapAsset.OffsetX, mapAsset.OffsetY));
                             }
                         }
                     }
@@ -99,5 +85,21 @@ namespace arcardnoid.Models.Content.Components.Map
         }
 
         #endregion Public Methods
+
+        #region Private Methods
+
+        private void DrawGrid()
+        {
+            for (int x = 0; x <= _mapItem.Width; x++)
+            {
+                Primitives2D.DrawLine(Game.SpriteBatch, (int)Position.X + (x * _mapItem.Size), (int)Position.Y, (int)Position.X + (x * _mapItem.Size), (int)Position.Y + (_mapItem.Height * _mapItem.Size), Color.White);
+            }
+            for (int y = 0; y <= _mapItem.Height; y++)
+            {
+                Primitives2D.DrawLine(Game.SpriteBatch, (int)Position.X, (int)Position.Y + (y * _mapItem.Size), (int)Position.X + (_mapItem.Width * _mapItem.Size), (int)Position.Y + (y * _mapItem.Size), Color.White);
+            }
+        }
+
+        #endregion Private Methods
     }
 }

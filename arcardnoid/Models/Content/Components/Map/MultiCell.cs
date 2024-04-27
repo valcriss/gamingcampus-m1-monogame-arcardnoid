@@ -16,7 +16,7 @@ namespace arcardnoid.Models.Content.Components.Map
 
         #region Public Constructors
 
-        public MultiCell(Texture2D texture, int x, int y, int realX, int realY, int size, int offsetX,int offsetY, MultiCellType type) : base(texture, x, y, realX, realY, offsetX, offsetY)
+        public MultiCell(string name, Texture2D texture, int x, int y, int realX, int realY, int size, int offsetX, int offsetY, MultiCellType type) : base(name, texture, x, y, realX, realY, offsetX, offsetY)
         {
             Size = size;
             Type = type;

@@ -19,7 +19,7 @@ namespace arcardnoid.Models.Framework.Components.Texts
 
         #region Public Constructors
 
-        public BitmapText(string fontAsset, string text, int x, int y, TextHorizontalAlign horizontalAlign = TextHorizontalAlign.Left, TextVerticalAlign verticalAlign = TextVerticalAlign.Top) : base(x, y)
+        public BitmapText(string name, string fontAsset, string text, int x, int y, TextHorizontalAlign horizontalAlign = TextHorizontalAlign.Left, TextVerticalAlign verticalAlign = TextVerticalAlign.Top) : base(name, x, y)
         {
             _fontAsset = fontAsset;
             _text = text;
@@ -62,14 +62,14 @@ namespace arcardnoid.Models.Framework.Components.Texts
             base.Load();
         }
 
-        public void SetText(string text)
-        {
-            _text = text;
-        }
-
         public Size2 MeasureString()
         {
             return _bitmapFont.MeasureString(_text);
+        }
+
+        public void SetText(string text)
+        {
+            _text = text;
         }
 
         #endregion Public Methods

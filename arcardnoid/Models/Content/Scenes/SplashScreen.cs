@@ -18,9 +18,9 @@ namespace arcardnoid.Models.Content.Scenes
         public SplashScreen()
         {
             BackgroundColor = Color.FromNonPremultiplied(127, 178, 255, 255);
-            AddComponent(new BitmapText("Fonts/title-font", "Daniel Silvestre", 960, 700, TextHorizontalAlign.Center, TextVerticalAlign.Center));
-            AddComponent(new BitmapText("Fonts/subtitle-font", "Programmation avancée C# et Monogame", 960, 850, TextHorizontalAlign.Center, TextVerticalAlign.Center));
-            AddComponent(new SpriteSheetImage("logo/logo", 6, 5, 30, 960, 400));
+            AddComponent(new BitmapText("Titre", "Fonts/title-font", "Daniel Silvestre", 960, 700, TextHorizontalAlign.Center, TextVerticalAlign.Center));
+            AddComponent(new BitmapText("Sous-titre", "Fonts/subtitle-font", "Programmation avancée C# et Monogame", 960, 850, TextHorizontalAlign.Center, TextVerticalAlign.Center));
+            AddComponent(new SpriteSheetImage("logo", "logo/logo", 6, 5, 30, 960, 400));
         }
 
         #endregion Public Constructors

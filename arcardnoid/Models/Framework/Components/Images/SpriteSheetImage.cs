@@ -21,7 +21,7 @@ namespace arcardnoid.Models.Framework.Components.Images
 
         #region Public Constructors
 
-        public SpriteSheetImage(string spriteAsset, int columns, int rows, double speed, int x, int y) : base(spriteAsset, x, y)
+        public SpriteSheetImage(string name, string spriteAsset, int columns, int rows, double speed, int x, int y) : base(name, spriteAsset, x, y)
         {
             _columns = columns;
             _rows = rows;

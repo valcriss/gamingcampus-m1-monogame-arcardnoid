@@ -19,12 +19,20 @@ namespace arcardnoid.Models.Content.Components.MainMenu
 
         #endregion Private Fields
 
+        #region Public Constructors
+
+        public MainMenuBackground() : base("MainMenuBackground")
+        {
+        }
+
+        #endregion Public Constructors
+
         #region Public Methods
 
         public override void Load()
         {
             base.Load();
-            AddComponent(new Image("mainmenu/left", 444, 540)).AddAnimations(new AnimationChain(new Animation[]
+            AddComponent(new Image("mainmenu-left", "mainmenu/left", 444, 540)).AddAnimations(new AnimationChain(new Animation[]
             {
                 new AlphaFadeAnimation("left-fade-up",BORDERS_FADE_DURATION,BORDERS_OPACITY_MIN,BORDERS_OPACITY_MAX),
                 new AlphaFadeAnimation("left-fade-down", BORDERS_FADE_DURATION,BORDERS_OPACITY_MAX,BORDERS_OPACITY_MIN)
@@ -35,7 +43,7 @@ namespace arcardnoid.Models.Content.Components.MainMenu
                 new MoveAnimation("left-move-right",BORDERS_MOVE_DURATION,new Vector2(444,540),new Vector2(444-BORDERS_MOVE_OFFSET,540))
             }, true, true));
 
-            AddComponent(new Image("mainmenu/right", 1476, 540)).AddAnimations(new AnimationChain(new Animation[]
+            AddComponent(new Image("mainmenu-right", "mainmenu/right", 1476, 540)).AddAnimations(new AnimationChain(new Animation[]
             {
                 new AlphaFadeAnimation("right-fade-up",BORDERS_FADE_DURATION,BORDERS_OPACITY_MIN,BORDERS_OPACITY_MAX),
                 new AlphaFadeAnimation("right-fade-down",BORDERS_FADE_DURATION,BORDERS_OPACITY_MAX,BORDERS_OPACITY_MIN)
@@ -57,7 +65,7 @@ namespace arcardnoid.Models.Content.Components.MainMenu
                 Vector2 from = i % 2 == 0 ? new Vector2(-106, y) : new Vector2(2020, y);
                 Vector2 to = i % 2 == 0 ? new Vector2(2020, y) : new Vector2(-106, y);
                 float speed = CLOUD_MOVE_SPEED + (i * CLOUD_MOVE_SPEED_OFFSET);
-                AddComponent(new Image("mainmenu/cloud1", 0, y)).AddAnimation(new MoveAnimation("cloud1-move", speed, from, to, true, true));
+                AddComponent(new Image($"mainmenu-cloud1-{i}", "mainmenu/cloud1", 0, y)).AddAnimation(new MoveAnimation("cloud1-move", speed, from, to, true, true));
             }
 
             for (int i = 0; i < cloud2PositionY.Length; i++)
@@ -66,7 +74,7 @@ namespace arcardnoid.Models.Content.Components.MainMenu
                 Vector2 from = i % 2 == 0 ? new Vector2(-166, y) : new Vector2(2086, y);
                 Vector2 to = i % 2 == 0 ? new Vector2(2086, y) : new Vector2(-166, y);
                 float speed = CLOUD_MOVE_SPEED + (i * CLOUD_MOVE_SPEED_OFFSET);
-                AddComponent(new Image("mainmenu/cloud2", 0, y)).AddAnimation(new MoveAnimation("cloud2-move", speed, from, to, true, true));
+                AddComponent(new Image($"mainmenu-cloud2-{i}", "mainmenu/cloud2", 0, y)).AddAnimation(new MoveAnimation("cloud2-move", speed, from, to, true, true));
             }
         }
 

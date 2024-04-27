@@ -33,6 +33,8 @@ namespace arcardnoid.Models.Framework.Scenes
             }
         }
 
+        public string Name { get; set; }
+
         public virtual float Opacity
         {
             get
@@ -117,8 +119,9 @@ namespace arcardnoid.Models.Framework.Scenes
 
         #region Public Constructors
 
-        public Component(int x = 0, int y = 0, int width = 0, int height = 0, float rotation = 0, float scale = 1)
+        public Component(string name, int x = 0, int y = 0, int width = 0, int height = 0, float rotation = 0, float scale = 1)
         {
+            Name = name;
             _position = new Vector2(x, y);
             _bounds = new RectangleF(x, y, width, height);
             _rotation = rotation;

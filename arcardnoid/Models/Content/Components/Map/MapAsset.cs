@@ -15,6 +15,12 @@ namespace arcardnoid.Models.Content.Components.Map
         [JsonProperty("name")]
         public string Name { get; set; }
 
+        [JsonProperty("offsetX")]
+        public int OffsetX { get; set; }
+
+        [JsonProperty("offsetY")]
+        public int OffsetY { get; set; }
+
         [JsonProperty("path")]
         public string Path { get; set; }
 
@@ -26,12 +32,6 @@ namespace arcardnoid.Models.Content.Components.Map
 
         [JsonProperty("type")]
         public string Type { get; set; }
-
-        [JsonProperty("offsetX")]
-        public int OffsetX { get; set; }
-
-        [JsonProperty("offsetY")]
-        public int OffsetY { get; set; }
 
         #endregion Public Properties
     }

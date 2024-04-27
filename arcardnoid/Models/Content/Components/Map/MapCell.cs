@@ -14,9 +14,9 @@ namespace arcardnoid.Models.Content.Components.Map
         protected int GridX { get; set; }
         protected int GridY { get; set; }
 
+        protected Rectangle ImageBounds { get; set; }
         protected int OffsetX { get; set; }
         protected int OffsetY { get; set; }
-        protected Rectangle ImageBounds { get; set; }
         protected Vector2 Origin { get; set; }
         protected Texture2D Texture2D { get; set; }
 
@@ -24,7 +24,7 @@ namespace arcardnoid.Models.Content.Components.Map
 
         #region Public Constructors
 
-        public MapCell(Texture2D texture, int x, int y, int realX, int realY, int offsetX, int offsetY) : base(realX, realY)
+        public MapCell(string name, Texture2D texture, int x, int y, int realX, int realY, int offsetX, int offsetY) : base(name, realX, realY)
         {
             GridX = x;
             GridY = y;

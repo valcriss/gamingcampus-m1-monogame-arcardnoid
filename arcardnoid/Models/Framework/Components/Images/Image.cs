@@ -32,7 +32,7 @@ namespace arcardnoid.Models.Framework.Components.Images
 
         #region Public Constructors
 
-        public Image(string spriteAsset, int x, int y) : base(x, y)
+        public Image(string name, string spriteAsset, int x, int y) : base(name, x, y)
         {
             _spriteAsset = spriteAsset;
         }

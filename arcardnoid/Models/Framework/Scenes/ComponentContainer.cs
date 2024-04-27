@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using arcardnoid.Models.Framework.Components.Profiler;
+using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace arcardnoid.Models.Framework.Scenes
@@ -81,7 +83,15 @@ namespace arcardnoid.Models.Framework.Scenes
                 foreach (var component in Components)
                 {
                     if (component.State == ElementState.Loaded)
+                    {
+                        DateTime start = DateTime.Now;
                         component.InnerUpdate(gameTime);
+                        if (BaseGame.DebugMode)
+                        {
+                            DateTime end = DateTime.Now;
+                            ProfilerCollection.Add(component.Name, (end - start).TotalMilliseconds);
+                        }
+                    }
                 }
             }
         }

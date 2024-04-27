@@ -16,7 +16,7 @@ namespace arcardnoid.Models.Content.Components.Map
 
         #region Public Constructors
 
-        public MultiCell2(Texture2D texture, int x, int y, int realX, int realY, int size, int offsetX,int offsetY, MultiCell2Type type) : base(texture, x, y, realX, realY, offsetX, offsetY)
+        public MultiCell2(string name, Texture2D texture, int x, int y, int realX, int realY, int size, int offsetX, int offsetY, MultiCell2Type type) : base(name, texture, x, y, realX, realY, offsetX, offsetY)
         {
             Size = size;
             Type = type;
@@ -38,7 +38,7 @@ namespace arcardnoid.Models.Content.Components.Map
             {
                 return MultiCell2Type.TopLeft;
             }
-            // Top 
+            // Top
             else if (!IsEmpty(map, x - 1, y, width, height) && IsEmpty(map, x, y - 1, width, height) && !IsEmpty(map, x + 1, y, width, height))
             {
                 return MultiCell2Type.Top;
@@ -78,7 +78,7 @@ namespace arcardnoid.Models.Content.Components.Map
             {
                 return MultiCell2Type.BottomRight;
             }
-            
+
             // Elevation Single
             else if (IsEmpty(map, x - 1, y, width, height) && IsEmpty(map, x + 1, y, width, height) && IsEmpty(map, x, y + 1, width, height))
             {
@@ -188,8 +188,10 @@ namespace arcardnoid.Models.Content.Components.Map
 
                 case MultiCell2Type.ElevationRight:
                     return new RectangleF(Size * 2, Size * 3, Size, Size);
+
                 case MultiCell2Type.ElevationSingle:
                     return new RectangleF(Size * 3, Size * 3, Size, Size);
+
                 case MultiCell2Type.StairsLeft:
                     return new RectangleF(0, Size * 7, Size, Size);
 

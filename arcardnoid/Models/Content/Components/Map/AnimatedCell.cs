@@ -21,7 +21,7 @@ namespace arcardnoid.Models.Content.Components.Map
 
         #region Public Constructors
 
-        public AnimatedCell(Texture2D texture, int columns, int rows, double speed, int x, int y, int realX, int realY, int offsetX, int offsetY) : base(texture, x, y, realX, realY, offsetX, offsetY)
+        public AnimatedCell(string name, Texture2D texture, int columns, int rows, double speed, int x, int y, int realX, int realY, int offsetX, int offsetY) : base(name, texture, x, y, realX, realY, offsetX, offsetY)
         {
             _columns = columns;
             _rows = rows;

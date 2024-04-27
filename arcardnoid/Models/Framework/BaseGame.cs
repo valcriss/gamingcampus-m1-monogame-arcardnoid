@@ -10,6 +10,7 @@ namespace arcardnoid.Models.Framework
     {
         #region Public Properties
 
+        public static bool DebugMode { get; set; } = false;
         public GameConfiguration Configuration { get; set; }
 
         public GraphicsDeviceManager Graphics { get; set; }
@@ -37,6 +38,7 @@ namespace arcardnoid.Models.Framework
             Graphics.PreferredBackBufferWidth = Configuration.ResolutionWidth;
             Graphics.PreferredBackBufferHeight = Configuration.ResolutionHeight;
             IsMouseVisible = true;
+            IsFixedTimeStep = false;
             Graphics.ApplyChanges();
             Content.RootDirectory = "Content";
         }

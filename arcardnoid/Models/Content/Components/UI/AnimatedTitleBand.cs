@@ -5,35 +5,37 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace arcardnoid.Models.Content.Components.UI
 {
     public class AnimatedTitleBand : Component
     {
-        private const int OffsetY = 24;
+        #region Private Properties
 
         private string BandAsset { get; set; }
-
-        private string FontAsset { get; set; }
-        private string Text { get; set; }
-        private string CurrentText { get; set; }
-
-        private double ElapsedTime { get; set; }
-        private double Speed { get; set; }
-
-        private BitmapText BitmapText { get; set; }
-
         private Texture2D BandTexture { get; set; }
-
+        private BitmapText BitmapText { get; set; }
+        private string CurrentText { get; set; }
+        private double ElapsedTime { get; set; }
+        private string FontAsset { get; set; }
+        private List<Rectangle> InsideBounds { get; set; }
         private Rectangle LeftBounds { get; set; }
         private Rectangle RightBounds { get; set; }
+        private double Speed { get; set; }
+        private string Text { get; set; }
         private Color TextColor { get; set; }
-        private List<Rectangle> InsideBounds { get; set; }
 
-        public AnimatedTitleBand(string bandAsset, string fontAsset, string text, double speed, int x, int y, Color textColor) : base(x, y)
+        #endregion Private Properties
+
+        #region Private Fields
+
+        private const int OffsetY = 24;
+
+        #endregion Private Fields
+
+        #region Public Constructors
+
+        public AnimatedTitleBand(string bandAsset, string fontAsset, string text, double speed, int x, int y, Color textColor) : base($"AnimatedTitleBand-{x}-{y}", x, y)
         {
             BandAsset = bandAsset;
             FontAsset = fontAsset;
@@ -43,11 +45,30 @@ namespace arcardnoid.Models.Content.Components.UI
             Speed = speed;
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
+        public override void Draw()
+        {
+            base.Draw();
+            // Draw left
+            Game.SpriteBatch.Draw(BandTexture, LeftBounds, new Rectangle(0, 0, 64, 64), Color);
+            // Draw inside
+            foreach (var insideBound in InsideBounds)
+            {
+                Game.SpriteBatch.Draw(BandTexture, insideBound, new Rectangle(64, 0, 64, 64), Color);
+            }
+
+            // Draw right
+            Game.SpriteBatch.Draw(BandTexture, RightBounds, new Rectangle(128, 0, 64, 64), Color);
+        }
+
         public override void Load()
         {
             base.Load();
             BandTexture = Game.Content.Load<Texture2D>(BandAsset);
-            BitmapText = AddComponent(new BitmapText(FontAsset, CurrentText, 0, 0, TextHorizontalAlign.Center, TextVerticalAlign.Center));
+            BitmapText = AddComponent(new BitmapText("AnimatedTitleBand-title", FontAsset, CurrentText, 0, 0, TextHorizontalAlign.Center, TextVerticalAlign.Center));
             BitmapText.Color = TextColor;
             ElapsedTime = 0;
         }
@@ -65,33 +86,19 @@ namespace arcardnoid.Models.Content.Components.UI
                     BitmapText.SetText(CurrentText);
                     ElapsedTime = 0;
                 }
+                Size2 size = BitmapText.MeasureString();
+                int numberOfCenters = (int)Math.Ceiling(size.Width / 64);
+                int sizeOfCenters = numberOfCenters * 64;
+                LeftBounds = new Rectangle((int)Bounds.X - 64 - (sizeOfCenters / 2), (int)Bounds.Y - OffsetY, 64, 64);
+                InsideBounds = new List<Rectangle>();
+                for (int x = (int)Bounds.X - 64 - (sizeOfCenters / 2) + 64; x < (int)Bounds.X + (sizeOfCenters / 2); x = x + 64)
+                {
+                    InsideBounds.Add(new Rectangle(x, (int)Bounds.Y - OffsetY, 64, 64));
+                }
+                RightBounds = new Rectangle((int)Bounds.X + (sizeOfCenters / 2), (int)Bounds.Y - OffsetY, 64, 64);
             }
-            Size2 size = BitmapText.MeasureString();
-            int numberOfCenters = (int)Math.Ceiling(size.Width / 64);
-            int sizeOfCenters = numberOfCenters * 64;
-            LeftBounds = new Rectangle((int)Bounds.X - 64 - (sizeOfCenters / 2), (int)Bounds.Y - OffsetY, 64, 64);
-            InsideBounds = new List<Rectangle>();
-            for (int x = (int)Bounds.X - 64 - (sizeOfCenters / 2) + 64; x < (int)Bounds.X + (sizeOfCenters / 2); x = x + 64)
-            {
-                InsideBounds.Add(new Rectangle(x, (int)Bounds.Y - OffsetY, 64, 64));
-            }
-            RightBounds = new Rectangle((int)Bounds.X + (sizeOfCenters / 2), (int)Bounds.Y - OffsetY, 64, 64);
-
         }
 
-        public override void Draw()
-        {
-            base.Draw();
-            // Draw left
-            Game.SpriteBatch.Draw(BandTexture, LeftBounds, new Rectangle(0, 0, 64, 64), Color);
-            // Draw inside
-            foreach (var insideBound in InsideBounds)
-            {
-                Game.SpriteBatch.Draw(BandTexture, insideBound, new Rectangle(64, 0, 64, 64), Color);
-            }
-
-            // Draw right
-            Game.SpriteBatch.Draw(BandTexture, RightBounds, new Rectangle(128, 0, 64, 64), Color);
-        }
+        #endregion Public Methods
     }
 }

@@ -7,6 +7,13 @@ namespace arcardnoid.Models.Framework.Components.Images
 {
     public class Image : Component
     {
+        #region Public Properties
+
+        public override Vector2 Position
+        { get => base.Position; set { base.Position = value; UpdateRenderBounds(); } }
+
+        #endregion Public Properties
+
         #region Protected Properties
 
         protected RectangleF DrawBounds { get; set; }
@@ -57,7 +64,7 @@ namespace arcardnoid.Models.Framework.Components.Images
 
         protected void UpdateRenderBounds()
         {
-            DrawBounds = new RectangleF(Bounds.X - DrawOrigin.X, Bounds.Y - DrawOrigin.Y, Bounds.Width, Bounds.Height);
+            DrawBounds = new RectangleF(RealBounds.X - DrawOrigin.X, RealBounds.Y - DrawOrigin.Y, RealBounds.Width, RealBounds.Height);
         }
 
         #endregion Protected Methods

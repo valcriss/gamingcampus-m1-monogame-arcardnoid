@@ -1,5 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using arcardnoid.Models.Framework.Animations;
+using Microsoft.Xna.Framework;
 using MonoGame.Extended;
+using System.Collections.Generic;
 
 namespace arcardnoid.Models.Framework.Scenes
 {
@@ -7,11 +9,11 @@ namespace arcardnoid.Models.Framework.Scenes
     {
         #region Public Properties
 
-        public RectangleF Bounds
+        public virtual RectangleF Bounds
         {
             get
             {
-                return Parent == null ? _bounds : new RectangleF(Parent.Position.X + _bounds.X, Parent.Position.Y + _bounds.Y, _bounds.Width, _bounds.Height);
+                return _bounds;
             }
             set
             {
@@ -19,11 +21,11 @@ namespace arcardnoid.Models.Framework.Scenes
             }
         }
 
-        public Color Color
+        public virtual Color Color
         {
             get
             {
-                return new Color(_color.R, _color.G, _color.B, Opacity * 255);
+                return Color.FromNonPremultiplied(_color.R, _color.G, _color.B, (int)(Opacity * 255));
             }
             set
             {
@@ -31,7 +33,7 @@ namespace arcardnoid.Models.Framework.Scenes
             }
         }
 
-        public float Opacity
+        public virtual float Opacity
         {
             get
             {
@@ -43,7 +45,7 @@ namespace arcardnoid.Models.Framework.Scenes
             }
         }
 
-        public Vector2 Position
+        public virtual Vector2 Position
         {
             get
             {
@@ -56,7 +58,19 @@ namespace arcardnoid.Models.Framework.Scenes
             }
         }
 
-        public float Rotation
+        public virtual RectangleF RealBounds
+        {
+            get
+            {
+                return Parent == null ? _bounds : new RectangleF(Parent.Position.X + _bounds.X, Parent.Position.Y + _bounds.Y, _bounds.Width, _bounds.Height);
+            }
+            set
+            {
+                _bounds = value;
+            }
+        }
+
+        public virtual float Rotation
         {
             get
             {
@@ -68,7 +82,7 @@ namespace arcardnoid.Models.Framework.Scenes
             }
         }
 
-        public float Scale
+        public virtual float Scale
         {
             get
             {
@@ -84,6 +98,7 @@ namespace arcardnoid.Models.Framework.Scenes
 
         #region Protected Properties
 
+        protected List<AnimationChain> Animations { get; set; } = new List<AnimationChain>();
         protected Component Parent { get; set; } = null;
 
         #endregion Protected Properties
@@ -114,10 +129,36 @@ namespace arcardnoid.Models.Framework.Scenes
 
         #region Public Methods
 
-        public override Component AddComponent(Component component)
+        public Component AddAnimation(Animation animation)
+        {
+            AnimationChain chain = new AnimationChain(new Animation[] { animation }, animation.Loop, animation.PlayOnStart);
+            chain.SetComponent(this);
+            Animations.Add(chain);
+            return this;
+        }
+
+        public Component AddAnimations(AnimationChain animations)
+        {
+            animations.SetComponent(this);
+            Animations.Add(animations);
+            return this;
+        }
+
+        public override T AddComponent<T>(T component)
         {
             component.Parent = this;
             return base.AddComponent(component);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            AnimationChain[] animations = Animations.ToArray();
+            foreach (var animation in animations)
+            {
+                animation.Update(gameTime);
+            }
+            Animations.RemoveAll(a => a.State == AnimationState.Ended);
         }
 
         #endregion Public Methods

@@ -1,0 +1,261 @@
+﻿{
+  "width": 11,
+  "height": 10,
+  "size": 64,
+  "assets": [
+    {
+      "id": 0,
+      "name": "Water Splash",
+      "type": "spritesheet",
+      "columns": 8,
+      "rows": 1,
+      "speed": 90,
+      "path": "map/water_splash"
+    },
+    {
+      "id": 1,
+      "name": "Sand",
+      "type": "multi",
+      "path": "map/sand"
+    },
+    {
+      "id": 2,
+      "name": "Elevation",
+      "type": "multi2",
+      "path": "map/elevation"
+    },
+    {
+      "id": 3,
+      "name": "Grass",
+      "type": "multi",
+      "path": "map/grass"
+    },
+    {
+      "id": 4,
+      "name": "Big Rock in Water",
+      "type": "spritesheet",
+      "columns": 8,
+      "rows": 1,
+      "speed": 90,
+      "path": "map/deco/rocks_water_big"
+    },
+    {
+      "id": 5,
+      "name": "Medium Rock",
+      "type": "normal",
+      "path": "map/deco/05"
+    },
+    {
+      "id": 6,
+      "name": "Small Rock",
+      "type": "normal",
+      "path": "map/deco/04"
+    },
+    {
+      "id": 7,
+      "name": "Small Grass",
+      "type": "normal",
+      "path": "map/deco/10"
+    },
+    {
+      "id": 8,
+      "name": "Medium Grass",
+      "type": "normal",
+      "path": "map/deco/11"
+    },
+    {
+      "id": 9,
+      "name": "Medium Rock in Water",
+      "type": "spritesheet",
+      "columns": 8,
+      "rows": 1,
+      "speed": 90,
+      "path": "map/deco/rocks_water_medium"
+    },
+    {
+      "id": 10,
+      "name": "Small Rock in Water",
+      "type": "spritesheet",
+      "columns": 8,
+      "rows": 1,
+      "speed": 90,
+      "path": "map/deco/rocks_water_small"
+    },
+    {
+      "id": 11,
+      "name": "Red tower in Wood",
+      "type": "spritesheet",
+      "columns": 4,
+      "rows": 1,
+      "speed": 120,
+      "offsetX": 34,
+      "path": "map/building/wood-tower-red"
+    },
+    {
+      "id": 12,
+      "name": "Goblin house",
+      "type": "normal",
+      "path": "map/building/goblin_house",
+      "offsetX": 34
+    },
+    {
+      "id": 13,
+      "name": "Tower blue",
+      "type": "normal",
+      "path": "map/building/tower_blue",
+      "offsetX": 34,
+      "offsetY": 16
+    },
+    {
+      "id": 14,
+      "name": "Archer blue",
+      "type": "spritesheet",
+      "columns": 6,
+      "rows": 1,
+      "speed": 120,
+      "path": "map/units/archer-blue-idle",
+      "offsetX": 32,
+      "offsetY": -39
+    },
+    {
+      "id": 15,
+      "name": "Warrior blue",
+      "type": "spritesheet",
+      "columns": 6,
+      "rows": 1,
+      "speed": 120,
+      "path": "map/units/warrior-blue-idle",
+      "offsetX": 16,
+      "offsetY": -16
+    },
+    {
+      "id": 16,
+      "name": "Sheep",
+      "type": "spritesheet",
+      "columns": 8,
+      "rows": 1,
+      "speed": 120,
+      "path": "map/units/sheep-idle",
+      "offsetX": 0,
+      "offsetY": -10
+    },
+    {
+      "id": 17,
+      "name": "Goblin Torch",
+      "type": "spritesheet",
+      "columns": 7,
+      "rows": 1,
+      "speed": 120,
+      "path": "map/units/torch-red-idle",
+      "offsetX": 32,
+      "offsetY": 0
+    }
+  ],
+  "layers": [
+    {
+      "name": "Water Splash Layer",
+      "data": [
+        "0,0,0,0, , , ",
+        "0, , , ,0,0,0",
+        "0, , , , , ,0,0,0,0, ",
+        "0, , , , , , , , , ,0",
+        "0,0,0, , , , , , , ,0",
+        " , , ,0,0, , , , , ,0",
+        " , , , ,0, , , , , ,0",
+        " , , , ,0, , ,0,0,0,0",
+        " , , , ,0, , ,0",
+        " , , , ,0,0,0,0"
+      ]
+    },
+    {
+      "name": "Sand Layer",
+      "data": [
+        "1,1,1,1, , , ",
+        "1,1,1,1,1,1,1",
+        "1,1,1,1,1,1,1,1,1,1, ",
+        "1,1,1,1,1,1,1,1,1,1,1",
+        "1,1,1,1,1,1,1,1,1,1,1",
+        " , , ,1,1,1,1,1,1,1,1",
+        " , , , ,1,1,1,1,1,1,1",
+        " , , , ,1,1,1,1,1,1,1",
+        " , , , ,1,1,1,1",
+        " , , , ,1,1,1,1"
+      ]
+    },
+    {
+      "name": "Elevation Layer",
+      "data": [
+        " , , , , , , ",
+        " ,2,2, , , , ",
+        " ,2,2, , , , , , , , ",
+        " ,2,2, , ,2, , , , , ",
+        " , , , , ,2, , ,2,2, ",
+        " , , , , , , , ,2,2, ",
+        " , , , , ,2,2, ,2,2, ",
+        " , , , , ,2,2, , , , ",
+        " , , , , ,2,2, ",
+        " , , , , , , , "
+      ]
+    },
+    {
+      "name": "Grass Layer",
+      "data": [
+        " , , , , , , ",
+        " ,3,3, , , , ",
+        " ,3,3, , , , , , , , ",
+        " , , , , ,3, , , , , ",
+        " , , , , , , , ,3,3, ",
+        " , , , , , , , ,3,3, ",
+        " , , , , ,3,3, , , , ",
+        " , , , , ,3,3, , , , ",
+        " , , , , , , , ",
+        " , , , , , , , "
+      ]
+    },
+    {
+      "name": "Deco Layer",
+      "data": [
+        "7, , , , , , , ,4",
+        " , , ,8, ,5, ",
+        " , , , , , , ,7, , , ",
+        "8, , , ,7, , , , , , ",
+        " ,6, , , , ,6, , , ,8",
+        " , , , , , , , , , , ",
+        " , , , ,8, , ,6, , , ",
+        " , ,10, , , , , , , ,5",
+        " , , , , , , ,7",
+        " , , , ,5, , , , , ,9"
+      ]
+    },
+    {
+      "name": "Building Layer",
+      "data": [
+        " ,13, , , , , , , ",
+        " , , , , , , ",
+        " , , , , , , , , , , ",
+        " , , , , , , , , , , ",
+        " , , , , , , , ,11, , ",
+        " , , , , , , , , , , ",
+        " , , , , ,12, , , , , ",
+        " , , , , , , , , , , ",
+        " , , , , , , , ",
+        " , , , , , , , , , , "
+      ]
+    },
+    {
+      "name": "Units Layer",
+      "data": [
+        " ,14, , , , , , , ",
+        " , , , , , , ",
+        " ,15, , , , , , , , , ",
+        " , , , , ,16, , ,17, , ",
+        " , , , , , , , , , , ",
+        " , , , , , , , , , , ",
+        " , , , , , , , , , , ",
+        " , , , , , , , , , , ",
+        " , , , , , , , ",
+        " , , , , , , , , , , "
+      ]
+    }
+  ]
+}

@@ -36,6 +36,7 @@ namespace arcardnoid.Models.Framework
             Graphics = new GraphicsDeviceManager(this);
             Graphics.PreferredBackBufferWidth = Configuration.ResolutionWidth;
             Graphics.PreferredBackBufferHeight = Configuration.ResolutionHeight;
+            IsMouseVisible = true;
             Graphics.ApplyChanges();
             Content.RootDirectory = "Content";
         }

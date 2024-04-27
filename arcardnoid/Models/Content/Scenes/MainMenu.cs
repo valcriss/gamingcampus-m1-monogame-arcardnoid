@@ -1,14 +1,19 @@
 ﻿using arcardnoid.Models.Framework.Scenes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace arcardnoid.Models.Content.Scenes
 {
     public class MainMenu : Scene
     {
+        #region Public Constructors
 
+        public MainMenu()
+        {
+            BackgroundColor = Color.FromNonPremultiplied(71, 171, 169, 255);
+            AddComponent(new Components.MainMenu.MainMenuBackground());
+
+        }
+
+        #endregion Public Constructors
     }
 }

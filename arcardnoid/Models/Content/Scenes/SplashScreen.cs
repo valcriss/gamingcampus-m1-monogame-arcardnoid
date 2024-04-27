@@ -7,9 +7,13 @@ namespace arcardnoid.Models.Content.Scenes
 {
     public class SplashScreen : Scene
     {
-        #region Public Constructors
+        #region Private Fields
 
         private double _time = 0;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public SplashScreen()
         {
@@ -19,6 +23,9 @@ namespace arcardnoid.Models.Content.Scenes
             AddComponent(new SpriteSheetImage("logo/logo", 6, 5, 30, 960, 400));
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Update(GameTime gameTime)
         {
@@ -29,6 +36,7 @@ namespace arcardnoid.Models.Content.Scenes
             }
             base.Update(gameTime);
         }
-        #endregion Public Constructors
+
+        #endregion Public Methods
     }
 }

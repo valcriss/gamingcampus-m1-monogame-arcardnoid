@@ -22,7 +22,7 @@ namespace arcardnoid.Models.Framework.Scenes
 
         #region Public Methods
 
-        public virtual Component AddComponent(Component component)
+        public virtual T AddComponent<T>(T component) where T : Component
         {
             Components.Add(component);
             return component;

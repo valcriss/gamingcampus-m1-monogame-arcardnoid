@@ -92,11 +92,11 @@ namespace arcardnoid.Models.Content.Components.Map
         {
             for (int x = 0; x <= _mapItem.Width; x++)
             {
-                Primitives2D.DrawLine(Game.SpriteBatch, (int)Position.X + (x * _mapItem.Size), (int)Position.Y, (int)Position.X + (x * _mapItem.Size), (int)Position.Y + (_mapItem.Height * _mapItem.Size), Color.White);
+                Primitives2D.DrawLine(Game.SpriteBatch, (int)RealPosition.X + (x * _mapItem.Size), (int)RealPosition.Y, (int)RealPosition.X + (x * _mapItem.Size), (int)RealPosition.Y + (_mapItem.Height * _mapItem.Size), Color.White);
             }
             for (int y = 0; y <= _mapItem.Height; y++)
             {
-                Primitives2D.DrawLine(Game.SpriteBatch, (int)Position.X, (int)Position.Y + (y * _mapItem.Size), (int)Position.X + (_mapItem.Width * _mapItem.Size), (int)Position.Y + (y * _mapItem.Size), Color.White);
+                Primitives2D.DrawLine(Game.SpriteBatch, (int)RealPosition.X, (int)RealPosition.Y + (y * _mapItem.Size), (int)RealPosition.X + (_mapItem.Width * _mapItem.Size), (int)RealPosition.Y + (y * _mapItem.Size), Color.White);
             }
         }
 

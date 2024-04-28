@@ -51,7 +51,7 @@ namespace arcardnoid.Models.Framework.Scenes
         {
             get
             {
-                return Parent == null ? _position : Parent.Position + _position;
+                return _position;
             }
             set
             {
@@ -64,11 +64,15 @@ namespace arcardnoid.Models.Framework.Scenes
         {
             get
             {
-                return Parent == null ? _bounds : new RectangleF(Parent.Position.X + _bounds.X, Parent.Position.Y + _bounds.Y, _bounds.Width, _bounds.Height);
+                return Parent == null ? _bounds : new RectangleF(Parent.RealPosition.X + _bounds.X, Parent.RealPosition.Y + _bounds.Y, _bounds.Width, _bounds.Height);
             }
-            set
+        }
+
+        public virtual Vector2 RealPosition
+        {
+            get
             {
-                _bounds = value;
+                return Parent == null ? _position : Parent.RealPosition + _position;
             }
         }
 
@@ -137,6 +141,16 @@ namespace arcardnoid.Models.Framework.Scenes
             AnimationChain chain = new AnimationChain(new Animation[] { animation }, animation.Loop, animation.PlayOnStart);
             chain.SetComponent(this);
             Animations.Add(chain);
+            return (T)this;
+        }
+
+        public T AddAnimations<T>(AnimationChain[] animationChains) where T : Component
+        {
+            foreach (var chain in animationChains)
+            {
+                chain.SetComponent(this);
+                Animations.Add(chain);
+            }
             return (T)this;
         }
 

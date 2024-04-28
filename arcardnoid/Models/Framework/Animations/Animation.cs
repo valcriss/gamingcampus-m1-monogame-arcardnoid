@@ -18,10 +18,10 @@ namespace arcardnoid.Models.Framework.Animations
 
         protected Component Component { get; set; }
         protected float Duration { get; set; }
+        protected EaseType Ease { get; set; } = EaseType.Linear;
         protected float ElapsedTime { get; set; }
         protected string Name { get; set; }
-        protected EaseType Ease { get; set; } = EaseType.Linear;
-        protected float Ratio => EasingFunctions.GetEase(Ease, ElapsedTime/ Duration);
+        protected float Ratio => EasingFunctions.GetEase(Ease, ElapsedTime / Duration);
 
         #endregion Protected Properties
 

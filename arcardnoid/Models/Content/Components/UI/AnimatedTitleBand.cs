@@ -18,7 +18,7 @@ namespace arcardnoid.Models.Content.Components.UI
         private string CurrentText { get; set; }
         private double ElapsedTime { get; set; }
         private string FontAsset { get; set; }
-        private List<Rectangle> InsideBounds { get; set; }
+        private List<Rectangle> InsideBounds { get; set; } = new List<Rectangle>();
         private Rectangle LeftBounds { get; set; }
         private Rectangle RightBounds { get; set; }
         private double Speed { get; set; }

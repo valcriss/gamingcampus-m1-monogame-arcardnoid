@@ -32,7 +32,7 @@ namespace arcardnoid.Models.Content.Components.MainMenu
         public override void Load()
         {
             base.Load();
-            AddComponent(new Image("mainmenu-left", "mainmenu/left", 444, 540)).AddAnimations< Image>(new AnimationChain(new Animation[]
+            AddComponent(new Image("mainmenu-left", "mainmenu/left", 444, 540)).AddAnimations<Image>(new AnimationChain(new Animation[]
             {
                 new AlphaFadeAnimation("left-fade-up",BORDERS_FADE_DURATION,BORDERS_OPACITY_MIN,BORDERS_OPACITY_MAX),
                 new AlphaFadeAnimation("left-fade-down", BORDERS_FADE_DURATION,BORDERS_OPACITY_MAX,BORDERS_OPACITY_MIN)

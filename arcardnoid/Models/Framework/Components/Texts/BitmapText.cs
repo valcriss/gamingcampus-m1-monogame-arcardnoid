@@ -19,12 +19,16 @@ namespace arcardnoid.Models.Framework.Components.Texts
 
         #region Public Constructors
 
-        public BitmapText(string name, string fontAsset, string text, int x, int y, TextHorizontalAlign horizontalAlign = TextHorizontalAlign.Left, TextVerticalAlign verticalAlign = TextVerticalAlign.Top) : base(name, x, y)
+        public BitmapText(string name, string fontAsset, string text, int x, int y, TextHorizontalAlign horizontalAlign = TextHorizontalAlign.Left, TextVerticalAlign verticalAlign = TextVerticalAlign.Top, Color? color = null) : base(name, x, y)
         {
             _fontAsset = fontAsset;
             _text = text;
             _horizontalAlign = horizontalAlign;
             _verticalAlign = verticalAlign;
+            if (color != null)
+            {
+                Color = color.Value;
+            }
         }
 
         #endregion Public Constructors
@@ -33,7 +37,7 @@ namespace arcardnoid.Models.Framework.Components.Texts
 
         public override void Draw()
         {
-            Vector2 position = RealBounds.Position;
+            Vector2 position = RealPosition;
             Size2 size = _bitmapFont.MeasureString(_text);
             if (_horizontalAlign == TextHorizontalAlign.Center)
             {

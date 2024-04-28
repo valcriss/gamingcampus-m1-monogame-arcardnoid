@@ -132,19 +132,19 @@ namespace arcardnoid.Models.Framework.Scenes
 
         #region Public Methods
 
-        public Component AddAnimation(Animation animation)
+        public T AddAnimation<T>(Animation animation) where T : Component
         {
             AnimationChain chain = new AnimationChain(new Animation[] { animation }, animation.Loop, animation.PlayOnStart);
             chain.SetComponent(this);
             Animations.Add(chain);
-            return this;
+            return (T)this;
         }
 
-        public Component AddAnimations(AnimationChain animations)
+        public T AddAnimations<T>(AnimationChain animations) where T : Component
         {
             animations.SetComponent(this);
             Animations.Add(animations);
-            return this;
+            return (T)this;
         }
 
         public override T AddComponent<T>(T component)

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using arcardnoid.Models.Framework.Easing;
+using Microsoft.Xna.Framework;
 using System;
 
 namespace arcardnoid.Models.Framework.Animations
@@ -14,7 +15,7 @@ namespace arcardnoid.Models.Framework.Animations
 
         #region Public Constructors
 
-        public MoveAnimation(string name, float duration, Vector2 from, Vector2 to, bool loop = false, bool playOnStart = false) : base(name, duration, loop, playOnStart)
+        public MoveAnimation(string name, float duration, Vector2 from, Vector2 to, bool loop = false, bool playOnStart = false, EaseType easeType = EaseType.Linear) : base(name, duration, loop, playOnStart, easeType)
         {
             _from = from;
             _to = to;

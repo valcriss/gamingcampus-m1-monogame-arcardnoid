@@ -16,7 +16,13 @@ namespace arcardnoid.Models.Content.Scenes
             BackgroundColor = Color.FromNonPremultiplied(71, 171, 169, 255);
             AddComponent(new MainMenuBackground());
             AddComponent(new Components.UI.AnimatedTitleBand("ui/bandeau", "fonts/band", "ArCardNoid : The Battle of the Bouncing Balls", 0.05f, 960, 100, Color.FromNonPremultiplied(75, 30, 0, 255)));
-            AddComponent(new MainGameMenu(672, 316)).AddAnimation(new MoveAnimation("MainGameMenuMove", 1f, new Vector2(672, 1081), new Vector2(672, 316), false, true));
+            MainGameMenu main = AddComponent(new MainGameMenu(672, 316)).AddAnimations<MainGameMenu>(new AnimationChain(new Animation[]
+            {
+                new MoveAnimation("MainGameMenuMove", 3f, new Vector2(672, 1181), new Vector2(672, 316), false, true, Framework.Easing.EaseType.InOutElastic),
+            }, false, true)).AddAnimations<MainGameMenu>(new AnimationChain(new Animation[]
+            {
+                new AlphaFadeAnimation("MainGameMenuFade", 3f,0, 1, false, true, Framework.Easing.EaseType.Linear),
+            }, false, true));
             if (BaseGame.DebugMode) AddComponent(new ProfilerComponent());
         }
 

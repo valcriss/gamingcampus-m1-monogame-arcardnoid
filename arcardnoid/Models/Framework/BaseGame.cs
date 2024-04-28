@@ -38,7 +38,7 @@ namespace arcardnoid.Models.Framework
             Graphics.PreferredBackBufferWidth = Configuration.ResolutionWidth;
             Graphics.PreferredBackBufferHeight = Configuration.ResolutionHeight;
             IsMouseVisible = true;
-            IsFixedTimeStep = false;
+            //IsFixedTimeStep = false;
             Graphics.ApplyChanges();
             Content.RootDirectory = "Content";
         }

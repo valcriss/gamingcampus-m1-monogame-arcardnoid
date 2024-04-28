@@ -84,7 +84,7 @@ namespace arcardnoid.Models.Framework.Components.UI
             base.Draw();
             foreach (Rectangle[] rectangle in Rectangles)
             {
-                Game.SpriteBatch.Draw(Texture, rectangle[1], rectangle[0], Color.White);
+                Game.SpriteBatch.Draw(Texture, rectangle[1], rectangle[0], Color);
             }
         }
     }

@@ -4,20 +4,17 @@ using arcardnoid.Models.Framework.Tools;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
-using SharpDX.Direct2D1;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace arcardnoid.Models.Content.Components.Map
 {
     public class DynamicGameMap : Component
     {
+        private const string FILTER = "chunk-451-2*.json";
+
         private MapItem _mapItem;
         private List<Texture2D> _mapTextures = new List<Texture2D>();
         private Texture2D _blockTexture;
@@ -172,7 +169,7 @@ namespace arcardnoid.Models.Content.Components.Map
         private List<MapChunk> LoadChunks()
         {
             List<MapChunk> chunks = new List<MapChunk>();
-            foreach (string file in Directory.GetFiles(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Maps/Chunks"), "chunk-45*.json"))
+            foreach (string file in Directory.GetFiles(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Maps/Chunks"), FILTER))
             {
                 chunks.Add(LoadFromFile<MapChunk>(file));
             }

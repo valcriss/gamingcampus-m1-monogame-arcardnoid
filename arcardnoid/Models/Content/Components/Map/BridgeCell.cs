@@ -23,7 +23,7 @@ namespace arcardnoid.Models.Content.Components.Map
 
         public static BridgeCellType GetMultiCellType(int[,] map, int x, int y, int width, int height)
         {
-            if (IsEmpty(map, x - 1, y, width, height) && !IsBorder(map, x - 1, y, width, height) && IsEmpty(map, x, y - 1, width, height) && IsEmpty(map, x, y + 1, width, height))
+            if (IsEmpty(map, x - 1, y, width, height) && !IsBorder(map, x - 1, y, width, height) && !IsBorder(map, x, y+1, width, height) && !IsBorder(map, x, y - 1, width, height) && IsEmpty(map, x, y - 1, width, height) && IsEmpty(map, x, y + 1, width, height))
             {
                 return BridgeCellType.HorizontalLeft;
             }
@@ -31,7 +31,7 @@ namespace arcardnoid.Models.Content.Components.Map
             {
                 return BridgeCellType.HorizontalCenter;
             }
-            else if (!IsEmpty(map, x - 1, y, width, height) && IsEmpty(map, x, y - 1, width, height) && IsEmpty(map, x, y + 1, width, height) && IsEmpty(map, x + 1, y, width, height) && !IsBorder(map, x + 1, y, width, height))
+            else if ((!IsEmpty(map, x - 1, y, width, height) || IsBorder(map, x - 1, y, width, height)) && IsEmpty(map, x, y - 1, width, height) && IsEmpty(map, x, y + 1, width, height) && IsEmpty(map, x + 1, y, width, height) && !IsBorder(map, x + 1, y, width, height))
             {
                 return BridgeCellType.HorizontalRight;
             }
@@ -47,7 +47,7 @@ namespace arcardnoid.Models.Content.Components.Map
             {
                 return BridgeCellType.BridgeShadow;
             }
-            else if (!IsEmpty(map, x, y - 1, width, height) && IsEmpty(map, x - 1, y, width, height) && IsEmpty(map, x + 1, y, width, height) && IsEmpty(map, x , y + 1, width, height) && !IsBorder(map, x, y + 1, width, height))
+            else if ((!IsEmpty(map, x, y - 1, width, height) || IsBorder(map, x, y - 1, width, height)) && IsEmpty(map, x - 1, y, width, height) && IsEmpty(map, x + 1, y, width, height) && IsEmpty(map, x , y + 1, width, height) && !IsBorder(map, x, y + 1, width, height))
             {
                 return BridgeCellType.VerticalBottom;
             }

@@ -1,5 +1,18 @@
 ﻿namespace arcardnoid.Models.Content.Components.Map
 {
+    public enum BridgeCellType
+    {
+        None,
+        HorizontalLeft,
+        HorizontalCenter,
+        HorizontalRight,
+        VerticalTop,
+        VerticalCenter,
+        VerticalBottom,
+        BridgeShadow
+    }
+
+
     public enum MultiCell2Type
     {
         None,

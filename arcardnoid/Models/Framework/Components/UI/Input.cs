@@ -42,12 +42,11 @@ namespace arcardnoid.Models.Framework.Components.UI
 
         #region Public Constructors
 
-        public Input(string name, string inputAsset, int x = 0, int y = 0, int width = 0) : base(name, x, y, width * 64, 128)
-        {
-            Random random = new Random();
+        public Input(string name, string inputAsset, string value = "", int x = 0, int y = 0, int width = 0) : base(name, x, y, width * 64, 128)
+        {      
             InputWidth = width;
             InputAsset = inputAsset;
-            _text = random.Next(100000, 999999).ToString();
+            _text = value;
         }
 
         #endregion Public Constructors
@@ -65,9 +64,14 @@ namespace arcardnoid.Models.Framework.Components.UI
             base.Draw();
         }
 
-        public int GetValue()
+        public string GetValue()
         {
-            return int.Parse(_text);
+            return _text;
+        }
+
+        public void SetValue(string value)
+        {
+            _text = value;
         }
 
         public override void Load()

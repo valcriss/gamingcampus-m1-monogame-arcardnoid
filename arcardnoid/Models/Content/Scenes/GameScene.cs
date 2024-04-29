@@ -1,4 +1,5 @@
-﻿using arcardnoid.Models.Framework.Scenes;
+﻿using arcardnoid.Models.Content.Components.Map;
+using arcardnoid.Models.Framework.Scenes;
 using Microsoft.Xna.Framework;
 
 namespace arcardnoid.Models.Content.Scenes
@@ -13,10 +14,16 @@ namespace arcardnoid.Models.Content.Scenes
 
         #region Public Constructors
 
-        public GameScene(int seed)
+        public GameScene(int seed = 123456)
         {
-            BackgroundColor = Color.White;
+            BackgroundColor = Color.FromNonPremultiplied(71, 171, 169, 255);
             Seed = seed;
+        }
+
+        public override void Load()
+        {
+            base.Load();
+            AddComponent(new DynamicGameMap(true));
         }
 
         #endregion Public Constructors

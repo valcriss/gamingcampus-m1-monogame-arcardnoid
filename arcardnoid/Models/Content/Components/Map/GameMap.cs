@@ -15,17 +15,19 @@ namespace arcardnoid.Models.Content.Components.Map
         #region Private Fields
 
         private string _mapAsset;
-        private MapItem _mapItem;
-        private List<Texture2D> _mapTextures;
+        protected MapItem _mapItem;
+        protected List<Texture2D> _mapTextures;
+        private bool _forceDebug;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public GameMap(string mapAsset, int x, int y) : base("GameMap", x, y)
+        public GameMap(string mapAsset, int x, int y, bool forceDebug = false) : base("GameMap", x, y)
         {
             _mapAsset = mapAsset;
             _mapTextures = new List<Texture2D>();
+            _forceDebug = forceDebug;
         }
 
         #endregion Public Constructors
@@ -35,7 +37,7 @@ namespace arcardnoid.Models.Content.Components.Map
         public override void Draw()
         {
             base.Draw();
-            if (BaseGame.DebugMode)
+            if (BaseGame.DebugMode || _forceDebug)
             {
                 DrawGrid();
             }

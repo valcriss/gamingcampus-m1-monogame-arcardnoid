@@ -111,6 +111,7 @@ namespace arcardnoid.Models.Content.Scenes
 
         private void OnNewGameButtonClicked()
         {
+            SeedFrame.NewSeed();
             MainGameMenu.AddAnimations<MainGameMenu>(GetMainMenuHideAnimations());
             SeedFrame.AddAnimations<SeedFrame>(GetSubFrameAppearAnimations());
         }

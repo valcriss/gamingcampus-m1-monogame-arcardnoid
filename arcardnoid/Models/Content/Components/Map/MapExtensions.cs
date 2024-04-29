@@ -21,9 +21,13 @@
                 for (int x = 0; x < line.Length; x++)
                 {
                     string index = line[x];
-                    if (index != " ")
+                    if(index.Trim() == "XX")
                     {
-                        map[x, y] = int.Parse(index);
+                        map[x, y] = 1;
+                    }
+                    else if (index.Trim() != "")
+                    {
+                        map[x, y] = int.Parse(index.Trim());
                     }
                 }
             }

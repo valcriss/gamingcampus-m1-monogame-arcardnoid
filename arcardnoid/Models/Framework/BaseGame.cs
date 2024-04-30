@@ -11,7 +11,7 @@ namespace arcardnoid.Models.Framework
     {
         #region Public Properties
 
-        public static bool DebugMode { get; set; } = true;
+        public static bool DebugMode { get; set; } = false;
         public GameConfiguration Configuration { get; set; }
 
         public GraphicsDeviceManager Graphics { get; set; }

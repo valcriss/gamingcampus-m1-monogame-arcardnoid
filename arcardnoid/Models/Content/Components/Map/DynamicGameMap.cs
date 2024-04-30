@@ -15,9 +15,8 @@ namespace arcardnoid.Models.Content.Components.Map
     {
         #region Private Fields
 
-        private const string FILTER = "chunk-450-1*.json";
-
         private Texture2D _blockTexture;
+        private string Filter { get; set; }
         private bool _forceDebug;
         private MapItem _mapItem;
         private List<Texture2D> _mapTextures = new List<Texture2D>();
@@ -27,6 +26,11 @@ namespace arcardnoid.Models.Content.Components.Map
         #region Public Constructors
 
         public DynamicGameMap(bool forceDebug = false) : base("DynamicGameMap", 28, 28)
+        {
+            _forceDebug = forceDebug;
+        }
+
+        public void SetForceDebug(bool forceDebug)
         {
             _forceDebug = forceDebug;
         }
@@ -47,13 +51,16 @@ namespace arcardnoid.Models.Content.Components.Map
         public override void Load()
         {
             base.Load();
-            if (_forceDebug)
-            {
-                _blockTexture = Game.Content.Load<Texture2D>("map/halt");
-            }
+            _blockTexture = Game.Content.Load<Texture2D>("map/halt");
             _mapItem = new MapItem() { Width = 29, Height = 16, Size = 64 };
             _mapItem.Assets = LoadFromFile<List<MapAsset>>("Maps/Chunks/chunkAssets.json");
             LoadAssets();
+        }
+
+        public void LoadTiles(string filter)
+        {
+            RemoveAllComponents();
+            Filter = filter;
             List<MapChunk> chunks = LoadChunks();
             List<ChunkLayout> layout = new List<ChunkLayout>();
             int x = 0;
@@ -75,7 +82,7 @@ namespace arcardnoid.Models.Content.Components.Map
 
         #region Private Methods
 
-        private void DrawBlocks(ChunkLayout chunk)
+        private void LoadBlocks(ChunkLayout chunk)
         {
             int[,] dataLines = chunk.MapChunk.Blocks.Data.ToMapArray(chunk.MapChunk.Width, chunk.MapChunk.Height);
             int RealX = chunk.X;
@@ -100,7 +107,7 @@ namespace arcardnoid.Models.Content.Components.Map
             }
         }
 
-        private void DrawEntrances(ChunkLayout chunk)
+        private void LoadEntrances(ChunkLayout chunk)
         {
             int RealX = chunk.X;
             int RealY = chunk.Y;
@@ -137,9 +144,9 @@ namespace arcardnoid.Models.Content.Components.Map
             for (int y = 0; y <= _mapItem.Height; y++)
             {
                 int x1 = ScreenManager.ScaleX((int)RealPosition.X);
-                int y1 = ScreenManager.ScaleY((int)RealPosition.Y + (y *_mapItem.Size));
+                int y1 = ScreenManager.ScaleY((int)RealPosition.Y + (y * _mapItem.Size));
                 int x2 = ScreenManager.ScaleX((int)RealPosition.X + (_mapItem.Width * _mapItem.Size));
-                int y2 = ScreenManager.ScaleY((int)RealPosition.Y + (y *_mapItem.Size));
+                int y2 = ScreenManager.ScaleY((int)RealPosition.Y + (y * _mapItem.Size));
                 Primitives2D.DrawLine(Game.SpriteBatch, x1, y1, x2, y2, Color.White);
             }
         }
@@ -203,15 +210,15 @@ namespace arcardnoid.Models.Content.Components.Map
                 {
                     DrawTiles(layer, chunk);
                 }
-                if (_forceDebug && _blockTexture != null) DrawBlocks(chunk);
-                if (_forceDebug && _blockTexture != null) DrawEntrances(chunk);
+                if (_forceDebug) LoadBlocks(chunk);
+                if (_forceDebug) LoadEntrances(chunk);
             }
         }
 
         private List<MapChunk> LoadChunks()
         {
             List<MapChunk> chunks = new List<MapChunk>();
-            foreach (string file in Directory.GetFiles(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Maps/Chunks"), FILTER))
+            foreach (string file in Directory.GetFiles(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Maps/Chunks"), Filter))
             {
                 chunks.Add(LoadFromFile<MapChunk>(file));
             }

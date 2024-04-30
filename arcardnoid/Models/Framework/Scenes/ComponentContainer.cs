@@ -35,6 +35,15 @@ namespace arcardnoid.Models.Framework.Scenes
             component.InnerUnload();
         }
 
+        public void RemoveAllComponents()
+        {
+            Component[] components = Components.ToArray();
+            foreach (Component component in components)
+            {
+                component?.InnerUnload();
+            }
+        }
+
         #endregion Public Methods
 
         #region Internal Methods
@@ -91,6 +100,11 @@ namespace arcardnoid.Models.Framework.Scenes
                             DateTime end = DateTime.Now;
                             ProfilerCollection.Add(component.Name, (end - start).TotalMilliseconds);
                         }
+                    }
+                    else if (component.State == ElementState.None)
+                    {
+                        component.SetGame(Game);
+                        component.InnerLoad();
                     }
                 }
             }

@@ -1,0 +1,81 @@
+{
+  "width": 2,
+  "height": 3,
+  "level": 1,
+  "entrances": [
+    
+  ],
+  "blocks": {
+    "data": [
+      "  ,  ",
+      "  ,  ",
+      "  ,  "
+    ]
+  },
+  "layers": [
+    {
+      "name": "Water Splash Layer",
+      "data": [
+        "00,00",
+        "00,00",
+        "00,00"
+      ]
+    },
+    {
+      "name": "Grass Layer",
+      "data": [
+        "  ,  ",
+        "  ,  ",
+        "  ,  "
+      ]
+    },
+    {
+      "name": "Shadow Layer",
+      "data": [
+        "  ,  ",
+        "  ,  ",
+        "  ,  "
+      ]
+    },
+    {
+      "name": "Sand Layer",
+      "data": [
+        "  ,  ",
+        "  ,  ",
+        "  ,  "
+      ]
+    },
+    {
+      "name": "Grass Layer",
+      "data": [
+        "03,03",
+        "03,03",
+        "03,03"
+      ]
+    },
+    {
+      "name": "Deco Layer",
+      "data": [
+        "  ,  ",
+        "  ,  ",
+        "  ,  "
+      ]
+    },
+    {
+      "name": "Bridge Layer",
+      "data": [
+        "  ,  ",
+        "  ,  ",
+        "  ,  "
+      ]
+    },
+    {
+      "name": "Building Layer",
+      "data": [
+        "  ,  ",
+        "  ,  ",
+        "  ,  "
+      ]
+    }
+  ]
+}

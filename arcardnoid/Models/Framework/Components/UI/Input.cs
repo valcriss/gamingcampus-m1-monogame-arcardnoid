@@ -1,5 +1,6 @@
 ﻿using arcardnoid.Models.Framework.Components.Texts;
 using arcardnoid.Models.Framework.Scenes;
+using arcardnoid.Models.Framework.Tools;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -55,12 +56,12 @@ namespace arcardnoid.Models.Framework.Components.UI
 
         public override void Draw()
         {
-            Game.SpriteBatch.Draw(_inputTexture, new Rectangle((int)RealBounds.X, (int)RealBounds.Y, 64, 128), LeftRectangle, Color);
+            Game.SpriteBatch.Draw(_inputTexture, ScreenManager.Scale(new Rectangle((int)RealBounds.X, (int)RealBounds.Y, 64, 128)), LeftRectangle, Color);
             for (int i = 0; i < InputWidth; i++)
             {
-                Game.SpriteBatch.Draw(_inputTexture, new Rectangle((int)RealBounds.X + 64 + i * 64, (int)RealBounds.Y, 64, 128), CenterRectangle, Color);
+                Game.SpriteBatch.Draw(_inputTexture, ScreenManager.Scale(new Rectangle((int)RealBounds.X + 64 + i * 64, (int)RealBounds.Y, 64, 128)), CenterRectangle, Color);
             }
-            Game.SpriteBatch.Draw(_inputTexture, new Rectangle((int)RealBounds.X + 64 + InputWidth * 64, (int)RealBounds.Y, 64, 128), RightRectangle, Color);
+            Game.SpriteBatch.Draw(_inputTexture, ScreenManager.Scale(new Rectangle((int)RealBounds.X + 64 + InputWidth * 64, (int)RealBounds.Y, 64, 128)), RightRectangle, Color);
             base.Draw();
         }
 
@@ -87,7 +88,8 @@ namespace arcardnoid.Models.Framework.Components.UI
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            MouseState mouseState = Mouse.GetState();
+            MouseState state = Mouse.GetState();
+            Point mousePoint = ScreenManager.UIScale(state.Position);
             if (IsDisabled)
             {
                 IsHovered = false;
@@ -96,17 +98,17 @@ namespace arcardnoid.Models.Framework.Components.UI
                 return;
             }
             Rectangle bounds = new Rectangle((int)RealBounds.X, (int)RealBounds.Y, 64 + InputWidth * 64, 128);
-            IsHovered = bounds.Contains(mouseState.Position);
+            IsHovered = bounds.Contains(mousePoint);
             if (IsHovered)
             {
-                if (mouseState.LeftButton == ButtonState.Pressed)
+                if (state.LeftButton == ButtonState.Pressed)
                 {
                     IsPressed = true;
                     IsFocused = true;
                     _lastCursorTime = 0;
                 }
             }
-            else if (mouseState.LeftButton == ButtonState.Pressed)
+            else if (state.LeftButton == ButtonState.Pressed)
             {
                 IsPressed = false;
                 IsFocused = false;

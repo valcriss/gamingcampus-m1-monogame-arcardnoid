@@ -1,5 +1,6 @@
 ﻿using arcardnoid.Models.Framework.Components.Texts;
 using arcardnoid.Models.Framework.Scenes;
+using arcardnoid.Models.Framework.Tools;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
@@ -53,15 +54,15 @@ namespace arcardnoid.Models.Content.Components.UI
         {
             base.Draw();
             // Draw left
-            Game.SpriteBatch.Draw(BandTexture, LeftBounds, new Rectangle(0, 0, 64, 64), Color);
+            Game.SpriteBatch.Draw(BandTexture, ScreenManager.Scale(LeftBounds), new Rectangle(0, 0, 64, 64), Color);
             // Draw inside
             foreach (var insideBound in InsideBounds)
             {
-                Game.SpriteBatch.Draw(BandTexture, insideBound, new Rectangle(64, 0, 64, 64), Color);
+                Game.SpriteBatch.Draw(BandTexture, ScreenManager.Scale(insideBound), new Rectangle(64, 0, 64, 64), Color);
             }
 
             // Draw right
-            Game.SpriteBatch.Draw(BandTexture, RightBounds, new Rectangle(128, 0, 64, 64), Color);
+            Game.SpriteBatch.Draw(BandTexture, ScreenManager.Scale(RightBounds), new Rectangle(128, 0, 64, 64), Color);
         }
 
         public override void Load()

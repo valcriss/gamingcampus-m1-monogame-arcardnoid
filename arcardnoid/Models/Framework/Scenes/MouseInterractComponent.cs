@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using arcardnoid.Models.Framework.Tools;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
 
@@ -41,7 +42,8 @@ namespace arcardnoid.Models.Framework.Scenes
         {
             base.Update(gameTime);
             MouseState state = Mouse.GetState();
-            if (RealBounds.Contains(state.Position))
+            Point mousePoint = ScreenManager.UIScale(state.Position);
+            if (RealBounds.Contains(mousePoint))
             {
                 if (state.LeftButton == ButtonState.Pressed)
                 {

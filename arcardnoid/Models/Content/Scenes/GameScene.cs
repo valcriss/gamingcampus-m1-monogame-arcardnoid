@@ -27,7 +27,7 @@ namespace arcardnoid.Models.Content.Scenes
         public override void Load()
         {
             base.Load();
-            AddComponent(new DynamicGameMap(false));
+            AddComponent(new DynamicGameMap(true));
         }
 
         #endregion Public Methods

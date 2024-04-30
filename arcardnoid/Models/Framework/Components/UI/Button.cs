@@ -1,5 +1,6 @@
 ﻿using arcardnoid.Models.Framework.Components.Texts;
 using arcardnoid.Models.Framework.Scenes;
+using arcardnoid.Models.Framework.Tools;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -46,7 +47,7 @@ namespace arcardnoid.Models.Framework.Components.UI
             base.Draw();
             foreach (Rectangle[] rectangle in Rectangles)
             {
-                Game.SpriteBatch.Draw(CurrentTexture, rectangle[1], rectangle[0], Color);
+                Game.SpriteBatch.Draw(CurrentTexture, ScreenManager.Scale(rectangle[1]), rectangle[0], Color);
             }
         }
 

@@ -53,14 +53,14 @@ namespace arcardnoid.Models.Framework.Components.UI
         public override void Draw()
         {
             base.Draw();
-            Game.SpriteBatch.Draw(CurrentLeftTexture, new Rectangle((int)RealBounds.X, (int)RealBounds.Y, 64, 64), LeftRectangle, Color);
-            Primitives2D.FillRectangle(Game.SpriteBatch, new Rectangle((int)RealBounds.X + 64, (int)RealBounds.Y + 6, (BarWidth * 64), 48), Color.FromNonPremultiplied(220, 220, 220, Color.A));
-            Primitives2D.FillRectangle(Game.SpriteBatch, new Rectangle((int)RealBounds.X + 64, (int)RealBounds.Y + 6, (int)(BarWidth * Value * 64), 48), Color.FromNonPremultiplied(187, 181, 82, Color.A));
+            Game.SpriteBatch.Draw(CurrentLeftTexture, ScreenManager.Scale(new Rectangle((int)RealBounds.X, (int)RealBounds.Y, 64, 64)), LeftRectangle, Color);
+            Primitives2D.FillRectangle(Game.SpriteBatch, ScreenManager.Scale(new Rectangle((int)RealBounds.X + 64, (int)RealBounds.Y + 6, (BarWidth * 64), 48)), Color.FromNonPremultiplied(220, 220, 220, Color.A));
+            Primitives2D.FillRectangle(Game.SpriteBatch, ScreenManager.Scale(new Rectangle((int)RealBounds.X + 64, (int)RealBounds.Y + 6, (int)(BarWidth * Value * 64), 48)), Color.FromNonPremultiplied(187, 181, 82, Color.A));
             for (int i = 0; i < BarWidth; i++)
             {
-                Game.SpriteBatch.Draw(CurrentLeftTexture, new Rectangle((int)RealBounds.X + 64 + i * 64, (int)RealBounds.Y, 64, 64), MiddleRectangle, Color);
+                Game.SpriteBatch.Draw(CurrentLeftTexture, ScreenManager.Scale(new Rectangle((int)RealBounds.X + 64 + i * 64, (int)RealBounds.Y, 64, 64)), MiddleRectangle, Color);
             }
-            Game.SpriteBatch.Draw(CurrentRightTexture, new Rectangle((int)RealBounds.X + 64 + BarWidth * 64, (int)RealBounds.Y, 64, 64), RightRectangle, Color);
+            Game.SpriteBatch.Draw(CurrentRightTexture, ScreenManager.Scale(new Rectangle((int)RealBounds.X + 64 + BarWidth * 64, (int)RealBounds.Y, 64, 64)), RightRectangle, Color);
         }
 
         public float GetValue()
@@ -87,9 +87,10 @@ namespace arcardnoid.Models.Framework.Components.UI
         {
             base.Update(gameTime);
             MouseState state = Mouse.GetState();
+            Point mousePoint = ScreenManager.UIScale(state.Position);
             Rectangle LeftRealBounds = new Rectangle((int)RealBounds.X, (int)RealBounds.Y, 64, 64);
             Rectangle RightRealBounds = new Rectangle((int)RealBounds.X + 64 + BarWidth * 64, (int)RealBounds.Y, 64, 64);
-            if (LeftRealBounds.Contains(state.Position))
+            if (LeftRealBounds.Contains(mousePoint))
             {
                 CurrentLeftTexture = HoverTexture;
                 CurrentRightTexture = NormalTexture;
@@ -106,7 +107,7 @@ namespace arcardnoid.Models.Framework.Components.UI
                     IsPressed = false;
                 }
             }
-            else if (RightRealBounds.Contains(state.Position))
+            else if (RightRealBounds.Contains(mousePoint))
             {
                 CurrentRightTexture = HoverTexture;
                 CurrentLeftTexture = NormalTexture;

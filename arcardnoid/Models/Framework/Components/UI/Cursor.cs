@@ -1,5 +1,6 @@
 ﻿using arcardnoid.Models.Framework.Components.Images;
 using arcardnoid.Models.Framework.Scenes;
+using arcardnoid.Models.Framework.Tools;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
@@ -38,7 +39,8 @@ namespace arcardnoid.Models.Framework.Components.UI
         {
             base.Update(gameTime);
             MouseState state = Mouse.GetState();
-            CursorImage.Position = new Vector2(state.Position.X + (int)Offset.X, state.Position.Y + (int)Offset.Y);
+            Point mousePoint = ScreenManager.UIScale(state.Position);
+            CursorImage.Position = new Vector2(mousePoint.X + (int)Offset.X, mousePoint.Y + (int)Offset.Y);
         }
 
         #endregion Public Methods

@@ -1,5 +1,6 @@
 ﻿using arcardnoid.Models.Framework.Configuration;
 using arcardnoid.Models.Framework.Scenes;
+using arcardnoid.Models.Framework.Tools;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -10,7 +11,7 @@ namespace arcardnoid.Models.Framework
     {
         #region Public Properties
 
-        public static bool DebugMode { get; set; } = false;
+        public static bool DebugMode { get; set; } = true;
         public GameConfiguration Configuration { get; set; }
 
         public GraphicsDeviceManager Graphics { get; set; }
@@ -37,6 +38,7 @@ namespace arcardnoid.Models.Framework
             Graphics = new GraphicsDeviceManager(this);
             Graphics.PreferredBackBufferWidth = Configuration.ResolutionWidth;
             Graphics.PreferredBackBufferHeight = Configuration.ResolutionHeight;
+            ScreenManager.Initialize(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
             IsMouseVisible = false;
             //IsFixedTimeStep = false;
             Graphics.ApplyChanges();

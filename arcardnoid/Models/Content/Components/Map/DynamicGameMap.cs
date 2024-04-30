@@ -128,11 +128,19 @@ namespace arcardnoid.Models.Content.Components.Map
         {
             for (int x = 0; x <= _mapItem.Width; x++)
             {
-                Primitives2D.DrawLine(Game.SpriteBatch, (int)RealPosition.X + (x * _mapItem.Size), (int)RealPosition.Y, (int)RealPosition.X + (x * _mapItem.Size), (int)RealPosition.Y + (_mapItem.Height * _mapItem.Size), Microsoft.Xna.Framework.Color.White);
+                int x1 = ScreenManager.ScaleX((int)RealPosition.X + (x * _mapItem.Size));
+                int y1 = ScreenManager.ScaleY((int)RealPosition.Y);
+                int x2 = ScreenManager.ScaleX((int)RealPosition.X + (x * _mapItem.Size));
+                int y2 = ScreenManager.ScaleY((int)RealPosition.Y + (_mapItem.Height * _mapItem.Size));
+                Primitives2D.DrawLine(Game.SpriteBatch, x1, y1, x2, y2, Color.White);
             }
             for (int y = 0; y <= _mapItem.Height; y++)
             {
-                Primitives2D.DrawLine(Game.SpriteBatch, (int)RealPosition.X, (int)RealPosition.Y + (y * _mapItem.Size), (int)RealPosition.X + (_mapItem.Width * _mapItem.Size), (int)RealPosition.Y + (y * _mapItem.Size), Microsoft.Xna.Framework.Color.White);
+                int x1 = ScreenManager.ScaleX((int)RealPosition.X);
+                int y1 = ScreenManager.ScaleY((int)RealPosition.Y + (y *_mapItem.Size));
+                int x2 = ScreenManager.ScaleX((int)RealPosition.X + (_mapItem.Width * _mapItem.Size));
+                int y2 = ScreenManager.ScaleY((int)RealPosition.Y + (y *_mapItem.Size));
+                Primitives2D.DrawLine(Game.SpriteBatch, x1, y1, x2, y2, Color.White);
             }
         }
 

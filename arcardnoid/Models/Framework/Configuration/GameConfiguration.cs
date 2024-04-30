@@ -6,9 +6,9 @@ namespace arcardnoid.Models.Framework.Configuration
     {
         #region Public Properties
 
-        public int ResolutionHeight { get; set; } = 1080;
+        public int ResolutionHeight { get; set; } =  768; // 1080;
 
-        public int ResolutionWidth { get; set; } = 1920;
+        public int ResolutionWidth { get; set; } = 1366; // 1920;
 
         #endregion Public Properties
 

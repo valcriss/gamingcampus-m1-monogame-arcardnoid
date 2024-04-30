@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using arcardnoid.Models.Framework.Tools;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 
@@ -85,7 +86,7 @@ namespace arcardnoid.Models.Content.Components.Map
         public override void Draw()
         {
             if (SourceRect.IsEmpty == false)
-                Game.SpriteBatch.Draw(Texture2D, DrawBounds.ToRectangle(), SourceRect.ToRectangle(), Color, MathHelper.ToRadians(Rotation), Origin, SpriteEffects.None, 0);
+                Game.SpriteBatch.Draw(Texture2D, ScreenManager.Scale(DrawBounds).ToRectangle(), SourceRect.ToRectangle(), Color, MathHelper.ToRadians(Rotation), Origin, SpriteEffects.None, 0);
         }
 
         public override void Load()

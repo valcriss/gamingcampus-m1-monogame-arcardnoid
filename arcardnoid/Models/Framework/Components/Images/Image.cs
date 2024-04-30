@@ -1,4 +1,5 @@
 ﻿using arcardnoid.Models.Framework.Scenes;
+using arcardnoid.Models.Framework.Tools;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
@@ -43,7 +44,7 @@ namespace arcardnoid.Models.Framework.Components.Images
 
         public override void Draw()
         {
-            Game.SpriteBatch.Draw(Sprite, DrawBounds.ToRectangle(), ImageBounds, Color, MathHelper.ToRadians(Rotation), Origin, SpriteEffects.None, 0);
+            Game.SpriteBatch.Draw(Sprite, ScreenManager.Scale(DrawBounds.ToRectangle()), ImageBounds, Color, MathHelper.ToRadians(Rotation), Origin, SpriteEffects.None, 0);
             base.Draw();
         }
 

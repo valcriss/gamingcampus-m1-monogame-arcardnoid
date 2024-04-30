@@ -20,12 +20,16 @@ namespace arcardnoid.Models.Content.Scenes
             Seed = seed;
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
         public override void Load()
         {
             base.Load();
             AddComponent(new DynamicGameMap(false));
         }
 
-        #endregion Public Constructors
+        #endregion Public Methods
     }
 }

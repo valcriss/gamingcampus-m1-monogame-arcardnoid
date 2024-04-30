@@ -12,12 +12,17 @@ namespace arcardnoid.Models.Content.Components.Map
 {
     public class GameMap : Component
     {
-        #region Private Fields
+        #region Protected Fields
 
-        private string _mapAsset;
         protected MapItem _mapItem;
         protected List<Texture2D> _mapTextures;
+
+        #endregion Protected Fields
+
+        #region Private Fields
+
         private bool _forceDebug;
+        private string _mapAsset;
 
         #endregion Private Fields
 

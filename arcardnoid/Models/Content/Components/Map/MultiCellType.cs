@@ -12,7 +12,6 @@
         BridgeShadow
     }
 
-
     public enum MultiCell2Type
     {
         None,

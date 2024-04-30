@@ -43,7 +43,7 @@ namespace arcardnoid.Models.Framework.Components.UI
         #region Public Constructors
 
         public Input(string name, string inputAsset, string value = "", int x = 0, int y = 0, int width = 0) : base(name, x, y, width * 64, 128)
-        {      
+        {
             InputWidth = width;
             InputAsset = inputAsset;
             _text = value;
@@ -69,11 +69,6 @@ namespace arcardnoid.Models.Framework.Components.UI
             return _text;
         }
 
-        public void SetValue(string value)
-        {
-            _text = value;
-        }
-
         public override void Load()
         {
             base.Load();
@@ -82,6 +77,11 @@ namespace arcardnoid.Models.Framework.Components.UI
             CenterRectangle = new Rectangle(64, 0, 64, 128);
             RightRectangle = new Rectangle(128, 0, 64, 128);
             Text = AddComponent(new BitmapText(Name + "Text", "fonts/band", _text, 64 + ((InputWidth / 2) * 64), 50, TextHorizontalAlign.Center, TextVerticalAlign.Center, Color.Black));
+        }
+
+        public void SetValue(string value)
+        {
+            _text = value;
         }
 
         public override void Update(GameTime gameTime)

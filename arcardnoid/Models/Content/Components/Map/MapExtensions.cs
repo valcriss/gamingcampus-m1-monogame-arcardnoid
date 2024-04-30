@@ -21,7 +21,7 @@
                 for (int x = 0; x < line.Length; x++)
                 {
                     string index = line[x];
-                    if(index.Trim() == "XX")
+                    if (index.Trim() == "XX")
                     {
                         map[x, y] = 1;
                     }

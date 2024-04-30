@@ -18,15 +18,18 @@ namespace arcardnoid.Models.Content.Scenes
     {
         #region Public Constructors
 
-        private int _filterIndex = 2;
+        private int _filterIndex = 0;
 
         private string[] _filters = new string[]
         {
+            "chunk-230-1-*",
+            /*
             "chunk-450-1-*",
             "chunk-450-2-*",
             "chunk-450-3-*",
             "chunk-451-1-*",
             "chunk-451-2-*",
+            */
         };
 
         private bool _loaded = false;

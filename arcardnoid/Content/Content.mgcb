@@ -442,6 +442,18 @@
 /processorParam:TextureFormat=Color
 /build:map/deco/rocks_water_small.png
 
+#begin map/deco/tree.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:map/deco/tree.png
+
 #begin map/door.png
 /importer:TextureImporter
 /processor:TextureProcessor

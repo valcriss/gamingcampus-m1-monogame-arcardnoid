@@ -169,5 +169,16 @@
     "name": "Bridge",
     "type": "bridge",
     "path": "map/bridge"
+  },
+  {
+    "id": 21,
+    "name": "Tree",
+    "type": "spritesheet",
+    "columns": 4,
+    "rows": 1,
+    "speed": 220,
+    "path": "map/deco/tree",
+    "offsetX": 16,
+    "offsetY": -16
   }
 ]

@@ -13,7 +13,7 @@ namespace arcardnoid.Models.Content.Components.Map
 {
     public class DynamicGameMap : Component
     {
-        private const string FILTER = "chunk-451-2*.json";
+        private const string FILTER = "chunk-450-1*.json";
 
         private MapItem _mapItem;
         private List<Texture2D> _mapTextures = new List<Texture2D>();
@@ -80,7 +80,7 @@ namespace arcardnoid.Models.Content.Components.Map
                         Texture2D texture = _blockTexture;
                         MapCell cell = new MapCell($"map-cell-{RealX}-{RealY}", texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), 0, 0);
                         cell.Color = Color.Cyan;
-                        cell.Opacity = 0.75f;
+                        cell.Opacity = 0.25f;
                         AddComponent(cell);
                     }
                     RealX++;
@@ -105,7 +105,7 @@ namespace arcardnoid.Models.Content.Components.Map
                         Texture2D texture = _blockTexture;
                         MapCell cell = new MapCell($"map-cell-{RealX}-{RealY}", texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), 0, 0);
                         cell.Color = Color.Red;
-                        cell.Opacity = 0.5f;
+                        cell.Opacity = 0.25f;
                         AddComponent(cell);
                     }
                     RealX++;

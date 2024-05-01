@@ -1,9 +1,12 @@
-﻿using arcardnoid.Models.Framework;
+﻿using arcardnoid.Models.Content.Components.Map.Cells;
+using arcardnoid.Models.Content.Components.Map.Models;
+using arcardnoid.Models.Framework;
 using arcardnoid.Models.Framework.Scenes;
 using arcardnoid.Models.Framework.Tools;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -53,7 +56,7 @@ namespace arcardnoid.Models.Content.Components.Map
             base.Load();
             _blockTexture = Game.Content.Load<Texture2D>("map/halt");
             _mapItem = new MapItem() { Width = 29, Height = 16, Size = 64 };
-            _mapItem.Assets = LoadFromFile<List<MapAsset>>("Maps/Chunks/chunkAssets.json");
+            _mapItem.Assets = LoadFromFile<List<MapAsset>>("Maps/chunkAssets.json");
             LoadAssets();
         }
 
@@ -70,10 +73,10 @@ namespace arcardnoid.Models.Content.Components.Map
                 if (x + chunk.Width > _mapItem.Width)
                 {
                     x = 0;
-                    y += chunk.Height;
+                    y += chunk.Height+1;
                 }
                 layout.Add(new ChunkLayout() { MapChunk = chunk, X = x, Y = y });
-                x += chunk.Width;
+                x += chunk.Width +1;
             }
             LoadChunkLayer(layout);
         }
@@ -121,7 +124,31 @@ namespace arcardnoid.Models.Content.Components.Map
                         Texture2D texture = _blockTexture;
                         MapCell cell = new MapCell($"map-cell-{RealX}-{RealY}", texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), 0, 0);
                         cell.Color = Color.Cyan;
-                        cell.Opacity = 0.25f;
+                        cell.Opacity = 0.35f;
+                        AddComponent(cell);
+                    }
+                    RealX++;
+                }
+                RealX = chunk.X;
+                RealY++;
+            }
+        }
+
+        private void LoadSpawns(ChunkLayout chunk)
+        {
+            int RealX = chunk.X;
+            int RealY = chunk.Y;
+            for (int y = 0; y < chunk.MapChunk.Height; y++)
+            {
+                for (int x = 0; x < chunk.MapChunk.Width; x++)
+                {
+                    MapChunkSpawn spawn = chunk.MapChunk.Spawns.FirstOrDefault(c => c.X == x && c.Y == y);
+                    if (spawn != null)
+                    {
+                        Texture2D texture = _blockTexture;
+                        MapCell cell = new MapCell($"map-cell-{RealX}-{RealY}", texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), 0, 0);
+                        cell.Color = Color.Yellow;
+                        cell.Opacity = 0.35f;
                         AddComponent(cell);
                     }
                     RealX++;
@@ -212,13 +239,14 @@ namespace arcardnoid.Models.Content.Components.Map
                 }
                 if (_forceDebug) LoadBlocks(chunk);
                 if (_forceDebug) LoadEntrances(chunk);
+                if (_forceDebug) LoadSpawns(chunk);
             }
         }
 
         private List<MapChunk> LoadChunks()
         {
             List<MapChunk> chunks = new List<MapChunk>();
-            foreach (string file in Directory.GetFiles(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Maps/Chunks"), Filter))
+            foreach (string file in Directory.GetFiles(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Maps/Chunks"), Filter, SearchOption.AllDirectories))
             {
                 chunks.Add(LoadFromFile<MapChunk>(file));
             }
@@ -228,7 +256,16 @@ namespace arcardnoid.Models.Content.Components.Map
         private T LoadFromFile<T>(string filename)
         {
             string content = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), filename));
-            return JsonConvert.DeserializeObject<T>(content);
+            try
+            {
+                return JsonConvert.DeserializeObject<T>(content);
+            }
+            catch(Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                System.Diagnostics.Debug.WriteLine(filename);
+                return default(T);
+            }
         }
 
         #endregion Private Methods

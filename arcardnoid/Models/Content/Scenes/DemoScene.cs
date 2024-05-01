@@ -22,7 +22,9 @@ namespace arcardnoid.Models.Content.Scenes
 
         private string[] _filters = new string[]
         {
-            "chunk-230-1-*",
+            "22\\0\\1\\*.json",
+            "22\\0\\2\\*.json",
+            "23\\0\\1\\*.json",
             /*
             "chunk-450-1-*",
             "chunk-450-2-*",
@@ -73,7 +75,7 @@ namespace arcardnoid.Models.Content.Scenes
         {
             string filter = _filters[_filterIndex];
             DynamicGameMap.LoadTiles(filter);
-            BitmapText.SetText(filter.Substring(0, filter.Length - 2));
+            BitmapText.SetText(filter.Replace("\\","-").Substring(0, filter.Length -7));
         }
 
         private void OnNext()

@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace arcardnoid.Models.Content.Components.Map.Models
 {
@@ -27,6 +29,11 @@ namespace arcardnoid.Models.Content.Components.Map.Models
 
         [JsonProperty("width")]
         public int Width { get; set; }
+
+        public static MapChunk FromFile(string file)
+        {
+            return JsonConvert.DeserializeObject<MapChunk>(File.ReadAllText(file));
+        }
 
         #endregion Public Properties
     }

@@ -63,7 +63,7 @@
     {
       "name": "Deco Layer",
       "data": [
-        "11,17",
+        "  ,  ",
         "  ,  ",
         "  ,  "
       ]
@@ -77,9 +77,25 @@
       ]
     },
     {
-      "name": "Building Layer",
+      "name": "Bridge Layer 2",
       "data": [
         "  ,  ",
+        "  ,  ",
+        "  ,  "
+      ]
+    },
+    {
+      "name": "Building Layer",
+      "data": [
+        "11,  ",
+        "  ,  ",
+        "  ,  "
+      ]
+    },
+    {
+      "name": "Actor Layer",
+      "data": [
+        "  ,17",
         "  ,  ",
         "  ,  "
       ]

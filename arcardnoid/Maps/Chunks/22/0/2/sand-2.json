@@ -72,7 +72,21 @@
       ]
     },
     {
+      "name": "Bridge Layer 2",
+      "data": [
+        "  ,  ",
+        "  ,  "
+      ]
+    },
+    {
       "name": "Building Layer",
+      "data": [
+        "  ,  ",
+        "  ,  "
+      ]
+    },
+    {
+      "name": "Actor Layer",
       "data": [
         "  ,  ",
         "  ,  "

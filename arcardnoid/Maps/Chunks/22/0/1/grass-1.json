@@ -31,28 +31,28 @@
       "name": "WaterSplash",
       "data": [
         "00,00",
-        "00,00",
+        "00,00"
       ]
     },
     {
       "name": "Terrain Layer 1",
       "data": [
         "  ,  ",
-        "  ,  ",
+        "  ,  "
       ]
     },
     {
       "name": "Shadow Layer",
       "data": [
         "  ,  ",
-        "  ,  ",
+        "  ,  "
       ]
     },
     {
       "name": "Terrain Layer 2",
       "data": [
         "03,03",
-        "03,03",
+        "03,03"
       ]
     },
     {
@@ -70,7 +70,21 @@
       ]
     },
     {
+      "name": "Bridge Layer 2",
+      "data": [
+        "  ,  ",
+        "  ,  "
+      ]
+    },
+    {
       "name": "Building Layer",
+      "data": [
+        "  ,  ",
+        "  ,  "
+      ]
+    },
+    {
+      "name": "Actor Layer",
       "data": [
         "  ,  ",
         "  ,  "

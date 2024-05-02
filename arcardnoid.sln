@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "arcardnoid", "arcardnoid\arcardnoid.csproj", "{09A3332D-6674-4D33-936F-67D1D1850AA7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "arcardnoidTests", "arcardnoidTests\arcardnoidTests.csproj", "{526259B3-F33A-451D-882F-3D42D33BC6F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{09A3332D-6674-4D33-936F-67D1D1850AA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09A3332D-6674-4D33-936F-67D1D1850AA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09A3332D-6674-4D33-936F-67D1D1850AA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{526259B3-F33A-451D-882F-3D42D33BC6F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{526259B3-F33A-451D-882F-3D42D33BC6F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{526259B3-F33A-451D-882F-3D42D33BC6F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{526259B3-F33A-451D-882F-3D42D33BC6F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

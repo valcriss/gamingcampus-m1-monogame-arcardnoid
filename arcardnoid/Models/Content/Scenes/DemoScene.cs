@@ -24,8 +24,13 @@ namespace arcardnoid.Models.Content.Scenes
         {
             "22\\0\\1\\*.json",
             "22\\0\\2\\*.json",
+            "22\\0\\3\\*.json",
             "23\\0\\1\\*.json",
             "23\\0\\2\\*.json",
+            "23\\0\\3\\*.json",
+            "32\\0\\1\\*.json",
+            "32\\0\\2\\*.json",
+            "32\\0\\3\\*.json",
         };
 
         private bool _loaded = false;

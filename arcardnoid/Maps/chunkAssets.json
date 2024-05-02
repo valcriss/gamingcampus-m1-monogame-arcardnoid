@@ -181,5 +181,65 @@
     "path": "map/deco/tree",
     "offsetX": 16,
     "offsetY": -16
+  },
+  {
+    "id": 22,
+    "name": "Tower blue",
+    "type": "normal",
+    "path": "map/building/tower_blue",
+    "offsetX": 34,
+    "offsetY": -48
+  },
+  {
+    "id": 23,
+    "name": "Warrior blue",
+    "type": "spritesheet",
+    "columns": 6,
+    "rows": 1,
+    "speed": 120,
+    "path": "map/units/warrior-blue-idle",
+    "offsetX": 6,
+    "offsetY": -24
+  },
+  {
+    "id": 24,
+    "name": "Red tower in Wood",
+    "type": "spritesheet",
+    "columns": 4,
+    "rows": 1,
+    "speed": 120,
+    "offsetX": 34,
+    "offsetY": 0,
+    "path": "map/building/wood-tower-red"
+  },
+  {
+    "id": 25,
+    "name": "Goblin Torch",
+    "type": "spritesheet",
+    "columns": 7,
+    "rows": 1,
+    "speed": 120,
+    "path": "map/units/torch-red-idle",
+    "offsetX": 32,
+    "offsetY": -128
+  },
+  {
+    "id": 26,
+    "name": "Goblin house",
+    "type": "normal",
+    "path": "map/building/goblin_house",
+    "offsetX": 34,
+    "offsetY": -16
+  },
+  {
+    "id": 27,
+    "name": "Goblin TNT",
+    "type": "spritesheet",
+    "columns": 6,
+    "rows": 1,
+    "speed": 120,
+    "path": "map/units/tnt-red-idle",
+    "offsetX": 16,
+    "offsetY": -16
   }
 ]

@@ -1,5 +1,5 @@
 {
-  "width": 2,
+  "width": 3,
   "height": 2,
   "level": 1,
   "entrances": [
@@ -8,15 +8,17 @@
       "y": 0,
       "from": 0,
       "to": 0
-    },
-    {
-      "x": 0,
-      "y": 1,
-      "from": 0,
-      "to": 0
     }
   ],
   "spawns": [
+    {
+      "x": 0,
+      "y": 0
+    },
+    {
+      "x": 0,
+      "y": 1
+    },
     {
       "x": 1,
       "y": 1
@@ -24,72 +26,72 @@
   ],
   "blocks": {
     "data": [
-      "XX,  ",
-      "  ,  ",
+      "  ,  ,  ",
+      "  ,  ,XX"
     ]
   },
   "layers": [
     {
       "name": "WaterSplash",
       "data": [
-        "00,00",
-        "00,00"
+        "00,00,00",
+        "00,00,00"
       ]
     },
     {
       "name": "Terrain Layer 1",
       "data": [
-        "  ,  ",
-        "  ,  "
+        "  ,  ,  ",
+        "  ,  ,  "
       ]
     },
     {
       "name": "Shadow Layer",
       "data": [
-        "  ,  ",
-        "  ,  "
+        "  ,  ,  ",
+        "  ,  ,  "
       ]
     },
     {
       "name": "Terrain Layer 2",
       "data": [
-        "01,01",
-        "01,01"
+        "03,03,03",
+        "03,03,03"
       ]
     },
     {
       "name": "Deco Layer",
       "data": [
-        "05,  ",
-        "  ,  "
+        "  ,  , ",
+        "  ,  ,07"
       ]
     },
     {
       "name": "Bridge Layer 1",
       "data": [
-        "  ,20",
-        "20,  "
+        "  ,20,  ",
+        "  ,  ,  "
       ]
     },
     {
       "name": "Bridge Layer 2",
       "data": [
-        "  ,  ",
-        "  ,  "
+        "  ,  ,  ",
+        "  ,  ,  "
       ]
     },
     {
       "name": "Building Layer",
       "data": [
-        "  ,  ",
-        "  ,  "
+        "  ,  ,  ",
+        "  ,  ,  "
       ]
     },
     {
       "name": "Actor Layer",
       "data": [
-        "  ,  ",
-        "  ,  "
+        "  ,  ,  ",
+        "  ,  ,  "
       ]
     }
   ]

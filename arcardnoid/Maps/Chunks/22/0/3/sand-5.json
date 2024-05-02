@@ -4,28 +4,29 @@
   "level": 1,
   "entrances": [
     {
+      "x": 0,
+      "y": 0,
+      "from": 0,
+      "to": 0
+    },
+    {
       "x": 1,
       "y": 0,
       "from": 0,
       "to": 0
     },
     {
-      "x": 0,
+      "x": 1,
       "y": 1,
       "from": 0,
       "to": 0
     }
   ],
-  "spawns": [
-    {
-      "x": 1,
-      "y": 1
-    }
-  ],
+  "spawns": [],
   "blocks": {
     "data": [
-      "XX,  ",
       "  ,  ",
+      "XX,  "
     ]
   },
   "layers": [
@@ -60,21 +61,21 @@
     {
       "name": "Deco Layer",
       "data": [
-        "05,  ",
-        "  ,  "
+        "  ,  ",
+        "06,  "
       ]
     },
     {
       "name": "Bridge Layer 1",
       "data": [
-        "  ,20",
-        "20,  "
+        "20,  ",
+        "  ,20"
       ]
     },
     {
       "name": "Bridge Layer 2",
       "data": [
-        "  ,  ",
+        "  ,20",
         "  ,  "
       ]
     },

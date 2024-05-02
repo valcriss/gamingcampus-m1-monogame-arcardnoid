@@ -25,13 +25,7 @@ namespace arcardnoid.Models.Content.Scenes
             "22\\0\\1\\*.json",
             "22\\0\\2\\*.json",
             "23\\0\\1\\*.json",
-            /*
-            "chunk-450-1-*",
-            "chunk-450-2-*",
-            "chunk-450-3-*",
-            "chunk-451-1-*",
-            "chunk-451-2-*",
-            */
+            "23\\0\\2\\*.json",
         };
 
         private bool _loaded = false;

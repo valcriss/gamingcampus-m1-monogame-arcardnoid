@@ -17,7 +17,7 @@ namespace arcardnoid.Models.Content.Components.Map
     {
         #region Public Properties
 
-        public MapHypothesis MapHypotesis { get; set; }
+        public MapHypothesis MapHypothesis { get; set; }
 
         #endregion Public Properties
 
@@ -35,7 +35,7 @@ namespace arcardnoid.Models.Content.Components.Map
         public RandomMap(MapHypothesis mapHypotesis, bool forceDebug = false) : base("RandomMap", mapHypotesis.PositionX, mapHypotesis.PositionY)
         {
             _forceDebug = forceDebug;
-            MapHypotesis = mapHypotesis;
+            MapHypothesis = mapHypotesis;
         }
 
         #endregion Public Constructors
@@ -70,7 +70,7 @@ namespace arcardnoid.Models.Content.Components.Map
         {
             base.Load();
             _blockTexture = Game.Content.Load<Texture2D>("map/halt");
-            _mapItem = new MapItem() { Width = MapHypotesis.Width, Height = MapHypotesis.Height, Size = 64 };
+            _mapItem = new MapItem() { Width = MapHypothesis.Width, Height = MapHypothesis.Height, Size = 64 };
             _mapItem.Assets = LoadFromFile<List<MapAsset>>("Maps/chunkAssets.json");
             LoadAssets();
             LoadTiles();
@@ -79,10 +79,7 @@ namespace arcardnoid.Models.Content.Components.Map
         public void LoadTiles()
         {
             RemoveAllComponents();
-            List<ChunkLayout> layout = new List<ChunkLayout>();
-
-            layout.Add(new ChunkLayout() { MapChunk = MapHypotesis.FinalChunk, X = 0, Y = 0 });
-            LoadChunkLayer(layout);
+            LoadChunkLayer(new ChunkLayout() { MapChunk = MapHypothesis.FinalChunk, X = 0, Y = 0 });
         }
 
         #endregion Public Methods
@@ -125,7 +122,7 @@ namespace arcardnoid.Models.Content.Components.Map
                         Texture2D texture = _mapTextures[assetIndex];
                         if (mapAsset.Type == "spritesheet")
                         {
-                            AddComponent(new AnimatedCell($"animated-cell-{RealX}-{RealY}", texture, mapAsset.Columns, mapAsset.Rows, mapAsset.Speed, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), mapAsset.OffsetX, mapAsset.OffsetY));
+                            AddComponent(new AnimatedCell($"animated-cell-{RealX}-{RealY}", texture, mapAsset.Columns, mapAsset.Rows, mapAsset.Speed, mapAsset.DelayMin, mapAsset.DelayMax, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), mapAsset.OffsetX, mapAsset.OffsetY));
                         }
                         else if (mapAsset.Type == "multi")
                         {
@@ -185,18 +182,15 @@ namespace arcardnoid.Models.Content.Components.Map
             }
         }
 
-        private void LoadChunkLayer(List<ChunkLayout> layout)
+        private void LoadChunkLayer(ChunkLayout layout)
         {
-            foreach (ChunkLayout chunk in layout)
+            foreach (MapLayer layer in layout.MapChunk.Layers)
             {
-                foreach (MapLayer layer in chunk.MapChunk.Layers)
-                {
-                    DrawTiles(layer, chunk);
-                }
-                if (_forceDebug) LoadBlocks(chunk);
-                if (_forceDebug) LoadEntrances(chunk);
-                if (_forceDebug) LoadSpawns(chunk);
+                DrawTiles(layer, layout);
             }
+            if (_forceDebug) LoadBlocks(layout);
+            if (_forceDebug) LoadEntrances(layout);
+            if (_forceDebug) LoadSpawns(layout);
         }
 
         private void LoadEntrances(ChunkLayout chunk)
@@ -207,9 +201,11 @@ namespace arcardnoid.Models.Content.Components.Map
             {
                 for (int x = 0; x < chunk.MapChunk.Width; x++)
                 {
-                    MapChunkEntrance entrance = chunk.MapChunk.Entrances.FirstOrDefault(c => c.X == x && c.Y == y);
-                    if (entrance != null)
+                    int count = chunk.MapChunk.Entrances.Count(c => c.X == x && c.Y == y);
+
+                    if (count >= 1)
                     {
+                        MapChunkEntrance entrance = chunk.MapChunk.Entrances.FirstOrDefault(c => c.X == x && c.Y == y);
                         Texture2D texture = _blockTexture;
                         MapCell cell = new MapCell($"map-cell-{RealX}-{RealY}", texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), 0, 0);
                         cell.Color = Microsoft.Xna.Framework.Color.Cyan;
@@ -231,9 +227,10 @@ namespace arcardnoid.Models.Content.Components.Map
             {
                 for (int x = 0; x < chunk.MapChunk.Width; x++)
                 {
-                    MapChunkSpawn spawn = chunk.MapChunk.Spawns.FirstOrDefault(c => c.X == x && c.Y == y);
-                    if (spawn != null)
+                    int count = chunk.MapChunk.Spawns.Count(c => c.X == x && c.Y == y);
+                    if (count >= 1)
                     {
+                        MapChunkSpawn spawn = chunk.MapChunk.Spawns.FirstOrDefault(c => c.X == x && c.Y == y);
                         Texture2D texture = _blockTexture;
                         MapCell cell = new MapCell($"map-cell-{RealX}-{RealY}", texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), 0, 0);
                         cell.Color = Microsoft.Xna.Framework.Color.Yellow;

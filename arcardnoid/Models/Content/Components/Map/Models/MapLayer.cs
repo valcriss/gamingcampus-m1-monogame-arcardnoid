@@ -2,7 +2,7 @@
 
 namespace arcardnoid.Models.Content.Components.Map.Models
 {
-    public class MapLayer
+    public struct MapLayer
     {
         #region Public Properties
 
@@ -10,8 +10,16 @@ namespace arcardnoid.Models.Content.Components.Map.Models
         public string[] Data { get; set; } = new string[0];
 
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         #endregion Public Properties
+
+        #region Public Constructors
+
+        public MapLayer()
+        {
+        }
+
+        #endregion Public Constructors
     }
 }

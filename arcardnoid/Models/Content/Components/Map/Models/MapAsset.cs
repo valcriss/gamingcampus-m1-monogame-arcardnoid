@@ -2,12 +2,18 @@
 
 namespace arcardnoid.Models.Content.Components.Map.Models
 {
-    public class MapAsset
+    public struct MapAsset
     {
         #region Public Properties
 
         [JsonProperty("columns")]
         public int Columns { get; set; }
+
+        [JsonProperty("delayMax")]
+        public int DelayMax { get; set; }
+
+        [JsonProperty("delayMin")]
+        public int DelayMin { get; set; }
 
         [JsonProperty("id")]
         public int Id { get; set; }

@@ -42,7 +42,7 @@ namespace arcardnoid.Models.Content.Components.Map
 
         #region Public Methods
 
-        public static T LoadFromFile<T>(string filename) where T : class
+        public static T LoadFromFile<T>(string filename) where T : new()
         {
             string content = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), filename));
             try
@@ -53,7 +53,7 @@ namespace arcardnoid.Models.Content.Components.Map
             {
                 System.Diagnostics.Debug.WriteLine(e.Message);
                 System.Diagnostics.Debug.WriteLine(filename);
-                return null;
+                return default;
             }
         }
 
@@ -141,7 +141,7 @@ namespace arcardnoid.Models.Content.Components.Map
                         Texture2D texture = _mapTextures[assetIndex];
                         if (mapAsset.Type == "spritesheet")
                         {
-                            AddComponent(new AnimatedCell($"animated-cell-{RealX}-{RealY}", texture, mapAsset.Columns, mapAsset.Rows, mapAsset.Speed, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), mapAsset.OffsetX, mapAsset.OffsetY));
+                            AddComponent(new AnimatedCell($"animated-cell-{RealX}-{RealY}", texture, mapAsset.Columns, mapAsset.Rows, mapAsset.Speed, mapAsset.DelayMin, mapAsset.DelayMax, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), mapAsset.OffsetX, mapAsset.OffsetY));
                         }
                         else if (mapAsset.Type == "multi")
                         {
@@ -233,9 +233,11 @@ namespace arcardnoid.Models.Content.Components.Map
             {
                 for (int x = 0; x < chunk.MapChunk.Width; x++)
                 {
-                    MapChunkEntrance entrance = chunk.MapChunk.Entrances.FirstOrDefault(c => c.X == x && c.Y == y);
-                    if (entrance != null)
+                    int count = chunk.MapChunk.Entrances.Count(c => c.X == x && c.Y == y);
+
+                    if (count >= 1)
                     {
+                        MapChunkEntrance entrance = chunk.MapChunk.Entrances.FirstOrDefault(c => c.X == x && c.Y == y);
                         Texture2D texture = _blockTexture;
                         MapCell cell = new MapCell($"map-cell-{RealX}-{RealY}", texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), 0, 0);
                         cell.Color = Color.Cyan;
@@ -257,9 +259,11 @@ namespace arcardnoid.Models.Content.Components.Map
             {
                 for (int x = 0; x < chunk.MapChunk.Width; x++)
                 {
-                    MapChunkSpawn spawn = chunk.MapChunk.Spawns.FirstOrDefault(c => c.X == x && c.Y == y);
-                    if (spawn != null)
+                    int count = chunk.MapChunk.Spawns.Count(c => c.X == x && c.Y == y);
+
+                    if (count >= 1)
                     {
+                        MapChunkSpawn spawn = chunk.MapChunk.Spawns.FirstOrDefault(c => c.X == x && c.Y == y);
                         Texture2D texture = _blockTexture;
                         MapCell cell = new MapCell($"map-cell-{RealX}-{RealY}", texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), 0, 0);
                         cell.Color = Color.Yellow;

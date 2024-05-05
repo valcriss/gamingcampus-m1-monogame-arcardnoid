@@ -16,7 +16,7 @@ namespace arcardnoid.Models.Content.Components.Map.Models
         BottomLeft
     }
 
-    public class MapChunkDoor
+    public struct MapChunkDoor
     {
         #region Public Properties
 
@@ -39,7 +39,7 @@ namespace arcardnoid.Models.Content.Components.Map.Models
 
         #region Public Methods
 
-        public Point GetOpositeChunkPosition(MapChunkDoorType doorType, MapChunkEntrance possibleEntrance)
+        public Point GetOppositeChunkPosition(MapChunkDoorType doorType, MapChunkEntrance possibleEntrance)
         {
             switch (doorType)
             {
@@ -58,7 +58,7 @@ namespace arcardnoid.Models.Content.Components.Map.Models
             return Point.Zero;
         }
 
-        public List<MapChunkDoorType> GetOpositeDoorTypes()
+        public List<MapChunkDoorType> GetOppositeDoorTypes()
         {
             switch (DoorType)
             {

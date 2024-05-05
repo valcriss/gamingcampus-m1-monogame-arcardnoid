@@ -72,7 +72,7 @@ namespace arcardnoid.Models.Content.Components.Map
                             Texture2D texture = _mapTextures[assetIndex];
                             if (mapAsset.Type == "spritesheet")
                             {
-                                AddComponent(new AnimatedCell($"animated-cell-{x}-{y}", texture, mapAsset.Columns, mapAsset.Rows, mapAsset.Speed, x, y, (x * _mapItem.Size) + (_mapItem.Size / 2), (y * _mapItem.Size) + (_mapItem.Size / 2), mapAsset.OffsetX, mapAsset.OffsetY));
+                                AddComponent(new AnimatedCell($"animated-cell-{x}-{y}", texture, mapAsset.Columns, mapAsset.Rows, mapAsset.Speed, mapAsset.DelayMin, mapAsset.DelayMax, x, y, (x * _mapItem.Size) + (_mapItem.Size / 2), (y * _mapItem.Size) + (_mapItem.Size / 2), mapAsset.OffsetX, mapAsset.OffsetY));
                             }
                             else if (mapAsset.Type == "multi")
                             {

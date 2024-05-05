@@ -1,13 +1,26 @@
-﻿using arcardnoid.Models.Content.Components.Map;
+﻿using arcardnoid.Models.Content.Components.GameScene;
+using arcardnoid.Models.Content.Components.Map;
+using arcardnoid.Models.Framework.Components.UI;
 using arcardnoid.Models.Framework.Scenes;
 using Microsoft.Xna.Framework;
+using System.Threading.Tasks;
 
 namespace arcardnoid.Models.Content.Scenes
 {
+    public enum GameSceneState
+    {
+        None,
+        Loading,
+        Loaded,
+    }
+
     public class GameScene : Scene
     {
         #region Private Properties
 
+        private GameSceneState LoadingState { get; set; } = GameSceneState.None;
+        private Task LoadingTask { get; set; }
+        private MapGenerator MapGenerator { get; set; }
         private int Seed { get; set; }
 
         #endregion Private Properties
@@ -18,6 +31,7 @@ namespace arcardnoid.Models.Content.Scenes
         {
             BackgroundColor = Color.FromNonPremultiplied(71, 171, 169, 255);
             Seed = seed;
+            MapGenerator = new MapGenerator(Seed);
         }
 
         #endregion Public Constructors
@@ -27,9 +41,27 @@ namespace arcardnoid.Models.Content.Scenes
         public override void Load()
         {
             base.Load();
-            MapGenerator mapGenerator = new MapGenerator(Seed);
-            mapGenerator.GenerateMap();
-            AddComponent(new RandomMap(mapGenerator.MapHypotesis, false));
+            AddComponent(new GameMapBackground());
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            if (LoadingState == GameSceneState.None)
+            {
+                LoadingState = GameSceneState.Loading;
+                LoadingTask = Task.Run(() =>
+                {
+                    MapGenerator.GenerateMap();
+                });
+            }
+
+            if (LoadingTask.IsCompleted && LoadingState == GameSceneState.Loading)
+            {
+                AddComponent(new RandomMap(MapGenerator.MapHypothesis, true));
+                AddComponent(new Cursor("cursor", "ui/cursors/01", new Vector2(12, 16)));
+                LoadingState = GameSceneState.Loaded;
+            }
         }
 
         #endregion Public Methods

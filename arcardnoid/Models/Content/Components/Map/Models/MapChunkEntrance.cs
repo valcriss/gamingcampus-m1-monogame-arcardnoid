@@ -2,7 +2,7 @@
 
 namespace arcardnoid.Models.Content.Components.Map.Models
 {
-    public class MapChunkEntrance
+    public struct MapChunkEntrance
     {
         #region Public Properties
 

@@ -1,11 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace arcardnoid.Models.Content.Components.Map.Models
 {
-    public class MapChunk
+    public struct MapChunk
     {
         #region Public Properties
 
@@ -31,6 +32,21 @@ namespace arcardnoid.Models.Content.Components.Map.Models
         public int Width { get; set; }
 
         #endregion Public Properties
+
+        #region Public Constructors
+
+        public MapChunk()
+        {
+            Blocks = new MapLayer();
+            Entrances = new List<MapChunkEntrance>();
+            Layers = new List<MapLayer>();
+            Spawns = new List<MapChunkSpawn>();
+            Height = 0;
+            Level = 0;
+            Width = 0;
+        }
+
+        #endregion Public Constructors
 
         #region Public Methods
 
@@ -69,13 +85,52 @@ namespace arcardnoid.Models.Content.Components.Map.Models
             return DynamicGameMap.LoadFromFile<MapChunk>(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Maps/Chunks/23/0/1/grass-03.json"));
         }
 
-        public List<MapChunkDoor> GetAllDoors(int x = 0, int y = 0, MapChunkEntrance possibleEntrance = null)
+        public void AddActor(EncounterType type, int x, int y)
+        {
+            int count = Layers.Count(c => c.Name == "Actor Layer");
+            if (count == 0)
+            {
+                return;
+            }
+            MapLayer actorLayer = Layers.FirstOrDefault(c => c.Name == "Actor Layer");
+
+            string line = actorLayer.Data[y];
+            string[] table = line.Split(',');
+            table[x] = GetEncountTypeCode(type);
+            actorLayer.Data[y] = string.Join(",", table);
+        }
+
+        public List<MapChunkDoor> GetAllDoors()
         {
             List<MapChunkDoor> doors = new List<MapChunkDoor>();
 
             foreach (MapChunkEntrance entrance in Entrances)
             {
-                if (possibleEntrance != null && entrance.X == possibleEntrance.X && entrance.Y == possibleEntrance.Y)
+                doors.Add(new MapChunkDoor(GetDoorType(entrance), entrance.X, entrance.Y));
+            }
+
+            return doors;
+        }
+
+        public List<MapChunkDoor> GetAllDoors(int x, int y)
+        {
+            List<MapChunkDoor> doors = new List<MapChunkDoor>();
+
+            foreach (MapChunkEntrance entrance in Entrances)
+            {
+                doors.Add(new MapChunkDoor(GetDoorType(entrance), x + entrance.X, y + entrance.Y));
+            }
+
+            return doors;
+        }
+
+        public List<MapChunkDoor> GetAllDoors(int x, int y, MapChunkEntrance possibleEntrance)
+        {
+            List<MapChunkDoor> doors = new List<MapChunkDoor>();
+
+            foreach (MapChunkEntrance entrance in Entrances)
+            {
+                if (entrance.X == possibleEntrance.X && entrance.Y == possibleEntrance.Y)
                 {
                     continue;
                 }
@@ -102,17 +157,38 @@ namespace arcardnoid.Models.Content.Components.Map.Models
             return entrances;
         }
 
-        internal List<MapChunkEntrance> GetCompatibleOpositeEntrances(MapChunkDoorType doorType)
+        internal List<MapChunkEntrance> GetCompatibleOppositeEntrances(MapChunkDoorType doorType)
         {
             List<MapChunkEntrance> entrances = new List<MapChunkEntrance>();
             foreach (MapChunkEntrance entrance in Entrances)
             {
-                if (IsDoorTypeCompatibleOposite(doorType, entrance))
+                if (IsDoorTypeCompatibleOpposite(doorType, entrance))
                 {
                     entrances.Add(entrance);
                 }
             }
             return entrances;
+        }
+
+        internal bool HasEncounters()
+        {
+            int count = Layers.Count(c => c.Name == "Building Layer");
+
+            if (count == 0)
+            {
+                return false;
+            }
+            MapLayer actorLayer = Layers.FirstOrDefault(c => c.Name == "Building Layer");
+            for (int y = 0; y < Height; y++)
+            {
+                string line = actorLayer.Data[y];
+                string[] tab = line.Split(',');
+                for (int x = 0; x < Width; x++)
+                {
+                    if (tab[x].ToString().Trim() != "") return true;
+                }
+            }
+            return false;
         }
 
         #endregion Internal Methods
@@ -156,7 +232,37 @@ namespace arcardnoid.Models.Content.Components.Map.Models
             return MapChunkDoorType.None;
         }
 
-        private bool IsDoorTypeCompatibleOposite(MapChunkDoorType doorType, MapChunkEntrance entrance)
+        private string GetEncountTypeCode(EncounterType type)
+        {
+            switch (type)
+            {
+                case EncounterType.Archer:
+                    return "33";
+
+                case EncounterType.Warrior:
+                    return "29";
+
+                case EncounterType.Torch:
+                    return "28";
+
+                case EncounterType.Gold:
+                    return "31";
+
+                case EncounterType.Meat:
+                    return "32";
+
+                case EncounterType.Sheep:
+                    return "16";
+
+                case EncounterType.Tnt:
+                    return "30";
+
+                default:
+                    return "";
+            }
+        }
+
+        private bool IsDoorTypeCompatibleOpposite(MapChunkDoorType doorType, MapChunkEntrance entrance)
         {
             MapChunkDoorType chunkDoorType = GetDoorType(entrance);
             switch (doorType)

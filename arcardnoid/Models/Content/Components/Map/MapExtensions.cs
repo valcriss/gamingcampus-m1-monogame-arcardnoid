@@ -1,4 +1,6 @@
-﻿using MonoGame.Extended;
+﻿using arcardnoid.Models.Content.Components.Map.Models;
+using MonoGame.Extended;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,6 +9,12 @@ namespace arcardnoid.Models.Content.Components.Map
     public static class MapExtensions
     {
         #region Public Methods
+
+        public static List<MapChunk> Clone(this List<MapChunk> list)
+        {
+            string content = JsonConvert.SerializeObject(list);
+            return JsonConvert.DeserializeObject<List<MapChunk>>(content);
+        }
 
         public static List<T> RandomList<T>(this List<T> list, FastRandom random)
         {

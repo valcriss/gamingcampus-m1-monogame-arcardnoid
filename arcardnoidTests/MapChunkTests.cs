@@ -19,7 +19,7 @@ namespace arcardnoidTests
                 Assert.IsNotNull(mapChunk);
                 foreach (string layer in layers)
                 {
-                    Assert.AreNotEqual(mapChunk.Layers.FirstOrDefault(c => c.Name == layer), null, file + $" missing layer {layer}");                    
+                    Assert.AreNotEqual(mapChunk.Layers.FirstOrDefault(c => c.Name == layer), default, file + $" missing layer {layer}");                    
                 }
                 int names = mapChunk.Layers.Select(c => c.Name).ToList().Count();
                 Assert.AreEqual(names,9, file + $" invalid layer count {names}");

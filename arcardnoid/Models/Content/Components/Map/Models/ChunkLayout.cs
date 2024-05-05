@@ -1,6 +1,6 @@
 ﻿namespace arcardnoid.Models.Content.Components.Map.Models
 {
-    public class ChunkLayout
+    public struct ChunkLayout
     {
         #region Public Properties
 

@@ -241,5 +241,75 @@
     "path": "map/units/tnt-red-idle",
     "offsetX": 16,
     "offsetY": -16
+  },
+  {
+    "id": 28,
+    "name": "Map Goblin Torch",
+    "type": "spritesheet",
+    "columns": 7,
+    "rows": 1,
+    "speed": 120,
+    "path": "map/units/torch-red-idle",
+    "offsetX": 0,
+    "offsetY": -20
+  },
+  {
+    "id": 29,
+    "name": "Map Warrior blue",
+    "type": "spritesheet",
+    "columns": 6,
+    "rows": 1,
+    "speed": 120,
+    "path": "map/units/warrior-blue-idle",
+    "offsetX": 0,
+    "offsetY": -20
+  },
+  {
+    "id": 30,
+    "name": "Map Goblin TNT",
+    "type": "spritesheet",
+    "columns": 6,
+    "rows": 1,
+    "speed": 120,
+    "path": "map/units/tnt-red-idle",
+    "offsetX": 0,
+    "offsetY": -20
+  },
+  {
+    "id": 31,
+    "name": "Map Gold",
+    "type": "spritesheet",
+    "columns": 7,
+    "rows": 1,
+    "speed": 120,
+    "delayMin": 1000,
+    "delayMax": 4000,
+    "path": "map/units/gold",
+    "offsetX": 0,
+    "offsetY": -20
+  },
+  {
+    "id": 32,
+    "name": "Map Meat",
+    "type": "spritesheet",
+    "columns": 7,
+    "rows": 1,
+    "speed": 120,
+    "delayMin": 1000,
+    "delayMax": 4000,
+    "path": "map/units/meat",
+    "offsetX": 0,
+    "offsetY": -10
+  },
+  {
+    "id": 33,
+    "name": "Map Archer blue",
+    "type": "spritesheet",
+    "columns": 6,
+    "rows": 1,
+    "speed": 120,
+    "path": "map/units/archer-blue-idle",
+    "offsetX": 0,
+    "offsetY": -20
   }
 ]

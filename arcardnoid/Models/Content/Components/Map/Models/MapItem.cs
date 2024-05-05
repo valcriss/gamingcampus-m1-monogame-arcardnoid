@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace arcardnoid.Models.Content.Components.Map.Models
 {
-    public class MapItem
+    public struct MapItem
     {
         #region Public Properties
 

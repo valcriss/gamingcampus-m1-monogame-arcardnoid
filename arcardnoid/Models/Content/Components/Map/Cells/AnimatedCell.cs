@@ -9,11 +9,21 @@ namespace arcardnoid.Models.Content.Components.Map.Cells
 {
     public class AnimatedCell : MapCell
     {
+        #region Private Properties
+
+        private static FastRandom AnimRandom { get; set; } = new FastRandom();
+
+        #endregion Private Properties
+
         #region Private Fields
 
         private int _columns;
+        private double _delay;
+        private int _delayMax;
+        private int _delayMin;
         private double _elapsedTime;
         private int _index;
+        private double _pausedTime;
         private List<Rectangle> _rects;
         private int _rows;
         private double _speed;
@@ -22,13 +32,15 @@ namespace arcardnoid.Models.Content.Components.Map.Cells
 
         #region Public Constructors
 
-        public AnimatedCell(string name, Texture2D texture, int columns, int rows, double speed, int x, int y, int realX, int realY, int offsetX, int offsetY) : base(name, texture, x, y, realX, realY, offsetX, offsetY)
+        public AnimatedCell(string name, Texture2D texture, int columns, int rows, double speed, int delayMin, int delayMax, int x, int y, int realX, int realY, int offsetX, int offsetY) : base(name, texture, x, y, realX, realY, offsetX, offsetY)
         {
             _columns = columns;
             _rows = rows;
             _speed = speed;
             _index = 0;
             _elapsedTime = 0;
+            _delayMin = delayMin;
+            _delayMax = delayMax;
         }
 
         #endregion Public Constructors
@@ -44,6 +56,7 @@ namespace arcardnoid.Models.Content.Components.Map.Cells
         {
             base.Load();
             CalculateRects();
+            _delay = (_delayMin == 0 && _delayMax == 0) ? 0 : AnimRandom.Next(_delayMin, _delayMax);
             Bounds = new RectangleF(Bounds.X, Bounds.Y, Texture2D.Width / _columns, Texture2D.Height / _rows);
             Origin = new Vector2(Bounds.Width / 2, Bounds.Height / 2);
             DrawOrigin = new Vector2(0, 0);
@@ -52,14 +65,30 @@ namespace arcardnoid.Models.Content.Components.Map.Cells
 
         public override void Update(GameTime gameTime)
         {
-            _elapsedTime += gameTime.ElapsedGameTime.TotalMilliseconds;
+            double ms = gameTime.ElapsedGameTime.TotalMilliseconds;
+            _elapsedTime += ms;
             if (_elapsedTime >= _speed)
             {
                 _elapsedTime = 0;
-                _index++;
-                if (_index >= _columns * _rows)
+                int nextIndex = _index + 1;
+                if (nextIndex < _columns * _rows)
                 {
-                    _index = 0;
+                    _index = nextIndex;
+                    _pausedTime = 0;
+                }
+                else
+                {
+                    if (_delay > 0 && _pausedTime < _delay)
+                    {
+                        _pausedTime += ms;
+                        System.Diagnostics.Debug.WriteLine(_pausedTime);
+                    }
+                    else
+                    {
+                        _index = 0;
+                        _pausedTime = 0;
+                        _delay = (_delayMin == 0 && _delayMax == 0) ? 0 : AnimRandom.Next(_delayMin, _delayMax);
+                    }
                 }
             }
             base.Update(gameTime);

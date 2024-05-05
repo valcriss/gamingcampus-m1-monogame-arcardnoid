@@ -27,7 +27,9 @@ namespace arcardnoid.Models.Content.Scenes
         public override void Load()
         {
             base.Load();
-            AddComponent(new DynamicGameMap(true));
+            MapGenerator mapGenerator = new MapGenerator(Seed);
+            mapGenerator.GenerateMap();
+            AddComponent(new RandomMap(mapGenerator.MapHypotesis, false));
         }
 
         #endregion Public Methods

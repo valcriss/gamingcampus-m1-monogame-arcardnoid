@@ -57,7 +57,7 @@ namespace arcardnoid.Models.Framework.Components.Texts
                 position.Y -= size.Height;
             }
 
-            Game.SpriteBatch.DrawString(_bitmapFont, _text, ScreenManager.Scale(position), Color,0,Vector2.Zero, ScreenManager.Scale(),Microsoft.Xna.Framework.Graphics.SpriteEffects.None,0);
+            Game.SpriteBatch.DrawString(_bitmapFont, _text, ScreenManager.Scale(position), Color, 0, Vector2.Zero, ScreenManager.Scale(), Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
             base.Draw();
         }
 

@@ -1,4 +1,8 @@
-﻿namespace arcardnoid.Models.Content.Components.Map
+﻿using MonoGame.Extended;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace arcardnoid.Models.Content.Components.Map
 {
     public static class MapExtensions
     {
@@ -33,6 +37,12 @@
             }
 
             return map;
+        }
+
+        public static List<T> RandomList<T>(this List<T> list, FastRandom random)
+        {
+            if (list == null || list.Count == 0) return list;
+            return list.OrderBy(c=> random.Next()).ToList();
         }
 
         #endregion Public Methods

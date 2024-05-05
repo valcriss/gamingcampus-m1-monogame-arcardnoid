@@ -1,30 +1,26 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace arcardnoid.Models.Framework.Tools
 {
     public static class ScreenManager
     {
-        private const float DEVELOPMENT_WIDTH = 1920;
+        #region Private Fields
+
         private const float DEVELOPMENT_HEIGHT = 1080;
-
-        private static float _widthRatio;
+        private const float DEVELOPMENT_WIDTH = 1920;
         private static float _heightRatio;
+        private static float _widthRatio;
 
-        public static void Initialize(int width,int height)
+        #endregion Private Fields
+
+        #region Public Methods
+
+        public static void Initialize(int width, int height)
         {
             _widthRatio = width / DEVELOPMENT_WIDTH;
             _heightRatio = height / DEVELOPMENT_HEIGHT;
-        }
-
-        public static Point UIScale(Point position)
-        {
-            return new Point((int)(position.X / _widthRatio), (int)(position.Y / _heightRatio));
         }
 
         public static Vector2 Scale(Vector2 position)
@@ -32,14 +28,8 @@ namespace arcardnoid.Models.Framework.Tools
             return new Vector2(position.X * _widthRatio, position.Y * _heightRatio);
         }
 
-        public static Vector2 UIScale(Vector2 position)
-        {
-            return new Vector2(position.X / _widthRatio, position.Y / _heightRatio);
-        }
-
         public static Rectangle Scale(Rectangle rectangle)
         {
-
             return Scale(rectangle.ToRectangleF()).ToRectangle();
         }
 
@@ -63,7 +53,8 @@ namespace arcardnoid.Models.Framework.Tools
             return (int)MathF.Round(ScaleX((float)value));
         }
 
-        public static float ScaleY(float value) { 
+        public static float ScaleY(float value)
+        {
             return value * _heightRatio;
         }
 
@@ -71,5 +62,17 @@ namespace arcardnoid.Models.Framework.Tools
         {
             return (int)MathF.Round(ScaleY((float)value));
         }
+
+        public static Point UIScale(Point position)
+        {
+            return new Point((int)(position.X / _widthRatio), (int)(position.Y / _heightRatio));
+        }
+
+        public static Vector2 UIScale(Vector2 position)
+        {
+            return new Vector2(position.X / _widthRatio, position.Y / _heightRatio);
+        }
+
+        #endregion Public Methods
     }
 }

@@ -16,10 +16,15 @@ namespace arcardnoid.Models.Content.Components.Map
 {
     public class DynamicGameMap : Component
     {
+        #region Private Properties
+
+        private string Filter { get; set; }
+
+        #endregion Private Properties
+
         #region Private Fields
 
         private Texture2D _blockTexture;
-        private string Filter { get; set; }
         private bool _forceDebug;
         private MapItem _mapItem;
         private List<Texture2D> _mapTextures = new List<Texture2D>();
@@ -29,11 +34,6 @@ namespace arcardnoid.Models.Content.Components.Map
         #region Public Constructors
 
         public DynamicGameMap(bool forceDebug = false) : base("DynamicGameMap", 28, 28)
-        {
-            _forceDebug = forceDebug;
-        }
-
-        public void SetForceDebug(bool forceDebug)
         {
             _forceDebug = forceDebug;
         }
@@ -73,90 +73,22 @@ namespace arcardnoid.Models.Content.Components.Map
                 if (x + chunk.Width > _mapItem.Width)
                 {
                     x = 0;
-                    y += chunk.Height+1;
+                    y += chunk.Height + 1;
                 }
                 layout.Add(new ChunkLayout() { MapChunk = chunk, X = x, Y = y });
-                x += chunk.Width +1;
+                x += chunk.Width + 1;
             }
             LoadChunkLayer(layout);
+        }
+
+        public void SetForceDebug(bool forceDebug)
+        {
+            _forceDebug = forceDebug;
         }
 
         #endregion Public Methods
 
         #region Private Methods
-
-        private void LoadBlocks(ChunkLayout chunk)
-        {
-            int[,] dataLines = chunk.MapChunk.Blocks.Data.ToMapArray(chunk.MapChunk.Width, chunk.MapChunk.Height);
-            int RealX = chunk.X;
-            int RealY = chunk.Y;
-            for (int y = 0; y < chunk.MapChunk.Height; y++)
-            {
-                for (int x = 0; x < chunk.MapChunk.Width; x++)
-                {
-                    int assetIndex = dataLines[x, y];
-                    if (assetIndex != -1)
-                    {
-                        Texture2D texture = _blockTexture;
-                        MapCell cell = new MapCell($"map-cell-{RealX}-{RealY}", texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), 0, 0);
-                        cell.Color = Color.Red;
-                        cell.Opacity = 0.25f;
-                        AddComponent(cell);
-                    }
-                    RealX++;
-                }
-                RealX = chunk.X;
-                RealY++;
-            }
-        }
-
-        private void LoadEntrances(ChunkLayout chunk)
-        {
-            int RealX = chunk.X;
-            int RealY = chunk.Y;
-            for (int y = 0; y < chunk.MapChunk.Height; y++)
-            {
-                for (int x = 0; x < chunk.MapChunk.Width; x++)
-                {
-                    MapChunkEntrance entrance = chunk.MapChunk.Entrances.FirstOrDefault(c => c.X == x && c.Y == y);
-                    if (entrance != null)
-                    {
-                        Texture2D texture = _blockTexture;
-                        MapCell cell = new MapCell($"map-cell-{RealX}-{RealY}", texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), 0, 0);
-                        cell.Color = Color.Cyan;
-                        cell.Opacity = 0.35f;
-                        AddComponent(cell);
-                    }
-                    RealX++;
-                }
-                RealX = chunk.X;
-                RealY++;
-            }
-        }
-
-        private void LoadSpawns(ChunkLayout chunk)
-        {
-            int RealX = chunk.X;
-            int RealY = chunk.Y;
-            for (int y = 0; y < chunk.MapChunk.Height; y++)
-            {
-                for (int x = 0; x < chunk.MapChunk.Width; x++)
-                {
-                    MapChunkSpawn spawn = chunk.MapChunk.Spawns.FirstOrDefault(c => c.X == x && c.Y == y);
-                    if (spawn != null)
-                    {
-                        Texture2D texture = _blockTexture;
-                        MapCell cell = new MapCell($"map-cell-{RealX}-{RealY}", texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), 0, 0);
-                        cell.Color = Color.Yellow;
-                        cell.Opacity = 0.35f;
-                        AddComponent(cell);
-                    }
-                    RealX++;
-                }
-                RealX = chunk.X;
-                RealY++;
-            }
-        }
 
         private void DrawGrid()
         {
@@ -229,6 +161,31 @@ namespace arcardnoid.Models.Content.Components.Map
             }
         }
 
+        private void LoadBlocks(ChunkLayout chunk)
+        {
+            int[,] dataLines = chunk.MapChunk.Blocks.Data.ToMapArray(chunk.MapChunk.Width, chunk.MapChunk.Height);
+            int RealX = chunk.X;
+            int RealY = chunk.Y;
+            for (int y = 0; y < chunk.MapChunk.Height; y++)
+            {
+                for (int x = 0; x < chunk.MapChunk.Width; x++)
+                {
+                    int assetIndex = dataLines[x, y];
+                    if (assetIndex != -1)
+                    {
+                        Texture2D texture = _blockTexture;
+                        MapCell cell = new MapCell($"map-cell-{RealX}-{RealY}", texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), 0, 0);
+                        cell.Color = Color.Red;
+                        cell.Opacity = 0.25f;
+                        AddComponent(cell);
+                    }
+                    RealX++;
+                }
+                RealX = chunk.X;
+                RealY++;
+            }
+        }
+
         private void LoadChunkLayer(List<ChunkLayout> layout)
         {
             foreach (ChunkLayout chunk in layout)
@@ -253,18 +210,66 @@ namespace arcardnoid.Models.Content.Components.Map
             return chunks;
         }
 
-        private T LoadFromFile<T>(string filename)
+        private void LoadEntrances(ChunkLayout chunk)
+        {
+            int RealX = chunk.X;
+            int RealY = chunk.Y;
+            for (int y = 0; y < chunk.MapChunk.Height; y++)
+            {
+                for (int x = 0; x < chunk.MapChunk.Width; x++)
+                {
+                    MapChunkEntrance entrance = chunk.MapChunk.Entrances.FirstOrDefault(c => c.X == x && c.Y == y);
+                    if (entrance != null)
+                    {
+                        Texture2D texture = _blockTexture;
+                        MapCell cell = new MapCell($"map-cell-{RealX}-{RealY}", texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), 0, 0);
+                        cell.Color = Color.Cyan;
+                        cell.Opacity = 0.35f;
+                        AddComponent(cell);
+                    }
+                    RealX++;
+                }
+                RealX = chunk.X;
+                RealY++;
+            }
+        }
+
+        public static T LoadFromFile<T>(string filename) where T : class
         {
             string content = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), filename));
             try
             {
                 return JsonConvert.DeserializeObject<T>(content);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e.Message);
                 System.Diagnostics.Debug.WriteLine(filename);
-                return default(T);
+                return null;
+            }
+        }
+
+        private void LoadSpawns(ChunkLayout chunk)
+        {
+            int RealX = chunk.X;
+            int RealY = chunk.Y;
+            for (int y = 0; y < chunk.MapChunk.Height; y++)
+            {
+                for (int x = 0; x < chunk.MapChunk.Width; x++)
+                {
+                    MapChunkSpawn spawn = chunk.MapChunk.Spawns.FirstOrDefault(c => c.X == x && c.Y == y);
+                    if (spawn != null)
+                    {
+                        Texture2D texture = _blockTexture;
+                        MapCell cell = new MapCell($"map-cell-{RealX}-{RealY}", texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), 0, 0);
+                        cell.Color = Color.Yellow;
+                        cell.Opacity = 0.35f;
+                        AddComponent(cell);
+                    }
+                    RealX++;
+                }
+                RealX = chunk.X;
+                RealY++;
             }
         }
 

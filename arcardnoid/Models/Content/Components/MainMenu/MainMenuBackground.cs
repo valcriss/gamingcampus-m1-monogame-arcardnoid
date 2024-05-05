@@ -54,7 +54,7 @@ namespace arcardnoid.Models.Content.Components.MainMenu
                 new MoveAnimation("right-move-left",BORDERS_MOVE_DURATION,new Vector2(1476,540),new Vector2(1476+BORDERS_MOVE_OFFSET,540))
             }, true, true));
 
-            AddComponent(new Map.GameMap("Maps/menumap.json", 608, 200));
+            AddComponent(new Map.StaticMap("Maps/menumap.json", 608, 200));
 
             int[] cloud1PositionY = new int[] { 220, 420, 620, 820, 970 };
             int[] cloud2PositionY = new int[] { 150, 350, 550, 750, 900 };

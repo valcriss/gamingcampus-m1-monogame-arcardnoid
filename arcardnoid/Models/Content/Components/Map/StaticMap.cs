@@ -3,7 +3,6 @@ using arcardnoid.Models.Content.Components.Map.Models;
 using arcardnoid.Models.Framework;
 using arcardnoid.Models.Framework.Scenes;
 using arcardnoid.Models.Framework.Tools;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ using System.Reflection;
 
 namespace arcardnoid.Models.Content.Components.Map
 {
-    public class GameMap : Component
+    public class StaticMap : Component
     {
         #region Protected Fields
 
@@ -30,7 +29,7 @@ namespace arcardnoid.Models.Content.Components.Map
 
         #region Public Constructors
 
-        public GameMap(string mapAsset, int x, int y, bool forceDebug = false) : base("GameMap", x, y)
+        public StaticMap(string mapAsset, int x, int y, bool forceDebug = false) : base("GameMap", x, y)
         {
             _mapAsset = mapAsset;
             _mapTextures = new List<Texture2D>();
@@ -83,6 +82,10 @@ namespace arcardnoid.Models.Content.Components.Map
                             {
                                 AddComponent(new MultiCell2($"multi-cell2-{x}-{y}", texture, x, y, (x * _mapItem.Size) + (_mapItem.Size / 2), (y * _mapItem.Size) + (_mapItem.Size / 2), _mapItem.Size, mapAsset.OffsetX, mapAsset.OffsetY, MultiCell2.GetMultiCellType(dataLines, x, y, _mapItem.Width, _mapItem.Height)));
                             }
+                            else if (mapAsset.Type == "bridge")
+                            {
+                                AddComponent(new BridgeCell($"bridge-cell-{x}-{y}", texture, x, y, (x * _mapItem.Size) + (_mapItem.Size / 2), (y * _mapItem.Size) + (_mapItem.Size / 2), _mapItem.Size, mapAsset.OffsetX, mapAsset.OffsetY, BridgeCell.GetMultiCellType(dataLines, x, y, _mapItem.Width, _mapItem.Height)));
+                            }
                             else
                             {
                                 AddComponent(new MapCell($"map-cell-{x}-{y}", texture, x, y, (x * _mapItem.Size) + (_mapItem.Size / 2), (y * _mapItem.Size) + (_mapItem.Size / 2), mapAsset.OffsetX, mapAsset.OffsetY));
@@ -105,7 +108,7 @@ namespace arcardnoid.Models.Content.Components.Map
                 int y1 = ScreenManager.ScaleY((int)RealPosition.Y);
                 int x2 = ScreenManager.ScaleX((int)RealPosition.X + (x * _mapItem.Size));
                 int y2 = ScreenManager.ScaleY((int)RealPosition.Y + (_mapItem.Height * _mapItem.Size));
-                Primitives2D.DrawLine(Game.SpriteBatch, x1, y1, x2, y2, Color.White);
+                Primitives2D.DrawLine(Game.SpriteBatch, x1, y1, x2, y2, Microsoft.Xna.Framework.Color.White);
             }
             for (int y = 0; y <= _mapItem.Height; y++)
             {
@@ -113,7 +116,7 @@ namespace arcardnoid.Models.Content.Components.Map
                 int y1 = ScreenManager.ScaleY((int)RealPosition.Y + (y * _mapItem.Size));
                 int x2 = ScreenManager.ScaleX((int)RealPosition.X + (_mapItem.Width * _mapItem.Size));
                 int y2 = ScreenManager.ScaleY((int)RealPosition.Y + (y * _mapItem.Size));
-                Primitives2D.DrawLine(Game.SpriteBatch, x1, y1, x2, y2, Color.White);
+                Primitives2D.DrawLine(Game.SpriteBatch, x1, y1, x2, y2, Microsoft.Xna.Framework.Color.White);
             }
         }
 

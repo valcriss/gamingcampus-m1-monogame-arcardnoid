@@ -3,20 +3,20 @@ using arcardnoid.Models.Framework.Components.Texts;
 using arcardnoid.Models.Framework.Components.UI;
 using arcardnoid.Models.Framework.Scenes;
 using Microsoft.Xna.Framework;
-using SharpDX.Direct3D9;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 namespace arcardnoid.Models.Content.Scenes
 {
     internal class DemoScene : Scene
     {
-        #region Public Constructors
+        #region Private Properties
+
+        private BitmapText BitmapText { get; set; }
+        private bool Debug { get; set; }
+        private DynamicGameMap DynamicGameMap { get; set; }
+
+        #endregion Private Properties
+
+        #region Private Fields
 
         private int _filterIndex = 0;
 
@@ -35,10 +35,9 @@ namespace arcardnoid.Models.Content.Scenes
 
         private bool _loaded = false;
 
-        private DynamicGameMap DynamicGameMap { get; set; }
-        private BitmapText BitmapText { get; set; }
+        #endregion Private Fields
 
-        private bool Debug { get; set; }
+        #region Public Constructors
 
         public DemoScene()
         {
@@ -70,11 +69,23 @@ namespace arcardnoid.Models.Content.Scenes
             }
         }
 
+        #endregion Public Methods
+
+        #region Private Methods
+
         private void LoadTiles()
         {
             string filter = _filters[_filterIndex];
             DynamicGameMap.LoadTiles(filter);
-            BitmapText.SetText(filter.Replace("\\","-").Substring(0, filter.Length -7));
+            BitmapText.SetText(filter.Replace("\\", "-").Substring(0, filter.Length - 7));
+        }
+
+        private void OnDebug()
+        {
+            if (!_loaded) return;
+            Debug = !Debug;
+            DynamicGameMap.SetForceDebug(Debug);
+            LoadTiles();
         }
 
         private void OnNext()
@@ -99,15 +110,6 @@ namespace arcardnoid.Models.Content.Scenes
             LoadTiles();
         }
 
-        private void OnDebug()
-        {
-            if (!_loaded) return;
-            Debug = !Debug;
-            DynamicGameMap.SetForceDebug(Debug);
-            LoadTiles();
-        }
-
-
-        #endregion Public Methods
+        #endregion Private Methods
     }
 }

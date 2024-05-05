@@ -30,11 +30,6 @@ namespace arcardnoid.Models.Framework.Scenes
             return component;
         }
 
-        public void RemoveComponent(Component component)
-        {
-            component.InnerUnload();
-        }
-
         public void RemoveAllComponents()
         {
             Component[] components = Components.ToArray();
@@ -42,6 +37,11 @@ namespace arcardnoid.Models.Framework.Scenes
             {
                 component?.InnerUnload();
             }
+        }
+
+        public void RemoveComponent(Component component)
+        {
+            component.InnerUnload();
         }
 
         #endregion Public Methods

@@ -9,7 +9,7 @@ namespace arcardnoid
 
         public ArCardNoidGame()
         {
-            SetInitialScene(new DemoScene());
+            SetInitialScene(new SplashScreen());
         }
 
         #endregion Public Constructors

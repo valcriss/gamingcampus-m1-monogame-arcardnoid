@@ -51,7 +51,7 @@ namespace arcardnoid.Models.Content.Components.MainMenu
         public void NewSeed()
         {
             string seed = Random.Next(100000, 999999).ToString();
-            seed = 123456.ToString();
+            //seed = 123456.ToString();
             Input.SetValue(seed);
         }
 

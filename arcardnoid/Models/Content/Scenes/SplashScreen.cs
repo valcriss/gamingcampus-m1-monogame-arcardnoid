@@ -9,8 +9,8 @@ namespace arcardnoid.Models.Content.Scenes
     {
         #region Private Fields
 
-        private double _time = 0;
         private int _duration = 4;
+        private double _time = 0;
 
         #endregion Private Fields
 

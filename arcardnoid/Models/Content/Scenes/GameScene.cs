@@ -18,12 +18,11 @@ namespace arcardnoid.Models.Content.Scenes
     {
         #region Private Properties
 
+        private LoadingScreen LoadingScreen { get; set; }
         private GameSceneState LoadingState { get; set; } = GameSceneState.None;
         private Task LoadingTask { get; set; }
         private MapGenerator MapGenerator { get; set; }
         private int Seed { get; set; }
-
-        private LoadingScreen LoadingScreen { get; set; }
 
         #endregion Private Properties
 

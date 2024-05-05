@@ -9,7 +9,7 @@ namespace arcardnoid.Models.Content.Components.Map
     public class MapGenerator
     {
         #region Public Properties
-        private const int MAP_HYPOTHESIS_COUNT = 20;
+
         public MapChunk MapChunk { get; set; }
         public MapHypothesis MapHypothesis { get; set; } = null;
 
@@ -28,6 +28,7 @@ namespace arcardnoid.Models.Content.Components.Map
         #region Private Fields
 
         private const int MAP_HEIGHT = 15;
+        private const int MAP_HYPOTHESIS_COUNT = 20;
         private const int MAP_WIDTH = 29;
         private const int STARTING_CHUNK_X = 0;
         private const int STARTING_CHUNK_Y = 7;

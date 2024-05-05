@@ -22,8 +22,8 @@ namespace arcardnoid.Models.Framework.Animations
         protected EaseType Ease { get; set; } = EaseType.Linear;
         protected float ElapsedTime { get; set; }
         protected string Name { get; set; }
-        protected float Ratio => EasingFunctions.GetEase(Ease, ElapsedTime / Duration);
         protected Action OnAnimationCompleted { get; set; }
+        protected float Ratio => EasingFunctions.GetEase(Ease, ElapsedTime / Duration);
 
         #endregion Protected Properties
 
@@ -57,7 +57,7 @@ namespace arcardnoid.Models.Framework.Animations
         public void Stop()
         {
             State = Loop ? AnimationState.Playing : AnimationState.Ended;
-            if(State == AnimationState.Ended)
+            if (State == AnimationState.Ended)
             {
                 OnAnimationCompleted?.Invoke();
             }

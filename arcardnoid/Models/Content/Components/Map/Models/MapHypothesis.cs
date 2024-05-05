@@ -35,7 +35,7 @@ namespace arcardnoid.Models.Content.Components.Map.Models
         {
             get
             {
-                return ((16 - Height) * 64 / 2) + 28;
+                return ((15 - Height) * 64 / 2) + 28;
             }
         }
 

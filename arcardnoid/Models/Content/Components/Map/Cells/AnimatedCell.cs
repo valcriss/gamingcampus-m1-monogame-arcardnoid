@@ -81,7 +81,6 @@ namespace arcardnoid.Models.Content.Components.Map.Cells
                     if (_delay > 0 && _pausedTime < _delay)
                     {
                         _pausedTime += ms;
-                        System.Diagnostics.Debug.WriteLine(_pausedTime);
                     }
                     else
                     {

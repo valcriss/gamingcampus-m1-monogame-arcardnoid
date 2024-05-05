@@ -1,6 +1,7 @@
 ﻿using arcardnoid.Models.Framework.Easing;
 using arcardnoid.Models.Framework.Scenes;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace arcardnoid.Models.Framework.Animations
 {
@@ -22,18 +23,20 @@ namespace arcardnoid.Models.Framework.Animations
         protected float ElapsedTime { get; set; }
         protected string Name { get; set; }
         protected float Ratio => EasingFunctions.GetEase(Ease, ElapsedTime / Duration);
+        protected Action OnAnimationCompleted { get; set; }
 
         #endregion Protected Properties
 
         #region Public Constructors
 
-        public Animation(string name, float duration, bool loop = false, bool playOnStart = false, EaseType ease = EaseType.Linear)
+        public Animation(string name, float duration, bool loop = false, bool playOnStart = false, EaseType ease = EaseType.Linear, Action onAnimationCompleted = null)
         {
             Name = name;
             Duration = duration;
             Loop = loop;
             PlayOnStart = playOnStart;
             Ease = ease;
+            OnAnimationCompleted = onAnimationCompleted;
         }
 
         #endregion Public Constructors
@@ -54,6 +57,10 @@ namespace arcardnoid.Models.Framework.Animations
         public void Stop()
         {
             State = Loop ? AnimationState.Playing : AnimationState.Ended;
+            if(State == AnimationState.Ended)
+            {
+                OnAnimationCompleted?.Invoke();
+            }
             ElapsedTime = 0;
         }
 

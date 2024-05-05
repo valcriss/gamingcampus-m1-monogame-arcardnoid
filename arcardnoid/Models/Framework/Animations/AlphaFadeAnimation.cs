@@ -1,5 +1,6 @@
 ﻿using arcardnoid.Models.Framework.Easing;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace arcardnoid.Models.Framework.Animations
 {
@@ -14,7 +15,7 @@ namespace arcardnoid.Models.Framework.Animations
 
         #region Public Constructors
 
-        public AlphaFadeAnimation(string name, float duration, float from, float to, bool loop = false, bool playOnStart = false, EaseType easeType = EaseType.Linear) : base(name, duration, loop, playOnStart, easeType)
+        public AlphaFadeAnimation(string name, float duration, float from, float to, bool loop = false, bool playOnStart = false, EaseType easeType = EaseType.Linear, Action onAnimationCompleted = null) : base(name, duration, loop, playOnStart, easeType, onAnimationCompleted)
         {
             _from = from;
             _to = to;

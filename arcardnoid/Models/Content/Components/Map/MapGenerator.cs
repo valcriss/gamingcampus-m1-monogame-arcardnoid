@@ -9,7 +9,7 @@ namespace arcardnoid.Models.Content.Components.Map
     public class MapGenerator
     {
         #region Public Properties
-
+        private const int MAP_HYPOTHESIS_COUNT = 20;
         public MapChunk MapChunk { get; set; }
         public MapHypothesis MapHypothesis { get; set; } = null;
 
@@ -52,7 +52,7 @@ namespace arcardnoid.Models.Content.Components.Map
             LoadChunks();
             List<MapHypothesis> mapHypotesisList = new List<MapHypothesis>();
 
-            while (mapHypotesisList.Count < 15)
+            while (mapHypotesisList.Count < MAP_HYPOTHESIS_COUNT)
             {
                 MapHypothesis hypotesis = RandomMap();
                 if (hypotesis != null)

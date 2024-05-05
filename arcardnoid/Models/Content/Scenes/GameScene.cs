@@ -23,6 +23,8 @@ namespace arcardnoid.Models.Content.Scenes
         private MapGenerator MapGenerator { get; set; }
         private int Seed { get; set; }
 
+        private LoadingScreen LoadingScreen { get; set; }
+
         #endregion Private Properties
 
         #region Public Constructors
@@ -42,6 +44,7 @@ namespace arcardnoid.Models.Content.Scenes
         {
             base.Load();
             AddComponent(new GameMapBackground());
+            LoadingScreen = AddComponent(new LoadingScreen());
         }
 
         public override void Update(GameTime gameTime)
@@ -58,8 +61,9 @@ namespace arcardnoid.Models.Content.Scenes
 
             if (LoadingTask.IsCompleted && LoadingState == GameSceneState.Loading)
             {
-                AddComponent(new RandomMap(MapGenerator.MapHypothesis, true));
+                AddComponent(new RandomMap(MapGenerator.MapHypothesis, false));
                 AddComponent(new Cursor("cursor", "ui/cursors/01", new Vector2(12, 16)));
+                LoadingScreen.Close();
                 LoadingState = GameSceneState.Loaded;
             }
         }

@@ -8,6 +8,12 @@ namespace arcardnoid.Models.Content.Components.Map
     {
         #region Public Methods
 
+        public static List<T> RandomList<T>(this List<T> list, FastRandom random)
+        {
+            if (list == null || list.Count == 0) return list;
+            return list.OrderBy(c => random.Next()).ToList();
+        }
+
         public static int[,] ToMapArray(this string[] layer, int with, int height)
         {
             int[,] map = new int[with, height];
@@ -51,21 +57,18 @@ namespace arcardnoid.Models.Content.Components.Map
                     {
                         line += ",";
                     }
+                    else if (data[x, y] == 99)
+                    {
+                        line += "XX,";
+                    }
                     else
                     {
                         line += data[x, y].ToString() + ",";
-
                     }
                 }
                 list.Add(line);
             }
             return list.ToArray();
-        }
-
-        public static List<T> RandomList<T>(this List<T> list, FastRandom random)
-        {
-            if (list == null || list.Count == 0) return list;
-            return list.OrderBy(c=> random.Next()).ToList();
         }
 
         #endregion Public Methods

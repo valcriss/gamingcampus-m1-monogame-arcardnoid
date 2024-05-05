@@ -7,7 +7,7 @@ namespace arcardnoidTests
     [TestClass]
     public class MapChunkTests
     {
-        private const string CHUNK_DIRECTORY = @"C:\Users\Z019817\Documents\GitHub\gamingcampus-m1-monogame-arcardnoid\arcardnoid\Maps\Chunks";
+        private const string CHUNK_DIRECTORY = @"C:\Users\silve\Documents\GitHub\gamingcampus-m1-monogame-arcardnoid\arcardnoid\Maps\Chunks";
 
         [TestMethod]
         public void TestChunkJsonLayers()

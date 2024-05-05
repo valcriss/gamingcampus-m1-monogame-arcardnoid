@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -86,6 +85,10 @@ namespace arcardnoid.Models.Content.Components.Map.Models
             return doors;
         }
 
+        #endregion Public Methods
+
+        #region Internal Methods
+
         internal List<MapChunkEntrance> FilterEntrances(List<MapChunkDoorType> opositeDoorTypes)
         {
             List<MapChunkEntrance> entrances = new List<MapChunkEntrance>();
@@ -112,27 +115,9 @@ namespace arcardnoid.Models.Content.Components.Map.Models
             return entrances;
         }
 
-        #endregion Public Methods
+        #endregion Internal Methods
 
         #region Private Methods
-
-        private bool IsDoorTypeCompatibleOposite(MapChunkDoorType doorType, MapChunkEntrance entrance)
-        {
-            MapChunkDoorType chunkDoorType = GetDoorType(entrance);
-            switch (doorType)
-            {
-                case MapChunkDoorType.Top:
-                    return chunkDoorType == MapChunkDoorType.Bottom || chunkDoorType == MapChunkDoorType.BottomRight || chunkDoorType == MapChunkDoorType.BottomLeft;
-                case MapChunkDoorType.Right:
-                    return chunkDoorType == MapChunkDoorType.Left || chunkDoorType == MapChunkDoorType.TopLeft || chunkDoorType == MapChunkDoorType.BottomLeft;
-                case MapChunkDoorType.Bottom:
-                    return chunkDoorType == MapChunkDoorType.Top || chunkDoorType == MapChunkDoorType.TopLeft || chunkDoorType == MapChunkDoorType.TopRight;
-                case MapChunkDoorType.Left:
-                    return chunkDoorType == MapChunkDoorType.Right || chunkDoorType == MapChunkDoorType.TopRight || chunkDoorType == MapChunkDoorType.BottomRight;
-
-            }
-            return false;
-        }
 
         private MapChunkDoorType GetDoorType(MapChunkEntrance entrance)
         {
@@ -169,6 +154,26 @@ namespace arcardnoid.Models.Content.Components.Map.Models
                 return MapChunkDoorType.Bottom;
             }
             return MapChunkDoorType.None;
+        }
+
+        private bool IsDoorTypeCompatibleOposite(MapChunkDoorType doorType, MapChunkEntrance entrance)
+        {
+            MapChunkDoorType chunkDoorType = GetDoorType(entrance);
+            switch (doorType)
+            {
+                case MapChunkDoorType.Top:
+                    return chunkDoorType == MapChunkDoorType.Bottom || chunkDoorType == MapChunkDoorType.BottomRight || chunkDoorType == MapChunkDoorType.BottomLeft;
+
+                case MapChunkDoorType.Right:
+                    return chunkDoorType == MapChunkDoorType.Left || chunkDoorType == MapChunkDoorType.TopLeft || chunkDoorType == MapChunkDoorType.BottomLeft;
+
+                case MapChunkDoorType.Bottom:
+                    return chunkDoorType == MapChunkDoorType.Top || chunkDoorType == MapChunkDoorType.TopLeft || chunkDoorType == MapChunkDoorType.TopRight;
+
+                case MapChunkDoorType.Left:
+                    return chunkDoorType == MapChunkDoorType.Right || chunkDoorType == MapChunkDoorType.TopRight || chunkDoorType == MapChunkDoorType.BottomRight;
+            }
+            return false;
         }
 
         #endregion Private Methods

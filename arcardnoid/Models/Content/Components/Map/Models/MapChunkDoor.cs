@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 
 namespace arcardnoid.Models.Content.Components.Map.Models
@@ -40,6 +39,25 @@ namespace arcardnoid.Models.Content.Components.Map.Models
 
         #region Public Methods
 
+        public Point GetOpositeChunkPosition(MapChunkDoorType doorType, MapChunkEntrance possibleEntrance)
+        {
+            switch (doorType)
+            {
+                case MapChunkDoorType.Top:
+                    return new Point(X - possibleEntrance.X, Y - possibleEntrance.Y - 2);
+
+                case MapChunkDoorType.Bottom:
+                    return new Point(X - possibleEntrance.X, Y + possibleEntrance.Y + 2);
+
+                case MapChunkDoorType.Right:
+                    return new Point(X + possibleEntrance.X + 2, Y - possibleEntrance.Y);
+
+                case MapChunkDoorType.Left:
+                    return new Point(X - possibleEntrance.X - 2, Y - possibleEntrance.Y);
+            }
+            return Point.Zero;
+        }
+
         public List<MapChunkDoorType> GetOpositeDoorTypes()
         {
             switch (DoorType)
@@ -71,22 +89,6 @@ namespace arcardnoid.Models.Content.Components.Map.Models
                 default:
                     return new List<MapChunkDoorType>();
             }
-        }
-
-        public Point GetOpositeChunkPosition(MapChunkDoorType doorType, MapChunkEntrance possibleEntrance)
-        {
-            switch (doorType)
-            {
-                case MapChunkDoorType.Top:
-                    return new Point(X - possibleEntrance.X, Y - possibleEntrance.Y - 2);
-                case MapChunkDoorType.Bottom:
-                    return new Point(X - possibleEntrance.X, Y + possibleEntrance.Y + 2);
-                case MapChunkDoorType.Right:
-                    return new Point(X + possibleEntrance.X + 2, Y - possibleEntrance.Y);
-                case MapChunkDoorType.Left:
-                    return new Point(X - possibleEntrance.X - 2 , Y - possibleEntrance.Y);
-            }
-            return Point.Zero;
         }
 
         #endregion Public Methods

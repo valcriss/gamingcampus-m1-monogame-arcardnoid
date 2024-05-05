@@ -42,6 +42,21 @@ namespace arcardnoid.Models.Content.Components.Map
 
         #region Public Methods
 
+        public static T LoadFromFile<T>(string filename) where T : class
+        {
+            string content = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), filename));
+            try
+            {
+                return JsonConvert.DeserializeObject<T>(content);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e.Message);
+                System.Diagnostics.Debug.WriteLine(filename);
+                return null;
+            }
+        }
+
         public override void Draw()
         {
             base.Draw();
@@ -231,21 +246,6 @@ namespace arcardnoid.Models.Content.Components.Map
                 }
                 RealX = chunk.X;
                 RealY++;
-            }
-        }
-
-        public static T LoadFromFile<T>(string filename) where T : class
-        {
-            string content = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), filename));
-            try
-            {
-                return JsonConvert.DeserializeObject<T>(content);
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine(e.Message);
-                System.Diagnostics.Debug.WriteLine(filename);
-                return null;
             }
         }
 

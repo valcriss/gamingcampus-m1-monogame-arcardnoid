@@ -1,7 +1,6 @@
 ﻿using arcardnoid.Models.Content.Components.Map.Models;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,13 +8,18 @@ namespace arcardnoid.Models.Content.Components.Map
 {
     public class MapGenerator
     {
+        #region Public Properties
+
+        public MapChunk MapChunk { get; set; } = null;
+        public MapHypothesis MapHypotesis { get; set; } = null;
+
+        #endregion Public Properties
+
         #region Private Properties
 
         private List<MapChunk> Chunks { get; set; }
         private FastRandom Random { get; set; }
         private MapChunk StartingChunk { get; set; }
-        public MapHypotesis MapHypotesis { get; set; } = null;
-        public MapChunk MapChunk { get; set; } = null;
 
         #endregion Private Properties
 
@@ -43,11 +47,11 @@ namespace arcardnoid.Models.Content.Components.Map
         public void GenerateMap()
         {
             LoadChunks();
-            List<MapHypotesis> mapHypotesisList = new List<MapHypotesis>();
+            List<MapHypothesis> mapHypotesisList = new List<MapHypothesis>();
 
             while (mapHypotesisList.Count < 15)
             {
-                MapHypotesis hypotesis = RandomMap();
+                MapHypothesis hypotesis = RandomMap();
                 if (hypotesis != null)
                 {
                     mapHypotesisList.Add(hypotesis);
@@ -60,7 +64,7 @@ namespace arcardnoid.Models.Content.Components.Map
 
         #region Private Methods
 
-        private List<MapChunk> GetPossibleChunks(MapHypotesis mapHypotesis, List<MapChunkDoorType> opositeDoorTypes)
+        private List<MapChunk> GetPossibleChunks(MapHypothesis mapHypotesis, List<MapChunkDoorType> opositeDoorTypes)
         {
             List<MapChunk> chunks = Chunks.Where(c => c.GetAllDoors().Any(d => opositeDoorTypes.Contains(d.DoorType))).ToList();
             if (mapHypotesis.GetCoverage() < 20)
@@ -76,9 +80,9 @@ namespace arcardnoid.Models.Content.Components.Map
             StartingChunk = MapChunk.StartingChunk();
         }
 
-        private MapHypotesis RandomMap()
+        private MapHypothesis RandomMap()
         {
-            MapHypotesis mapHypotesis = new MapHypotesis(MAP_WIDTH, MAP_HEIGHT);
+            MapHypothesis mapHypotesis = new MapHypothesis(MAP_WIDTH, MAP_HEIGHT);
             mapHypotesis.AddStartingChunk(StartingChunk, STARTING_CHUNK_X, STARTING_CHUNK_Y);
             while (mapHypotesis.HasOpenedDoors())
             {
@@ -93,7 +97,7 @@ namespace arcardnoid.Models.Content.Components.Map
             return mapHypotesis;
         }
 
-        private bool TryCloseDoor(MapHypotesis mapHypotesis, MapChunkDoor openedDoor)
+        private bool TryCloseDoor(MapHypothesis mapHypotesis, MapChunkDoor openedDoor)
         {
             List<MapChunkDoorType> opositeDoorTypes = openedDoor.GetOpositeDoorTypes().RandomList(Random);
             List<MapChunk> possibleChunks = GetPossibleChunks(mapHypotesis, opositeDoorTypes).RandomList(Random);
@@ -108,7 +112,7 @@ namespace arcardnoid.Models.Content.Components.Map
             return false;
         }
 
-        private bool TryPlaceChunk(MapChunk chunk, MapHypotesis mapHypotesis, MapChunkDoor openedDoor)
+        private bool TryPlaceChunk(MapChunk chunk, MapHypothesis mapHypotesis, MapChunkDoor openedDoor)
         {
             List<MapChunkDoorType> basicChunkDoorTypes = (new List<MapChunkDoorType>() { MapChunkDoorType.Top, MapChunkDoorType.Right, MapChunkDoorType.Bottom, MapChunkDoorType.Left }).RandomList(Random);
             foreach (MapChunkDoorType doorType in basicChunkDoorTypes)
@@ -118,8 +122,17 @@ namespace arcardnoid.Models.Content.Components.Map
                 foreach (MapChunkEntrance possibleEntrance in compatibleEntrances)
                 {
                     Point possibleChunkPosition = openedDoor.GetOpositeChunkPosition(doorType, possibleEntrance);
+                   
                     if (mapHypotesis.AddChunk(chunk, possibleChunkPosition.X, possibleChunkPosition.Y, possibleEntrance))
                     {
+                        mapHypotesis.BridgePositions.Add(new MapBridgePosition()
+                        {
+                            DoorType = doorType,
+                            FromX = openedDoor.X,
+                            FromY = openedDoor.Y,
+                            ToX = possibleChunkPosition.X + possibleEntrance.X,
+                            ToY = possibleChunkPosition.Y + possibleEntrance.Y
+                        });
                         return true;
                     }
                 }

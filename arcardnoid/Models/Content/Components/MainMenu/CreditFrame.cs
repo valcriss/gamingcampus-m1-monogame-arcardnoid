@@ -46,8 +46,8 @@ namespace arcardnoid.Models.Content.Components.MainMenu
             foreach (var item in Content)
             {
                 if (item.Value == null) continue;
-                AddComponent(new BitmapText("txt" + item.Key, "fonts/band", item.Key, categoryX, y, TextHorizontalAlign.Left, TextVerticalAlign.Top, Microsoft.Xna.Framework.Color.Black));
-                var bitmap = AddComponent(new BitmapText("txt" + item.Key + "Content", "fonts/ken", item.Value, categoryContentX, y + 45, TextHorizontalAlign.Left, TextVerticalAlign.Top, Microsoft.Xna.Framework.Color.Black));
+                AddComponent(new BitmapText($"txt{item.Key}", "fonts/band", item.Key, categoryX, y, TextHorizontalAlign.Left, TextVerticalAlign.Top, Microsoft.Xna.Framework.Color.Black));
+                AddComponent(new BitmapText($"txt{item.Key}Content", "fonts/ken", item.Value, categoryContentX, y + 45, TextHorizontalAlign.Left, TextVerticalAlign.Top, Microsoft.Xna.Framework.Color.Black));
                 y += ((item.Value.Split('\n').Length - 1) * 22) + 70;
             }
             AddComponent(new Button("btnParametres", "Annuler", "ui/buttons/button-red-normal", "ui/buttons/button-red-hover", "ui/buttons/button-red-pressed", OnClose, 490, height - 124, 210, 64));

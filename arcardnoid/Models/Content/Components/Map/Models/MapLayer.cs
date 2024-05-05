@@ -7,7 +7,7 @@ namespace arcardnoid.Models.Content.Components.Map.Models
         #region Public Properties
 
         [JsonProperty("data")]
-        public string[] Data { get; set; }
+        public string[] Data { get; set; } = new string[0];
 
         [JsonProperty("name")]
         public string Name { get; set; }

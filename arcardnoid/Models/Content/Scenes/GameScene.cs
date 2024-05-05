@@ -29,7 +29,7 @@ namespace arcardnoid.Models.Content.Scenes
             base.Load();
             MapGenerator mapGenerator = new MapGenerator(Seed);
             mapGenerator.GenerateMap();
-            AddComponent(new RandomMap(mapGenerator.MapHypotesis, false));
+            AddComponent(new RandomMap(mapGenerator.MapHypotesis, true));
         }
 
         #endregion Public Methods

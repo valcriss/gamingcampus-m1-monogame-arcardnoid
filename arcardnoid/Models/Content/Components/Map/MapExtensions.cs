@@ -39,6 +39,29 @@ namespace arcardnoid.Models.Content.Components.Map
             return map;
         }
 
+        public static string[] ToStringData(this int[,] data)
+        {
+            List<string> list = new List<string>();
+            for (int y = 0; y < data.GetLength(1); y++)
+            {
+                string line = "";
+                for (int x = 0; x < data.GetLength(0); x++)
+                {
+                    if (data[x, y] == -1)
+                    {
+                        line += ",";
+                    }
+                    else
+                    {
+                        line += data[x, y].ToString() + ",";
+
+                    }
+                }
+                list.Add(line);
+            }
+            return list.ToArray();
+        }
+
         public static List<T> RandomList<T>(this List<T> list, FastRandom random)
         {
             if (list == null || list.Count == 0) return list;

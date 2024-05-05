@@ -51,12 +51,9 @@ namespace arcardnoid.Models.Content.Components.Map
         public void LoadTiles()
         {
             RemoveAllComponents();
-            List<MapChunkPosition> chunks = MapHypotesis.Chunks;
             List<ChunkLayout> layout = new List<ChunkLayout>();
-            foreach (MapChunkPosition chunk in chunks)
-            {
-                layout.Add(new ChunkLayout() { MapChunk = chunk.MapChunk, X = chunk.X, Y = chunk.Y });
-            }
+
+            layout.Add(new ChunkLayout() { MapChunk = MapHypotesis.FinalChunk, X = 0, Y = 0 });
             LoadChunkLayer(layout);
         }
 

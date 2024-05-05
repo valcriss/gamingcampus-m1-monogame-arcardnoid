@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace arcardnoid.Models.Content.Components.Map.Models
 {
@@ -32,6 +33,7 @@ namespace arcardnoid.Models.Content.Components.Map.Models
         #region Private Properties
 
         public List<MapChunkPosition> Chunks { get; set; }
+        public MapChunk FinalChunk { get; set; }
 
         #endregion Private Properties
 
@@ -121,6 +123,7 @@ namespace arcardnoid.Models.Content.Components.Map.Models
             }
             Width = (w < Width - 1 ? w : w + 1);
             Height = (h < Height - 1 ? h : h + 1);
+            FinalChunk = ConcatenateAsChunk();
             return this;
         }
 
@@ -170,6 +173,66 @@ namespace arcardnoid.Models.Content.Components.Map.Models
                 }
             }
             return Math.Max(0, Math.Min(100, (int)Math.Ceiling((covered / (float)total) * 100)));
+        }
+
+        public MapChunk ConcatenateAsChunk()
+        {
+            MapChunk concatenatedChunk = new MapChunk();
+
+
+            concatenatedChunk.Width = Width;
+            concatenatedChunk.Height = Height;
+            concatenatedChunk.Level = 1;
+
+            // Mise a jour des blocs
+            concatenatedChunk.Blocks = new MapLayer();
+
+            // Mise a jour des layers de base
+            string[] baseLayers = new string[] { "WaterSplash", "Terrain Layer 1", "Shadow Layer", "Terrain Layer 2", "Deco Layer", "Building Layer", "Actor Layer" };
+            foreach (string layer in baseLayers)
+            {
+                int[,] initialLayer = GetInitialLayer(Width, Height);
+                foreach (MapChunkPosition position in Chunks)
+                {
+                    MapLayer mapLayer = position.MapChunk.Layers.FirstOrDefault(c => c.Name == layer);
+                    if (mapLayer == null)
+                    {
+                        continue;
+                    }
+                    for (int y = 0; y < position.MapChunk.Height; y++)
+                    {
+                        string line = mapLayer.Data[y];
+                        for (int x = 0; x < position.MapChunk.Width; x++)
+                        {
+                            string cell = line.Split(',')[x];
+                            if (cell.Trim() != "")
+                            {
+                                initialLayer[position.X + x, position.Y + y] = int.Parse(cell);
+                            }
+                        }
+                    }
+                }
+                MapLayer newLayer = new MapLayer();
+                newLayer.Name = layer;
+                newLayer.Data = initialLayer.ToStringData();
+                concatenatedChunk.Layers.Add(newLayer);
+            }
+
+            // Ajout des layers de ponts
+            return concatenatedChunk;
+        }
+
+        private int[,] GetInitialLayer(int width, int height)
+        {
+            int[,] layer = new int[width, height];
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    layer[x, y] = -1;
+                }
+            }
+            return layer;
         }
 
         #endregion Private Methods

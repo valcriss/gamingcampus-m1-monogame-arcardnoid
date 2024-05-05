@@ -15,6 +15,7 @@ namespace arcardnoid.Models.Content.Components.Map
         private FastRandom Random { get; set; }
         private MapChunk StartingChunk { get; set; }
         public MapHypotesis MapHypotesis { get; set; } = null;
+        public MapChunk MapChunk { get; set; } = null;
 
         #endregion Private Properties
 

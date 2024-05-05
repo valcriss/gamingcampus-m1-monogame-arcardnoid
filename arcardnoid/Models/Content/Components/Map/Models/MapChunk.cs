@@ -20,13 +20,13 @@ namespace arcardnoid.Models.Content.Components.Map.Models
         public int Height { get; set; }
 
         [JsonProperty("layers")]
-        public List<MapLayer> Layers { get; set; }
+        public List<MapLayer> Layers { get; set; } = new List<MapLayer>();
 
         [JsonProperty("level")]
         public int Level { get; set; }
 
         [JsonProperty("spawns")]
-        public List<MapChunkSpawn> Spawns { get; set; }
+        public List<MapChunkSpawn> Spawns { get; set; } = new List<MapChunkSpawn>();
 
         [JsonProperty("width")]
         public int Width { get; set; }

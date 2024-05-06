@@ -1,5 +1,6 @@
 ﻿using arcardnoid.Models.Content.Components.GameScene;
 using arcardnoid.Models.Content.Components.Map;
+using arcardnoid.Models.Content.Components.Map.Characters;
 using arcardnoid.Models.Framework.Components.Texts;
 using arcardnoid.Models.Framework.Components.UI;
 using arcardnoid.Models.Framework.Scenes;
@@ -64,6 +65,7 @@ namespace arcardnoid.Models.Content.Scenes
             {
                 AddComponent(new RandomMap(MapGenerator.MapHypothesis, false));
                 AddComponent(new Cursor("cursor", "ui/cursors/01", new Vector2(12, 16)));
+                AddComponent(new MainCharacter(MapGenerator.MapHypothesis));
                 LoadingScreen.Close();
                 LoadingState = GameSceneState.Loaded;
             }

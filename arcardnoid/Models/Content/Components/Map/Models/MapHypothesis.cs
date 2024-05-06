@@ -40,6 +40,9 @@ namespace arcardnoid.Models.Content.Components.Map.Models
             }
         }
 
+        public int PlayerPositionX { get;private set; }
+        public int PlayerPositionY { get; private set; }
+
         public int Width { get; set; }
 
         #endregion Public Properties
@@ -108,6 +111,8 @@ namespace arcardnoid.Models.Content.Components.Map.Models
 
         public void AddStartingChunk(MapChunk chunk, int x, int y)
         {
+            PlayerPositionX = x;
+            PlayerPositionY = y+1;
             AddChunkToMap(chunk, x, y);
             Chunks.Add(new MapChunkPosition() { MapChunk = chunk, X = x, Y = y });
             foreach (MapChunkDoor door in chunk.GetAllDoors(x, y))
@@ -164,6 +169,8 @@ namespace arcardnoid.Models.Content.Components.Map.Models
             int startY = chunk.GetChunkStartY();
             int endX = chunk.GetChunkEndX();
             int endY = chunk.GetChunkEndY();
+            PlayerPositionX -= startX;
+            PlayerPositionY -= startY;
             // Mise a jour des spawns
             for (int i = 0; i < chunk.Spawns.Count; i++)
             {

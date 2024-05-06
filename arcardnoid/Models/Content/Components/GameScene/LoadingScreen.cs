@@ -4,6 +4,7 @@ using arcardnoid.Models.Framework.Scenes;
 using arcardnoid.Models.Framework.Tools;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
+using System;
 
 namespace arcardnoid.Models.Content.Components.GameScene
 {
@@ -51,9 +52,9 @@ namespace arcardnoid.Models.Content.Components.GameScene
 
         public LoadingScreen() : base("LoadingScreen")
         {
-            _messageRandom = new FastRandom();
+            _messageRandom = new FastRandom(DateTime.Now.Second+1000);
             this.Color = Color.Black;
-            _messageIndex = _messageRandom.Next(0, _loadingMessages.Length);
+            _messageIndex = _messageRandom.Next(0, _loadingMessages.Length-1);
         }
 
         #endregion Public Constructors
@@ -84,7 +85,7 @@ namespace arcardnoid.Models.Content.Components.GameScene
             _elapsedTime += gameTime.ElapsedGameTime.TotalMilliseconds;
             if (_elapsedTime >= _messageChangeTime)
             {
-                _messageIndex = _messageRandom.Next(0, _loadingMessages.Length);
+                _messageIndex = _messageRandom.Next(0, _loadingMessages.Length-1);
                 BitmapText.SetText(_loadingMessages[_messageIndex]);
                 _elapsedTime = 0;
             }

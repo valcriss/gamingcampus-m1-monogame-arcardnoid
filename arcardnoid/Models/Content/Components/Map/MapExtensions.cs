@@ -1,14 +1,131 @@
 ﻿using arcardnoid.Models.Content.Components.Map.Models;
+using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace arcardnoid.Models.Content.Components.Map
 {
     public static class MapExtensions
     {
         #region Public Methods
+
+        public static MapLayer Trim(this MapLayer layer, int startX, int startY, int endX, int endY)
+        {
+            List<string> lines = new List<string>();
+            for (int y = 0; y < layer.Data.Length; y++)
+            {
+                if (y < startY || y > endY) continue;
+                string line = layer.Data[y];
+                string[] tab = line.Split(',');
+                string result = string.Empty;
+                for (int x = 0; x < tab.Length; x++)
+                {
+                    if (x < startX || x > endX) continue;
+                    string data = layer.GetLayerData(x, y);
+                    result += data + ",";
+                }
+                if (result != "")
+                {
+                    lines.Add(result);
+                }
+            }
+            return new MapLayer()
+            {
+                Name = layer.Name,
+                Data = lines.ToArray()
+            };
+        }
+
+        public static int GetChunkStartX(this MapChunk chunk)
+        {
+            int startX = int.MaxValue;
+            foreach (MapLayer layer in chunk.Layers)
+            {
+                for (int y = 0; y < chunk.Height; y++)
+                {
+                    for (int x = 0; x < chunk.Width; x++)
+                    {
+                        string data = layer.GetLayerData(x, y);
+                        if (data != "")
+                        {
+                            startX = MathHelper.Min(startX, x);
+                        }
+                    }
+                }
+            }
+            return startX;
+        }
+
+        public static int GetChunkEndX(this MapChunk chunk)
+        {
+            int endX = 0;
+            foreach (MapLayer layer in chunk.Layers)
+            {
+                for (int y = 0; y < chunk.Height; y++)
+                {
+                    for (int x = 0; x < chunk.Width; x++)
+                    {
+                        string data = layer.GetLayerData(x, y);
+                        if (data != "")
+                        {
+                            endX = MathHelper.Max(x, endX);
+                        }
+                    }
+                }
+            }
+            return endX;
+        }
+
+        public static int GetChunkStartY(this MapChunk chunk)
+        {
+            int startY = int.MaxValue;
+            foreach (MapLayer layer in chunk.Layers)
+            {
+                for (int y = 0; y < chunk.Height; y++)
+                {
+                    for (int x = 0; x < chunk.Width; x++)
+                    {
+                        string data = layer.GetLayerData(x, y);
+                        if (data != "")
+                        {
+                            startY = MathHelper.Min(startY, y);
+                        }
+                    }
+                }
+            }
+            return startY;
+        }
+
+        public static int GetChunkEndY(this MapChunk chunk)
+        {
+            int endY = 0;
+            foreach (MapLayer layer in chunk.Layers)
+            {
+                for (int y = 0; y < chunk.Height; y++)
+                {
+                    for (int x = 0; x < chunk.Width; x++)
+                    {
+                        string data = layer.GetLayerData(x, y);
+                        if (data != "")
+                        {
+                            endY = MathHelper.Max(y, endY);
+                        }
+                    }
+                }
+            }
+            return endY;
+        }
+
+        public static string GetLayerData(this MapLayer layer, int x, int y)
+        {
+            if (y < 0 || y >= layer.Data.Length) return "";
+            string[] data = layer.Data[y].Split(',');
+            if (x < 0 || x >= data.Length) return "";
+            return data[x].Trim();
+        }
 
         public static List<MapChunk> Clone(this List<MapChunk> list)
         {

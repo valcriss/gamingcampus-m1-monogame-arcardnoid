@@ -3,6 +3,7 @@ using MonoGame.Extended;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace arcardnoid.Models.Content.Components.Map.Models
 {
@@ -35,7 +36,7 @@ namespace arcardnoid.Models.Content.Components.Map.Models
         {
             get
             {
-                return ((15 - Height) * 64 / 2) + 28;
+                return ((15 - Height) * 64 / 2) + 60;
             }
         }
 
@@ -78,21 +79,6 @@ namespace arcardnoid.Models.Content.Components.Map.Models
 
         public MapHypothesis Accept()
         {
-            int w = 0;
-            int h = 0;
-            for (int x = 0; x < Width; x++)
-            {
-                for (int y = 0; y < Height; y++)
-                {
-                    if (Map[x, y] != -1)
-                    {
-                        w = Math.Max(w, x);
-                        h = Math.Max(h, y);
-                    }
-                }
-            }
-            Width = (w < Width - 1 ? w : w + 1);
-            Height = (h < Height - 1 ? h : h + 1);
             FinalChunk = ConcatenateAsChunk();
             return this;
         }
@@ -163,10 +149,43 @@ namespace arcardnoid.Models.Content.Components.Map.Models
                 concatenatedChunk.Layers.Add(ConcatenateLayers(layer));
             }
 
+            // Trim chunk
+            concatenatedChunk = TrimChunk(concatenatedChunk);
+
             // Mise a jour des blocs restants
             UpdateEmptyCellsBlocks(concatenatedChunk);
 
             return concatenatedChunk;
+        }
+
+        private MapChunk TrimChunk(MapChunk chunk)
+        {
+            int startX = chunk.GetChunkStartX();
+            int startY = chunk.GetChunkStartY();
+            int endX = chunk.GetChunkEndX();
+            int endY = chunk.GetChunkEndY();
+            // Mise a jour des spawns
+            for (int i = 0; i < chunk.Spawns.Count; i++)
+            {
+                MapChunkSpawn spawn = chunk.Spawns[i];
+                spawn.X -= startX;
+                spawn.Y -= startY;
+                chunk.Spawns[i] = spawn;
+            }
+
+            chunk.Blocks = chunk.Blocks.Trim(startX, startY, endX, endY);
+            // Mise a jour des layers
+            for (int i = 0; i < chunk.Layers.Count; i++)
+            {
+                chunk.Layers[i] = chunk.Layers[i].Trim(startX, startY, endX, endY);
+            }
+            int finalstartX = chunk.GetChunkStartX();
+            int finalstartY = chunk.GetChunkStartY();
+            int finalendX = chunk.GetChunkEndX();
+            int finalendY = chunk.GetChunkEndY();
+            Width = finalendX + 1;
+            Height = finalendY + 1;
+            return chunk;
         }
 
         public int GetCoverage()

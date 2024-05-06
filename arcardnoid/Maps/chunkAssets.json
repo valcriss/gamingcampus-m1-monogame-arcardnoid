@@ -250,7 +250,7 @@
     "rows": 1,
     "speed": 120,
     "path": "map/units/torch-red-idle",
-    "offsetX": 0,
+    "offsetX": 6,
     "offsetY": -20
   },
   {
@@ -272,7 +272,7 @@
     "rows": 1,
     "speed": 120,
     "path": "map/units/tnt-red-idle",
-    "offsetX": 0,
+    "offsetX": 6,
     "offsetY": -20
   },
   {

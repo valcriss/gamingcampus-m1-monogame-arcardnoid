@@ -18,19 +18,17 @@ namespace arcardnoid.Models.Content.Components.GameScene
 
         #region Private Fields
 
-        private const double _messageChangeTime = 750;
+        private const double _messageChangeTime = 1000;
         private double _elapsedTime = 0;
 
         private string[] _loadingMessages = new string[]
         {
             "Les architectes sont encore en train de dessiner",
-            "Les ouvriers sont en grève",
-            "Les serveurs sont en train de chauffer",
             "Les artistes sont en train de peindre",
-            "Nous construisons les bâtiments aussi vite que possible",
-            "Les développeurs sont en train de coder",
+            "Nous construisons les batiments aussi vite que possible",
+            "Les developpeurs sont en train de coder",
             "Veuillez patienter pendant que les petits lutins dessinent votre carte",
-            "Le serveur est alimenté par un citron et deux électrodes.",
+            "Le serveur est alimente par un citron et deux electrodes.",
             "Les hamsters sont en train de courir dans leur roue",
             "Nous testons votre patience",
             "Suis le lapin blanc",
@@ -38,7 +36,7 @@ namespace arcardnoid.Models.Content.Components.GameScene
             "Pourquoi ne commandes-tu pas un sandwich ?",
             "Pendant que le satellite se met en position",
             "C'est toujours plus rapide que tu ne pourrais le dessiner",
-            "La dernière fois que j'ai essayé, le singe n'a pas survécu. Espérons que cela fonctionnera mieux cette fois.",
+            "La derniere fois que j'ai essaye, le singe n'a pas survecu. Esperons que cela fonctionnera mieux cette fois.",
             "All your bases are belong to us",
             "Les licornes sont au bout de ce chemin, je le promets."
         };

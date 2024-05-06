@@ -29,7 +29,7 @@ namespace arcardnoid.Models.Content.Scenes
 
         #region Public Constructors
 
-        public GameScene(int seed = 107370)
+        public GameScene(int seed = 123456)
         {
             BackgroundColor = Color.FromNonPremultiplied(71, 171, 169, 255);
             Seed = seed;
@@ -62,7 +62,7 @@ namespace arcardnoid.Models.Content.Scenes
 
             if (LoadingTask.IsCompleted && LoadingState == GameSceneState.Loading)
             {
-                AddComponent(new RandomMap(MapGenerator.MapHypothesis, true));
+                AddComponent(new RandomMap(MapGenerator.MapHypothesis, false));
                 AddComponent(new Cursor("cursor", "ui/cursors/01", new Vector2(12, 16)));
                 LoadingScreen.Close();
                 LoadingState = GameSceneState.Loaded;

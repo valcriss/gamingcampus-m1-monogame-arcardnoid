@@ -244,6 +244,12 @@ namespace arcardnoid.Models.Content.Components.Map
             }
         }
 
+        internal void ToggleDebug()
+        {
+            _forceDebug = !_forceDebug;
+            LoadTiles();
+        }
+
         #endregion Private Methods
     }
 }

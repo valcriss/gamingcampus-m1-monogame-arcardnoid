@@ -169,6 +169,7 @@ namespace arcardnoid.Models.Framework.Scenes
 
         public override void Update(GameTime gameTime)
         {
+            if (!Enabled) return;
             base.Update(gameTime);
             AnimationChain[] animations = Animations.ToArray();
             foreach (var animation in animations)

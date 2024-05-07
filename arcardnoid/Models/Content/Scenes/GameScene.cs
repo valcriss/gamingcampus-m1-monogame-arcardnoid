@@ -5,6 +5,7 @@ using arcardnoid.Models.Framework.Components.Texts;
 using arcardnoid.Models.Framework.Components.UI;
 using arcardnoid.Models.Framework.Scenes;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System.Threading.Tasks;
 
 namespace arcardnoid.Models.Content.Scenes
@@ -24,6 +25,10 @@ namespace arcardnoid.Models.Content.Scenes
         private GameSceneState LoadingState { get; set; } = GameSceneState.None;
         private Task LoadingTask { get; set; }
         private MapGenerator MapGenerator { get; set; }
+        private PauseScreen PauseScreen { get; set; }
+        private RandomMap RandomMap { get; set; }
+        private MainCharacter MainCharacter { get; set; }
+
         private int Seed { get; set; }
 
         #endregion Private Properties
@@ -46,7 +51,24 @@ namespace arcardnoid.Models.Content.Scenes
             base.Load();
             AddComponent(new GameMapBackground());
             AddComponent(new BitmapText("seed", "fonts/regular", $"Graine : {Seed}", 10, 1050, TextHorizontalAlign.Left, TextVerticalAlign.Top, Color.White));
-            LoadingScreen = AddComponent(new LoadingScreen());
+            LoadingScreen = AddComponent(new LoadingScreen());            
+        }
+
+        private void OnResume()
+        {
+            RandomMap.Enabled = true;
+            MainCharacter.Enabled = true;
+        }
+
+        private void OnDebug()
+        {
+            OnResume();
+            RandomMap.ToggleDebug();
+        }
+
+        private void OnQuit()
+        {
+            Game.ScenesManager.SwitchScene(this, new MainMenu());
         }
 
         public override void Update(GameTime gameTime)
@@ -63,12 +85,28 @@ namespace arcardnoid.Models.Content.Scenes
 
             if (LoadingTask.IsCompleted && LoadingState == GameSceneState.Loading)
             {
-                AddComponent(new RandomMap(MapGenerator.MapHypothesis, false));
-                AddComponent(new Cursor("cursor", "ui/cursors/01", new Vector2(12, 16)));
-                AddComponent(new MainCharacter(MapGenerator.MapHypothesis));
+                PostLoadMap();
                 LoadingScreen.Close();
                 LoadingState = GameSceneState.Loaded;
             }
+
+            if(LoadingState == GameSceneState.Loaded)
+            {
+                if(Keyboard.GetState().IsKeyDown(Keys.Escape))
+                {
+                    RandomMap.Enabled = false;
+                    MainCharacter.Enabled = false;
+                    PauseScreen.Open();
+                }
+            }
+        }
+
+        private void PostLoadMap()
+        {
+            RandomMap = AddComponent(new RandomMap(MapGenerator.MapHypothesis, false));
+            MainCharacter = AddComponent(new MainCharacter(MapGenerator.MapHypothesis));
+            PauseScreen = AddComponent(new PauseScreen(OnResume, OnDebug, OnQuit));
+            AddComponent(new Cursor("cursor", "ui/cursors/01", new Vector2(12, 16)));
         }
 
         #endregion Public Methods

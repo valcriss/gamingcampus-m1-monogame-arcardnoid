@@ -11,6 +11,8 @@ namespace arcardnoid.Models.Framework.Scenes
 
         protected List<Component> Components { get; set; }
 
+        public virtual bool Visible { get; set; } = true;
+        public virtual bool Enabled { get; set; } = true;
         #endregion Protected Properties
 
         #region Public Constructors
@@ -50,7 +52,7 @@ namespace arcardnoid.Models.Framework.Scenes
 
         internal void InnerDraw()
         {
-            if (this.State == ElementState.Loaded)
+            if (this.State == ElementState.Loaded && Visible)
             {
                 this.Draw();
                 foreach (var component in Components)
@@ -86,12 +88,12 @@ namespace arcardnoid.Models.Framework.Scenes
 
         internal void InnerUpdate(GameTime gameTime)
         {
-            if (this.State == ElementState.Loaded)
+            if (this.State == ElementState.Loaded && Enabled)
             {
                 this.Update(gameTime);
                 foreach (var component in Components)
                 {
-                    if (component.State == ElementState.Loaded)
+                    if (component.State == ElementState.Loaded && component.Enabled)
                     {
                         DateTime start = DateTime.Now;
                         component.InnerUpdate(gameTime);

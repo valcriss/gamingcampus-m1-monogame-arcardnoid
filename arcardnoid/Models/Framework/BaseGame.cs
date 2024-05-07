@@ -68,8 +68,6 @@ namespace arcardnoid.Models.Framework
 
         protected override void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
             ScenesManager.Update(gameTime);
             base.Update(gameTime);
         }

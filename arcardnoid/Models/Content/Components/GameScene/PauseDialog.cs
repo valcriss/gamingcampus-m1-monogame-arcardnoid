@@ -21,7 +21,7 @@ namespace arcardnoid.Models.Content.Components.GameScene
         public override void Load()
         {
             base.Load();
-            AddComponent(new Frame("frame", "ui/banner", 0, 0, 576, 512));
+            AddComponent(new Frame("frame", "ui/banner", 0, 0, 576, 448));
             AddComponent(new BitmapText("txtTitle", "fonts/band", "Jeu en pause", 288, 90, TextHorizontalAlign.Center, TextVerticalAlign.Center, Microsoft.Xna.Framework.Color.Black));
             int buttonStartY = 150;
             AddComponent(new Button("btnResume", "Reprendre", "ui/buttons/button-green-normal", "ui/buttons/button-green-hover", "ui/buttons/button-green-pressed", OnResume, 80, buttonStartY, 410, 64));

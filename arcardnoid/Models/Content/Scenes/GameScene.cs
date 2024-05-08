@@ -105,6 +105,7 @@ namespace arcardnoid.Models.Content.Scenes
         {
             RandomMap = AddComponent(new RandomMap(MapGenerator.MapHypothesis, false));
             MainCharacter = AddComponent(new MainCharacter(MapGenerator.MapHypothesis));
+            AddComponent(new GameSceneUI());
             PauseScreen = AddComponent(new PauseScreen(OnResume, OnDebug, OnQuit));
             AddComponent(new Cursor("cursor", "ui/cursors/01", new Vector2(12, 16)));
         }

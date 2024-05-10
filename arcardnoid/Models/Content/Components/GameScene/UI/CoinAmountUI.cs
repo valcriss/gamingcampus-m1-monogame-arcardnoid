@@ -8,7 +8,7 @@ namespace arcardnoid.Models.Content.Components.GameScene.UI
     {
         #region Private Properties
 
-        private int CoinAmount { get; set; } = 0;
+        private int CoinAmount { get; set; } = 100;
 
         #endregion Private Properties
 
@@ -25,8 +25,9 @@ namespace arcardnoid.Models.Content.Components.GameScene.UI
         public override void Load()
         {
             base.Load();
-            AddComponent(new Image("coin-icon", "ui/coin", 0, 20));
-            AddComponent(new BitmapText("coin-amount", "fonts/band", CoinAmount.ToString() + " Or", 40, 0, TextHorizontalAlign.Left, TextVerticalAlign.Top, Microsoft.Xna.Framework.Color.White));
+            AddComponent(new Image("coin-icon", "ui/coin", 0, 25));
+            AddComponent(new BitmapText("coin-amount", "fonts/band", CoinAmount.ToString() + " Or", 42, 17, TextHorizontalAlign.Left, TextVerticalAlign.Top, Microsoft.Xna.Framework.Color.Black));
+            AddComponent(new BitmapText("coin-amount", "fonts/band", CoinAmount.ToString() + " Or", 40, 15, TextHorizontalAlign.Left, TextVerticalAlign.Top, Microsoft.Xna.Framework.Color.White));
         }
 
         #endregion Public Methods

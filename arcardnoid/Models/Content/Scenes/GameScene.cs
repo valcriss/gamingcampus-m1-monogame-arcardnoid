@@ -4,8 +4,10 @@ using arcardnoid.Models.Content.Components.Map.Characters;
 using arcardnoid.Models.Framework.Components.Texts;
 using arcardnoid.Models.Framework.Components.UI;
 using arcardnoid.Models.Framework.Scenes;
+using arcardnoid.Models.Framework.Tools;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace arcardnoid.Models.Content.Scenes
@@ -29,6 +31,8 @@ namespace arcardnoid.Models.Content.Scenes
         private RandomMap RandomMap { get; set; }
         private MainCharacter MainCharacter { get; set; }
 
+
+
         private int Seed { get; set; }
 
         #endregion Private Properties
@@ -51,7 +55,7 @@ namespace arcardnoid.Models.Content.Scenes
             base.Load();
             AddComponent(new GameMapBackground());
             AddComponent(new BitmapText("seed", "fonts/regular", $"Graine : {Seed}", 10, 1050, TextHorizontalAlign.Left, TextVerticalAlign.Top, Color.White));
-            LoadingScreen = AddComponent(new LoadingScreen());            
+            LoadingScreen = AddComponent(new LoadingScreen());
         }
 
         private void OnResume()
@@ -64,6 +68,7 @@ namespace arcardnoid.Models.Content.Scenes
         {
             OnResume();
             RandomMap.ToggleDebug();
+            MainCharacter.ToggleDebug();
         }
 
         private void OnQuit()
@@ -90,9 +95,9 @@ namespace arcardnoid.Models.Content.Scenes
                 LoadingState = GameSceneState.Loaded;
             }
 
-            if(LoadingState == GameSceneState.Loaded)
+            if (LoadingState == GameSceneState.Loaded)
             {
-                if(Keyboard.GetState().IsKeyDown(Keys.Escape))
+                if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 {
                     RandomMap.Enabled = false;
                     MainCharacter.Enabled = false;
@@ -104,10 +109,16 @@ namespace arcardnoid.Models.Content.Scenes
         private void PostLoadMap()
         {
             RandomMap = AddComponent(new RandomMap(MapGenerator.MapHypothesis, false));
-            MainCharacter = AddComponent(new MainCharacter(MapGenerator.MapHypothesis));
+            RandomMap.OnMapClickedEvent += OnMapClicked;
+            MainCharacter = AddComponent(new MainCharacter(RandomMap, MapGenerator.MapHypothesis));
             AddComponent(new GameSceneUI());
             PauseScreen = AddComponent(new PauseScreen(OnResume, OnDebug, OnQuit));
             AddComponent(new Cursor("cursor", "ui/cursors/01", new Vector2(12, 16)));
+        }
+
+        private void OnMapClicked(Point point)
+        {
+            MainCharacter.SetCurrentPath(RandomMap.GetPath(MainCharacter.CurrentCell.X, MainCharacter.CurrentCell.Y, point.X, point.Y));
         }
 
         #endregion Public Methods

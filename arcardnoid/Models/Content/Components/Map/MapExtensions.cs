@@ -2,15 +2,31 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ProgressBar;
 
 namespace arcardnoid.Models.Content.Components.Map
 {
     public static class MapExtensions
     {
         #region Public Methods
+
+        public static bool IsEmpty(this MapLayer layer, int x, int y)
+        {
+            return layer.GetLayerData(x, y) == "";
+        }
+
+        public static double Distance(this Point point1, Point point2)
+        {
+            return Math.Sqrt(Math.Pow(point1.X - point2.X, 2) + Math.Pow(point1.Y - point2.Y, 2));
+        }
+
+        public static double Distance(this Vector2 point1, Vector2 point2)
+        {
+            return Math.Sqrt(Math.Pow(point1.X - point2.X, 2) + Math.Pow(point1.Y - point2.Y, 2));
+        }
+
 
         public static MapLayer Trim(this MapLayer layer, int startX, int startY, int endX, int endY)
         {

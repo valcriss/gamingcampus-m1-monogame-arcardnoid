@@ -3,7 +3,9 @@ using arcardnoid.Models.Content.Components.Map.Models;
 using arcardnoid.Models.Framework;
 using arcardnoid.Models.Framework.Scenes;
 using arcardnoid.Models.Framework.Tools;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,9 +18,10 @@ namespace arcardnoid.Models.Content.Components.Map
     public class RandomMap : Component
     {
         #region Public Properties
-
+        public event Action<Point> OnMapClickedEvent;
         public MapHypothesis MapHypothesis { get; set; }
-
+        public int MouseX { get; set; }
+        public int MouseY { get; set; }
         #endregion Public Properties
 
         #region Private Fields
@@ -27,12 +30,13 @@ namespace arcardnoid.Models.Content.Components.Map
         private bool _forceDebug;
         private MapItem _mapItem;
         private List<Texture2D> _mapTextures = new List<Texture2D>();
+        private DateTime _clickTime = DateTime.Now;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public RandomMap(MapHypothesis mapHypotesis, bool forceDebug = false) : base("RandomMap", mapHypotesis.PositionX, mapHypotesis.PositionY)
+        public RandomMap(MapHypothesis mapHypotesis, bool forceDebug = false) : base("RandomMap", mapHypotesis.PositionX, mapHypotesis.PositionY, mapHypotesis.Width * 64, mapHypotesis.Height * 64)
         {
             _forceDebug = forceDebug;
             MapHypothesis = mapHypotesis;
@@ -74,6 +78,28 @@ namespace arcardnoid.Models.Content.Components.Map
             _mapItem.Assets = LoadFromFile<List<MapAsset>>("Maps/chunkAssets.json");
             LoadAssets();
             LoadTiles();
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            MouseState mouseState = Mouse.GetState();
+            Point mousePosition = ScreenManager.UIScale(mouseState.Position);
+            if (Bounds.Contains(mousePosition))
+            {
+                MouseX = (int)((mousePosition.X - Bounds.X) / _mapItem.Size);
+                MouseY = (int)((mousePosition.Y - Bounds.Y) / _mapItem.Size);
+                if (mouseState.LeftButton == ButtonState.Pressed && DateTime.Now.Subtract(_clickTime).TotalMilliseconds > 200)
+                {
+                    _clickTime = DateTime.Now;
+                    OnMapClickedEvent?.Invoke(new Point(MouseX, MouseY));
+                }
+            }
+            else
+            {
+                MouseX = -1;
+                MouseY = -1;
+            }
         }
 
         public void LoadTiles()
@@ -244,11 +270,61 @@ namespace arcardnoid.Models.Content.Components.Map
             }
         }
 
-        internal void ToggleDebug()
+        public void ToggleDebug()
         {
             _forceDebug = !_forceDebug;
             LoadTiles();
         }
+
+        public List<Point> GetPath(int playerPositionX, int playerPositionY, int x, int y)
+        {
+            Point source = new Point(playerPositionX, playerPositionY);
+            Point destination = new Point(x, y);
+            if(!isValid(source) || !isValid(destination)) return null;
+            List<Point> path = new List<Point>
+            {
+                source
+            };
+            Queue<List<Point>> queue = new Queue<List<Point>>();
+            queue.Enqueue(path);
+
+            while (queue.Count > 0)
+            {
+                List<Point> currentPath = queue.Dequeue();
+                Point currentPoint = currentPath.Last();
+                if (currentPoint == destination) return currentPath;
+                foreach (Point point in GetNeighbors(currentPoint).OrderBy(c => c.Distance(destination)))
+                {
+                    if (currentPath.Contains(point)) continue;
+                    List<Point> newPath = new List<Point>(currentPath)
+                    {
+                        point
+                    };
+                    queue.Enqueue(newPath);
+                }
+            }
+            return null;
+        }
+
+        private List<Point> GetNeighbors(Point point)
+        {
+            List<Point> neighbors = new List<Point>();
+            if (isValid(new Point(point.X - 1, point.Y))) neighbors.Add(new Point(point.X - 1, point.Y));
+            if (isValid(new Point(point.X + 1, point.Y))) neighbors.Add(new Point(point.X + 1, point.Y));
+            if (isValid(new Point(point.X, point.Y - 1))) neighbors.Add(new Point(point.X, point.Y - 1));
+            if (isValid(new Point(point.X, point.Y + 1))) neighbors.Add(new Point(point.X, point.Y + 1));
+            return neighbors;
+        }
+
+
+
+        private bool isValid(Point point)
+        {            
+            if (!(point.X >= 0 && point.X < _mapItem.Width && point.Y >= 0 && point.Y < _mapItem.Height)) return false;
+            return MapHypothesis.FinalChunk.Blocks.IsEmpty(point.X, point.Y);
+        }
+
+
 
         #endregion Private Methods
     }

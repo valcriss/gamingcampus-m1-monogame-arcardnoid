@@ -8,7 +8,7 @@
             {
               "actor": "Player",
               "face": "Happy",
-              "text": "Ho. quelqu'un � laiss� tomb� un portefeuille, je vais le prendre avec moi"
+              "text": "Ho. quelqu'un à laissé tombé un portefeuille, je vais le prendre avec moi"
             }
           ],
           "gold": 200,
@@ -19,13 +19,140 @@
             {
               "actor": "Player",
               "face": "Happy",
-              "text": "Ho. c'est comme trouver des pi�ces au fond du lave-linge"
+              "text": "Ho. c'est comme trouver des pièces au fond du lave-linge"
             }
           ],
           "gold": 200,
           "heart": 0
         }
-      ] 
+      ]
+    },
+    {
+      "type": "Heart",
+      "dialogs": [
+        {
+          "steps": [
+            {
+              "actor": "Player",
+              "face": "Happy",
+              "text": "J'avais justement envie d'un bon steak."
+            }
+          ],
+          "gold": 0,
+          "heart": 1
+        },
+        {
+          "steps": [
+            {
+              "actor": "Player",
+              "face": "Happy",
+              "text": "Ca à un peu le gout du poulet"
+            }
+          ],
+          "gold": 0,
+          "heart": 1
+        }
+      ]
+    },
+    {
+      "type": "Archer",
+      "dialogs": [
+        {
+          "steps": [
+            {
+              "actor": "Player",
+              "face": "Shocked",
+              "text": "Je cherche toujours un phrase choc pour entamer un combat."
+            },
+            {
+              "actor": "Archer",
+              "text": "On a qu'a commencer, je dois allez chercher les enfants à l'école à cinq heure."
+            }
+          ],
+          "gold": 0,
+          "heart": 0
+        }
+      ]
+    },
+    {
+      "type": "Warrior",
+      "dialogs": [
+        {
+          "steps": [
+            {
+              "actor": "Player",
+              "face": "Shocked",
+              "text": "C'est sympa l'armure ca donne un style."
+            },
+            {
+              "actor": "Warrior",
+              "text": "C'est bien, mais pour controler l'angle mort pour les creneaux faut prendre l'habitude. Sinon on se fracasse ?"
+            }
+          ],
+          "gold": 0,
+          "heart": 0
+        }
+      ]
+    },
+    {
+      "type": "Torch",
+      "dialogs": [
+        {
+          "steps": [
+            {
+              "actor": "Player",
+              "face": "Shocked",
+              "text": "Tu devrais faire attention avec ca, tu risque de te bruler non ?"
+            },
+            {
+              "actor": "Torch",
+              "text": "Oui ca arrive souvent, mais j'ai un peu peur dans le noir"
+            }
+          ],
+          "gold": 0,
+          "heart": 0
+        }
+      ]
+    },
+    {
+      "type": "Tnt",
+      "dialogs": [
+        {
+          "steps": [
+            {
+              "actor": "Player",
+              "face": "Shocked",
+              "text": "J'imagine que c'est pas une bougie d'anniversaire ?"
+            },
+            {
+              "actor": "Tnt",
+              "text": "T'es pas la chips la plus craquante du paquet toi non ?"
+            }
+          ],
+          "gold": 0,
+          "heart": 0
+        }
+      ]
+    },
+    {
+      "type": "Sheep",
+      "dialogs": [
+        {
+          "steps": [
+            {
+              "actor": "Player",
+              "face": "Happy",
+              "text": "Que fait un mouton dans ces contrées sauvages ?"
+            },
+            {
+              "actor": "Sheep",
+              "text": "je suis un marchand transformé en mouton (le dev n'a pas trouvé d'asset correct)"
+            }
+          ],
+          "gold": 0,
+          "heart": 0
+        }
+      ]
     }
   ]
 }

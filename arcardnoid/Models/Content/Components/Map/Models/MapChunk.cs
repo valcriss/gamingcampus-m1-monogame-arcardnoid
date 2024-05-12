@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -262,6 +263,29 @@ namespace arcardnoid.Models.Content.Components.Map.Models
             }
         }
 
+        private EncounterType GetEncountTypeFromCode(string code)
+        {
+            switch (code)
+            {
+                case "33": return EncounterType.Archer;
+
+                case "29": return EncounterType.Warrior;
+
+                case "28": return EncounterType.Torch;
+
+                case "31": return EncounterType.Gold;
+
+                case "32": return EncounterType.Meat;
+
+                case "16": return EncounterType.Sheep;
+
+                case "30": return EncounterType.Tnt;
+
+                default:
+                    return EncounterType.None;
+            }
+        }
+
         private bool IsDoorTypeCompatibleOpposite(MapChunkDoorType doorType, MapChunkEntrance entrance)
         {
             MapChunkDoorType chunkDoorType = GetDoorType(entrance);
@@ -280,6 +304,18 @@ namespace arcardnoid.Models.Content.Components.Map.Models
                     return chunkDoorType == MapChunkDoorType.Right || chunkDoorType == MapChunkDoorType.TopRight || chunkDoorType == MapChunkDoorType.BottomRight;
             }
             return false;
+        }
+
+        public EncounterType CheckCollision(int x, int y)
+        {
+            int count = Layers.Count(c => c.Name == "Actor Layer");
+            if (count == 0)
+            {
+                return EncounterType.None;
+            }
+            MapLayer actorLayer = Layers.FirstOrDefault(c => c.Name == "Actor Layer");
+            string code = actorLayer.GetLayerData(x, y);
+            return GetEncountTypeFromCode(code);
         }
 
         #endregion Private Methods

@@ -3,6 +3,7 @@ using arcardnoid.Models.Framework.Scenes;
 using arcardnoid.Models.Framework.Tools;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 
 namespace arcardnoid.Models.Content.Components.Map.Characters
@@ -23,7 +24,7 @@ namespace arcardnoid.Models.Content.Components.Map.Characters
     public class MainCharacter : Component
     {
         #region Private Fields
-
+        public event Action<EncounterType, double> OnEncounter;
         private Dictionary<CharacterDirection, Dictionary<AnimationState, List<Rectangle>>> _animations;
         private CharacterDirection _direction = CharacterDirection.Right;
         private MapHypothesis _mapHypotesis;
@@ -39,6 +40,7 @@ namespace arcardnoid.Models.Content.Components.Map.Characters
         private int _currentPathIndex = 0;
         private bool _forceDebug = false;
         public Point CurrentCell { get; set; }
+        private Point InitialCell { get; set; }
 
         private float _moveSpeed = 150;
 
@@ -52,6 +54,7 @@ namespace arcardnoid.Models.Content.Components.Map.Characters
             RandomMap = randomMap;
             _mapHypotesis = mapHypotesis;
             CurrentCell = new Point((int)mapHypotesis.PlayerPositionX, (int)mapHypotesis.PlayerPositionY);
+            InitialCell = new Point((int)mapHypotesis.PlayerPositionX, (int)mapHypotesis.PlayerPositionY);
             _animations = new Dictionary<CharacterDirection, Dictionary<AnimationState, List<Rectangle>>>();
         }
 
@@ -106,7 +109,7 @@ namespace arcardnoid.Models.Content.Components.Map.Characters
             _drawRectangle = _animations[_direction][_state][_currentFrame];
         }
 
-        private MonoGame.Extended.RectangleF GetRealPosition(float x, float y)
+        private static MonoGame.Extended.RectangleF GetRealPosition(float x, float y)
         {
             return new MonoGame.Extended.RectangleF((x * 64) - 192 / 2 + 32, (y * 64) - 192 / 2 + 16, 64, 64);
         }
@@ -136,9 +139,9 @@ namespace arcardnoid.Models.Content.Components.Map.Characters
                 {
                     _currentPathIndex++;
                     CurrentCell = nextPoint;
-                    if (_currentPathIndex >= CurrentPath.Count - 1)
+                    if (CheckCollisionsOnCell() || _currentPathIndex >= CurrentPath.Count - 1)
                     {
-                        CurrentPath = null;                        
+                        CurrentPath = null;
                         return;
                     }
                 }
@@ -148,6 +151,14 @@ namespace arcardnoid.Models.Content.Components.Map.Characters
                 float offsetY = direction.Y * _moveSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                 Bounds = new MonoGame.Extended.RectangleF(Bounds.Position.X + offsetX, Bounds.Position.Y + offsetY, 64, 64);
             }
+        }
+
+        private bool CheckCollisionsOnCell()
+        {
+            EncounterType collision = _mapHypotesis.FinalChunk.CheckCollision(CurrentCell.X, CurrentCell.Y);
+            if (collision == EncounterType.None) return false;
+            OnEncounter?.Invoke(collision, InitialCell.Distance(CurrentCell));
+            return true;
         }
 
         public override void Draw()

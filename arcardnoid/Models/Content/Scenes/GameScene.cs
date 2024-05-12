@@ -1,6 +1,8 @@
 ﻿using arcardnoid.Models.Content.Components.GameScene;
+using arcardnoid.Models.Content.Components.GameScene.UI;
 using arcardnoid.Models.Content.Components.Map;
 using arcardnoid.Models.Content.Components.Map.Characters;
+using arcardnoid.Models.Content.Components.Map.Models;
 using arcardnoid.Models.Framework.Components.Texts;
 using arcardnoid.Models.Framework.Components.UI;
 using arcardnoid.Models.Framework.Scenes;
@@ -111,7 +113,9 @@ namespace arcardnoid.Models.Content.Scenes
             RandomMap = AddComponent(new RandomMap(MapGenerator.MapHypothesis, false));
             RandomMap.OnMapClickedEvent += OnMapClicked;
             MainCharacter = AddComponent(new MainCharacter(RandomMap, MapGenerator.MapHypothesis));
+            MainCharacter.OnEncounter += OnEncounter;
             AddComponent(new GameSceneUI());
+            AddComponent(new DialogFrame());
             PauseScreen = AddComponent(new PauseScreen(OnResume, OnDebug, OnQuit));
             AddComponent(new Cursor("cursor", "ui/cursors/01", new Vector2(12, 16)));
         }
@@ -119,6 +123,11 @@ namespace arcardnoid.Models.Content.Scenes
         private void OnMapClicked(Point point)
         {
             MainCharacter.SetCurrentPath(RandomMap.GetPath(MainCharacter.CurrentCell.X, MainCharacter.CurrentCell.Y, point.X, point.Y));
+        }
+
+        private void OnEncounter(EncounterType type,double distanceFromStart)
+        {
+            System.Diagnostics.Debug.WriteLine("Encounter : " + type + " at " + distanceFromStart + " from start");
         }
 
         #endregion Public Methods

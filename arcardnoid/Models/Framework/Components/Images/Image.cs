@@ -63,7 +63,7 @@ namespace arcardnoid.Models.Framework.Components.Images
 
         #region Protected Methods
 
-        protected void UpdateRenderBounds()
+        protected virtual void UpdateRenderBounds()
         {
             DrawBounds = new RectangleF(RealBounds.X - DrawOrigin.X, RealBounds.Y - DrawOrigin.Y, RealBounds.Width, RealBounds.Height);
         }

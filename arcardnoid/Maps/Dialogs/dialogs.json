@@ -1,0 +1,31 @@
+{
+  "dialogs": [
+    {
+      "type": "Gold",
+      "dialogs": [
+        {
+          "steps": [
+            {
+              "actor": "Player",
+              "face": "Happy",
+              "text": "Ho. quelqu'un à laissé tombé un portefeuille, je vais le prendre avec moi"
+            }
+          ],
+          "gold": 200,
+          "heart": 0
+        },
+        {
+          "steps": [
+            {
+              "actor": "Player",
+              "face": "Happy",
+              "text": "Ho. c'est comme trouver des pièces au fond du lave-linge"
+            }
+          ],
+          "gold": 200,
+          "heart": 0
+        }
+      ] 
+    }
+  ]
+}

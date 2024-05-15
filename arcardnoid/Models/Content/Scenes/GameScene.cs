@@ -33,6 +33,8 @@ namespace arcardnoid.Models.Content.Scenes
         private RandomMap RandomMap { get; set; }
         private MainCharacter MainCharacter { get; set; }
 
+        private DialogFrame DialogFrame { get; set; }
+
 
 
         private int Seed { get; set; }
@@ -115,7 +117,7 @@ namespace arcardnoid.Models.Content.Scenes
             MainCharacter = AddComponent(new MainCharacter(RandomMap, MapGenerator.MapHypothesis));
             MainCharacter.OnEncounter += OnEncounter;
             AddComponent(new GameSceneUI());
-            AddComponent(new DialogFrame());
+            DialogFrame = AddComponent(new DialogFrame());
             PauseScreen = AddComponent(new PauseScreen(OnResume, OnDebug, OnQuit));
             AddComponent(new Cursor("cursor", "ui/cursors/01", new Vector2(12, 16)));
         }
@@ -128,6 +130,7 @@ namespace arcardnoid.Models.Content.Scenes
         private void OnEncounter(EncounterType type,double distanceFromStart)
         {
             System.Diagnostics.Debug.WriteLine("Encounter : " + type + " at " + distanceFromStart + " from start");
+            DialogFrame.ShowDialog(type,null);
         }
 
         #endregion Public Methods

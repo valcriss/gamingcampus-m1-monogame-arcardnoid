@@ -28,7 +28,7 @@
       ]
     },
     {
-      "type": "Heart",
+      "type": "Meat",
       "dialogs": [
         {
           "steps": [
@@ -86,7 +86,7 @@
             },
             {
               "actor": "Warrior",
-              "text": "C'est bien, mais pour controler l'angle mort pour les creneaux faut prendre l'habitude. Sinon on se fracasse ?"
+              "text": "C'est bien, mais pour controler l'angle mort pour les creneaux faut prendre l'habitude."
             }
           ],
           "gold": 0,

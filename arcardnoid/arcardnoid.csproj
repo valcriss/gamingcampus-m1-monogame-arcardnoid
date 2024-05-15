@@ -571,6 +571,9 @@
     <None Update="Maps\Chunks\32\0\3\grass-01.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Maps\Dialogs\dialogs.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Maps\emptymap.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

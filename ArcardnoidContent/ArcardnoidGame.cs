@@ -2,28 +2,42 @@
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArcardnoidContent
 {
     public class ArcardnoidGame : IGameService
     {
+        #region Public Events
+
+        public event Action? OnGameExit;
+
+        #endregion Public Events
+
+        #region Private Fields
+
         private IScenesManager _scenesManager;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public ArcardnoidGame()
         {
             _scenesManager = GameServiceProvider.GetService<IScenesManager>();
         }
 
-        public event Action? OnGameExit;
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public void DrawGame()
         {
             _scenesManager.Draw();
+        }
+
+        public void ExitGame()
+        {
+            OnGameExit?.Invoke();
         }
 
         public void InitializeGame()
@@ -36,14 +50,11 @@ namespace ArcardnoidContent
             _scenesManager.AddScene(new GameScene());
         }
 
-        public void ExitGame()
-        {
-            OnGameExit?.Invoke();
-        }
-
         public void UpdateGame(float delta)
         {
             _scenesManager.Update(delta);
         }
+
+        #endregion Public Methods
     }
 }

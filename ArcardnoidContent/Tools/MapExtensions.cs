@@ -1,67 +1,28 @@
 ﻿using ArcardnoidContent.Components.Shared.Map.Models;
 using ArcardnoidShared.Framework.Drawing;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArcardnoidContent.Tools
 {
     public static class MapExtensions
     {
+        #region Public Methods
+
         public static List<MapChunk> Clone(this List<MapChunk> list)
         {
             string content = JsonConvert.SerializeObject(list);
             return JsonConvert.DeserializeObject<List<MapChunk>>(content);
         }
-        public static MapLayer Trim(this MapLayer layer, int startX, int startY, int endX, int endY)
+
+        public static double Distance(this Point point1, Point point2)
         {
-            List<string> lines = new List<string>();
-            for (int y = 0; y < layer.Data.Length; y++)
-            {
-                if (y < startY || y > endY) continue;
-                string line = layer.Data[y];
-                string[] tab = line.Split(',');
-                string result = string.Empty;
-                for (int x = 0; x < tab.Length; x++)
-                {
-                    if (x < startX || x > endX) continue;
-                    string data = layer.GetLayerData(x, y);
-                    result += data + ",";
-                }
-                if (result != "")
-                {
-                    lines.Add(result);
-                }
-            }
-            return new MapLayer()
-            {
-                Name = layer.Name,
-                Data = lines.ToArray()
-            };
+            return Math.Sqrt(Math.Pow(point1.X - point2.X, 2) + Math.Pow(point1.Y - point2.Y, 2));
         }
 
-        public static int GetChunkStartX(this MapChunk chunk)
+        public static double Distance(this Vector2 point1, Vector2 point2)
         {
-            int startX = int.MaxValue;
-            foreach (MapLayer layer in chunk.Layers)
-            {
-                for (int y = 0; y < chunk.Height; y++)
-                {
-                    for (int x = 0; x < chunk.Width; x++)
-                    {
-                        string data = layer.GetLayerData(x, y);
-                        if (data != "")
-                        {
-                            startX = Math.Min(startX, x);
-                        }
-                    }
-                }
-            }
-            return startX;
+            return Math.Sqrt(Math.Pow(point1.X - point2.X, 2) + Math.Pow(point1.Y - point2.Y, 2));
         }
 
         public static int GetChunkEndX(this MapChunk chunk)
@@ -84,6 +45,46 @@ namespace ArcardnoidContent.Tools
             return endX;
         }
 
+        public static int GetChunkEndY(this MapChunk chunk)
+        {
+            int endY = 0;
+            foreach (MapLayer layer in chunk.Layers)
+            {
+                for (int y = 0; y < chunk.Height; y++)
+                {
+                    for (int x = 0; x < chunk.Width; x++)
+                    {
+                        string data = layer.GetLayerData(x, y);
+                        if (data != "")
+                        {
+                            endY = Math.Max(y, endY);
+                        }
+                    }
+                }
+            }
+            return endY;
+        }
+
+        public static int GetChunkStartX(this MapChunk chunk)
+        {
+            int startX = int.MaxValue;
+            foreach (MapLayer layer in chunk.Layers)
+            {
+                for (int y = 0; y < chunk.Height; y++)
+                {
+                    for (int x = 0; x < chunk.Width; x++)
+                    {
+                        string data = layer.GetLayerData(x, y);
+                        if (data != "")
+                        {
+                            startX = Math.Min(startX, x);
+                        }
+                    }
+                }
+            }
+            return startX;
+        }
+
         public static int GetChunkStartY(this MapChunk chunk)
         {
             int startY = int.MaxValue;
@@ -104,51 +105,6 @@ namespace ArcardnoidContent.Tools
             return startY;
         }
 
-        public static int GetChunkEndY(this MapChunk chunk)
-        {
-            int endY = 0;
-            foreach (MapLayer layer in chunk.Layers)
-            {
-                for (int y = 0; y < chunk.Height; y++)
-                {
-                    for (int x = 0; x < chunk.Width; x++)
-                    {
-                        string data = layer.GetLayerData(x, y);
-                        if (data != "")
-                        {
-                            endY = Math.Max(y, endY);
-                        }
-                    }
-                }
-            }
-            return endY;
-        }
-        public static string[] ToStringData(this int[,] data)
-        {
-            List<string> list = new List<string>();
-            for (int y = 0; y < data.GetLength(1); y++)
-            {
-                string line = "";
-                for (int x = 0; x < data.GetLength(0); x++)
-                {
-                    if (data[x, y] == -1)
-                    {
-                        line += ",";
-                    }
-                    else if (data[x, y] == 99)
-                    {
-                        line += "XX,";
-                    }
-                    else
-                    {
-                        line += data[x, y].ToString() + ",";
-                    }
-                }
-                list.Add(line);
-            }
-            return list.ToArray();
-        }
-
         public static string GetLayerData(this MapLayer layer, int x, int y)
         {
             if (y < 0 || y >= layer.Data.Length) return "";
@@ -156,6 +112,12 @@ namespace ArcardnoidContent.Tools
             if (x < 0 || x >= data.Length) return "";
             return data[x].Trim();
         }
+
+        public static bool IsEmpty(this MapLayer layer, int x, int y)
+        {
+            return layer.GetLayerData(x, y) == "";
+        }
+
         public static List<T> RandomList<T>(this List<T> list, Random random)
         {
             if (list == null || list.Count == 0) return list;
@@ -193,19 +155,59 @@ namespace ArcardnoidContent.Tools
             return map;
         }
 
-        public static bool IsEmpty(this MapLayer layer, int x, int y)
+        public static string[] ToStringData(this int[,] data)
         {
-            return layer.GetLayerData(x, y) == "";
+            List<string> list = new List<string>();
+            for (int y = 0; y < data.GetLength(1); y++)
+            {
+                string line = "";
+                for (int x = 0; x < data.GetLength(0); x++)
+                {
+                    if (data[x, y] == -1)
+                    {
+                        line += ",";
+                    }
+                    else if (data[x, y] == 99)
+                    {
+                        line += "XX,";
+                    }
+                    else
+                    {
+                        line += data[x, y].ToString() + ",";
+                    }
+                }
+                list.Add(line);
+            }
+            return list.ToArray();
         }
 
-        public static double Distance(this Point point1, Point point2)
+        public static MapLayer Trim(this MapLayer layer, int startX, int startY, int endX, int endY)
         {
-            return Math.Sqrt(Math.Pow(point1.X - point2.X, 2) + Math.Pow(point1.Y - point2.Y, 2));
+            List<string> lines = new List<string>();
+            for (int y = 0; y < layer.Data.Length; y++)
+            {
+                if (y < startY || y > endY) continue;
+                string line = layer.Data[y];
+                string[] tab = line.Split(',');
+                string result = string.Empty;
+                for (int x = 0; x < tab.Length; x++)
+                {
+                    if (x < startX || x > endX) continue;
+                    string data = layer.GetLayerData(x, y);
+                    result += data + ",";
+                }
+                if (result != "")
+                {
+                    lines.Add(result);
+                }
+            }
+            return new MapLayer()
+            {
+                Name = layer.Name,
+                Data = lines.ToArray()
+            };
         }
 
-        public static double Distance(this Vector2 point1, Vector2 point2)
-        {
-            return Math.Sqrt(Math.Pow(point1.X - point2.X, 2) + Math.Pow(point1.Y - point2.Y, 2));
-        }
+        #endregion Public Methods
     }
 }

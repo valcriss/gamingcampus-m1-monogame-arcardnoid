@@ -1,20 +1,26 @@
 ﻿using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace arcardnoid.Models
 {
     public class GraphicsManager : IScreenManager
     {
+        #region Private Properties
+
         private ArCardNoidGame Game { get; set; }
+
+        #endregion Private Properties
+
+        #region Public Constructors
+
         public GraphicsManager(ArCardNoidGame game)
         {
             Game = game;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public void Clear(GameColor color)
         {
@@ -32,5 +38,7 @@ namespace arcardnoid.Models
             Game.Graphics.PreferredBackBufferHeight = (int)size.Y;
             Game.Graphics.ApplyChanges();
         }
+
+        #endregion Public Methods
     }
 }

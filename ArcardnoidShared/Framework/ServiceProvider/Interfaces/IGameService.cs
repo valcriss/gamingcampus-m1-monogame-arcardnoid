@@ -2,19 +2,23 @@
 {
     public interface IGameService
     {
-        #region Public Methods
-        
+        #region Public Events
+
         event Action OnGameExit;
 
+        #endregion Public Events
+
+        #region Public Methods
+
         void DrawGame();
+
+        void ExitGame();
 
         void InitializeGame();
 
         void LoadGameContent();
 
         void UpdateGame(float delta);
-
-        void ExitGame();
 
         #endregion Public Methods
     }

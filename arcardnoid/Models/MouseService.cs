@@ -1,22 +1,18 @@
 ﻿using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace arcardnoid.Models
 {
     public class MouseService : IMouseService
     {
+        #region Private Properties
+
         private MouseState State { get; set; }
 
-        public void Update()
-        {
-            State = Mouse.GetState();
-        }
+        #endregion Private Properties
+
+        #region Public Methods
 
         public Point GetMousePosition()
         {
@@ -27,5 +23,12 @@ namespace arcardnoid.Models
         {
             return State.LeftButton == ButtonState.Pressed;
         }
+
+        public void Update()
+        {
+            State = Mouse.GetState();
+        }
+
+        #endregion Public Methods
     }
 }

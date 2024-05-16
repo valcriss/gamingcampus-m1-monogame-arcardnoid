@@ -3,16 +3,21 @@ using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Animations;
 using ArcardnoidShared.Framework.Scenes.Components;
 
-
 namespace ArcardnoidContent.Components.GameScene
 {
     public class PauseScreen : GameComponent
     {
+        #region Private Properties
+
         private DialogBackground DialogBackground { get; set; }
-        private PauseDialog PauseDialog { get; set; }
-        private Action OnResume { get; set; }
         private Action OnDebug { get; set; }
         private Action OnQuit { get; set; }
+        private Action OnResume { get; set; }
+        private PauseDialog PauseDialog { get; set; }
+
+        #endregion Private Properties
+
+        #region Public Constructors
 
         public PauseScreen(Action onResume, Action onDebug, Action onQuit) : base()
         {
@@ -20,6 +25,10 @@ namespace ArcardnoidContent.Components.GameScene
             OnDebug = onDebug;
             OnQuit = onQuit;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Load()
         {
@@ -30,31 +39,15 @@ namespace ArcardnoidContent.Components.GameScene
             PauseDialog.Visible = false;
         }
 
-        private void OnResumeClicked()
-        {
-            Close(OnResume);
-        }
-
-        private void OnDebugClicked()
-        {
-            Close(OnDebug);
-        }
-
-        private void OnQuitClicked()
-        {
-            Close(OnQuit);
-        }
-
         public void Open()
         {
             DialogBackground.Visible = true;
             DialogBackground.AddAnimation<DialogBackground>(new AlphaFadeAnimation(0.5f, 0f, 0.5f, false, true, EaseType.Linear, BackgroundAppearCompleted));
         }
 
-        private void Close(Action callBack)
-        {
-            PauseDialog.AddAnimations<PauseDialog>(GetDialogHideAnimations(() => BackgroundHideStart(callBack)));
-        }
+        #endregion Public Methods
+
+        #region Private Methods
 
         private void BackgroundAppearCompleted()
         {
@@ -65,6 +58,11 @@ namespace ArcardnoidContent.Components.GameScene
         private void BackgroundHideStart(Action callBack)
         {
             DialogBackground.AddAnimation<DialogBackground>(new AlphaFadeAnimation(0.5f, 0.5f, 0f, false, true, EaseType.Linear, callBack));
+        }
+
+        private void Close(Action callBack)
+        {
+            PauseDialog.AddAnimations<PauseDialog>(GetDialogHideAnimations(() => BackgroundHideStart(callBack)));
         }
 
         private AnimationChain[] GetDialogAppearAnimations()
@@ -84,5 +82,22 @@ namespace ArcardnoidContent.Components.GameScene
                 new AnimationChain(new Animation[] { new AlphaFadeAnimation(0.5f,1, 0, false, true, EaseType.Linear, onCompleted) }, false, true)
             };
         }
+
+        private void OnDebugClicked()
+        {
+            Close(OnDebug);
+        }
+
+        private void OnQuitClicked()
+        {
+            Close(OnQuit);
+        }
+
+        private void OnResumeClicked()
+        {
+            Close(OnResume);
+        }
+
+        #endregion Private Methods
     }
 }

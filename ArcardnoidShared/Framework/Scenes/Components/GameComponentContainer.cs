@@ -31,24 +31,6 @@ namespace ArcardnoidShared.Framework.Scenes.Components
             return gameComponent;
         }
 
-        public void RemoveAllGameComponents()
-        {
-            GameComponent[] gameComponents = GameComponents.ToArray();
-            foreach (GameComponent gameComponent in gameComponents)
-            {
-                gameComponent?.InnerUnload();
-            }
-        }
-
-        public void RemoveGameComponent(GameComponent gameComponent)
-        {
-            gameComponent.InnerUnload();
-        }
-
-        #endregion Public Methods
-
-        #region Internal Methods
-
         public void InnerDraw()
         {
             if (State == ElementState.Loaded && Visible)
@@ -103,6 +85,20 @@ namespace ArcardnoidShared.Framework.Scenes.Components
             }
         }
 
-        #endregion Internal Methods
+        public void RemoveAllGameComponents()
+        {
+            GameComponent[] gameComponents = GameComponents.ToArray();
+            foreach (GameComponent gameComponent in gameComponents)
+            {
+                gameComponent?.InnerUnload();
+            }
+        }
+
+        public void RemoveGameComponent(GameComponent gameComponent)
+        {
+            gameComponent.InnerUnload();
+        }
+
+        #endregion Public Methods
     }
 }

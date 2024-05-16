@@ -1,5 +1,4 @@
 ﻿using ArcardnoidShared.Framework.Scenes;
-using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
 namespace ArcardnoidShared.Framework.ServiceProvider
 {
@@ -11,11 +10,16 @@ namespace ArcardnoidShared.Framework.ServiceProvider
 
         #endregion Private Fields
 
-        #region Public Methods
+        #region Public Constructors
+
         static GameServiceProvider()
         {
             RegisterService(new ScenesManager());
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public static T GetService<T>()
         {

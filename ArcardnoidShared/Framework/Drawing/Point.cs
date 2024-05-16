@@ -1,5 +1,4 @@
-﻿
-namespace ArcardnoidShared.Framework.Drawing
+﻿namespace ArcardnoidShared.Framework.Drawing
 {
     public class Point
     {
@@ -19,10 +18,9 @@ namespace ArcardnoidShared.Framework.Drawing
             Y = y;
         }
 
-        public override string ToString()
-        {
-            return $"X: {X}, Y: {Y}";
-        }
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public static Point Normalize(Point point)
         {
@@ -30,14 +28,14 @@ namespace ArcardnoidShared.Framework.Drawing
             return new Point(point.X / length, point.Y / length);
         }
 
-        public static Point operator +(Point a, Point b)
-        {
-            return new Point(a.X + b.X, a.Y + b.Y);
-        }
-
         public static Point operator -(Point a, Point b)
         {
             return new Point(a.X - b.X, a.Y - b.Y);
+        }
+
+        public static bool operator !=(Point a, Point b)
+        {
+            return a.X != b.X || a.Y != b.Y;
         }
 
         public static Point operator *(Point a, float b)
@@ -50,16 +48,21 @@ namespace ArcardnoidShared.Framework.Drawing
             return new Point(a.X / b, a.Y / b);
         }
 
+        public static Point operator +(Point a, Point b)
+        {
+            return new Point(a.X + b.X, a.Y + b.Y);
+        }
+
         public static bool operator ==(Point a, Point b)
         {
             return a.X == b.X && a.Y == b.Y;
         }
 
-        public static bool operator !=(Point a, Point b)
+        public override string ToString()
         {
-            return a.X != b.X || a.Y != b.Y;
+            return $"X: {X}, Y: {Y}";
         }
 
-        #endregion Public Constructors
+        #endregion Public Methods
     }
 }

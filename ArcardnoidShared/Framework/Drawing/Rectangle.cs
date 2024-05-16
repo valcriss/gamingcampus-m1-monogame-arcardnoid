@@ -42,15 +42,15 @@
 
         #region Public Methods
 
+        public bool Contains(Point point)
+        {
+            return point.X >= X && point.X <= X + Width && point.Y >= Y && point.Y <= Y + Height;
+        }
+
         public void SetPosition(Point position)
         {
             X = position.X;
             Y = position.Y;
-        }
-
-        public bool Contains(Point point)
-        {
-            return point.X >= X && point.X <= X + Width && point.Y >= Y && point.Y <= Y + Height;
         }
 
         public override string ToString()

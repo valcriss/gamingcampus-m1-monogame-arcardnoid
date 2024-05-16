@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ArcardnoidContent.Components.Shared.Map.Models
+﻿namespace ArcardnoidContent.Components.Shared.Map.Models
 {
     public struct ChunkLayout
     {
@@ -14,6 +8,6 @@ namespace ArcardnoidContent.Components.Shared.Map.Models
         public int X { get; set; }
         public int Y { get; set; }
 
-        #endregion
+        #endregion Public Properties
     }
 }

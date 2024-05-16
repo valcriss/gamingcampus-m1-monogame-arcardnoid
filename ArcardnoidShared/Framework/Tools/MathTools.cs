@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ArcardnoidShared.Framework.Tools
+﻿namespace ArcardnoidShared.Framework.Tools
 {
     public static class MathTools
     {
+        #region Public Methods
+
         public static float Lerp(float a, float b, float t)
         {
             return a + (b - a) * t;
         }
+
+        #endregion Public Methods
     }
 }

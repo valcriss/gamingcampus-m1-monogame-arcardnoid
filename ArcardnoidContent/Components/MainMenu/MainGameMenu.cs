@@ -5,13 +5,19 @@ namespace ArcardnoidContent.Components.MainMenu
 {
     public class MainGameMenu : GameComponent
     {
+        #region Private Properties
+
         private Action OnCredits { get; set; }
+        private Action OnDemo { get; set; }
         private Action OnNewGame { get; set; }
         private Action OnParameters { get; set; }
-        private Action OnDemo { get; set; }
         private Action OnQuit { get; set; }
 
-        public MainGameMenu(Action onNewGame, Action onCredits, Action onParameters,Action onDemo, Action onQuit) : base(672, 316)
+        #endregion Private Properties
+
+        #region Public Constructors
+
+        public MainGameMenu(Action onNewGame, Action onCredits, Action onParameters, Action onDemo, Action onQuit) : base(672, 316)
         {
             OnNewGame = onNewGame;
             OnCredits = onCredits;
@@ -19,6 +25,10 @@ namespace ArcardnoidContent.Components.MainMenu
             OnDemo = onDemo;
             OnQuit = onQuit;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Load()
         {
@@ -30,5 +40,7 @@ namespace ArcardnoidContent.Components.MainMenu
             AddGameComponent(new Button("Démo", "ui/buttons/button-green-normal", "ui/buttons/button-green-hover", "ui/buttons/button-green-pressed", OnDemo, 80, 315, 410, 64));
             AddGameComponent(new Button("Quitter", "ui/buttons/button-red-normal", "ui/buttons/button-red-hover", "ui/buttons/button-red-pressed", OnQuit, 80, 425, 410, 64));
         }
+
+        #endregion Public Methods
     }
 }

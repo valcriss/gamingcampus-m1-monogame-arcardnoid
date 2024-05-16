@@ -5,11 +5,12 @@ using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
-
 namespace ArcardnoidShared.Framework.Components.UI
 {
     public class Button : MouseInterractComponent
     {
+        #region Private Properties
+
         private Rectangle CenterRectangle { get; set; }
         private ITexture CurrentTexture { get; set; }
         private string HoverAsset { get; set; }
@@ -24,6 +25,10 @@ namespace ArcardnoidShared.Framework.Components.UI
         private string Text { get; set; }
         private BitmapText TextComponent { get; set; }
 
+        #endregion Private Properties
+
+        #region Public Constructors
+
         public Button(string text, string normalAsset, string hoverAsset, string pressedAsset, Action onClick = null, int x = 0, int y = 0, int width = 0, int height = 0) : base(onClick, x, y, width, height)
         {
             NormalAsset = normalAsset;
@@ -31,6 +36,10 @@ namespace ArcardnoidShared.Framework.Components.UI
             PressedAsset = pressedAsset;
             Text = text;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Draw()
         {
@@ -91,5 +100,7 @@ namespace ArcardnoidShared.Framework.Components.UI
 
             Rectangles.Add(new Rectangle[] { RightRectangle, new Rectangle((int)RealBounds.X + (int)RealBounds.Width - RightRectangle.Width, (int)RealBounds.Y, RightRectangle.Width, (int)RealBounds.Height) });
         }
+
+        #endregion Public Methods
     }
 }

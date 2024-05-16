@@ -1,16 +1,17 @@
 ﻿using ArcardnoidShared.Framework.Drawing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArcardnoidShared.Framework.ServiceProvider.Interfaces
 {
     public interface IMouseService
     {
-        void Update();
+        #region Public Methods
+
         Point GetMousePosition();
+
         bool IsMouseLeftButtonPressed();
+
+        void Update();
+
+        #endregion Public Methods
     }
 }

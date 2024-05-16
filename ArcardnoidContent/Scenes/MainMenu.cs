@@ -7,16 +7,21 @@ using ArcardnoidShared.Framework.Scenes.Animations;
 using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
-
 namespace ArcardnoidContent.Scenes
 {
     public class MainMenu : Scene
     {
+        #region Private Properties
+
         private CreditFrame CreditFrame { get; set; }
         private MainGameMenu MainGameMenu { get; set; }
         private ParametersFrame ParametersFrame { get; set; }
         private QuitGameConfirm QuitGameConfirm { get; set; }
         private SeedFrame SeedFrame { get; set; }
+
+        #endregion Private Properties
+
+        #region Public Constructors
 
         public MainMenu()
         {
@@ -31,6 +36,10 @@ namespace ArcardnoidContent.Scenes
 
             AddGameComponent(new Cursor("ui/cursors/01", new Point(12, 16)));
         }
+
+        #endregion Public Constructors
+
+        #region Private Methods
 
         private AnimationChain[] GetMainMenuAppearAnimations(float duration)
         {
@@ -98,6 +107,11 @@ namespace ArcardnoidContent.Scenes
             CreditFrame.AddAnimations<CreditFrame>(GetSubFrameAppearAnimations());
         }
 
+        private void OnDemoButtonClicked()
+        {
+            GameServiceProvider.GetService<IScenesManager>().SwitchScene(this, new DemoScene());
+        }
+
         private void OnNewGameButtonClicked()
         {
             SeedFrame.NewSeed();
@@ -108,11 +122,6 @@ namespace ArcardnoidContent.Scenes
         private void OnNewGameConfirmButtonClicked()
         {
             GameServiceProvider.GetService<IScenesManager>().SwitchScene(this, new GameScene(SeedFrame.GetSeed()));
-        }
-
-        private void OnDemoButtonClicked()
-        {
-            GameServiceProvider.GetService<IScenesManager>().SwitchScene(this, new DemoScene());
         }
 
         private void OnParametersButtonClicked()
@@ -149,5 +158,7 @@ namespace ArcardnoidContent.Scenes
             SeedFrame.AddAnimations<SeedFrame>(GetSubFrameHideAnimations());
             MainGameMenu.AddAnimations<MainGameMenu>(GetMainMenuAppearAnimations(1f));
         }
+
+        #endregion Private Methods
     }
 }

@@ -3,26 +3,29 @@ using ArcardnoidShared.Framework.Components.UI;
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.ServiceProvider.Enums;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace ArcardnoidContent.Components.MainMenu
 {
     public class ParametersFrame : GameComponent
     {
+        #region Private Properties
+
         private Progress MusicVolume { get; set; }
         private Action OnClose { get; set; }
         private Progress SoundVolume { get; set; }
+
+        #endregion Private Properties
+
+        #region Public Constructors
 
         public ParametersFrame(Action onClose) : base(672, 1081)
         {
             OnClose = onClose;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Load()
         {
@@ -42,5 +45,7 @@ namespace ArcardnoidContent.Components.MainMenu
 
             AddGameComponent(new Button("Annuler", "ui/buttons/button-red-normal", "ui/buttons/button-red-hover", "ui/buttons/button-red-pressed", OnClose, 490, height - 124, 210, 64));
         }
+
+        #endregion Public Methods
     }
 }

@@ -1,6 +1,4 @@
 
-using arcardnoid.Models.Content.Components.Map.Models;
-using SharpDX.Direct2D1;
 
 namespace arcardnoidTests
 {

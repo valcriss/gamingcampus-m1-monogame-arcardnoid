@@ -1,29 +1,33 @@
-﻿using ArcardnoidShared.Framework.Drawing;
-using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
-using ArcardnoidShared.Framework.Tools;
-using Microsoft.Xna.Framework;
+﻿using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using MonoGame.Extended.BitmapFonts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace arcardnoid.Models
 {
     public class BitmapFontService : IBitmapFontService
     {
+        #region Private Properties
+
         private ArCardNoidGame Game { get; set; }
+
+        #endregion Private Properties
+
+        #region Public Constructors
 
         public BitmapFontService(ArCardNoidGame game)
         {
             Game = game;
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
         public IBitmapFont Load(string assetName)
         {
             BitmapFont font = Game.Content.Load<BitmapFont>(assetName);
             return new MonoGameBitmapFont(Game, font);
         }
+
+        #endregion Public Methods
     }
 }

@@ -5,24 +5,35 @@ using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
-
 namespace ArcardnoidContent.Components.UI
 {
     public class AnimatedTitleBand : GameComponent
     {
+        #region Private Properties
+
         private string BandAsset { get; set; }
-        private string FontAsset { get; set; }
-        private GameColor TextColor { get; set; }
-        private string Text { get; set; }
-        private string CurrentText { get; set; }
-        private double Speed { get; set; }
-        private BitmapText BitmapText { get; set; }
-        private double ElapsedTime { get; set; }
         private ITexture BandTexture { get; set; }
+        private BitmapText BitmapText { get; set; }
+        private string CurrentText { get; set; }
+        private double ElapsedTime { get; set; }
+        private string FontAsset { get; set; }
         private List<Rectangle> InsideBounds { get; set; } = new List<Rectangle>();
         private Rectangle LeftBounds { get; set; }
         private Rectangle RightBounds { get; set; }
+        private double Speed { get; set; }
+        private string Text { get; set; }
+        private GameColor TextColor { get; set; }
+
+        #endregion Private Properties
+
+        #region Private Fields
+
         private const int OffsetY = 24;
+
+        #endregion Private Fields
+
+        #region Public Constructors
+
         public AnimatedTitleBand(string bandAsset, string fontAsset, string text, double speed, int x, int y, GameColor textColor) : base(x, y)
         {
             BandAsset = bandAsset;
@@ -33,6 +44,22 @@ namespace ArcardnoidContent.Components.UI
             Speed = speed;
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
+        public override void Draw()
+        {
+            base.Draw();
+            if (LeftBounds == null || RightBounds == null || InsideBounds == null || BandTexture == null) return;
+            BandTexture.DrawTexture(LeftBounds, new Rectangle(0, 0, 64, 64), Color, 0, Point.Zero);
+            foreach (var insideBound in InsideBounds)
+            {
+                BandTexture.DrawTexture(insideBound, new Rectangle(64, 0, 64, 64), Color, 0, Point.Zero);
+            }
+            BandTexture.DrawTexture(RightBounds, new Rectangle(128, 0, 64, 64), Color, 0, Point.Zero);
+        }
+
         public override void Load()
         {
             base.Load();
@@ -40,18 +67,6 @@ namespace ArcardnoidContent.Components.UI
             BitmapText = AddGameComponent(new BitmapText(FontAsset, CurrentText, 0, 0, TextHorizontalAlign.Center, TextVerticalAlign.Center));
             BitmapText.Color = TextColor;
             ElapsedTime = 0;
-        }
-
-        public override void Draw()
-        {
-            base.Draw();
-            if(LeftBounds == null || RightBounds == null || InsideBounds == null || BandTexture == null) return;
-            BandTexture.DrawTexture(LeftBounds, new Rectangle(0, 0, 64, 64), Color, 0, Point.Zero);
-            foreach (var insideBound in InsideBounds)
-            {
-                BandTexture.DrawTexture(insideBound, new Rectangle(64, 0, 64, 64), Color, 0, Point.Zero);
-            }
-            BandTexture.DrawTexture(RightBounds, new Rectangle(128, 0, 64, 64), Color, 0, Point.Zero);
         }
 
         public override void Update(float delta)
@@ -79,5 +94,7 @@ namespace ArcardnoidContent.Components.UI
                 RightBounds = new Rectangle((int)Bounds.X + (sizeOfCenters / 2), (int)Bounds.Y - OffsetY, 64, 64);
             }
         }
+
+        #endregion Public Methods
     }
 }

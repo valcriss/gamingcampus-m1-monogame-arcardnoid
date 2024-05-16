@@ -3,26 +3,31 @@ using ArcardnoidShared.Framework.Components.UI;
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.ServiceProvider.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArcardnoidContent.Components.MainMenu
 {
     public class SeedFrame : GameComponent
     {
+        #region Private Properties
+
         private Input Input { get; set; }
         private Action OnCancel { get; set; }
         private Action OnConfirm { get; set; }
         private Random Random { get; set; } = new Random();
+
+        #endregion Private Properties
+
+        #region Public Constructors
 
         public SeedFrame(Action onConfirm, Action onCancel) : base(672, 1081)
         {
             OnConfirm = onConfirm;
             OnCancel = onCancel;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public int GetSeed()
         {
@@ -46,5 +51,7 @@ namespace ArcardnoidContent.Components.MainMenu
             //seed = 123456.ToString();
             Input.SetValue(seed);
         }
+
+        #endregion Public Methods
     }
 }

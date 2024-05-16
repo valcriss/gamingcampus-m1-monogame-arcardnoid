@@ -3,22 +3,37 @@ using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
-
 namespace ArcardnoidContent.Components.GameScene.UI
 {
     public class HeartUI : GameComponent
     {
-        private ITexture heartTexture;
-        private HearState state = HearState.Filling;
-        private Dictionary<HearState, List<Rectangle>> _rectangles;
+        #region Private Fields
+
         private int _currentFrame = 0;
         private double _elapsedTime = 0;
         private double _frameSpeed = 0.05;
         private Rectangle _imageBounds;
+        private Dictionary<HearState, List<Rectangle>> _rectangles;
+        private ITexture heartTexture;
+        private HearState state = HearState.Filling;
 
-        public HeartUI(int x, int y) : base( x, y, 58, 50)
+        #endregion Private Fields
+
+        #region Public Constructors
+
+        public HeartUI(int x, int y) : base(x, y, 58, 50)
         {
             _rectangles = new Dictionary<HearState, List<Rectangle>>();
+        }
+
+        #endregion Public Constructors
+
+        #region Public Methods
+
+        public override void Draw()
+        {
+            base.Draw();
+            heartTexture.DrawTexture(Bounds, _imageBounds, Color, Rotation, Point.Zero);
         }
 
         public override void Load()
@@ -43,11 +58,6 @@ namespace ArcardnoidContent.Components.GameScene.UI
                     _rectangles[HearState.Emptying].Add(new Rectangle(x, y, 260, 220));
                 }
             }
-        }
-        public override void Draw()
-        {
-            base.Draw();
-            heartTexture.DrawTexture(Bounds, _imageBounds, Color, Rotation, Point.Zero);
         }
 
         public override void Update(float delta)
@@ -74,5 +84,7 @@ namespace ArcardnoidContent.Components.GameScene.UI
             }
             _imageBounds = _rectangles[state][_currentFrame];
         }
+
+        #endregion Public Methods
     }
 }

@@ -1,5 +1,4 @@
-﻿using arcardnoid.Models.Framework.Exceptions;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Reflection;
@@ -38,7 +37,7 @@ namespace arcardnoid.Models.Framework.Tools
             }
             catch (Exception ex)
             {
-                throw new GameException($"Impossible de lire le fichier {Filename}", ex);
+                throw new Exception($"Impossible de lire le fichier {Filename}", ex);
             }
         }
 
@@ -55,7 +54,7 @@ namespace arcardnoid.Models.Framework.Tools
             }
             catch (Exception ex)
             {
-                throw new GameException($"Impossible de sauvegarder le fichier {Filename}", ex);
+                throw new Exception($"Impossible de sauvegarder le fichier {Filename}", ex);
             }
         }
 

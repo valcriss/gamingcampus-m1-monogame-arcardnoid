@@ -5,8 +5,6 @@ using ArcardnoidShared.Framework.Scenes.Animations;
 using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Enums;
-using ArcardnoidShared.Framework.Tools;
-
 
 namespace ArcardnoidContent.Components.GameScene
 {
@@ -16,6 +14,7 @@ namespace ArcardnoidContent.Components.GameScene
 
         private BitmapText BitmapText { get; set; } = null;
         private IPrimitives2D Primitives2D => GameServiceProvider.GetService<IPrimitives2D>();
+
         #endregion Private Properties
 
         #region Private Fields
@@ -64,7 +63,7 @@ namespace ArcardnoidContent.Components.GameScene
         public void Close()
         {
             BitmapText.InnerUnload();
-            this.AddAnimation<LoadingScreen>(new AlphaFadeAnimation( 1f, 1, 0, false, true, EaseType.Linear, () => { InnerUnload(); }));
+            this.AddAnimation<LoadingScreen>(new AlphaFadeAnimation(1f, 1, 0, false, true, EaseType.Linear, () => { InnerUnload(); }));
         }
 
         public override void Draw()

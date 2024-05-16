@@ -15,18 +15,33 @@ namespace ArcardnoidContent.Components.DemoScene
 {
     public class DynamicGameMap : GameComponent
     {
+        #region Private Properties
+
         private string Filter { get; set; }
+
+        private IPrimitives2D Primitives2D => GameServiceProvider.GetService<IPrimitives2D>();
+
+        #endregion Private Properties
+
+        #region Private Fields
 
         private ITexture _blockTexture;
         private bool _forceDebug;
         private MapItem _mapItem;
         private List<ITexture> _mapTextures = new List<ITexture>();
-        private IPrimitives2D Primitives2D => GameServiceProvider.GetService<IPrimitives2D>();
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public DynamicGameMap(bool forceDebug = false) : base(28, 28)
         {
             _forceDebug = forceDebug;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public static T LoadFromFile<T>(string filename) where T : new()
         {
@@ -86,6 +101,10 @@ namespace ArcardnoidContent.Components.DemoScene
         {
             _forceDebug = forceDebug;
         }
+
+        #endregion Public Methods
+
+        #region Private Methods
 
         private void DrawGrid()
         {
@@ -247,7 +266,7 @@ namespace ArcardnoidContent.Components.DemoScene
                     {
                         MapChunkSpawn spawn = chunk.MapChunk.Spawns.FirstOrDefault(c => c.X == x && c.Y == y);
                         ITexture texture = _blockTexture;
-                        MapCell cell = new MapCell( texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), 0, 0);
+                        MapCell cell = new MapCell(texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), 0, 0);
                         cell.Color = GameColor.Yellow;
                         cell.Opacity = 0.35f;
                         AddGameComponent(cell);
@@ -258,5 +277,7 @@ namespace ArcardnoidContent.Components.DemoScene
                 RealY++;
             }
         }
+
+        #endregion Private Methods
     }
 }

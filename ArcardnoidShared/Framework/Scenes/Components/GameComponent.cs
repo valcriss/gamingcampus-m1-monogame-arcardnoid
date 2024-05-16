@@ -7,13 +7,6 @@ namespace ArcardnoidShared.Framework.Scenes.Components
     {
         #region Public Properties
 
-        public virtual Point Position
-        {
-            get => Bounds.Position;
-            set => Bounds.SetPosition(value);
-        }
-
-
         public virtual Rectangle Bounds
         {
             get
@@ -52,6 +45,12 @@ namespace ArcardnoidShared.Framework.Scenes.Components
 
         public GameComponent? Parent { get; set; }
 
+        public virtual Point Position
+        {
+            get => Bounds.Position;
+            set => Bounds.SetPosition(value);
+        }
+
         public virtual Rectangle RealBounds
         {
             get
@@ -86,6 +85,12 @@ namespace ArcardnoidShared.Framework.Scenes.Components
 
         #endregion Public Properties
 
+        #region Protected Properties
+
+        protected List<AnimationChain> Animations { get; set; } = new List<AnimationChain>();
+
+        #endregion Protected Properties
+
         #region Private Fields
 
         private Rectangle _bounds = Rectangle.Empty;
@@ -105,11 +110,7 @@ namespace ArcardnoidShared.Framework.Scenes.Components
             _scale = scale;
         }
 
-        #region Protected Properties
-
-        protected List<AnimationChain> Animations { get; set; } = new List<AnimationChain>();
-
-        #endregion Protected Properties
+        #endregion Public Constructors
 
         #region Public Methods
 
@@ -151,7 +152,5 @@ namespace ArcardnoidShared.Framework.Scenes.Components
         }
 
         #endregion Public Methods
-
-        #endregion Public Constructors
     }
 }

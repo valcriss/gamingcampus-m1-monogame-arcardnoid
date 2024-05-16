@@ -3,12 +3,6 @@ using ArcardnoidShared.Framework.Components.Text;
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.ServiceProvider.Enums;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArcardnoidContent.Components.GameScene.UI
 {

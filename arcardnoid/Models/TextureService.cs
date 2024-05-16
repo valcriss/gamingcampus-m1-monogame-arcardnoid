@@ -1,26 +1,33 @@
 ﻿using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace arcardnoid.Models
 {
     public class TextureService : ITextureService
     {
+        #region Private Properties
+
         private ArCardNoidGame Game { get; set; }
+
+        #endregion Private Properties
+
+        #region Public Constructors
 
         public TextureService(ArCardNoidGame game)
         {
             Game = game;
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
         public ITexture Load(string assetName)
         {
             Texture2D texture = Game.Content.Load<Texture2D>(assetName);
             return new MonoGameTexture(Game, texture);
         }
+
+        #endregion Public Methods
     }
 }

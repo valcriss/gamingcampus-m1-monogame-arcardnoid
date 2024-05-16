@@ -27,8 +27,8 @@ namespace ArcardnoidShared.Framework.Tools
         }
 
         public static Rectangle Scale(Rectangle rectangle)
-        {            
-            return new Rectangle(rectangle.X * _widthRatio, rectangle.Y * _heightRatio, rectangle.Width * _widthRatio,rectangle.Height * _heightRatio);
+        {
+            return new Rectangle(rectangle.X * _widthRatio, rectangle.Y * _heightRatio, rectangle.Width * _widthRatio, rectangle.Height * _heightRatio);
         }
 
         public static float Scale()

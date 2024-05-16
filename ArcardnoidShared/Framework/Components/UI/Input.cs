@@ -5,17 +5,13 @@ using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using ArcardnoidShared.Framework.Tools;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace ArcardnoidShared.Framework.Components.UI
 {
     public class Input : GameComponent
     {
+        #region Public Properties
+
         public Rectangle CenterRectangle { get; set; }
         public string InputAsset { get; set; }
         public int InputWidth { get; set; }
@@ -26,7 +22,15 @@ namespace ArcardnoidShared.Framework.Components.UI
         public Rectangle LeftRectangle { get; set; }
         public Rectangle RightRectangle { get; set; }
 
+        #endregion Public Properties
+
+        #region Private Properties
+
         private BitmapText Text { get; set; }
+
+        #endregion Private Properties
+
+        #region Private Fields
 
         private double _cursorBlinkTime = 0.5;
         private bool _cursorVisible = true;
@@ -35,12 +39,20 @@ namespace ArcardnoidShared.Framework.Components.UI
         private DateTime _lastKeyTime = DateTime.Now;
         private string _text;
 
+        #endregion Private Fields
+
+        #region Public Constructors
+
         public Input(string inputAsset, string value = "", int x = 0, int y = 0, int width = 0) : base(x, y, width * 64, 128)
         {
             InputWidth = width;
             InputAsset = inputAsset;
             _text = value;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Draw()
         {
@@ -188,5 +200,7 @@ namespace ArcardnoidShared.Framework.Components.UI
             }
             Text.SetText(_text + (_cursorVisible && IsFocused ? "|" : ""));
         }
+
+        #endregion Public Methods
     }
 }

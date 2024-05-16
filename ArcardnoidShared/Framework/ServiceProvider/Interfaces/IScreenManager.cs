@@ -8,9 +8,9 @@ namespace ArcardnoidShared.Framework.ServiceProvider.Interfaces
 
         void Clear(GameColor color);
 
-        void SetSize(Point size);
-
         Point GetSize();
+
+        void SetSize(Point size);
 
         #endregion Public Methods
     }

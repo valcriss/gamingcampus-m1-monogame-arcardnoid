@@ -1,11 +1,6 @@
 ﻿using ArcardnoidContent.Components.Shared.Map.Models;
 using ArcardnoidContent.Tools;
 using ArcardnoidShared.Framework.Drawing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArcardnoidContent.Components.GameScene
 {
@@ -26,6 +21,10 @@ namespace ArcardnoidContent.Components.GameScene
         public int[,] Map { get; set; }
         public Queue<MapChunkDoor> OpenedDoor { get; set; }
 
+        public int PlayerPositionX { get; private set; }
+
+        public int PlayerPositionY { get; private set; }
+
         public int PositionX
         {
             get
@@ -41,9 +40,6 @@ namespace ArcardnoidContent.Components.GameScene
                 return ((15 - Height) * 64 / 2) + 60;
             }
         }
-
-        public int PlayerPositionX { get; private set; }
-        public int PlayerPositionY { get; private set; }
 
         public int Width { get; set; }
 
@@ -163,38 +159,6 @@ namespace ArcardnoidContent.Components.GameScene
             UpdateEmptyCellsBlocks(concatenatedChunk);
 
             return concatenatedChunk;
-        }
-
-        private MapChunk TrimChunk(MapChunk chunk)
-        {
-            int startX = chunk.GetChunkStartX();
-            int startY = chunk.GetChunkStartY();
-            int endX = chunk.GetChunkEndX();
-            int endY = chunk.GetChunkEndY();
-            PlayerPositionX -= startX;
-            PlayerPositionY -= startY;
-            // Mise a jour des spawns
-            for (int i = 0; i < chunk.Spawns.Count; i++)
-            {
-                MapChunkSpawn spawn = chunk.Spawns[i];
-                spawn.X -= startX;
-                spawn.Y -= startY;
-                chunk.Spawns[i] = spawn;
-            }
-
-            chunk.Blocks = chunk.Blocks.Trim(startX, startY, endX, endY);
-            // Mise a jour des layers
-            for (int i = 0; i < chunk.Layers.Count; i++)
-            {
-                chunk.Layers[i] = chunk.Layers[i].Trim(startX, startY, endX, endY);
-            }
-            int finalstartX = chunk.GetChunkStartX();
-            int finalstartY = chunk.GetChunkStartY();
-            int finalendX = chunk.GetChunkEndX();
-            int finalendY = chunk.GetChunkEndY();
-            Width = finalendX + 1;
-            Height = finalendY + 1;
-            return chunk;
         }
 
         public int GetCoverage()
@@ -434,6 +398,38 @@ namespace ArcardnoidContent.Components.GameScene
                 }
             }
             return true;
+        }
+
+        private MapChunk TrimChunk(MapChunk chunk)
+        {
+            int startX = chunk.GetChunkStartX();
+            int startY = chunk.GetChunkStartY();
+            int endX = chunk.GetChunkEndX();
+            int endY = chunk.GetChunkEndY();
+            PlayerPositionX -= startX;
+            PlayerPositionY -= startY;
+            // Mise a jour des spawns
+            for (int i = 0; i < chunk.Spawns.Count; i++)
+            {
+                MapChunkSpawn spawn = chunk.Spawns[i];
+                spawn.X -= startX;
+                spawn.Y -= startY;
+                chunk.Spawns[i] = spawn;
+            }
+
+            chunk.Blocks = chunk.Blocks.Trim(startX, startY, endX, endY);
+            // Mise a jour des layers
+            for (int i = 0; i < chunk.Layers.Count; i++)
+            {
+                chunk.Layers[i] = chunk.Layers[i].Trim(startX, startY, endX, endY);
+            }
+            int finalstartX = chunk.GetChunkStartX();
+            int finalstartY = chunk.GetChunkStartY();
+            int finalendX = chunk.GetChunkEndX();
+            int finalendY = chunk.GetChunkEndY();
+            Width = finalendX + 1;
+            Height = finalendY + 1;
+            return chunk;
         }
 
         private void UpdateEmptyCellsBlocks(MapChunk concatenatedChunk)

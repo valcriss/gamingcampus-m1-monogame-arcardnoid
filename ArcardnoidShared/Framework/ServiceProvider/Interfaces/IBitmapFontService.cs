@@ -6,7 +6,6 @@
 
         IBitmapFont Load(string assetName);
 
-
         #endregion Public Methods
     }
 }

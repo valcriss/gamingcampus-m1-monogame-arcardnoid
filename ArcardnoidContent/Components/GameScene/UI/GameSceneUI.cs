@@ -1,7 +1,6 @@
 ﻿using ArcardnoidShared.Framework.Components.Images;
 using ArcardnoidShared.Framework.Scenes.Components;
 
-
 namespace ArcardnoidContent.Components.GameScene.UI
 {
     public class GameSceneUI : GameComponent

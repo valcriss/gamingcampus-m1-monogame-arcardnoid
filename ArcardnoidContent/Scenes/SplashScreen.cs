@@ -22,11 +22,15 @@ namespace ArcardnoidContent.Scenes
             AddGameComponent(new TimeOutAction(4, ChangeScene));
         }
 
+        #endregion Public Constructors
+
+        #region Private Methods
+
         private void ChangeScene()
         {
             GameServiceProvider.GetService<IScenesManager>().SwitchScene(this, new MainMenu());
         }
 
-        #endregion Public Constructors
+        #endregion Private Methods
     }
 }

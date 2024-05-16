@@ -7,6 +7,8 @@ namespace ArcardnoidShared.Framework.Components.UI
 {
     public class Frame : GameComponent
     {
+        #region Private Properties
+
         private Rectangle Bottom { get; set; }
         private Rectangle BottomLeft { get; set; }
         private Rectangle BottomRight { get; set; }
@@ -20,10 +22,18 @@ namespace ArcardnoidShared.Framework.Components.UI
         private Rectangle TopLeft { get; set; }
         private Rectangle TopRight { get; set; }
 
+        #endregion Private Properties
+
+        #region Public Constructors
+
         public Frame(string frameAsset, int x = 0, int y = 0, int width = 0, int height = 0) : base(x, y, width, height)
         {
             FrameAsset = frameAsset;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Draw()
         {
@@ -81,5 +91,7 @@ namespace ArcardnoidShared.Framework.Components.UI
             }
             Rectangles.Add(new Rectangle[] { BottomRight, new Rectangle((int)RealBounds.X + (int)RealBounds.Width - width, (int)RealBounds.Y + (int)RealBounds.Height - height, width, height) });
         }
+
+        #endregion Public Methods
     }
 }

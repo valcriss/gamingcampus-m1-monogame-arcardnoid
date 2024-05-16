@@ -2,24 +2,34 @@
 using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using ArcardnoidShared.Framework.Tools;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArcardnoidShared.Framework.Scenes.Components
 {
     public class MouseInterractComponent : GameComponent
     {
+        #region Protected Properties
+
         protected MouseInterractState InterractState { get; set; } = MouseInterractState.Normal;
         protected Action? OnClick { get; set; } = null;
+
+        #endregion Protected Properties
+
+        #region Private Properties
+
         private bool WasPressed { get; set; } = false;
+
+        #endregion Private Properties
+
+        #region Public Constructors
 
         public MouseInterractComponent(Action? onClick = null, int x = 0, int y = 0, int width = 0, int height = 0, float rotation = 0, float scale = 1) : base(x, y, width, height, rotation, scale)
         {
             OnClick = onClick;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Update(float delta)
         {
@@ -51,5 +61,7 @@ namespace ArcardnoidShared.Framework.Scenes.Components
                 WasPressed = false;
             }
         }
+
+        #endregion Public Methods
     }
 }

@@ -8,37 +8,45 @@ using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using Newtonsoft.Json;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArcardnoidContent.Components.GameScene.UI
 {
     public class DialogFrame : GameComponent
     {
-        private Dictionary<PlayerFaceExpression, Rectangle> _playerFacesRect;
+        #region Private Properties
+
+        private Action Callback { get; set; }
+        private Image OponentFaceBack { get; set; }
+        private BitmapText OponentText { get; set; }
+        private ImagePart PlayerFace { get; set; }
+        private Image PlayerFaceBack { get; set; }
+        private BitmapText PlayerText { get; set; }
+
+        #endregion Private Properties
+
+        #region Private Fields
+
+        private Dictionary<string, GameComponent> _actorFace;
+        private EncounterDialog _currentDialog = null;
+        private int _currentDialogStep = 0;
         private PlayerFaceExpression _currentExpression = PlayerFaceExpression.Happy;
         private DialogCollection _dialogs;
         private Random _fastRandom;
-        private EncounterDialog _currentDialog = null;
-        private int _currentDialogStep = 0;
-        private Dictionary<string, GameComponent> _actorFace;
+        private Dictionary<PlayerFaceExpression, Rectangle> _playerFacesRect;
 
-        private Image PlayerFaceBack { get; set; }
-        private Image OponentFaceBack { get; set; }
+        #endregion Private Fields
 
-        private BitmapText PlayerText { get; set; }
-        private BitmapText OponentText { get; set; }
-
-        private ImagePart PlayerFace { get; set; }
-
-        private Action Callback { get; set; }
+        #region Public Constructors
 
         public DialogFrame() : base()
         {
             _fastRandom = new Random((DateTime.Now.Second + 1000));
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Load()
         {
@@ -80,6 +88,15 @@ namespace ArcardnoidContent.Components.GameScene.UI
             PlayerText.Visible = false;
             OponentFaceBack.Visible = false;
             Visible = false;
+        }
+
+        public void ShowDialog(EncounterType encounterType, Action callback)
+        {
+            Callback = callback;
+            EncounterDialogCollection items = _dialogs.EncounterDialogs.FirstOrDefault(c => c.Type == encounterType);
+            _currentDialog = items.EncounterDialogs[_fastRandom.Next(items.EncounterDialogs.Count - 1)];
+            _currentDialogStep = 0;
+            Visible = true;
         }
 
         public override void Update(float delta)
@@ -128,19 +145,16 @@ namespace ArcardnoidContent.Components.GameScene.UI
             }
         }
 
-        public void ShowDialog(EncounterType encounterType, Action callback)
-        {
-            Callback = callback;
-            EncounterDialogCollection items = _dialogs.EncounterDialogs.FirstOrDefault(c => c.Type == encounterType);
-            _currentDialog = items.EncounterDialogs[_fastRandom.Next(items.EncounterDialogs.Count - 1)];
-            _currentDialogStep = 0;
-            Visible = true;
-        }
+        #endregion Public Methods
+
+        #region Private Methods
 
         private DialogCollection LoadDialogs()
         {
             string filename = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Maps/Dialogs/dialogs.json");
             return JsonConvert.DeserializeObject<DialogCollection>(File.ReadAllText(filename));
         }
+
+        #endregion Private Methods
     }
 }

@@ -4,18 +4,31 @@ using ArcardnoidShared.Framework.Tools;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace arcardnoid.Models
 {
     public class MonoGameTexture : ITexture
     {
-        private Texture2D _texture;
+        #region Public Properties
+
+        public int Height => _texture.Height;
+        public int Width => _texture.Width;
+
+        #endregion Public Properties
+
+        #region Private Properties
+
         private ArCardNoidGame Game { get; set; }
+
+        #endregion Private Properties
+
+        #region Private Fields
+
+        private Texture2D _texture;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public MonoGameTexture(ArCardNoidGame game, Texture2D texture)
         {
@@ -23,14 +36,16 @@ namespace arcardnoid.Models
             Game = game;
         }
 
-        public int Height => _texture.Height;
+        #endregion Public Constructors
 
-        public int Width => _texture.Width;
+        #region Public Methods
 
         public void DrawTexture(ArcardnoidShared.Framework.Drawing.Rectangle destination, ArcardnoidShared.Framework.Drawing.Rectangle? source, GameColor color, float rotation, ArcardnoidShared.Framework.Drawing.Point origin)
         {
             ArcardnoidShared.Framework.Drawing.Rectangle sourceRect = source != null ? source : new ArcardnoidShared.Framework.Drawing.Rectangle(0, 0, _texture.Width, _texture.Height);
             Game.SpriteBatch.Draw(_texture, ScreenManager.Scale(destination).ToXnaRectangle().ToRectangle(), sourceRect.ToXnaRectangle().ToRectangle(), color.ToXnaColor(), MathHelper.ToRadians(rotation), origin.ToVector2(), SpriteEffects.None, 0);
         }
+
+        #endregion Public Methods
     }
 }

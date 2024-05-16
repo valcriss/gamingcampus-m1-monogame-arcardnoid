@@ -1,37 +1,47 @@
 ﻿using arcardnoid.Models.Framework.Tools;
+using ArcardnoidContent.Components.Shared.Map;
 using ArcardnoidContent.Components.Shared.Map.Cells;
 using ArcardnoidContent.Components.Shared.Map.Models;
-using ArcardnoidContent.Components.Shared.Map;
+using ArcardnoidContent.Tools;
+using ArcardnoidShared.Framework.Drawing;
+using ArcardnoidShared.Framework.Scenes.Components;
+using ArcardnoidShared.Framework.ServiceProvider;
+using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using ArcardnoidShared.Framework.Tools;
 using Newtonsoft.Json;
 using System.Reflection;
-using ArcardnoidShared.Framework.Scenes.Components;
-using ArcardnoidShared.Framework.Drawing;
-using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
-using ArcardnoidShared.Framework.ServiceProvider;
-using ArcardnoidContent.Tools;
-
 
 namespace ArcardnoidContent.Components.GameScene
 {
     public class RandomMap : GameComponent
     {
-        #region Public Properties
+        #region Public Events
+
         public event Action<Point> OnMapClickedEvent;
-        private IPrimitives2D Primitives2D => GameServiceProvider.GetService<IPrimitives2D>();
+
+        #endregion Public Events
+
+        #region Public Properties
 
         public MapHypothesis MapHypothesis { get; set; }
         public int MouseX { get; set; }
         public int MouseY { get; set; }
+
         #endregion Public Properties
+
+        #region Private Properties
+
+        private IPrimitives2D Primitives2D => GameServiceProvider.GetService<IPrimitives2D>();
+
+        #endregion Private Properties
 
         #region Private Fields
 
         private ITexture _blockTexture;
+        private DateTime _clickTime = DateTime.Now;
         private bool _forceDebug;
         private MapItem _mapItem;
         private List<ITexture> _mapTextures = new List<ITexture>();
-        private DateTime _clickTime = DateTime.Now;
 
         #endregion Private Fields
 
@@ -71,6 +81,36 @@ namespace ArcardnoidContent.Components.GameScene
             }
         }
 
+        public List<Point> GetPath(int playerPositionX, int playerPositionY, int x, int y)
+        {
+            Point source = new Point(playerPositionX, playerPositionY);
+            Point destination = new Point(x, y);
+            if (!isValid(source) || !isValid(destination)) return null;
+            List<Point> path = new List<Point>
+            {
+                source
+            };
+            Queue<List<Point>> queue = new Queue<List<Point>>();
+            queue.Enqueue(path);
+
+            while (queue.Count > 0)
+            {
+                List<Point> currentPath = queue.Dequeue();
+                Point currentPoint = currentPath.Last();
+                if (currentPoint == destination) return currentPath;
+                foreach (Point point in GetNeighbors(currentPoint).OrderBy(c => c.Distance(destination)))
+                {
+                    if (currentPath.Contains(point)) continue;
+                    List<Point> newPath = new List<Point>(currentPath)
+                    {
+                        point
+                    };
+                    queue.Enqueue(newPath);
+                }
+            }
+            return null;
+        }
+
         public override void Load()
         {
             base.Load();
@@ -78,6 +118,18 @@ namespace ArcardnoidContent.Components.GameScene
             _mapItem = new MapItem() { Width = MapHypothesis.Width, Height = MapHypothesis.Height, Size = 64 };
             _mapItem.Assets = LoadFromFile<List<MapAsset>>("Maps/chunkAssets.json");
             LoadAssets();
+            LoadTiles();
+        }
+
+        public void LoadTiles()
+        {
+            RemoveAllGameComponents();
+            LoadChunkLayer(new ChunkLayout() { MapChunk = MapHypothesis.FinalChunk, X = 0, Y = 0 });
+        }
+
+        public void ToggleDebug()
+        {
+            _forceDebug = !_forceDebug;
             LoadTiles();
         }
 
@@ -102,12 +154,6 @@ namespace ArcardnoidContent.Components.GameScene
                 MouseX = -1;
                 MouseY = -1;
             }
-        }
-
-        public void LoadTiles()
-        {
-            RemoveAllGameComponents();
-            LoadChunkLayer(new ChunkLayout() { MapChunk = MapHypothesis.FinalChunk, X = 0, Y = 0 });
         }
 
         #endregion Public Methods
@@ -174,6 +220,22 @@ namespace ArcardnoidContent.Components.GameScene
                 RealX = chunk.X;
                 RealY++;
             }
+        }
+
+        private List<Point> GetNeighbors(Point point)
+        {
+            List<Point> neighbors = new List<Point>();
+            if (isValid(new Point(point.X - 1, point.Y))) neighbors.Add(new Point(point.X - 1, point.Y));
+            if (isValid(new Point(point.X + 1, point.Y))) neighbors.Add(new Point(point.X + 1, point.Y));
+            if (isValid(new Point(point.X, point.Y - 1))) neighbors.Add(new Point(point.X, point.Y - 1));
+            if (isValid(new Point(point.X, point.Y + 1))) neighbors.Add(new Point(point.X, point.Y + 1));
+            return neighbors;
+        }
+
+        private bool isValid(Point point)
+        {
+            if (!(point.X >= 0 && point.X < _mapItem.Width && point.Y >= 0 && point.Y < _mapItem.Height)) return false;
+            return MapHypothesis.FinalChunk.Blocks.IsEmpty((int)point.X, (int)point.Y);
         }
 
         private void LoadAssets()
@@ -271,62 +333,6 @@ namespace ArcardnoidContent.Components.GameScene
                 RealY++;
             }
         }
-
-        public void ToggleDebug()
-        {
-            _forceDebug = !_forceDebug;
-            LoadTiles();
-        }
-
-        public List<Point> GetPath(int playerPositionX, int playerPositionY, int x, int y)
-        {
-            Point source = new Point(playerPositionX, playerPositionY);
-            Point destination = new Point(x, y);
-            if (!isValid(source) || !isValid(destination)) return null;
-            List<Point> path = new List<Point>
-            {
-                source
-            };
-            Queue<List<Point>> queue = new Queue<List<Point>>();
-            queue.Enqueue(path);
-
-            while (queue.Count > 0)
-            {
-                List<Point> currentPath = queue.Dequeue();
-                Point currentPoint = currentPath.Last();
-                if (currentPoint == destination) return currentPath;
-                foreach (Point point in GetNeighbors(currentPoint).OrderBy(c => c.Distance(destination)))
-                {
-                    if (currentPath.Contains(point)) continue;
-                    List<Point> newPath = new List<Point>(currentPath)
-                    {
-                        point
-                    };
-                    queue.Enqueue(newPath);
-                }
-            }
-            return null;
-        }
-
-        private List<Point> GetNeighbors(Point point)
-        {
-            List<Point> neighbors = new List<Point>();
-            if (isValid(new Point(point.X - 1, point.Y))) neighbors.Add(new Point(point.X - 1, point.Y));
-            if (isValid(new Point(point.X + 1, point.Y))) neighbors.Add(new Point(point.X + 1, point.Y));
-            if (isValid(new Point(point.X, point.Y - 1))) neighbors.Add(new Point(point.X, point.Y - 1));
-            if (isValid(new Point(point.X, point.Y + 1))) neighbors.Add(new Point(point.X, point.Y + 1));
-            return neighbors;
-        }
-
-
-
-        private bool isValid(Point point)
-        {
-            if (!(point.X >= 0 && point.X < _mapItem.Width && point.Y >= 0 && point.Y < _mapItem.Height)) return false;
-            return MapHypothesis.FinalChunk.Blocks.IsEmpty((int)point.X,(int)point.Y);
-        }
-
-
 
         #endregion Private Methods
     }

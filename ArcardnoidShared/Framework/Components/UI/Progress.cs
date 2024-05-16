@@ -6,21 +6,21 @@ using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using ArcardnoidShared.Framework.Tools;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace ArcardnoidShared.Framework.Components.UI
 {
     public class Progress : GameComponent
     {
+        #region Public Properties
+
         public string HoverAsset { get; set; }
         public string NormalAsset { get; set; }
         public string PressedAsset { get; set; }
         public float Value { get; set; } = 0;
+
+        #endregion Public Properties
+
+        #region Private Properties
 
         private int BarWidth { get; set; }
         private ITexture CurrentLeftTexture { get; set; }
@@ -31,9 +31,13 @@ namespace ArcardnoidShared.Framework.Components.UI
         private Rectangle MiddleRectangle { get; set; }
         private ITexture NormalTexture { get; set; }
         private ITexture PressedTexture { get; set; }
+        private IPrimitives2D Primitives2D { get; set; }
         private Rectangle RightRectangle { get; set; }
         private BitmapText Text { get; set; }
-        private IPrimitives2D Primitives2D { get; set; }
+
+        #endregion Private Properties
+
+        #region Public Constructors
 
         public Progress(string normalAsset, string hoverAsset, string pressedAsset, float value, int x = 0, int y = 0, int width = 0) : base(x, y, (width + 2) * 64, 64)
         {
@@ -44,20 +48,9 @@ namespace ArcardnoidShared.Framework.Components.UI
             BarWidth = width;
         }
 
-        public override void Load()
-        {
-            base.Load();
-            NormalTexture =GameServiceProvider.GetService<ITextureService>().Load(NormalAsset);
-            HoverTexture = GameServiceProvider.GetService<ITextureService>().Load(HoverAsset);
-            PressedTexture = GameServiceProvider.GetService<ITextureService>().Load(PressedAsset);
-            CurrentLeftTexture = NormalTexture;
-            CurrentRightTexture = NormalTexture;
-            LeftRectangle = new Rectangle(0, 0, 64, 64);
-            MiddleRectangle = new Rectangle(64, 0, 64, 64);
-            RightRectangle = new Rectangle(128, 0, 64, 64);
-            Text = AddGameComponent(new BitmapText("fonts/band", GetValueAsString(), 64 + ((BarWidth / 2) * 64), 28, TextHorizontalAlign.Center, TextVerticalAlign.Center, GameColor.Black));
-            Primitives2D = GameServiceProvider.GetService<IPrimitives2D>();
-        }
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public override void Draw()
         {
@@ -70,6 +63,21 @@ namespace ArcardnoidShared.Framework.Components.UI
                 CurrentLeftTexture.DrawTexture(new Rectangle((int)RealBounds.X + 64 + i * 64, (int)RealBounds.Y, 64, 64), MiddleRectangle, Color, 0, Point.Zero);
             }
             CurrentRightTexture.DrawTexture(new Rectangle((int)RealBounds.X + 64 + BarWidth * 64, (int)RealBounds.Y, 64, 64), RightRectangle, Color, 0, Point.Zero);
+        }
+
+        public override void Load()
+        {
+            base.Load();
+            NormalTexture = GameServiceProvider.GetService<ITextureService>().Load(NormalAsset);
+            HoverTexture = GameServiceProvider.GetService<ITextureService>().Load(HoverAsset);
+            PressedTexture = GameServiceProvider.GetService<ITextureService>().Load(PressedAsset);
+            CurrentLeftTexture = NormalTexture;
+            CurrentRightTexture = NormalTexture;
+            LeftRectangle = new Rectangle(0, 0, 64, 64);
+            MiddleRectangle = new Rectangle(64, 0, 64, 64);
+            RightRectangle = new Rectangle(128, 0, 64, 64);
+            Text = AddGameComponent(new BitmapText("fonts/band", GetValueAsString(), 64 + ((BarWidth / 2) * 64), 28, TextHorizontalAlign.Center, TextVerticalAlign.Center, GameColor.Black));
+            Primitives2D = GameServiceProvider.GetService<IPrimitives2D>();
         }
 
         public override void Update(float delta)
@@ -122,9 +130,15 @@ namespace ArcardnoidShared.Framework.Components.UI
             }
         }
 
+        #endregion Public Methods
+
+        #region Private Methods
+
         private string GetValueAsString()
         {
             return (Value * 100).ToString("0") + "%";
         }
+
+        #endregion Private Methods
     }
 }

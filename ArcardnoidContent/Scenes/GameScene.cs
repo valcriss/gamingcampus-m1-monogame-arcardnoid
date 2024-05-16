@@ -10,21 +10,26 @@ using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
-
 namespace ArcardnoidContent.Scenes
 {
     public class GameScene : Scene
     {
+        #region Private Properties
+
+        private DialogFrame DialogFrame { get; set; }
         private LoadingScreen LoadingScreen { get; set; }
         private GameSceneState LoadingState { get; set; } = GameSceneState.None;
         private Task LoadingTask { get; set; }
+        private MainCharacter MainCharacter { get; set; }
         private MapGenerator MapGenerator { get; set; }
         private PauseScreen PauseScreen { get; set; }
         private RandomMap RandomMap { get; set; }
-        private MainCharacter MainCharacter { get; set; }
-        private DialogFrame DialogFrame { get; set; }
-
         private int Seed { get; set; }
+
+        #endregion Private Properties
+
+        #region Public Constructors
+
         public GameScene(int seed = 123456)
         {
             BackgroundColor = new GameColor(71, 171, 169, 255);
@@ -32,30 +37,16 @@ namespace ArcardnoidContent.Scenes
             MapGenerator = new MapGenerator(Seed);
         }
 
+        #endregion Public Constructors
+
+        #region Public Methods
+
         public override void Load()
         {
             base.Load();
             AddGameComponent(new GameMapBackground());
             AddGameComponent(new BitmapText("fonts/regular", $"Graine : {Seed}", 10, 1050, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.White));
             LoadingScreen = AddGameComponent(new LoadingScreen());
-        }
-
-        private void OnResume()
-        {
-            RandomMap.Enabled = true;
-            MainCharacter.Enabled = true;
-        }
-
-        private void OnDebug()
-        {
-            OnResume();
-            RandomMap.ToggleDebug();
-            MainCharacter.ToggleDebug();
-        }
-
-        private void OnQuit()
-        {
-           GameServiceProvider.GetService<IScenesManager>().SwitchScene(this, new MainMenu());
         }
 
         public override void Update(float delta)
@@ -90,6 +81,39 @@ namespace ArcardnoidContent.Scenes
             }
         }
 
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private void OnDebug()
+        {
+            OnResume();
+            RandomMap.ToggleDebug();
+            MainCharacter.ToggleDebug();
+        }
+
+        private void OnEncounter(EncounterType type, double distanceFromStart)
+        {
+            System.Diagnostics.Debug.WriteLine("Encounter : " + type + " at " + distanceFromStart + " from start");
+            DialogFrame.ShowDialog(type, null);
+        }
+
+        private void OnMapClicked(Point point)
+        {
+            MainCharacter.SetCurrentPath(RandomMap.GetPath((int)MainCharacter.CurrentCell.X, (int)MainCharacter.CurrentCell.Y, (int)point.X, (int)point.Y));
+        }
+
+        private void OnQuit()
+        {
+            GameServiceProvider.GetService<IScenesManager>().SwitchScene(this, new MainMenu());
+        }
+
+        private void OnResume()
+        {
+            RandomMap.Enabled = true;
+            MainCharacter.Enabled = true;
+        }
+
         private void PostLoadMap()
         {
             RandomMap = AddGameComponent(new RandomMap(MapGenerator.MapHypothesis, false));
@@ -102,15 +126,6 @@ namespace ArcardnoidContent.Scenes
             AddGameComponent(new Cursor("ui/cursors/01", new Point(12, 16)));
         }
 
-        private void OnMapClicked(Point point)
-        {
-            MainCharacter.SetCurrentPath(RandomMap.GetPath((int)MainCharacter.CurrentCell.X, (int)MainCharacter.CurrentCell.Y, (int)point.X, (int)point.Y));
-        }
-
-        private void OnEncounter(EncounterType type, double distanceFromStart)
-        {
-            System.Diagnostics.Debug.WriteLine("Encounter : " + type + " at " + distanceFromStart + " from start");
-            DialogFrame.ShowDialog(type, null);
-        }
+        #endregion Private Methods
     }
 }

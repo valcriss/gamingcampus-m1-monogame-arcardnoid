@@ -3,7 +3,6 @@ using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Animations;
 using ArcardnoidShared.Framework.Scenes.Components;
 
-
 namespace ArcardnoidContent.Components.GameScene
 {
     public class GameMapBackground : GameComponent

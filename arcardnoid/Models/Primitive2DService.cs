@@ -7,12 +7,22 @@ namespace arcardnoid.Models
 {
     public class Primitive2DService : IPrimitives2D
     {
+        #region Private Fields
 
         private SpriteBatch _spriteBatch;
+
+        #endregion Private Fields
+
+        #region Public Constructors
+
         public Primitive2DService(SpriteBatch spriteBatch)
         {
             _spriteBatch = spriteBatch;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         public void DrawArc(Point center, float radius, int sides, float startingAngle, float radians, GameColor color)
         {
@@ -121,7 +131,7 @@ namespace arcardnoid.Models
 
         public void FillRectangle(Point location, Point size, GameColor color, float angle)
         {
-            Primitives2D.FillRectangle(_spriteBatch, location.ToVector2(), size.ToVector2(), color.ToXnaColor(), angle);    
+            Primitives2D.FillRectangle(_spriteBatch, location.ToVector2(), size.ToVector2(), color.ToXnaColor(), angle);
         }
 
         public void PutPixel(float x, float y, GameColor color)
@@ -133,5 +143,7 @@ namespace arcardnoid.Models
         {
             Primitives2D.PutPixel(_spriteBatch, position.ToVector2(), color.ToXnaColor());
         }
+
+        #endregion Public Methods
     }
 }

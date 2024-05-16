@@ -1,12 +1,7 @@
 ﻿using ArcardnoidContent.Components.DemoScene;
 using ArcardnoidContent.Tools;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArcardnoidContent.Components.Shared.Map.Models
 {
@@ -102,6 +97,18 @@ namespace ArcardnoidContent.Components.Shared.Map.Models
             string[] table = line.Split(',');
             table[x] = GetEncountTypeCode(type);
             actorLayer.Data[y] = string.Join(",", table);
+        }
+
+        public EncounterType CheckCollision(int x, int y)
+        {
+            int count = Layers.Count(c => c.Name == "Actor Layer");
+            if (count == 0)
+            {
+                return EncounterType.None;
+            }
+            MapLayer actorLayer = Layers.FirstOrDefault(c => c.Name == "Actor Layer");
+            string code = actorLayer.GetLayerData(x, y);
+            return GetEncountTypeFromCode(code);
         }
 
         public List<MapChunkDoor> GetAllDoors()
@@ -307,18 +314,6 @@ namespace ArcardnoidContent.Components.Shared.Map.Models
                     return chunkDoorType == MapChunkDoorType.Right || chunkDoorType == MapChunkDoorType.TopRight || chunkDoorType == MapChunkDoorType.BottomRight;
             }
             return false;
-        }
-
-        public EncounterType CheckCollision(int x, int y)
-        {
-            int count = Layers.Count(c => c.Name == "Actor Layer");
-            if (count == 0)
-            {
-                return EncounterType.None;
-            }
-            MapLayer actorLayer = Layers.FirstOrDefault(c => c.Name == "Actor Layer");
-            string code = actorLayer.GetLayerData(x, y);
-            return GetEncountTypeFromCode(code);
         }
 
         #endregion Private Methods

@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ArcardnoidShared.Framework.ServiceProvider.Interfaces
+﻿namespace ArcardnoidShared.Framework.ServiceProvider.Interfaces
 {
     public interface IKeyboardService
     {
-        void Update();
-        bool IsKeyDown(string key);
+        #region Public Methods
 
         bool HasBeenPressed(string key);
+
+        bool IsKeyDown(string key);
+
+        void Update();
+
+        #endregion Public Methods
     }
 }

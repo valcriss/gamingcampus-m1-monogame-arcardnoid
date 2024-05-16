@@ -5,15 +5,14 @@
         #region Public Properties
 
         public static GameColor Black => new GameColor(0, 0, 0);
-        public static GameColor White => new GameColor(255, 255, 255);
-        public static GameColor Red => new GameColor(255, 0, 0);
         public static GameColor Cyan => new GameColor(0, 255, 255);
+        public static GameColor Red => new GameColor(255, 0, 0);
+        public static GameColor White => new GameColor(255, 255, 255);
         public static GameColor Yellow => new GameColor(255, 255, 0);
         public int A { get; set; }
         public int B { get; set; }
         public int G { get; set; }
         public int R { get; set; }
-        
 
         #endregion Public Properties
 

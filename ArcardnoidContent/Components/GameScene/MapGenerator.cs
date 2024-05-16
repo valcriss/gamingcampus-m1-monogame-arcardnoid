@@ -1,11 +1,6 @@
 ﻿using ArcardnoidContent.Components.Shared.Map.Models;
 using ArcardnoidContent.Tools;
 using ArcardnoidShared.Framework.Drawing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArcardnoidContent.Components.GameScene
 {

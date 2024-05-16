@@ -1,6 +1,8 @@
 ﻿using ArcardnoidContent.Components.Shared.Map.Models;
 using ArcardnoidContent.Tools;
 using ArcardnoidShared.Framework.Drawing;
+using ArcardnoidShared.Framework.ServiceProvider;
+using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
 namespace ArcardnoidContent.Components.GameScene
 {
@@ -16,7 +18,7 @@ namespace ArcardnoidContent.Components.GameScene
         #region Private Properties
 
         private List<MapChunk> Chunks { get; set; }
-        private Random Random { get; set; }
+        private IRandom Random { get; set; }
         private int Seed { get; set; }
         private MapChunk StartingChunk { get; set; }
         private List<MapChunk> StoredChunks { get; set; }
@@ -39,7 +41,7 @@ namespace ArcardnoidContent.Components.GameScene
         {
             Seed = seed;
             Chunks = new List<MapChunk>();
-            Random = new Random(seed);
+            Random = GameServiceProvider.GetService<IRandomService>().GetRandom(seed);
         }
 
         #endregion Public Constructors

@@ -55,6 +55,7 @@ namespace arcardnoid
             GameServiceProvider.RegisterService(new Primitive2DService(SpriteBatch));
             GameServiceProvider.RegisterService(new MouseService());
             GameServiceProvider.RegisterService(new KeyboardService());
+            GameServiceProvider.RegisterService(new RandomService());
             GameService.LoadGameContent();
         }
 

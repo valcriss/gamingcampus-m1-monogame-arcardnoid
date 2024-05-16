@@ -32,7 +32,7 @@ namespace ArcardnoidContent.Components.GameScene.UI
         private int _currentDialogStep = 0;
         private PlayerFaceExpression _currentExpression = PlayerFaceExpression.Happy;
         private DialogCollection _dialogs;
-        private Random _fastRandom;
+        private IRandom _fastRandom;
         private Dictionary<PlayerFaceExpression, Rectangle> _playerFacesRect;
 
         #endregion Private Fields
@@ -41,7 +41,7 @@ namespace ArcardnoidContent.Components.GameScene.UI
 
         public DialogFrame() : base()
         {
-            _fastRandom = new Random((DateTime.Now.Second + 1000));
+            _fastRandom = GameServiceProvider.GetService<IRandomService>().GetRandom((DateTime.Now.Second + 1000));
         }
 
         #endregion Public Constructors

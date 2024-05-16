@@ -1,4 +1,5 @@
 ﻿using ArcardnoidShared.Framework.Drawing;
+using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
 namespace ArcardnoidContent.Components.Shared.Map.Cells
@@ -7,7 +8,7 @@ namespace ArcardnoidContent.Components.Shared.Map.Cells
     {
         #region Private Properties
 
-        private static Random AnimRandom { get; set; } = new Random();
+        private static IRandom AnimRandom { get; set; } = GameServiceProvider.GetService<IRandomService>().GetRandom();
 
         #endregion Private Properties
 

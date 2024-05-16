@@ -1,6 +1,8 @@
 ﻿using ArcardnoidContent.Components.Shared.Map.Models;
 using ArcardnoidContent.Tools;
 using ArcardnoidShared.Framework.Drawing;
+using ArcardnoidShared.Framework.ServiceProvider;
+using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
 namespace ArcardnoidContent.Components.GameScene
 {
@@ -50,7 +52,7 @@ namespace ArcardnoidContent.Components.GameScene
         private int CurrentGold { get; set; } = 0;
         private int CurrentMeat { get; set; } = 0;
         private int CurrentSheep { get; set; } = 0;
-        private Random EncountersRandom { get; set; }
+        private IRandom EncountersRandom { get; set; }
 
         #endregion Private Properties
 
@@ -70,7 +72,7 @@ namespace ArcardnoidContent.Components.GameScene
             Height = height;
             Chunks = new List<MapChunkPosition>();
             OpenedDoor = new Queue<MapChunkDoor>();
-            EncountersRandom = new Random(seed);
+            EncountersRandom = GameServiceProvider.GetService<IRandomService>().GetRandom(seed);
             InitializeMap();
         }
 

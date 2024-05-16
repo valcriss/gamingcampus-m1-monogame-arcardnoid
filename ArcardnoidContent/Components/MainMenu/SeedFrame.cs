@@ -2,7 +2,9 @@
 using ArcardnoidShared.Framework.Components.UI;
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Components;
+using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Enums;
+using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
 namespace ArcardnoidContent.Components.MainMenu
 {
@@ -13,7 +15,7 @@ namespace ArcardnoidContent.Components.MainMenu
         private Input Input { get; set; }
         private Action OnCancel { get; set; }
         private Action OnConfirm { get; set; }
-        private Random Random { get; set; } = new Random();
+        private IRandom Random { get; set; } = GameServiceProvider.GetService<IRandomService>().GetRandom();
 
         #endregion Private Properties
 

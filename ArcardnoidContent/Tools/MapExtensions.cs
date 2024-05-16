@@ -1,5 +1,6 @@
 ﻿using ArcardnoidContent.Components.Shared.Map.Models;
 using ArcardnoidShared.Framework.Drawing;
+using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using Newtonsoft.Json;
 using System.Numerics;
 
@@ -118,7 +119,7 @@ namespace ArcardnoidContent.Tools
             return layer.GetLayerData(x, y) == "";
         }
 
-        public static List<T> RandomList<T>(this List<T> list, Random random)
+        public static List<T> RandomList<T>(this List<T> list, IRandom random)
         {
             if (list == null || list.Count == 0) return list;
             return list.OrderBy(c => random.Next()).ToList();

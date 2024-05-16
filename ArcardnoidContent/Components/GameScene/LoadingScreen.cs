@@ -5,6 +5,7 @@ using ArcardnoidShared.Framework.Scenes.Animations;
 using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Enums;
+using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
 namespace ArcardnoidContent.Components.GameScene
 {
@@ -43,7 +44,7 @@ namespace ArcardnoidContent.Components.GameScene
         };
 
         private int _messageIndex = 0;
-        private Random _messageRandom;
+        private IRandom _messageRandom;
 
         #endregion Private Fields
 
@@ -51,7 +52,7 @@ namespace ArcardnoidContent.Components.GameScene
 
         public LoadingScreen() : base()
         {
-            _messageRandom = new Random(DateTime.Now.Second + 1000);
+            _messageRandom = GameServiceProvider.GetService<IRandomService>().GetRandom(DateTime.Now.Second + 1000);
             this.Color = GameColor.Black;
             _messageIndex = _messageRandom.Next(0, _loadingMessages.Length - 1);
         }

@@ -1,5 +1,4 @@
-﻿using arcardnoid.Models.Framework.Components.Profiler;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace arcardnoid.Models.Framework.Scenes
 {
@@ -21,8 +20,6 @@ namespace arcardnoid.Models.Framework.Scenes
 
         public override void Update(GameTime gameTime)
         {
-            if (BaseGame.DebugMode)
-                ProfilerCollection.Clear();
             base.Update(gameTime);
         }
 

@@ -1,7 +1,6 @@
 ﻿using arcardnoid.Models.Content.Components.MainMenu;
 using arcardnoid.Models.Framework;
 using arcardnoid.Models.Framework.Animations;
-using arcardnoid.Models.Framework.Components.Profiler;
 using arcardnoid.Models.Framework.Components.UI;
 using arcardnoid.Models.Framework.Scenes;
 using Microsoft.Xna.Framework;
@@ -35,7 +34,6 @@ namespace arcardnoid.Models.Content.Scenes
             ParametersFrame = AddComponent(new ParametersFrame(OnParametersFrameCancelClicked));
             SeedFrame = AddComponent(new SeedFrame(OnNewGameConfirmButtonClicked, OnSeedFrameCancelClicked));
 
-            if (BaseGame.DebugMode) AddComponent(new ProfilerComponent());
             AddComponent(new Cursor("cursor", "ui/cursors/01", new Vector2(12, 16)));
         }
 

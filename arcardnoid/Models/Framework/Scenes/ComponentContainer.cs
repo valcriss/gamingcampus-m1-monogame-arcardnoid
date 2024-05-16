@@ -1,5 +1,4 @@
-﻿using arcardnoid.Models.Framework.Components.Profiler;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
@@ -97,11 +96,6 @@ namespace arcardnoid.Models.Framework.Scenes
                     {
                         DateTime start = DateTime.Now;
                         component.InnerUpdate(gameTime);
-                        if (BaseGame.DebugMode)
-                        {
-                            DateTime end = DateTime.Now;
-                            ProfilerCollection.Add(component.Name, (end - start).TotalMilliseconds);
-                        }
                     }
                     else if (component.State == ElementState.None)
                     {

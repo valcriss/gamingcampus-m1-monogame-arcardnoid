@@ -60,7 +60,6 @@ namespace arcardnoid.Models.Content.Components.UI
             {
                 Game.SpriteBatch.Draw(BandTexture, ScreenManager.Scale(insideBound), new Rectangle(64, 0, 64, 64), Color);
             }
-
             // Draw right
             Game.SpriteBatch.Draw(BandTexture, ScreenManager.Scale(RightBounds), new Rectangle(128, 0, 64, 64), Color);
         }

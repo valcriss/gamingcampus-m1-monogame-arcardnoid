@@ -106,7 +106,7 @@ namespace arcardnoid.Models.Content.Components.Map.Cells
 
         public override void Draw()
         {
-            if (SourceRect.IsEmpty == false)
+            if (SourceRect.IsEmpty != false)
                 Game.SpriteBatch.Draw(Texture2D, ScreenManager.Scale(DrawBounds).ToRectangle(), SourceRect.ToRectangle(), Color, MathHelper.ToRadians(Rotation), Origin, SpriteEffects.None, 0);
         }
 

@@ -18,6 +18,11 @@
             Y = y;
         }
 
+        public override bool Equals(object? obj)
+        {
+            return (Point)obj == this;
+        }
+
         #endregion Public Constructors
 
         #region Public Methods

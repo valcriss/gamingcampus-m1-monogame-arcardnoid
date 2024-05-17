@@ -40,7 +40,6 @@ namespace ArcardnoidShared.Framework.Components.UI
         {
             base.Update(delta);
             IMouseService mouseService = GameServiceProvider.GetService<IMouseService>();
-            mouseService.Update();
             Point mousePosition = mouseService.GetMousePosition();
             Point mousePoint = ScreenManager.UIScale(mousePosition);
             CursorImage.Position = new Point(mousePoint.X + (int)Offset.X, mousePoint.Y + (int)Offset.Y);

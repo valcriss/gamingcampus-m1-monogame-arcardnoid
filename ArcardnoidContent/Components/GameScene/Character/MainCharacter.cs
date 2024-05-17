@@ -25,7 +25,7 @@ namespace ArcardnoidContent.Components.GameScene.Character
 
         #region Private Properties
 
-        private List<Point> CurrentPath { get; set; } = null;
+        private List<Point>? CurrentPath { get; set; } = null;
         private Point InitialCell { get; set; }
         private IPrimitives2D Primitives2D => GameServiceProvider.GetService<IPrimitives2D>();
         private RandomMap RandomMap { get; set; }
@@ -92,7 +92,7 @@ namespace ArcardnoidContent.Components.GameScene.Character
             });
         }
 
-        public void SetCurrentPath(List<Point> path)
+        public void SetCurrentPath(List<Point>? path)
         {
             CurrentPath = path;
             _currentPathIndex = 0;

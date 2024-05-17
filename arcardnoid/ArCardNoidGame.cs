@@ -61,6 +61,8 @@ namespace arcardnoid
 
         protected override void Update(GameTime gameTime)
         {
+            GameServiceProvider.GetService<IMouseService>().Update();
+            GameServiceProvider.GetService<IKeyboardService>().Update();
             GameService.UpdateGame((float)gameTime.ElapsedGameTime.TotalSeconds);
             base.Update(gameTime);
         }

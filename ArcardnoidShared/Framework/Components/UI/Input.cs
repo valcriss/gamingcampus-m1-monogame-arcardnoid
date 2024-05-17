@@ -89,7 +89,6 @@ namespace ArcardnoidShared.Framework.Components.UI
         {
             base.Update(delta);
             IMouseService mouseService = GameServiceProvider.GetService<IMouseService>();
-            mouseService.Update();
 
             Point mousePoint = ScreenManager.UIScale(mouseService.GetMousePosition());
             if (IsDisabled)
@@ -128,7 +127,6 @@ namespace ArcardnoidShared.Framework.Components.UI
                 }
 
                 IKeyboardService Keyboard = GameServiceProvider.GetService<IKeyboardService>();
-                Keyboard.Update();
 
                 if ((Keyboard.IsKeyDown("NumPad0") || Keyboard.IsKeyDown("D0")) && DateTime.Now.Subtract(_lastKeyTime).TotalMilliseconds > 100)
                 {

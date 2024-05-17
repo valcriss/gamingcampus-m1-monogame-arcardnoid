@@ -81,11 +81,12 @@ namespace ArcardnoidContent.Components.GameScene
             }
         }
 
-        public List<Point> GetPath(int playerPositionX, int playerPositionY, int x, int y)
+        public List<Point>? GetPath(int playerPositionX, int playerPositionY, int x, int y)
         {
             Point source = new Point(playerPositionX, playerPositionY);
             Point destination = new Point(x, y);
             if (!isValid(source) || !isValid(destination)) return null;
+            List<Point> done = new List<Point>();
             List<Point> path = new List<Point>
             {
                 source
@@ -99,8 +100,10 @@ namespace ArcardnoidContent.Components.GameScene
                 Point currentPoint = currentPath.Last();
                 if (currentPoint == destination) return currentPath;
                 foreach (Point point in GetNeighbors(currentPoint).OrderBy(c => c.Distance(destination)))
-                {
-                    if (currentPath.Contains(point)) continue;
+                {                    
+                    if (currentPath.Contains(point) || done.Contains(point)) continue;
+                    done.Add(point);
+                    System.Diagnostics.Debug.WriteLine(point);
                     List<Point> newPath = new List<Point>(currentPath)
                     {
                         point
@@ -137,7 +140,6 @@ namespace ArcardnoidContent.Components.GameScene
         {
             base.Update(delta);
             IMouseService mouseService = GameServiceProvider.GetService<IMouseService>();
-            mouseService.Update();
             Point mousePosition = ScreenManager.UIScale(mouseService.GetMousePosition());
             if (Bounds.Contains(mousePosition))
             {
@@ -166,7 +168,7 @@ namespace ArcardnoidContent.Components.GameScene
             {
                 int x1 = ScreenManager.ScaleX((int)RealBounds.X + (x * _mapItem.Size));
                 int y1 = ScreenManager.ScaleY((int)RealBounds.Y);
-                int x2 = ScreenManager.ScaleX((int)RealBounds.Y + (_mapItem.Height * _mapItem.Size));
+                int x2 = ScreenManager.ScaleX((int)RealBounds.X + (x * _mapItem.Size));
                 int y2 = ScreenManager.ScaleY((int)RealBounds.Y + (_mapItem.Height * _mapItem.Size));
                 Primitives2D.DrawLine(x1, y1, x2, y2, GameColor.White);
             }

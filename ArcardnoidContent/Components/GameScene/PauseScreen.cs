@@ -62,7 +62,7 @@ namespace ArcardnoidContent.Components.GameScene
 
         private void Close(Action callBack)
         {
-            PauseDialog.AddAnimations<PauseDialog>(GetDialogHideAnimations(() => BackgroundHideStart(callBack)));
+            PauseDialog.AddAnimations<PauseDialog>(GetDialogHideAnimations(() => BackgroundHideStart(()=> { PauseDialog.Visible = false; callBack(); } )));
         }
 
         private AnimationChain[] GetDialogAppearAnimations()
@@ -96,6 +96,11 @@ namespace ArcardnoidContent.Components.GameScene
         private void OnResumeClicked()
         {
             Close(OnResume);
+        }
+
+        internal bool IsOpened()
+        {
+            return PauseDialog.Visible;
         }
 
         #endregion Private Methods

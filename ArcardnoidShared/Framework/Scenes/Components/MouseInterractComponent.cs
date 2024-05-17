@@ -35,7 +35,7 @@ namespace ArcardnoidShared.Framework.Scenes.Components
         {
             base.Update(delta);
             IMouseService mouseService = GameServiceProvider.GetService<IMouseService>();
-            mouseService.Update();
+
             Point mousePosition = mouseService.GetMousePosition();
             Point mousePoint = ScreenManager.UIScale(mousePosition);
             if (RealBounds.Contains(mousePoint))

@@ -72,7 +72,7 @@ namespace ArcardnoidContent.Scenes
 
             if (LoadingState == GameSceneState.Loaded)
             {
-                if (keyboard.IsKeyDown("Escape"))
+                if (keyboard.HasBeenPressed("Escape"))
                 {
                     RandomMap.Enabled = false;
                     MainCharacter.Enabled = false;
@@ -100,6 +100,10 @@ namespace ArcardnoidContent.Scenes
 
         private void OnMapClicked(Point point)
         {
+            if(PauseScreen.IsOpened() || DialogFrame.IsOpened())
+            {
+                return;
+            }
             MainCharacter.SetCurrentPath(RandomMap.GetPath((int)MainCharacter.CurrentCell.X, (int)MainCharacter.CurrentCell.Y, (int)point.X, (int)point.Y));
         }
 

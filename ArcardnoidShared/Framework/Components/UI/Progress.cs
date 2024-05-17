@@ -84,7 +84,7 @@ namespace ArcardnoidShared.Framework.Components.UI
         {
             base.Update(delta);
             IMouseService mouseService = GameServiceProvider.GetService<IMouseService>();
-            mouseService.Update();
+
             Point mousePoint = ScreenManager.UIScale(mouseService.GetMousePosition());
             Rectangle LeftRealBounds = new Rectangle((int)RealBounds.X, (int)RealBounds.Y, 64, 64);
             Rectangle RightRealBounds = new Rectangle((int)RealBounds.X + 64 + BarWidth * 64, (int)RealBounds.Y, 64, 64);

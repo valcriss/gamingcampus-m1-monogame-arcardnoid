@@ -131,8 +131,8 @@ namespace ArcardnoidContent.Components.GameScene.UI
             }
 
             IKeyboardService keyboard = GameServiceProvider.GetService<IKeyboardService>();
-            keyboard.Update();
-            if (keyboard.HasBeenPressed("Space"))
+            IMouseService mouse = GameServiceProvider.GetService<IMouseService>();
+            if (keyboard.HasBeenPressed("Space") || mouse.IsMouseLeftButtonPressed())
             {
                 _currentDialogStep++;
                 if (_currentDialogStep >= _currentDialog.Steps.Count)
@@ -153,6 +153,11 @@ namespace ArcardnoidContent.Components.GameScene.UI
         {
             string filename = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Maps/Dialogs/dialogs.json");
             return JsonConvert.DeserializeObject<DialogCollection>(File.ReadAllText(filename));
+        }
+
+        internal bool IsOpened()
+        {
+            return Visible;
         }
 
         #endregion Private Methods

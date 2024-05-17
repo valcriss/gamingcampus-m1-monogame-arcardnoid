@@ -7,7 +7,7 @@ namespace arcardnoid.Models
     public class MouseService : IMouseService
     {
         #region Private Properties
-
+        private MouseState PreviousMouseState { get; set; }
         private MouseState State { get; set; }
 
         #endregion Private Properties
@@ -21,11 +21,12 @@ namespace arcardnoid.Models
 
         public bool IsMouseLeftButtonPressed()
         {
-            return State.LeftButton == ButtonState.Pressed;
+            return State.LeftButton == ButtonState.Pressed && PreviousMouseState.LeftButton == ButtonState.Released;
         }
 
         public void Update()
         {
+            PreviousMouseState = State;
             State = Mouse.GetState();
         }
 

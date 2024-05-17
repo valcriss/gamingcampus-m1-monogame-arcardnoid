@@ -1,5 +1,4 @@
-﻿using ArcardnoidContent.Components.DemoScene;
-using ArcardnoidContent.Tools;
+﻿using ArcardnoidContent.Tools;
 using Newtonsoft.Json;
 using System.Reflection;
 

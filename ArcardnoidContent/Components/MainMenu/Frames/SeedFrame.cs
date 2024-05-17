@@ -6,7 +6,7 @@ using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
-namespace ArcardnoidContent.Components.MainMenu
+namespace ArcardnoidContent.Components.MainMenu.Frames
 {
     public class SeedFrame : GameComponent
     {

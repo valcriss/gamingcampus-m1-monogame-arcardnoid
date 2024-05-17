@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace ArcardnoidContent.Components.GameScene.UI
+namespace ArcardnoidContent.Components.GameScene.Dialogs
 {
     public class DialogStep
     {

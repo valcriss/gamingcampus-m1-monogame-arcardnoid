@@ -3,13 +3,13 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 
-namespace arcardnoid.Models.Framework.Tools
+namespace arcardnoid.Models.Tools
 {
     public static class Primitives2D
     {
         #region Private Fields
 
-        private static readonly Dictionary<String, List<Vector2>> circleCache = new Dictionary<string, List<Vector2>>();
+        private static readonly Dictionary<string, List<Vector2>> circleCache = new Dictionary<string, List<Vector2>>();
 
         //private static readonly Dictionary<String, List<Vector2>> arcCache = new Dictionary<string, List<Vector2>>();
         private static Texture2D pixel;
@@ -30,7 +30,7 @@ namespace arcardnoid.Models.Framework.Tools
         /// <param name="color">         The color of the arc </param>
         public static void DrawArc(this SpriteBatch spriteBatch, Vector2 center, float radius, int sides, float startingAngle, float radians, Color color)
         {
-            DrawArc(spriteBatch, center, radius, sides, startingAngle, radians, color, 1.0f);
+            spriteBatch.DrawArc(center, radius, sides, startingAngle, radians, color, 1.0f);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace arcardnoid.Models.Framework.Tools
         /// <param name="color">       The color to use </param>
         public static void DrawLine(this SpriteBatch spriteBatch, float x1, float y1, float x2, float y2, Color color)
         {
-            DrawLine(spriteBatch, new Vector2(x1, y1), new Vector2(x2, y2), color, 1.0f);
+            spriteBatch.DrawLine(new Vector2(x1, y1), new Vector2(x2, y2), color, 1.0f);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace arcardnoid.Models.Framework.Tools
         /// <param name="thickness">   The thickness of the line </param>
         public static void DrawLine(this SpriteBatch spriteBatch, float x1, float y1, float x2, float y2, Color color, float thickness)
         {
-            DrawLine(spriteBatch, new Vector2(x1, y1), new Vector2(x2, y2), color, thickness);
+            spriteBatch.DrawLine(new Vector2(x1, y1), new Vector2(x2, y2), color, thickness);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace arcardnoid.Models.Framework.Tools
         /// <param name="color">       The color to use </param>
         public static void DrawLine(this SpriteBatch spriteBatch, Vector2 point1, Vector2 point2, Color color)
         {
-            DrawLine(spriteBatch, point1, point2, color, 1.0f);
+            spriteBatch.DrawLine(point1, point2, color, 1.0f);
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace arcardnoid.Models.Framework.Tools
             // calculate the angle between the two vectors
             float angle = (float)Math.Atan2(point2.Y - point1.Y, point2.X - point1.X);
 
-            DrawLine(spriteBatch, point1, distance, angle, color, thickness);
+            spriteBatch.DrawLine(point1, distance, angle, color, thickness);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace arcardnoid.Models.Framework.Tools
         /// <param name="color">       The color to use </param>
         public static void DrawLine(this SpriteBatch spriteBatch, Vector2 point, float length, float angle, Color color)
         {
-            DrawLine(spriteBatch, point, length, angle, color, 1.0f);
+            spriteBatch.DrawLine(point, length, angle, color, 1.0f);
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace arcardnoid.Models.Framework.Tools
         /// <param name="color">       The color to draw the rectangle in </param>
         public static void DrawRectangle(this SpriteBatch spriteBatch, Rectangle rect, Color color)
         {
-            DrawRectangle(spriteBatch, rect, color, 1.0f);
+            spriteBatch.DrawRectangle(rect, color, 1.0f);
         }
 
         /// <summary>
@@ -231,10 +231,10 @@ namespace arcardnoid.Models.Framework.Tools
             // TODO: Handle rotations
             // TODO: Figure out the pattern for the offsets required and then handle it in the line instead of here
 
-            DrawLine(spriteBatch, new Vector2(rect.X, rect.Y), new Vector2(rect.Right, rect.Y), color, thickness); // top
-            DrawLine(spriteBatch, new Vector2(rect.X + 1f, rect.Y), new Vector2(rect.X + 1f, rect.Bottom + thickness), color, thickness); // left
-            DrawLine(spriteBatch, new Vector2(rect.X, rect.Bottom), new Vector2(rect.Right, rect.Bottom), color, thickness); // bottom
-            DrawLine(spriteBatch, new Vector2(rect.Right + 1f, rect.Y), new Vector2(rect.Right + 1f, rect.Bottom + thickness), color, thickness); // right
+            spriteBatch.DrawLine(new Vector2(rect.X, rect.Y), new Vector2(rect.Right, rect.Y), color, thickness); // top
+            spriteBatch.DrawLine(new Vector2(rect.X + 1f, rect.Y), new Vector2(rect.X + 1f, rect.Bottom + thickness), color, thickness); // left
+            spriteBatch.DrawLine(new Vector2(rect.X, rect.Bottom), new Vector2(rect.Right, rect.Bottom), color, thickness); // bottom
+            spriteBatch.DrawLine(new Vector2(rect.Right + 1f, rect.Y), new Vector2(rect.Right + 1f, rect.Bottom + thickness), color, thickness); // right
         }
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace arcardnoid.Models.Framework.Tools
         /// <param name="color">       The color to draw the rectangle in </param>
         public static void DrawRectangle(this SpriteBatch spriteBatch, Vector2 location, Vector2 size, Color color)
         {
-            DrawRectangle(spriteBatch, new Rectangle((int)location.X, (int)location.Y, (int)size.X, (int)size.Y), color, 1.0f);
+            spriteBatch.DrawRectangle(new Rectangle((int)location.X, (int)location.Y, (int)size.X, (int)size.Y), color, 1.0f);
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace arcardnoid.Models.Framework.Tools
         /// <param name="thickness">   The thickness of the line </param>
         public static void DrawRectangle(this SpriteBatch spriteBatch, Vector2 location, Vector2 size, Color color, float thickness)
         {
-            DrawRectangle(spriteBatch, new Rectangle((int)location.X, (int)location.Y, (int)size.X, (int)size.Y), color, thickness);
+            spriteBatch.DrawRectangle(new Rectangle((int)location.X, (int)location.Y, (int)size.X, (int)size.Y), color, thickness);
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace arcardnoid.Models.Framework.Tools
         /// <param name="color">       The color to draw the rectangle in </param>
         public static void FillRectangle(this SpriteBatch spriteBatch, Vector2 location, Vector2 size, Color color)
         {
-            FillRectangle(spriteBatch, location, size, color, 0.0f);
+            spriteBatch.FillRectangle(location, size, color, 0.0f);
         }
 
         /// <summary>
@@ -346,7 +346,7 @@ namespace arcardnoid.Models.Framework.Tools
         /// <param name="color">       The color to draw the rectangle in </param>
         public static void FillRectangle(this SpriteBatch spriteBatch, float x, float y, float w, float h, Color color)
         {
-            FillRectangle(spriteBatch, new Vector2(x, y), new Vector2(w, h), color, 0.0f);
+            spriteBatch.FillRectangle(new Vector2(x, y), new Vector2(w, h), color, 0.0f);
         }
 
         /// <summary>
@@ -361,12 +361,12 @@ namespace arcardnoid.Models.Framework.Tools
         /// <param name="angle">       The angle of the rectangle in radians </param>
         public static void FillRectangle(this SpriteBatch spriteBatch, float x, float y, float w, float h, Color color, float angle)
         {
-            FillRectangle(spriteBatch, new Vector2(x, y), new Vector2(w, h), color, angle);
+            spriteBatch.FillRectangle(new Vector2(x, y), new Vector2(w, h), color, angle);
         }
 
         public static void PutPixel(this SpriteBatch spriteBatch, float x, float y, Color color)
         {
-            PutPixel(spriteBatch, new Vector2(x, y), color);
+            spriteBatch.PutPixel(new Vector2(x, y), color);
         }
 
         public static void PutPixel(this SpriteBatch spriteBatch, Vector2 position, Color color)
@@ -402,7 +402,7 @@ namespace arcardnoid.Models.Framework.Tools
             double anglePerSide = MathHelper.TwoPi / sides;
 
             // "Rotate" to the starting point
-            while ((curAngle + (anglePerSide / 2.0)) < startingAngle)
+            while (curAngle + anglePerSide / 2.0 < startingAngle)
             {
                 curAngle += anglePerSide;
 
@@ -415,7 +415,7 @@ namespace arcardnoid.Models.Framework.Tools
             points.Add(points[0]);
 
             // Now remove the points at the end of the circle to create the arc
-            int sidesInArc = (int)((radians / anglePerSide) + 0.5);
+            int sidesInArc = (int)(radians / anglePerSide + 0.5);
             points.RemoveRange(sidesInArc + 1, points.Count - sidesInArc - 1);
 
             return points;
@@ -430,7 +430,7 @@ namespace arcardnoid.Models.Framework.Tools
         private static List<Vector2> CreateCircle(double radius, int sides)
         {
             // Look for a cached version of this circle
-            String circleKey = radius + "x" + sides;
+            string circleKey = radius + "x" + sides;
             if (circleCache.ContainsKey(circleKey))
             {
                 return circleCache[circleKey];
@@ -477,7 +477,7 @@ namespace arcardnoid.Models.Framework.Tools
 
             for (int i = 1; i < points.Count; i++)
             {
-                DrawLine(spriteBatch, points[i - 1] + position, points[i] + position, color, thickness);
+                spriteBatch.DrawLine(points[i - 1] + position, points[i] + position, color, thickness);
             }
         }
 

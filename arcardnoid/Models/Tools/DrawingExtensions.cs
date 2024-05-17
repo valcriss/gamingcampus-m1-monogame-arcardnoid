@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using MonoGame.Extended;
 
-namespace arcardnoid.Models.Framework.Tools
+namespace arcardnoid.Models.Tools
 {
     public static class DrawingExtensions
     {

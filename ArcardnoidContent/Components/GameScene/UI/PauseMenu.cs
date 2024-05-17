@@ -6,7 +6,7 @@ using ArcardnoidShared.Framework.ServiceProvider.Enums;
 
 namespace ArcardnoidContent.Components.GameScene.UI
 {
-    public class PauseDialog : GameComponent
+    public class PauseMenu : GameComponent
     {
         #region Private Properties
 
@@ -18,7 +18,7 @@ namespace ArcardnoidContent.Components.GameScene.UI
 
         #region Public Constructors
 
-        public PauseDialog(Action onResume, Action onDebug, Action onQuit) : base(672, 1081)
+        public PauseMenu(Action onResume, Action onDebug, Action onQuit) : base(672, 1081)
         {
             OnResume = onResume;
             OnDebug = onDebug;

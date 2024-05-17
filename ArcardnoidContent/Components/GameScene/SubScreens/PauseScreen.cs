@@ -1,9 +1,10 @@
-﻿using ArcardnoidContent.Components.GameScene.UI;
+﻿using ArcardnoidContent.Components.GameScene.Dialogs;
+using ArcardnoidContent.Components.GameScene.UI;
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Animations;
 using ArcardnoidShared.Framework.Scenes.Components;
 
-namespace ArcardnoidContent.Components.GameScene
+namespace ArcardnoidContent.Components.GameScene.SubScreens
 {
     public class PauseScreen : GameComponent
     {
@@ -13,7 +14,7 @@ namespace ArcardnoidContent.Components.GameScene
         private Action OnDebug { get; set; }
         private Action OnQuit { get; set; }
         private Action OnResume { get; set; }
-        private PauseDialog PauseDialog { get; set; }
+        private PauseMenu PauseDialog { get; set; }
 
         #endregion Private Properties
 
@@ -35,7 +36,7 @@ namespace ArcardnoidContent.Components.GameScene
             base.Load();
             DialogBackground = AddGameComponent(new DialogBackground());
             DialogBackground.Visible = false;
-            PauseDialog = AddGameComponent(new PauseDialog(OnResumeClicked, OnDebugClicked, OnQuitClicked));
+            PauseDialog = AddGameComponent(new PauseMenu(OnResumeClicked, OnDebugClicked, OnQuitClicked));
             PauseDialog.Visible = false;
         }
 
@@ -61,7 +62,7 @@ namespace ArcardnoidContent.Components.GameScene
         private void BackgroundAppearCompleted()
         {
             PauseDialog.Visible = true;
-            PauseDialog.AddAnimations<PauseDialog>(GetDialogAppearAnimations());
+            PauseDialog.AddAnimations<PauseMenu>(GetDialogAppearAnimations());
         }
 
         private void BackgroundHideStart(Action callBack)
@@ -71,7 +72,7 @@ namespace ArcardnoidContent.Components.GameScene
 
         private void Close(Action callBack)
         {
-            PauseDialog.AddAnimations<PauseDialog>(GetDialogHideAnimations(() => BackgroundHideStart(() => { PauseDialog.Visible = false; callBack(); })));
+            PauseDialog.AddAnimations<PauseMenu>(GetDialogHideAnimations(() => BackgroundHideStart(() => { PauseDialog.Visible = false; callBack(); })));
         }
 
         private AnimationChain[] GetDialogAppearAnimations()

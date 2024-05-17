@@ -4,7 +4,7 @@ using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.ServiceProvider.Enums;
 
-namespace ArcardnoidContent.Components.MainMenu
+namespace ArcardnoidContent.Components.MainMenu.Frames
 {
     public class QuitGameConfirm : GameComponent
     {

@@ -1,4 +1,5 @@
 ﻿using ArcardnoidContent.Components.MainMenu;
+using ArcardnoidContent.Components.MainMenu.Frames;
 using ArcardnoidContent.Components.UI;
 using ArcardnoidShared.Framework.Components.UI;
 using ArcardnoidShared.Framework.Drawing;

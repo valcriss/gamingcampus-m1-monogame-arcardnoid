@@ -1,4 +1,5 @@
 ﻿using arcardnoid.Models.Framework.Tools;
+using ArcardnoidContent.Components.Shared.Map;
 using ArcardnoidContent.Components.Shared.Map.Models;
 using ArcardnoidContent.Tools;
 using ArcardnoidShared.Framework.Drawing;

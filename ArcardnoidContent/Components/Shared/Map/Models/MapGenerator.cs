@@ -1,10 +1,10 @@
-﻿using ArcardnoidContent.Components.Shared.Map.Models;
+﻿using ArcardnoidContent.Components.GameScene;
 using ArcardnoidContent.Tools;
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
-namespace ArcardnoidContent.Components.GameScene
+namespace ArcardnoidContent.Components.Shared.Map.Models
 {
     public class MapGenerator
     {
@@ -119,7 +119,7 @@ namespace ArcardnoidContent.Components.GameScene
 
         private bool TryPlaceChunk(MapChunk chunk, MapHypothesis mapHypotesis, MapChunkDoor openedDoor)
         {
-            List<MapChunkDoorType> basicChunkDoorTypes = (new List<MapChunkDoorType>() { MapChunkDoorType.Top, MapChunkDoorType.Right, MapChunkDoorType.Bottom, MapChunkDoorType.Left }).RandomList(Random);
+            List<MapChunkDoorType> basicChunkDoorTypes = new List<MapChunkDoorType>() { MapChunkDoorType.Top, MapChunkDoorType.Right, MapChunkDoorType.Bottom, MapChunkDoorType.Left }.RandomList(Random);
             foreach (MapChunkDoorType doorType in basicChunkDoorTypes)
             {
                 List<MapChunkEntrance> compatibleEntrances = chunk.GetCompatibleOppositeEntrances(doorType).RandomList(Random);

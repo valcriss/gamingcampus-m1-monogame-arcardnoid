@@ -3,7 +3,7 @@ using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.ServiceProvider;
 
-namespace ArcardnoidContent.Components.GameScene.UI
+namespace ArcardnoidContent.Components.GameScene.Dialogs
 {
     public class DialogBackground : GameComponent
     {

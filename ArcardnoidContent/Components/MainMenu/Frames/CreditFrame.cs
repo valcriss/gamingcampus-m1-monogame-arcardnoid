@@ -4,7 +4,7 @@ using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.ServiceProvider.Enums;
 
-namespace ArcardnoidContent.Components.MainMenu
+namespace ArcardnoidContent.Components.MainMenu.Frames
 {
     public class CreditFrame : GameComponent
     {
@@ -48,7 +48,7 @@ namespace ArcardnoidContent.Components.MainMenu
                 if (item.Value == null) continue;
                 AddGameComponent(new BitmapText("fonts/band", item.Key, categoryX, y, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.Black));
                 AddGameComponent(new BitmapText("fonts/ken", item.Value, categoryContentX, y + 45, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.Black));
-                y += ((item.Value.Split('\n').Length - 1) * 22) + 70;
+                y += (item.Value.Split('\n').Length - 1) * 22 + 70;
             }
             AddGameComponent(new Button("Annuler", "ui/buttons/button-red-normal", "ui/buttons/button-red-hover", "ui/buttons/button-red-pressed", OnClose, 490, height - 124, 210, 64));
         }

@@ -7,7 +7,7 @@ using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
-namespace ArcardnoidContent.Components.GameScene
+namespace ArcardnoidContent.Components.GameScene.SubScreens
 {
     public class LoadingScreen : GameComponent
     {
@@ -53,7 +53,7 @@ namespace ArcardnoidContent.Components.GameScene
         public LoadingScreen() : base()
         {
             _messageRandom = GameServiceProvider.GetService<IRandomService>().GetRandom(DateTime.Now.Second + 1000);
-            this.Color = GameColor.Black;
+            Color = GameColor.Black;
             _messageIndex = _messageRandom.Next(0, _loadingMessages.Length - 1);
         }
 
@@ -64,7 +64,7 @@ namespace ArcardnoidContent.Components.GameScene
         public void Close()
         {
             BitmapText.InnerUnload();
-            this.AddAnimation<LoadingScreen>(new AlphaFadeAnimation(1f, 1, 0, false, true, EaseType.Linear, () => { InnerUnload(); }));
+            AddAnimation<LoadingScreen>(new AlphaFadeAnimation(1f, 1, 0, false, true, EaseType.Linear, () => { InnerUnload(); }));
         }
 
         public override void Draw()

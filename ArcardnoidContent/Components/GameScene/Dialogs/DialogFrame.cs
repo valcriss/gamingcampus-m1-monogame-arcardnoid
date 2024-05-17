@@ -1,4 +1,5 @@
-﻿using ArcardnoidContent.Components.Shared.Map.Models;
+﻿using ArcardnoidContent.Components.GameScene.UI;
+using ArcardnoidContent.Components.Shared.Map.Models;
 using ArcardnoidShared.Framework.Components.Images;
 using ArcardnoidShared.Framework.Components.Text;
 using ArcardnoidShared.Framework.Components.UI;
@@ -10,7 +11,7 @@ using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using Newtonsoft.Json;
 using System.Reflection;
 
-namespace ArcardnoidContent.Components.GameScene.UI
+namespace ArcardnoidContent.Components.GameScene.Dialogs
 {
     public class DialogFrame : GameComponent
     {
@@ -41,7 +42,7 @@ namespace ArcardnoidContent.Components.GameScene.UI
 
         public DialogFrame() : base()
         {
-            _fastRandom = GameServiceProvider.GetService<IRandomService>().GetRandom((DateTime.Now.Second + 1000));
+            _fastRandom = GameServiceProvider.GetService<IRandomService>().GetRandom(DateTime.Now.Second + 1000);
         }
 
         #endregion Public Constructors

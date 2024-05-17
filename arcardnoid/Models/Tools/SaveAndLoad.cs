@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Reflection;
 
-namespace arcardnoid.Models.Framework.Tools
+namespace arcardnoid.Models.Tools
 {
     public class SaveAndLoad<T> where T : class, new()
     {

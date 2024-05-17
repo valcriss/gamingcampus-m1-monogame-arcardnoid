@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using ArcardnoidContent.Components.GameScene.UI;
+using Newtonsoft.Json;
 
-namespace ArcardnoidContent.Components.GameScene.UI
+namespace ArcardnoidContent.Components.GameScene.Dialogs
 {
     public class DialogCollection
     {

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ArcardnoidContent.Components.GameScene.Dialogs;
+using Newtonsoft.Json;
 
 namespace ArcardnoidContent.Components.GameScene.UI
 {

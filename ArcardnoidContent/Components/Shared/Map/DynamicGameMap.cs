@@ -1,5 +1,4 @@
 ﻿using arcardnoid.Models.Framework.Tools;
-using ArcardnoidContent.Components.Shared.Map;
 using ArcardnoidContent.Components.Shared.Map.Cells;
 using ArcardnoidContent.Components.Shared.Map.Models;
 using ArcardnoidContent.Tools;
@@ -11,7 +10,7 @@ using ArcardnoidShared.Framework.Tools;
 using Newtonsoft.Json;
 using System.Reflection;
 
-namespace ArcardnoidContent.Components.DemoScene
+namespace ArcardnoidContent.Components.Shared.Map
 {
     public class DynamicGameMap : GameComponent
     {
@@ -110,18 +109,18 @@ namespace ArcardnoidContent.Components.DemoScene
         {
             for (int x = 0; x <= _mapItem.Width; x++)
             {
-                int x1 = ScreenManager.ScaleX((int)RealBounds.X + (x * _mapItem.Size));
+                int x1 = ScreenManager.ScaleX((int)RealBounds.X + x * _mapItem.Size);
                 int y1 = ScreenManager.ScaleY((int)RealBounds.Y);
-                int x2 = ScreenManager.ScaleX((int)RealBounds.X + (x * _mapItem.Size));
-                int y2 = ScreenManager.ScaleY((int)RealBounds.Y + (_mapItem.Height * _mapItem.Size));
+                int x2 = ScreenManager.ScaleX((int)RealBounds.X + x * _mapItem.Size);
+                int y2 = ScreenManager.ScaleY((int)RealBounds.Y + _mapItem.Height * _mapItem.Size);
                 Primitives2D.DrawLine(x1, y1, x2, y2, GameColor.White);
             }
             for (int y = 0; y <= _mapItem.Height; y++)
             {
                 int x1 = ScreenManager.ScaleX((int)RealBounds.X);
-                int y1 = ScreenManager.ScaleY((int)RealBounds.Y + (y * _mapItem.Size));
-                int x2 = ScreenManager.ScaleX((int)RealBounds.X + (_mapItem.Width * _mapItem.Size));
-                int y2 = ScreenManager.ScaleY((int)RealBounds.Y + (y * _mapItem.Size));
+                int y1 = ScreenManager.ScaleY((int)RealBounds.Y + y * _mapItem.Size);
+                int x2 = ScreenManager.ScaleX((int)RealBounds.X + _mapItem.Width * _mapItem.Size);
+                int y2 = ScreenManager.ScaleY((int)RealBounds.Y + y * _mapItem.Size);
                 Primitives2D.DrawLine(x1, y1, x2, y2, GameColor.White);
             }
         }
@@ -142,23 +141,23 @@ namespace ArcardnoidContent.Components.DemoScene
                         ITexture texture = _mapTextures[assetIndex];
                         if (mapAsset.Type == "spritesheet")
                         {
-                            AddGameComponent(new AnimatedCell(texture, mapAsset.Columns, mapAsset.Rows, mapAsset.Speed, mapAsset.DelayMin, mapAsset.DelayMax, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), mapAsset.OffsetX, mapAsset.OffsetY));
+                            AddGameComponent(new AnimatedCell(texture, mapAsset.Columns, mapAsset.Rows, mapAsset.Speed, mapAsset.DelayMin, mapAsset.DelayMax, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, mapAsset.OffsetX, mapAsset.OffsetY));
                         }
                         else if (mapAsset.Type == "multi")
                         {
-                            AddGameComponent(new MultiCell(texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), _mapItem.Size, mapAsset.OffsetX, mapAsset.OffsetY, MultiCell.GetMultiCellType(dataLines, x, y, chunk.MapChunk.Width, chunk.MapChunk.Height)));
+                            AddGameComponent(new MultiCell(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, _mapItem.Size, mapAsset.OffsetX, mapAsset.OffsetY, MultiCell.GetMultiCellType(dataLines, x, y, chunk.MapChunk.Width, chunk.MapChunk.Height)));
                         }
                         else if (mapAsset.Type == "multi2")
                         {
-                            AddGameComponent(new MultiCell2(texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), _mapItem.Size, mapAsset.OffsetX, mapAsset.OffsetY, MultiCell2.GetMultiCellType(dataLines, x, y, chunk.MapChunk.Width, chunk.MapChunk.Height)));
+                            AddGameComponent(new MultiCell2(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, _mapItem.Size, mapAsset.OffsetX, mapAsset.OffsetY, MultiCell2.GetMultiCellType(dataLines, x, y, chunk.MapChunk.Width, chunk.MapChunk.Height)));
                         }
                         else if (mapAsset.Type == "bridge")
                         {
-                            AddGameComponent(new BridgeCell(texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), _mapItem.Size, mapAsset.OffsetX, mapAsset.OffsetY, BridgeCell.GetMultiCellType(dataLines, x, y, chunk.MapChunk.Width, chunk.MapChunk.Height)));
+                            AddGameComponent(new BridgeCell(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, _mapItem.Size, mapAsset.OffsetX, mapAsset.OffsetY, BridgeCell.GetMultiCellType(dataLines, x, y, chunk.MapChunk.Width, chunk.MapChunk.Height)));
                         }
                         else
                         {
-                            AddGameComponent(new MapCell(texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), mapAsset.OffsetX, mapAsset.OffsetY));
+                            AddGameComponent(new MapCell(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, mapAsset.OffsetX, mapAsset.OffsetY));
                         }
                     }
                     RealX++;
@@ -190,7 +189,7 @@ namespace ArcardnoidContent.Components.DemoScene
                     if (assetIndex != -1)
                     {
                         ITexture texture = _blockTexture;
-                        MapCell cell = new MapCell(texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), 0, 0);
+                        MapCell cell = new MapCell(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, 0, 0);
                         cell.Color = GameColor.Red;
                         cell.Opacity = 0.25f;
                         AddGameComponent(cell);
@@ -240,7 +239,7 @@ namespace ArcardnoidContent.Components.DemoScene
                     {
                         MapChunkEntrance entrance = chunk.MapChunk.Entrances.FirstOrDefault(c => c.X == x && c.Y == y);
                         ITexture texture = _blockTexture;
-                        MapCell cell = new MapCell(texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), 0, 0);
+                        MapCell cell = new MapCell(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, 0, 0);
                         cell.Color = GameColor.Cyan;
                         cell.Opacity = 0.35f;
                         AddGameComponent(cell);
@@ -266,7 +265,7 @@ namespace ArcardnoidContent.Components.DemoScene
                     {
                         MapChunkSpawn spawn = chunk.MapChunk.Spawns.FirstOrDefault(c => c.X == x && c.Y == y);
                         ITexture texture = _blockTexture;
-                        MapCell cell = new MapCell(texture, RealX, RealY, (RealX * _mapItem.Size) + (_mapItem.Size / 2), (RealY * _mapItem.Size) + (_mapItem.Size / 2), 0, 0);
+                        MapCell cell = new MapCell(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, 0, 0);
                         cell.Color = GameColor.Yellow;
                         cell.Opacity = 0.35f;
                         AddGameComponent(cell);

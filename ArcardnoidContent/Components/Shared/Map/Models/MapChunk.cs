@@ -110,6 +110,21 @@ namespace ArcardnoidContent.Components.Shared.Map.Models
             return GetEncountTypeFromCode(code);
         }
 
+        public void ClearActor(int x, int y)
+        {
+            int count = Layers.Count(c => c.Name == "Actor Layer");
+            if (count == 0)
+            {
+                return;
+            }
+            MapLayer actorLayer = Layers.FirstOrDefault(c => c.Name == "Actor Layer");
+
+            string line = actorLayer.Data[y];
+            string[] table = line.Split(',');
+            table[x] = "";
+            actorLayer.Data[y] = string.Join(",", table);
+        }
+
         public List<MapChunkDoor> GetAllDoors()
         {
             List<MapChunkDoor> doors = new List<MapChunkDoor>();

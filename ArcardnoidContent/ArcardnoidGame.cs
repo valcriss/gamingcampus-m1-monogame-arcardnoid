@@ -1,4 +1,5 @@
-﻿using ArcardnoidContent.Scenes;
+﻿using ArcardnoidContent.Components.GamePlay;
+using ArcardnoidContent.Scenes;
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
@@ -43,6 +44,7 @@ namespace ArcardnoidContent
         public void InitializeGame()
         {
             GameServiceProvider.GetService<IScreenManager>().SetSize(new Point(1920, 1080));
+            GameServiceProvider.RegisterService(new GamePlay());
         }
 
         public void LoadGameContent()

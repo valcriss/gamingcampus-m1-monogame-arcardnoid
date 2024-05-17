@@ -14,7 +14,7 @@ namespace ArcardnoidContent.Components.GameScene.Character
     {
         #region Public Events
 
-        public event Action<EncounterType, double> OnEncounter;
+        public event Action<EncounterType, Point, double> OnEncounter;
 
         #endregion Public Events
 
@@ -135,7 +135,7 @@ namespace ArcardnoidContent.Components.GameScene.Character
         {
             EncounterType collision = _mapHypotesis.FinalChunk.CheckCollision((int)CurrentCell.X, (int)CurrentCell.Y);
             if (collision == EncounterType.None) return false;
-            OnEncounter?.Invoke(collision, InitialCell.Distance(CurrentCell));
+            OnEncounter?.Invoke(collision, new Point(CurrentCell.X, CurrentCell.Y), InitialCell.Distance(CurrentCell));
             return true;
         }
 

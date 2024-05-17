@@ -17,7 +17,7 @@ namespace ArcardnoidContent.Components.GameScene.Dialogs
     {
         #region Private Properties
 
-        private Action Callback { get; set; }
+        private Action<EncounterDialog> Callback { get; set; }
         private Image OponentFaceBack { get; set; }
         private BitmapText OponentText { get; set; }
         private ImagePart PlayerFace { get; set; }
@@ -91,7 +91,7 @@ namespace ArcardnoidContent.Components.GameScene.Dialogs
             Visible = false;
         }
 
-        public void ShowDialog(EncounterType encounterType, Action callback)
+        public void ShowDialog(EncounterType encounterType, Action<EncounterDialog> callback)
         {
             Callback = callback;
             EncounterDialogCollection items = _dialogs.EncounterDialogs.FirstOrDefault(c => c.Type == encounterType);
@@ -138,10 +138,10 @@ namespace ArcardnoidContent.Components.GameScene.Dialogs
                 _currentDialogStep++;
                 if (_currentDialogStep >= _currentDialog.Steps.Count)
                 {
+                    Callback?.Invoke(_currentDialog);
                     _currentDialog = null;
                     _currentDialogStep = 0;
                     Visible = false;
-                    Callback?.Invoke();
                 }
             }
         }

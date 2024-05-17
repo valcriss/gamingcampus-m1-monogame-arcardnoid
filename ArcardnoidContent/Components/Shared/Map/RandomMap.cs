@@ -72,6 +72,20 @@ namespace ArcardnoidContent.Components.Shared.Map
             }
         }
 
+        public void ClearCell(string asset, Point cell)
+        {
+            MapHypothesis.FinalChunk.ClearActor((int)cell.X, (int)cell.Y);
+            foreach (GameComponent component in GameComponents)
+            {
+                if (component is MapCell mapCell && mapCell.TextureAsset == asset && mapCell.GridX == cell.X && mapCell.GridY == cell.Y)
+                {
+                    component.InnerUnload();
+                    return;
+                }
+            }
+            
+        }
+
         public override void Draw()
         {
             base.Draw();
@@ -103,7 +117,6 @@ namespace ArcardnoidContent.Components.Shared.Map
                 {
                     if (currentPath.Contains(point) || done.Contains(point)) continue;
                     done.Add(point);
-                    System.Diagnostics.Debug.WriteLine(point);
                     List<Point> newPath = new List<Point>(currentPath)
                     {
                         point

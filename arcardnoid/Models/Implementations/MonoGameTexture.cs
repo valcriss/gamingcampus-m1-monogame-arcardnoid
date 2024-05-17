@@ -12,6 +12,7 @@ namespace arcardnoid.Models.Implementations
     {
         #region Public Properties
 
+        public string AssetPath => _assetPath;
         public int Height => _texture.Height;
         public int Width => _texture.Width;
 
@@ -25,14 +26,16 @@ namespace arcardnoid.Models.Implementations
 
         #region Private Fields
 
+        private string _assetPath;
         private Texture2D _texture;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public MonoGameTexture(ArCardNoidGame game, Texture2D texture)
+        public MonoGameTexture(ArCardNoidGame game, Texture2D texture, string assetPath)
         {
+            _assetPath = assetPath;
             _texture = texture;
             Game = game;
         }

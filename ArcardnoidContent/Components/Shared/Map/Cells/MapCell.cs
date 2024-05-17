@@ -6,13 +6,18 @@ namespace ArcardnoidContent.Components.Shared.Map.Cells
 {
     public class MapCell : GameComponent
     {
+        #region Public Properties
+
+        public int GridX { get; set; }
+        public int GridY { get; set; }
+        public string? TextureAsset => Texture2D?.AssetPath;
+
+        #endregion Public Properties
+
         #region Protected Properties
 
         protected Rectangle DrawBounds { get; set; } = Rectangle.Empty;
         protected Point DrawOrigin { get; set; } = Point.Zero;
-        protected int GridX { get; set; }
-        protected int GridY { get; set; }
-
         protected Rectangle ImageBounds { get; set; } = Rectangle.Empty;
         protected int OffsetX { get; set; }
         protected int OffsetY { get; set; }
@@ -20,6 +25,12 @@ namespace ArcardnoidContent.Components.Shared.Map.Cells
         protected ITexture Texture2D { get; set; }
 
         #endregion Protected Properties
+
+        #region Public Fields
+
+        public static string GOLD_ASSET = "map/units/gold";
+
+        #endregion Public Fields
 
         #region Public Constructors
 

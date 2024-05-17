@@ -26,7 +26,7 @@ namespace arcardnoid.Models.Services
         public ITexture Load(string assetName)
         {
             Texture2D texture = Game.Content.Load<Texture2D>(assetName);
-            return new MonoGameTexture(Game, texture);
+            return new MonoGameTexture(Game, texture, assetName);
         }
 
         #endregion Public Methods

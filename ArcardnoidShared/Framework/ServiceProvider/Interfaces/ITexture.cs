@@ -6,6 +6,7 @@ namespace ArcardnoidShared.Framework.ServiceProvider.Interfaces
     {
         #region Public Properties
 
+        string AssetPath { get; }
         int Height { get; }
         int Width { get; }
 

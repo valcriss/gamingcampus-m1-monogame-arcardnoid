@@ -1,9 +1,11 @@
-﻿using ArcardnoidContent.Components.GameScene;
+﻿using ArcardnoidContent.Components.GamePlay;
+using ArcardnoidContent.Components.GameScene;
 using ArcardnoidContent.Components.GameScene.Character;
 using ArcardnoidContent.Components.GameScene.Dialogs;
 using ArcardnoidContent.Components.GameScene.SubScreens;
 using ArcardnoidContent.Components.GameScene.UI;
 using ArcardnoidContent.Components.Shared.Map;
+using ArcardnoidContent.Components.Shared.Map.Cells;
 using ArcardnoidContent.Components.Shared.Map.Models;
 using ArcardnoidShared.Framework.Components.Text;
 using ArcardnoidShared.Framework.Components.UI;
@@ -95,10 +97,21 @@ namespace ArcardnoidContent.Scenes
             MainCharacter.ToggleDebug();
         }
 
-        private void OnEncounter(EncounterType type, double distanceFromStart)
+        private void OnEncounter(EncounterType type, Point cell, double distanceFromStart)
         {
             System.Diagnostics.Debug.WriteLine("Encounter : " + type + " at " + distanceFromStart + " from start");
-            DialogFrame.ShowDialog(type, null);
+            DialogFrame.ShowDialog(type, (encouterDialog) => { OnEncounterDialogEnds(encouterDialog, type, cell, distanceFromStart); });
+        }
+
+        private void OnEncounterDialogEnds(EncounterDialog encounterDialog, EncounterType type, Point cell, double distanceFromStart)
+        {
+            switch (type)
+            {
+                case EncounterType.Gold:
+                    RandomMap.ClearCell(MapCell.GOLD_ASSET, cell);
+                    GameServiceProvider.GetService<IGamePlay>().AddGold(encounterDialog.Gold);
+                    break;
+            }
         }
 
         private void OnMapClicked(Point point)

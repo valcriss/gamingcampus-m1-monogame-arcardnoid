@@ -1,16 +1,17 @@
 ﻿using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using MonoGame.Extended;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace arcardnoid.Models
+namespace arcardnoid.Models.Implementations
 {
     public class MonoGameRandom : IRandom
     {
+        #region Private Fields
+
         private FastRandom _random;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public MonoGameRandom(int seed)
         {
@@ -21,6 +22,11 @@ namespace arcardnoid.Models
         {
             _random = new FastRandom();
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
+
         public int Next(int minValue, int maxValue)
         {
             return _random.Next(minValue, maxValue);
@@ -35,5 +41,7 @@ namespace arcardnoid.Models
         {
             return _random.Next();
         }
+
+        #endregion Public Methods
     }
 }

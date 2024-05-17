@@ -1,14 +1,12 @@
-﻿using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using arcardnoid.Models.Implementations;
+using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
-namespace arcardnoid.Models
+namespace arcardnoid.Models.Services
 {
     public class RandomService : IRandomService
     {
+        #region Public Methods
+
         public IRandom GetRandom()
         {
             return new MonoGameRandom();
@@ -18,5 +16,7 @@ namespace arcardnoid.Models
         {
             return new MonoGameRandom(seed);
         }
+
+        #endregion Public Methods
     }
 }

@@ -1,7 +1,8 @@
-﻿using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
+﻿using arcardnoid.Models.Implementations;
+using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using MonoGame.Extended.BitmapFonts;
 
-namespace arcardnoid.Models
+namespace arcardnoid.Models.Services
 {
     public class BitmapFontService : IBitmapFontService
     {

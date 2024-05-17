@@ -1,4 +1,4 @@
-﻿using arcardnoid.Models;
+﻿using arcardnoid.Models.Services;
 using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using ArcardnoidShared.Framework.Tools;
@@ -27,7 +27,7 @@ namespace arcardnoid
         public ArCardNoidGame()
         {
             Graphics = new GraphicsDeviceManager(this);
-            GameServiceProvider.RegisterService(new GraphicsManager(this));
+            GameServiceProvider.RegisterService(new ScreenManagerService(this));
 
             GameService.OnGameExit += () => Exit();
             GameService.InitializeGame();

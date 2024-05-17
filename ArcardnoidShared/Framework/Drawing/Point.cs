@@ -18,11 +18,6 @@
             Y = y;
         }
 
-        public override bool Equals(object? obj)
-        {
-            return (Point)obj == this;
-        }
-
         #endregion Public Constructors
 
         #region Public Methods
@@ -61,6 +56,11 @@
         public static bool operator ==(Point a, Point b)
         {
             return a.X == b.X && a.Y == b.Y;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return (Point)obj == this;
         }
 
         public override string ToString()

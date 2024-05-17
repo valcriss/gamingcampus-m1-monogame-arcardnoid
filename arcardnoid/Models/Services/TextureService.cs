@@ -1,7 +1,8 @@
-﻿using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
+﻿using arcardnoid.Models.Implementations;
+using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace arcardnoid.Models
+namespace arcardnoid.Models.Services
 {
     public class TextureService : ITextureService
     {

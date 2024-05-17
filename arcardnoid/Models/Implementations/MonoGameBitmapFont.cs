@@ -1,10 +1,11 @@
-﻿using ArcardnoidShared.Framework.Drawing;
+﻿using arcardnoid.Models.Framework.Tools;
+using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using ArcardnoidShared.Framework.Tools;
 using Microsoft.Xna.Framework;
 using MonoGame.Extended.BitmapFonts;
 
-namespace arcardnoid.Models
+namespace arcardnoid.Models.Implementations
 {
     public class MonoGameBitmapFont : IBitmapFont
     {

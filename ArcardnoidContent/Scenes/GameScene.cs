@@ -100,7 +100,7 @@ namespace ArcardnoidContent.Scenes
 
         private void OnMapClicked(Point point)
         {
-            if(PauseScreen.IsOpened() || DialogFrame.IsOpened())
+            if (PauseScreen.IsOpened() || DialogFrame.IsOpened())
             {
                 return;
             }

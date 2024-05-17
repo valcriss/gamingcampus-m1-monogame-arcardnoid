@@ -1,9 +1,10 @@
-﻿using ArcardnoidShared.Framework.Drawing;
+﻿using arcardnoid.Models.Framework.Tools;
+using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
-namespace arcardnoid.Models
+namespace arcardnoid.Models.Services
 {
-    public class GraphicsManager : IScreenManager
+    public class ScreenManagerService : IScreenManager
     {
         #region Private Properties
 
@@ -13,7 +14,7 @@ namespace arcardnoid.Models
 
         #region Public Constructors
 
-        public GraphicsManager(ArCardNoidGame game)
+        public ScreenManagerService(ArCardNoidGame game)
         {
             Game = game;
         }

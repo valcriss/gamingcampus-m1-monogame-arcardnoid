@@ -2,11 +2,12 @@
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using Microsoft.Xna.Framework.Input;
 
-namespace arcardnoid.Models
+namespace arcardnoid.Models.Services
 {
     public class MouseService : IMouseService
     {
         #region Private Properties
+
         private MouseState PreviousMouseState { get; set; }
         private MouseState State { get; set; }
 

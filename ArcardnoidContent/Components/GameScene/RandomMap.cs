@@ -100,7 +100,7 @@ namespace ArcardnoidContent.Components.GameScene
                 Point currentPoint = currentPath.Last();
                 if (currentPoint == destination) return currentPath;
                 foreach (Point point in GetNeighbors(currentPoint).OrderBy(c => c.Distance(destination)))
-                {                    
+                {
                     if (currentPath.Contains(point) || done.Contains(point)) continue;
                     done.Add(point);
                     System.Diagnostics.Debug.WriteLine(point);

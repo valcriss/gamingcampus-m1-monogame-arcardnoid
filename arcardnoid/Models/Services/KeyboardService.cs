@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Input;
 using System;
 
-namespace arcardnoid.Models
+namespace arcardnoid.Models.Services
 {
     public class KeyboardService : IKeyboardService
     {

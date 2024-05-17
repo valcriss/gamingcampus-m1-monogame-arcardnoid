@@ -147,17 +147,21 @@ namespace ArcardnoidContent.Components.GameScene.UI
 
         #endregion Public Methods
 
+        #region Internal Methods
+
+        internal bool IsOpened()
+        {
+            return Visible;
+        }
+
+        #endregion Internal Methods
+
         #region Private Methods
 
         private DialogCollection LoadDialogs()
         {
             string filename = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Maps/Dialogs/dialogs.json");
             return JsonConvert.DeserializeObject<DialogCollection>(File.ReadAllText(filename));
-        }
-
-        internal bool IsOpened()
-        {
-            return Visible;
         }
 
         #endregion Private Methods

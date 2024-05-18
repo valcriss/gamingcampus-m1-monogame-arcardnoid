@@ -36,6 +36,12 @@ namespace ArcardnoidShared.Framework.Scenes.Animations
             }
         }
 
+        public override void Stop()
+        {
+            base.Stop();
+            Component.Position = _to;
+        }
+
         #endregion Public Methods
     }
 }

@@ -28,7 +28,9 @@ namespace arcardnoid
         {
             Graphics = new GraphicsDeviceManager(this);
             GameServiceProvider.RegisterService(new ScreenManagerService(this));
-
+            GameServiceProvider.RegisterService(new RandomService());
+            GameServiceProvider.RegisterService(new MouseService());
+            GameServiceProvider.RegisterService(new KeyboardService());
             GameService.OnGameExit += () => Exit();
             GameService.InitializeGame();
             ScreenManager.Initialize(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
@@ -53,9 +55,6 @@ namespace arcardnoid
             GameServiceProvider.RegisterService(new BitmapFontService(this));
             GameServiceProvider.RegisterService(new TextureService(this));
             GameServiceProvider.RegisterService(new Primitive2DService(SpriteBatch));
-            GameServiceProvider.RegisterService(new MouseService());
-            GameServiceProvider.RegisterService(new KeyboardService());
-            GameServiceProvider.RegisterService(new RandomService());
             GameService.LoadGameContent();
         }
 

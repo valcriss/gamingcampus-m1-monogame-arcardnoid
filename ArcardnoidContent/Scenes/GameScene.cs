@@ -1,5 +1,6 @@
 ﻿using ArcardnoidContent.Components.GamePlay;
 using ArcardnoidContent.Components.GameScene;
+using ArcardnoidContent.Components.GameScene.Battle;
 using ArcardnoidContent.Components.GameScene.Character;
 using ArcardnoidContent.Components.GameScene.Dialogs;
 using ArcardnoidContent.Components.GameScene.SubScreens;
@@ -11,6 +12,8 @@ using ArcardnoidShared.Framework.Components.Text;
 using ArcardnoidShared.Framework.Components.UI;
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes;
+using ArcardnoidShared.Framework.Scenes.Animations;
+using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
@@ -29,13 +32,17 @@ namespace ArcardnoidContent.Scenes
         private MapGenerator MapGenerator { get; set; }
         private PauseScreen PauseScreen { get; set; }
         private RandomMap RandomMap { get; set; }
+        private GameSceneUI GameSceneUI { get; set; }
+        private GameMapBackground GameMapBackground { get; set; }
+        private BitmapText SeedText { get; set; }
+        private BattleContainer BattleContainer { get; set; }
         private int Seed { get; set; }
 
         #endregion Private Properties
 
         #region Public Constructors
 
-        public GameScene(int seed = 123456)
+        public GameScene(int seed = 1)
         {
             BackgroundColor = new GameColor(71, 171, 169, 255);
             Seed = seed;
@@ -49,9 +56,11 @@ namespace ArcardnoidContent.Scenes
         public override void Load()
         {
             base.Load();
-            AddGameComponent(new GameMapBackground());
-            AddGameComponent(new BitmapText("fonts/regular", $"Graine : {Seed}", 10, 1050, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.White));
+            GameMapBackground = AddGameComponent(new GameMapBackground());
+            SeedText = AddGameComponent(new BitmapText("fonts/regular", $"Graine : {Seed}", 10, 1050, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.White));
             LoadingScreen = AddGameComponent(new LoadingScreen());
+            BattleContainer = AddGameComponent(new BattleContainer());
+            BattleContainer.Visible = BattleContainer.Enabled = false;
         }
 
         public override void Update(float delta)
@@ -100,6 +109,7 @@ namespace ArcardnoidContent.Scenes
         private void OnEncounter(EncounterType type, Point cell, double distanceFromStart)
         {
             System.Diagnostics.Debug.WriteLine("Encounter : " + type + " at " + distanceFromStart + " from start");
+            if (type == EncounterType.Meat && GameServiceProvider.GetService<IGamePlay>().GetHeart() == 2) return;
             DialogFrame.ShowDialog(type, (encouterDialog) => { OnEncounterDialogEnds(encouterDialog, type, cell, distanceFromStart); });
         }
 
@@ -111,7 +121,45 @@ namespace ArcardnoidContent.Scenes
                     RandomMap.ClearCell(MapCell.GOLD_ASSET, cell);
                     GameServiceProvider.GetService<IGamePlay>().AddGold(encounterDialog.Gold);
                     break;
+                case EncounterType.Meat:
+                    RandomMap.ClearCell(MapCell.MEAT_ASSET, cell);
+                    GameServiceProvider.GetService<IGamePlay>().AddHeart(1);
+                    break;
+                case EncounterType.Archer:
+                case EncounterType.Warrior:
+                case EncounterType.Torch:
+                case EncounterType.Tnt:
+                    StartBattle(type, cell, distanceFromStart);
+                    break;
             }
+        }
+
+        private void StartBattle(EncounterType type, Point cell, double distanceFromStart)
+        {
+            AddHideAnimation<RandomMap>(RandomMap);
+            AddHideAnimation<MainCharacter>(MainCharacter);
+            AddHideAnimation<GameSceneUI>(GameSceneUI);
+            AddHideAnimation<BitmapText>(SeedText);
+            AddShowAnimation<BattleContainer>(BattleContainer);
+            BattleContainer.Show();
+        }
+
+        private GameComponent AddHideAnimation<T>(GameComponent component, float duration = 0.5f) where T : GameComponent
+        {
+            return component.AddAnimation<T>(new AlphaFadeAnimation(duration, 1, 0, false, true, EaseType.Linear, () =>
+            {
+                component.Enabled = false;
+                component.Visible = false;
+            }));
+        }
+
+        private GameComponent AddShowAnimation<T>(GameComponent component, float duration = 0.5f) where T : GameComponent
+        {
+            component.Enabled = true;
+            component.Visible = true;
+            return component.AddAnimation<T>(new AlphaFadeAnimation(duration, 0, 1, false, true, EaseType.Linear, () =>
+            {
+            }));
         }
 
         private void OnMapClicked(Point point)
@@ -140,7 +188,7 @@ namespace ArcardnoidContent.Scenes
             RandomMap.OnMapClickedEvent += OnMapClicked;
             MainCharacter = AddGameComponent(new MainCharacter(RandomMap, MapGenerator.MapHypothesis));
             MainCharacter.OnEncounter += OnEncounter;
-            AddGameComponent(new GameSceneUI());
+            GameSceneUI = AddGameComponent(new GameSceneUI());
             DialogFrame = AddGameComponent(new DialogFrame());
             PauseScreen = AddGameComponent(new PauseScreen(OnResume, OnDebug, OnQuit));
             AddGameComponent(new Cursor("ui/cursors/01", new Point(12, 16)));

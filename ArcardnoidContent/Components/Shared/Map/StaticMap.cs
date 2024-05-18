@@ -108,7 +108,7 @@ namespace ArcardnoidContent.Components.Shared.Map
         #region Private Methods
 
         private void DrawGrid()
-        {
+        {           
             for (int x = 0; x <= _mapItem.Width; x++)
             {
                 int x1 = ScreenManager.ScaleX((int)RealBounds.X + (x * _mapItem.Size));

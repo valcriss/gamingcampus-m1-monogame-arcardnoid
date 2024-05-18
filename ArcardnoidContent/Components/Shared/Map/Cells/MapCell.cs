@@ -29,6 +29,7 @@ namespace ArcardnoidContent.Components.Shared.Map.Cells
         #region Public Fields
 
         public static string GOLD_ASSET = "map/units/gold";
+        public static string MEAT_ASSET = "map/units/meat";
 
         #endregion Public Fields
 
@@ -61,6 +62,12 @@ namespace ArcardnoidContent.Components.Shared.Map.Cells
             DrawOrigin = new Point(0, 0);
             UpdateRenderBounds();
             base.Load();
+        }
+
+        public override void Update(float delta)
+        {
+            base.Update(delta);
+            UpdateRenderBounds();
         }
 
         #endregion Public Methods

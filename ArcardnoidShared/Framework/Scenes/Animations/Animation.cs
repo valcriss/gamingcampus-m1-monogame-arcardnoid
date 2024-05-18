@@ -38,7 +38,7 @@ namespace ArcardnoidShared.Framework.Scenes.Animations
 
         #region Public Methods
 
-        public void Play()
+        public virtual void Play()
         {
             State = AnimationState.Playing;
             ElapsedTime = 0;
@@ -49,7 +49,7 @@ namespace ArcardnoidShared.Framework.Scenes.Animations
             Component = component;
         }
 
-        public void Stop()
+        public virtual void Stop()
         {
             State = Loop ? AnimationState.Playing : AnimationState.Ended;
             if (State == AnimationState.Ended)

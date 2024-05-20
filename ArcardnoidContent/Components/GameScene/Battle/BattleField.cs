@@ -45,11 +45,11 @@ namespace ArcardnoidContent.Components.GameScene.Battle
             int[,] opponentField = GenerateField(numberOfOpponents);
             int[,] playerField = GenerateField(GamePlay.GetUnits());
 
-            AddUnitsComponents(opponentField, opponentAsset, 352, 168);
-            AddUnitsComponents(playerField, playerAsset, 352, 672);
+            AddUnitsComponents(opponentField, opponentAsset, encounterType, 96, 136);
+            AddUnitsComponents(playerField, playerAsset, EncounterType.None, 96, 576);
         }
 
-        private void AddUnitsComponents(int[,] positions, ITexture asset, int positionX, int positionY)
+        private void AddUnitsComponents(int[,] positions, ITexture asset, EncounterType encounterType, int positionX, int positionY)
         {
             for (int x = 0; x < 20; x++)
             {
@@ -57,7 +57,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
                 {
                     if (positions[x, y] == 1)
                     {
-                        AddGameComponent(new AnimatedCell(asset, 6, 1, 120, 0, 0, x, y, positionX + x * 64, positionY + y * 64, 0, 0));
+                        StaticMap.AddGameComponent(new AnimatedCell(asset, GetTextureColumns(encounterType), 1, 120, 0, 0, x, y, positionX + x * 64, positionY + y * 64, 0, 0));
                     }
                 }
             }
@@ -79,6 +79,17 @@ namespace ArcardnoidContent.Components.GameScene.Battle
             return "map/units/archer-blue-idle";
         }
 
+        private int GetTextureColumns(EncounterType encounterType)
+        {
+            switch (encounterType)
+            {
+                case EncounterType.Torch:
+                    return 7;
+                default:
+                    return 6;
+            }
+        }
+
         private ITexture LoadAssetTexture(string asset)
         {
             return GameServiceProvider.GetService<ITextureService>().Load(asset);
@@ -88,32 +99,26 @@ namespace ArcardnoidContent.Components.GameScene.Battle
         {
             // Répartir de maniere homogène les unités sur le terrain
             int[,] field = new int[20, 5];
-            for (int i = 0; i < numberOfUnits; i++)
+            int left = numberOfUnits;
+            int lines = (int)Math.Ceiling(numberOfUnits / (float)20);
+            for (int y = 0; y < lines; y++)
             {
-                int x = i % 20;
-                int y = i / 20;
-                field[x, y] = 1;
+                int inLine = Math.Min(20, left);
+                for (int x = 10 - inLine / 2; x < 10 + inLine / 2; x++)
+                {
+                    field[x, y] = 1;
+                }
+                left -= inLine;
             }
             return field;
         }
 
         private int NumberOfOpponents(double distanceFromStart)
         {
-            float ratio = (float)distanceFromStart / 30;
-            return (int)(ratio * (20 * 5));
-        }
-
-        private int[,] InitializeBattleSide()
-        {
-            int[,] encountersPosition = new int[20, 5];
-            for (int i = 0; i < 20; i++)
-            {
-                for (int j = 0; j < 5; j++)
-                {
-                    encountersPosition[i, j] = 1;
-                }
-            }
-            return encountersPosition;
+            float ratio = (float)distanceFromStart / 25;
+            int value = Math.Min(10, (int)Math.Max(ratio * (20 * 5), (20 * 5)));
+            // Si la valeur n'est pas pair on la rend pair
+            return value % 2 == 0 ? value : value + 1;
         }
 
         #endregion Public Methods

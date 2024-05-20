@@ -17,6 +17,11 @@ namespace ArcardnoidContent.Components.Shared.Map
             "map/deco/04",
             "map/deco/10",
             "map/deco/11",
+            "map/units/archer-blue-idle",
+            "map/units/warrior-blue-idle",
+            "map/units/torch-red-idle",
+            "map/units/tnt-red-idle",
+            "map/units/player-battle"
         };
 
         #endregion Private Fields

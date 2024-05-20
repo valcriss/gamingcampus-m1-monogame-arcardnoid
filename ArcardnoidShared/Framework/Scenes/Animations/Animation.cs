@@ -20,18 +20,28 @@ namespace ArcardnoidShared.Framework.Scenes.Animations
         protected float ElapsedTime { get; set; }
         protected Action? OnAnimationCompleted { get; set; }
         protected float Ratio => EasingFunctions.GetEase(Ease, ElapsedTime / Duration);
+        protected float StartAfter { get; set; }
 
         #endregion Protected Properties
 
+        #region Protected Fields
+
+        protected bool CanStart = true;
+
+        #endregion Protected Fields
+
         #region Public Constructors
 
-        public Animation(float duration, bool loop = false, bool playOnStart = false, EaseType ease = EaseType.Linear, Action? onAnimationCompleted = null)
+        public Animation(float duration, bool loop = false, bool playOnStart = false, EaseType ease = EaseType.Linear, Action? onAnimationCompleted = null, float startAfter = 0)
         {
             Duration = duration;
             Loop = loop;
             PlayOnStart = playOnStart;
             Ease = ease;
             OnAnimationCompleted = onAnimationCompleted;
+            StartAfter = startAfter;
+            CanStart = startAfter <= 0;
+            ElapsedTime = 0;
         }
 
         #endregion Public Constructors
@@ -61,11 +71,20 @@ namespace ArcardnoidShared.Framework.Scenes.Animations
 
         public virtual void Update(float delta)
         {
-            if (State == AnimationState.Waiting && PlayOnStart)
+            if (CanStart == false)
+            {
+                ElapsedTime += delta;
+                if (ElapsedTime >= StartAfter)
+                {
+                    CanStart = true;
+                    ElapsedTime = 0;
+                }
+            }
+            else if (CanStart && State == AnimationState.Waiting && PlayOnStart)
             {
                 Play();
             }
-            if (State == AnimationState.Playing)
+            else if (State == AnimationState.Playing)
             {
                 ElapsedTime += delta;
                 if (ElapsedTime >= Duration)

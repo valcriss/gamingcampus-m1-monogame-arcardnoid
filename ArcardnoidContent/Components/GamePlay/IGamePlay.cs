@@ -12,9 +12,13 @@ namespace ArcardnoidContent.Components.GamePlay
 
         event Action<int>? HeartChanged;
 
+        event Action<int>? UnitsChanged;
+
         #endregion Public Events
 
         #region Public Methods
+
+        void AddUnits(int units);
 
         void AddCard(Card card);
 
@@ -30,11 +34,17 @@ namespace ArcardnoidContent.Components.GamePlay
 
         int GetHeart();
 
+        int GetUnits();
+
+        int GetMaxUnits();
+
         void RemoveCard(Card card);
 
         void RemoveGold(int gold);
 
         void RemoveHeart(int heart);
+
+        void RemoveUnits(int units);
 
         void UseCard(Card card);
 

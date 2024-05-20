@@ -12,8 +12,8 @@ namespace ArcardnoidContent.Components.GameScene.UI
     {
         #region Private Properties
 
-        private int CoinAmount { get; set; } = 0;
         private BitmapText[] BitmapTexts { get; set; } = new BitmapText[2];
+        private int CoinAmount { get; set; } = 0;
 
         #endregion Private Properties
 
@@ -38,14 +38,18 @@ namespace ArcardnoidContent.Components.GameScene.UI
             BitmapTexts[1] = AddGameComponent(new BitmapText("fonts/band", CoinAmount.ToString() + " Or", 40, 15, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.White));
         }
 
+        #endregion Public Methods
+
+        #region Private Methods
+
         private void GamePlay_GoldChanged(int gold)
         {
-            for(int i=0; i<BitmapTexts.Length; i++)
+            for (int i = 0; i < BitmapTexts.Length; i++)
             {
                 BitmapTexts[i].SetText(gold.ToString() + " Or");
             }
         }
 
-        #endregion Public Methods
+        #endregion Private Methods
     }
 }

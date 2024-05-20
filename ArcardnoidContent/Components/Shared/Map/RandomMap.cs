@@ -1,6 +1,7 @@
 ﻿using arcardnoid.Models.Framework.Tools;
 using ArcardnoidContent.Components.GameScene;
 using ArcardnoidContent.Components.Shared.Map.Cells;
+using ArcardnoidContent.Components.Shared.Map.Enums;
 using ArcardnoidContent.Components.Shared.Map.Models;
 using ArcardnoidContent.Tools;
 using ArcardnoidShared.Framework.Drawing;
@@ -83,7 +84,6 @@ namespace ArcardnoidContent.Components.Shared.Map
                     return;
                 }
             }
-            
         }
 
         public override void Draw()
@@ -172,6 +172,21 @@ namespace ArcardnoidContent.Components.Shared.Map
         }
 
         #endregion Public Methods
+
+        #region Internal Methods
+
+        internal GroundType GetGroundType(Point cell)
+        {
+            MapLayer terrainLayer1 = MapHypothesis.FinalChunk.Layers.FirstOrDefault(c => c.Name == "Terrain Layer 1");
+            string value = terrainLayer1.GetLayerData((int)cell.X, (int)cell.Y);
+            if (value != string.Empty) { return int.Parse(value) == 1 ? GroundType.Sand : GroundType.Grass; }
+            MapLayer terrainLayer2 = MapHypothesis.FinalChunk.Layers.FirstOrDefault(c => c.Name == "Terrain Layer 2");
+            string value2 = terrainLayer2.GetLayerData((int)cell.X, (int)cell.Y);
+            if (value2 != string.Empty) { return int.Parse(value2) == 1 ? GroundType.Sand : GroundType.Grass; }
+            return GroundType.Grass;
+        }
+
+        #endregion Internal Methods
 
         #region Private Methods
 

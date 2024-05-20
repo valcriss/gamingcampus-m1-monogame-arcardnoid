@@ -14,7 +14,7 @@ namespace ArcardnoidShared.Framework.Scenes.Animations
 
         #region Public Constructors
 
-        public MoveAnimation(float duration, Point from, Point to, bool loop = false, bool playOnStart = false, EaseType easeType = EaseType.Linear) : base(duration, loop, playOnStart, easeType)
+        public MoveAnimation(float duration, Point from, Point to, bool loop = false, bool playOnStart = false, EaseType easeType = EaseType.Linear, Action? onAnimationCompleted = null, float startAfter = 0) : base(duration, loop, playOnStart, easeType, onAnimationCompleted, startAfter)
         {
             _from = from;
             _to = to;
@@ -24,22 +24,27 @@ namespace ArcardnoidShared.Framework.Scenes.Animations
 
         #region Public Methods
 
-        public override void Update(float delta)
-        {
-            base.Update(delta);
-            if (State == AnimationState.Playing)
-            {
-                float x = MathF.Abs(_from.X - _to.X) > 0.01 ? MathTools.Lerp(_from.X, _to.X, Ratio) : _to.X;
-                float y = MathF.Abs(_from.Y - _to.Y) > 0.01 ? MathTools.Lerp(_from.Y, _to.Y, Ratio) : _to.Y;
-                Point newPosition = new Point(x, y);
-                Component.Position = newPosition;
-            }
-        }
-
         public override void Stop()
         {
             base.Stop();
             Component.Position = _to;
+        }
+
+        public override void Update(float delta)
+        {
+            base.Update(delta);
+            if (!CanStart)
+            {
+                Component.Position = _from;
+            }
+            else if (State == AnimationState.Playing)
+            {
+                float x = MathF.Abs(_from.X - _to.X) > 0.01 ? MathTools.Lerp(_from.X, _to.X, Ratio) : _to.X;
+                float y = MathF.Abs(_from.Y - _to.Y) > 0.01 ? MathTools.Lerp(_from.Y, _to.Y, Ratio) : _to.Y;
+                Point newPosition = new Point(x, y);
+                Component.Visible = true;
+                Component.Position = newPosition;
+            }
         }
 
         #endregion Public Methods

@@ -1,6 +1,6 @@
 ﻿using arcardnoid.Models.Framework.Tools;
 using ArcardnoidContent.Components.Shared.Map;
-using ArcardnoidContent.Components.Shared.Map.Models;
+using ArcardnoidContent.Components.Shared.Map.Enums;
 using ArcardnoidContent.Tools;
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Components;

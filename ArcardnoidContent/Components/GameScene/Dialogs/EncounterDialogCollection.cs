@@ -1,4 +1,4 @@
-﻿using ArcardnoidContent.Components.Shared.Map.Models;
+﻿using ArcardnoidContent.Components.Shared.Map.Enums;
 using Newtonsoft.Json;
 
 namespace ArcardnoidContent.Components.GameScene.UI

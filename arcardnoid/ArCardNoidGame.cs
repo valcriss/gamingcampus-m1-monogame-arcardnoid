@@ -54,7 +54,7 @@ namespace arcardnoid
             SpriteBatch = new SpriteBatch(GraphicsDevice);
             GameServiceProvider.RegisterService(new BitmapFontService(this));
             GameServiceProvider.RegisterService(new TextureService(this));
-            GameServiceProvider.RegisterService(new Primitive2DService(SpriteBatch));
+            GameServiceProvider.RegisterService(new Primitive2DService(this));
             GameService.LoadGameContent();
         }
 

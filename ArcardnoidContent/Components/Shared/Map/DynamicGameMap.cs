@@ -18,7 +18,6 @@ namespace ArcardnoidContent.Components.Shared.Map
 
         private string Filter { get; set; }
 
-        private IPrimitives2D Primitives2D => GameServiceProvider.GetService<IPrimitives2D>();
 
         #endregion Private Properties
 
@@ -113,7 +112,7 @@ namespace ArcardnoidContent.Components.Shared.Map
                 int y1 = ScreenManager.ScaleY((int)RealBounds.Y);
                 int x2 = ScreenManager.ScaleX((int)RealBounds.X + x * _mapItem.Size);
                 int y2 = ScreenManager.ScaleY((int)RealBounds.Y + _mapItem.Height * _mapItem.Size);
-                Primitives2D.DrawLine(x1, y1, x2, y2, GameColor.White);
+                GameServiceProvider.GetService<IPrimitives2D>().DrawLine(x1, y1, x2, y2, GameColor.White);
             }
             for (int y = 0; y <= _mapItem.Height; y++)
             {
@@ -121,7 +120,7 @@ namespace ArcardnoidContent.Components.Shared.Map
                 int y1 = ScreenManager.ScaleY((int)RealBounds.Y + y * _mapItem.Size);
                 int x2 = ScreenManager.ScaleX((int)RealBounds.X + _mapItem.Width * _mapItem.Size);
                 int y2 = ScreenManager.ScaleY((int)RealBounds.Y + y * _mapItem.Size);
-                Primitives2D.DrawLine(x1, y1, x2, y2, GameColor.White);
+                GameServiceProvider.GetService<IPrimitives2D>().DrawLine(x1, y1, x2, y2, GameColor.White);
             }
         }
 

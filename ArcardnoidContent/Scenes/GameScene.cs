@@ -7,6 +7,7 @@ using ArcardnoidContent.Components.GameScene.SubScreens;
 using ArcardnoidContent.Components.GameScene.UI;
 using ArcardnoidContent.Components.Shared.Map;
 using ArcardnoidContent.Components.Shared.Map.Cells;
+using ArcardnoidContent.Components.Shared.Map.Enums;
 using ArcardnoidContent.Components.Shared.Map.Models;
 using ArcardnoidShared.Framework.Components.Text;
 using ArcardnoidShared.Framework.Components.UI;
@@ -141,7 +142,8 @@ namespace ArcardnoidContent.Scenes
             AddHideAnimation<GameSceneUI>(GameSceneUI);
             AddHideAnimation<BitmapText>(SeedText);
             AddShowAnimation<BattleContainer>(BattleContainer);
-            BattleContainer.Show();
+            System.Diagnostics.Debug.WriteLine("Start battle with " + type + " at " + distanceFromStart + " from start");
+            BattleContainer.Show(RandomMap.GetGroundType(cell), type, distanceFromStart);
         }
 
         private GameComponent AddHideAnimation<T>(GameComponent component, float duration = 0.5f) where T : GameComponent

@@ -1,5 +1,5 @@
 ﻿using ArcardnoidContent.Components.GameScene.UI;
-using ArcardnoidContent.Components.Shared.Map.Models;
+using ArcardnoidContent.Components.Shared.Map.Enums;
 using ArcardnoidShared.Framework.Components.Images;
 using ArcardnoidShared.Framework.Components.Text;
 using ArcardnoidShared.Framework.Components.UI;

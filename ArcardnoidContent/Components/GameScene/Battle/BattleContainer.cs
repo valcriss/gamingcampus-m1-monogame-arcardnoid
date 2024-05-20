@@ -1,35 +1,47 @@
-﻿using ArcardnoidShared.Framework.Components.UI;
+﻿using ArcardnoidContent.Components.Shared.Map.Enums;
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Animations;
 using ArcardnoidShared.Framework.Scenes.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArcardnoidContent.Components.GameScene.Battle
 {
     public class BattleContainer : GameComponent
     {
-        private BattleSide LeftBattleSide { get; set; }
-        private BattleSide RightBattleSide { get; set; }
+        #region Private Properties
+
+        private BattleField BattleField { get; set; }
+        private double DistanceFromStart { get; set; }
+        private EncounterType EncounterType { get; set; }
+
+        #endregion Private Properties
+
+        #region Public Constructors
 
         public BattleContainer()
         {
-            LeftBattleSide = AddGameComponent(new BattleSide(0, 0));
-            RightBattleSide = AddGameComponent(new BattleSide(1920 / 2, 0));
         }
 
-        public void Show()
+        #endregion Public Constructors
+
+        #region Public Methods
+
+        public void Show(GroundType ground, EncounterType type, double distanceFromStart)
         {
-            AddShowAnimation(LeftBattleSide, true);
-            AddShowAnimation(RightBattleSide, false);
+            EncounterType = type;
+            DistanceFromStart = distanceFromStart;
+            BattleField = AddGameComponent(new BattleField(ground, 0, 0));
+            AddShowAnimation(BattleField);
         }
 
-        private void AddShowAnimation(BattleSide side, bool left)
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private void AddShowAnimation(BattleField side)
         {
-            side.AddAnimation<BattleSide>(new MoveAnimation(1.5f, new Point(left ? -1920 / 2 : 1920, 0), new Point(left ? 0 : 1920 / 2, 0), false, true, EaseType.InBounce));
+            side.AddAnimation<BattleField>(new MoveAnimation(0.5f, new Point(0, -1300), new Point(0, 0), false, true, EaseType.InOutBounce, () => { side.ShowMap(EncounterType, DistanceFromStart); }));
         }
+
+        #endregion Private Methods
     }
 }

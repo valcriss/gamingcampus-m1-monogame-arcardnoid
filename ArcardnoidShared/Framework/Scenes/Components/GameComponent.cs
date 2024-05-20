@@ -31,6 +31,8 @@ namespace ArcardnoidShared.Framework.Scenes.Components
             }
         }
 
+        public bool HasAnimations => Animations.Count > 0;
+
         public virtual float Opacity
         {
             get

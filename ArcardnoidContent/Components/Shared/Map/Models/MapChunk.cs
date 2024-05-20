@@ -1,4 +1,5 @@
-﻿using ArcardnoidContent.Tools;
+﻿using ArcardnoidContent.Components.Shared.Map.Enums;
+using ArcardnoidContent.Tools;
 using Newtonsoft.Json;
 using System.Reflection;
 

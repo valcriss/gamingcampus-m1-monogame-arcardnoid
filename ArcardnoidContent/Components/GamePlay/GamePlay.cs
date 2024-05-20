@@ -4,6 +4,9 @@ namespace ArcardnoidContent.Components.GamePlay
 {
     public class GamePlay : IGamePlay
     {
+        private const int MAXIMUM_UNITS = 5 * 20;
+        private const int MAXIMUM_HEART = 2;
+
         #region Public Events
 
         public event Action<List<Card>>? CardChanged;
@@ -11,13 +14,15 @@ namespace ArcardnoidContent.Components.GamePlay
         public event Action<int>? GoldChanged;
 
         public event Action<int>? HeartChanged;
+        public event Action<int>? UnitsChanged;
 
         #endregion Public Events
 
         #region Private Fields
 
         private int _gold = 200;
-        private int _heart = 2;
+        private int _heart = MAXIMUM_HEART;
+        private int _units = MAXIMUM_UNITS;
 
         #endregion Private Fields
 
@@ -36,7 +41,7 @@ namespace ArcardnoidContent.Components.GamePlay
 
         public void AddHeart(int heart)
         {
-            _heart = Math.Min(2, _heart + heart);
+            _heart = Math.Min(MAXIMUM_HEART, _heart + heart);
             HeartChanged?.Invoke(_heart);
         }
 
@@ -80,6 +85,26 @@ namespace ArcardnoidContent.Components.GamePlay
         public void UseCard(Card card)
         {
             throw new NotImplementedException();
+        }
+
+        public void AddUnits(int units)
+        {
+            _units += Math.Min(MAXIMUM_UNITS, units);
+        }
+
+        public int GetUnits()
+        {
+           return _units;
+        }
+
+        public void RemoveUnits(int units)
+        {
+            _units = Math.Max(0, _units - units);
+        }
+
+        public int GetMaxUnits()
+        {
+            return MAXIMUM_UNITS;
         }
 
         #endregion Public Methods

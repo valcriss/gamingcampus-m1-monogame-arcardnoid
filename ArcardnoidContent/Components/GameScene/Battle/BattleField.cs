@@ -115,8 +115,11 @@ namespace ArcardnoidContent.Components.GameScene.Battle
 
         private int NumberOfOpponents(double distanceFromStart)
         {
-            float ratio = (float)distanceFromStart / 25;
-            int value = Math.Min(10, (int)Math.Max(ratio * (20 * 5), (20 * 5)));
+            System.Diagnostics.Debug.WriteLine($"Distance from start: {distanceFromStart}");
+            float ratio = (float)distanceFromStart / 30;
+            System.Diagnostics.Debug.WriteLine($"Ratio: {ratio}");
+            int value = Math.Max(10, (int)Math.Min(ratio * (20 * 5), (20 * 5)));
+            System.Diagnostics.Debug.WriteLine($"Value: {value}");
             // Si la valeur n'est pas pair on la rend pair
             return value % 2 == 0 ? value : value + 1;
         }

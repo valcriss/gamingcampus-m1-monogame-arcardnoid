@@ -52,6 +52,9 @@ namespace ArcardnoidContent.Components.Shared.Map.Models
         public static List<MapChunk> AllChunks()
         {
             List<MapChunk> chunks = new List<MapChunk>();
+            string location = Assembly.GetExecutingAssembly().Location;
+            string? directory = Path.GetDirectoryName(location);
+            if (directory == null) throw new Exception("Directory not found");
             string[] filters = new string[]
             {
                 "22\\0\\1\\*.json",
@@ -66,7 +69,7 @@ namespace ArcardnoidContent.Components.Shared.Map.Models
             };
             foreach (var filter in filters)
             {
-                foreach (string file in Directory.GetFiles(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Maps/Chunks"), filter, SearchOption.AllDirectories))
+                foreach (string file in Directory.GetFiles(Path.Combine(directory, "Maps/Chunks"), filter, SearchOption.AllDirectories))
                 {
                     chunks.Add(DynamicGameMap.LoadFromFile<MapChunk>(file));
                 }
@@ -81,7 +84,10 @@ namespace ArcardnoidContent.Components.Shared.Map.Models
 
         public static MapChunk StartingChunk()
         {
-            return DynamicGameMap.LoadFromFile<MapChunk>(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Maps/Chunks/23/0/1/grass-03.json"));
+            string location = Assembly.GetExecutingAssembly().Location;
+            string? directory = Path.GetDirectoryName(location);
+            if (directory == null) throw new Exception("Directory not found");
+            return DynamicGameMap.LoadFromFile<MapChunk>(Path.Combine(directory, "Maps/Chunks/23/0/1/grass-03.json"));
         }
 
         public void AddActor(EncounterType type, int x, int y)

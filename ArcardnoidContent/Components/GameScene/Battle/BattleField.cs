@@ -1,13 +1,10 @@
-﻿using arcardnoid.Models.Framework.Tools;
-using ArcardnoidContent.Components.GamePlay;
+﻿using ArcardnoidContent.Components.GamePlay;
 using ArcardnoidContent.Components.Shared.Map;
 using ArcardnoidContent.Components.Shared.Map.Cells;
 using ArcardnoidContent.Components.Shared.Map.Enums;
-using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
-using ArcardnoidShared.Framework.Tools;
 
 namespace ArcardnoidContent.Components.GameScene.Battle
 {
@@ -15,27 +12,36 @@ namespace ArcardnoidContent.Components.GameScene.Battle
     {
         #region Private Properties
 
+        private IGamePlay GamePlay => GameServiceProvider.GetService<IGamePlay>();
         private AnimatedStaticMap StaticMap { get; set; }
 
-        private IGamePlay GamePlay => GameServiceProvider.GetService<IGamePlay>();
         #endregion Private Properties
 
         #region Public Constructors
 
         public BattleField(GroundType ground, int x, int y) : base(x, y, 1664, 1080)
         {
-            StaticMap = AddGameComponent(new AnimatedStaticMap(ground == GroundType.Grass ? "Maps/grassmap.json" : "Maps/sandmap.json", 256, 60, true));
+            StaticMap = AddGameComponent(new AnimatedStaticMap(ground == GroundType.Grass ? "Maps/grassmap.json" : "Maps/sandmap.json", 256, 60, MapAnimationEnded, true));
         }
 
         #endregion Public Constructors
 
         #region Public Methods
 
+        public void MapAnimationEnded()
+        {
+            System.Diagnostics.Debug.WriteLine("Map animation ended");
+        }
+
         public void ShowMap(EncounterType encounterType, double distanceFromStart)
         {
             AddUnits(encounterType, distanceFromStart);
             StaticMap.AddTilesAnimation();
         }
+
+        #endregion Public Methods
+
+        #region Private Methods
 
         private void AddUnits(EncounterType encounterType, double distanceFromStart)
         {
@@ -69,30 +75,17 @@ namespace ArcardnoidContent.Components.GameScene.Battle
             {
                 case EncounterType.Archer:
                     return "map/units/archer-blue-idle";
+
                 case EncounterType.Warrior:
                     return "map/units/warrior-blue-idle";
+
                 case EncounterType.Torch:
                     return "map/units/torch-red-idle";
+
                 case EncounterType.Tnt:
                     return "map/units/tnt-red-idle";
             }
             return "map/units/archer-blue-idle";
-        }
-
-        private int GetTextureColumns(EncounterType encounterType)
-        {
-            switch (encounterType)
-            {
-                case EncounterType.Torch:
-                    return 7;
-                default:
-                    return 6;
-            }
-        }
-
-        private ITexture LoadAssetTexture(string asset)
-        {
-            return GameServiceProvider.GetService<ITextureService>().Load(asset);
         }
 
         private int[,] GenerateField(int numberOfUnits)
@@ -113,6 +106,23 @@ namespace ArcardnoidContent.Components.GameScene.Battle
             return field;
         }
 
+        private int GetTextureColumns(EncounterType encounterType)
+        {
+            switch (encounterType)
+            {
+                case EncounterType.Torch:
+                    return 7;
+
+                default:
+                    return 6;
+            }
+        }
+
+        private ITexture LoadAssetTexture(string asset)
+        {
+            return GameServiceProvider.GetService<ITextureService>().Load(asset);
+        }
+
         private int NumberOfOpponents(double distanceFromStart)
         {
             System.Diagnostics.Debug.WriteLine($"Distance from start: {distanceFromStart}");
@@ -124,6 +134,6 @@ namespace ArcardnoidContent.Components.GameScene.Battle
             return value % 2 == 0 ? value : value + 1;
         }
 
-        #endregion Public Methods
+        #endregion Private Methods
     }
 }

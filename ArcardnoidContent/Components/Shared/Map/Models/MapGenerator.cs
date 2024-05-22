@@ -11,17 +11,17 @@ namespace ArcardnoidContent.Components.Shared.Map.Models
         #region Public Properties
 
         public MapChunk MapChunk { get; set; }
-        public MapHypothesis MapHypothesis { get; set; } = null;
+        public MapHypothesis? MapHypothesis { get; set; } = null;
 
         #endregion Public Properties
 
         #region Private Properties
 
-        private List<MapChunk> Chunks { get; set; }
+        private List<MapChunk>? Chunks { get; set; }
         private IRandom Random { get; set; }
         private int Seed { get; set; }
         private MapChunk StartingChunk { get; set; }
-        private List<MapChunk> StoredChunks { get; set; }
+        private List<MapChunk> StoredChunks { get; set; } = new List<MapChunk>();
 
         #endregion Private Properties
 
@@ -55,7 +55,7 @@ namespace ArcardnoidContent.Components.Shared.Map.Models
 
             while (mapHypotesisList.Count < MAP_HYPOTHESIS_COUNT)
             {
-                MapHypothesis hypotesis = RandomMap();
+                MapHypothesis? hypotesis = RandomMap();
                 if (hypotesis != null)
                 {
                     mapHypotesisList.Add(hypotesis);
@@ -70,6 +70,7 @@ namespace ArcardnoidContent.Components.Shared.Map.Models
 
         private List<MapChunk> GetPossibleChunks(MapHypothesis mapHypotesis, List<MapChunkDoorType> opositeDoorTypes)
         {
+            if (Chunks == null) return new List<MapChunk>();
             List<MapChunk> chunks = Chunks.Where(c => c.GetAllDoors().Any(d => opositeDoorTypes.Contains(d.DoorType))).ToList();
             if (mapHypotesis.GetCoverage() < 20)
             {
@@ -84,7 +85,7 @@ namespace ArcardnoidContent.Components.Shared.Map.Models
             StartingChunk = MapChunk.StartingChunk();
         }
 
-        private MapHypothesis RandomMap()
+        private MapHypothesis? RandomMap()
         {
             Chunks = StoredChunks.Clone();
             MapHypothesis mapHypotesis = new MapHypothesis(Seed, MAP_WIDTH, MAP_HEIGHT);
@@ -104,9 +105,10 @@ namespace ArcardnoidContent.Components.Shared.Map.Models
 
         private bool TryCloseDoor(MapHypothesis mapHypotesis, MapChunkDoor openedDoor)
         {
-            List<MapChunkDoorType> opositeDoorTypes = openedDoor.GetOppositeDoorTypes().RandomList(Random);
-            List<MapChunk> possibleChunks = GetPossibleChunks(mapHypotesis, opositeDoorTypes).RandomList(Random);
-
+            List<MapChunkDoorType>? opositeDoorTypes = openedDoor.GetOppositeDoorTypes().RandomList(Random);
+            if (opositeDoorTypes == null) return false;
+            List<MapChunk>? possibleChunks = GetPossibleChunks(mapHypotesis, opositeDoorTypes).RandomList(Random);
+            if (possibleChunks == null) return false;
             foreach (MapChunk chunk in possibleChunks)
             {
                 if (TryPlaceChunk(chunk, mapHypotesis, openedDoor))
@@ -119,11 +121,12 @@ namespace ArcardnoidContent.Components.Shared.Map.Models
 
         private bool TryPlaceChunk(MapChunk chunk, MapHypothesis mapHypotesis, MapChunkDoor openedDoor)
         {
-            List<MapChunkDoorType> basicChunkDoorTypes = new List<MapChunkDoorType>() { MapChunkDoorType.Top, MapChunkDoorType.Right, MapChunkDoorType.Bottom, MapChunkDoorType.Left }.RandomList(Random);
+            List<MapChunkDoorType>? basicChunkDoorTypes = new List<MapChunkDoorType>() { MapChunkDoorType.Top, MapChunkDoorType.Right, MapChunkDoorType.Bottom, MapChunkDoorType.Left }.RandomList(Random);
+            if (basicChunkDoorTypes == null) return false;
             foreach (MapChunkDoorType doorType in basicChunkDoorTypes)
             {
-                List<MapChunkEntrance> compatibleEntrances = chunk.GetCompatibleOppositeEntrances(doorType).RandomList(Random);
-                if (compatibleEntrances.Count == 0) continue;
+                List<MapChunkEntrance>? compatibleEntrances = chunk.GetCompatibleOppositeEntrances(doorType).RandomList(Random);
+                if (compatibleEntrances == null || compatibleEntrances.Count == 0) continue;
                 foreach (MapChunkEntrance possibleEntrance in compatibleEntrances)
                 {
                     Point possibleChunkPosition = openedDoor.GetOppositeChunkPosition(doorType, possibleEntrance);

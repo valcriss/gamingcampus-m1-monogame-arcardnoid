@@ -18,13 +18,13 @@ namespace ArcardnoidContent.Components.GamePlay
 
         #region Public Methods
 
-        void AddUnits(int units);
-
         void AddCard(Card card);
 
         void AddGold(int gold);
 
         void AddHeart(int heart);
+
+        void AddUnits(int units);
 
         bool CanBuy(int gold);
 
@@ -34,9 +34,9 @@ namespace ArcardnoidContent.Components.GamePlay
 
         int GetHeart();
 
-        int GetUnits();
-
         int GetMaxUnits();
+
+        int GetUnits();
 
         void RemoveCard(Card card);
 

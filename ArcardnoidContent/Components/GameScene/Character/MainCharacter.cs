@@ -14,7 +14,7 @@ namespace ArcardnoidContent.Components.GameScene.Character
     {
         #region Public Events
 
-        public event Action<EncounterType, Point, double> OnEncounter;
+        public event Action<EncounterType, Point, double>? OnEncounter;
 
         #endregion Public Events
 
@@ -41,13 +41,13 @@ namespace ArcardnoidContent.Components.GameScene.Character
         private int _currentFrame = 0;
         private int _currentPathIndex = 0;
         private CharacterDirection _direction = CharacterDirection.Right;
-        private Rectangle _drawRectangle;
+        private Rectangle _drawRectangle = Rectangle.Empty;
         private bool _forceDebug = false;
-        private Rectangle _imageBounds;
+        private Rectangle _imageBounds = Rectangle.Empty;
         private MapHypothesis _mapHypotesis;
         private float _moveSpeed = 150;
         private AnimationState _state = AnimationState.Idle;
-        private ITexture _texture;
+        private ITexture? _texture;
 
         #endregion Private Fields
 

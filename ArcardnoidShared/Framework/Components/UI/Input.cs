@@ -12,21 +12,21 @@ namespace ArcardnoidShared.Framework.Components.UI
     {
         #region Public Properties
 
-        public Rectangle CenterRectangle { get; set; }
+        public Rectangle CenterRectangle { get; set; } = Rectangle.Empty;
         public string InputAsset { get; set; }
         public int InputWidth { get; set; }
         public bool IsDisabled { get; set; }
         public bool IsFocused { get; set; }
         public bool IsHovered { get; set; }
         public bool IsPressed { get; set; }
-        public Rectangle LeftRectangle { get; set; }
-        public Rectangle RightRectangle { get; set; }
+        public Rectangle LeftRectangle { get; set; } = Rectangle.Empty;
+        public Rectangle RightRectangle { get; set; } = Rectangle.Empty;
 
         #endregion Public Properties
 
         #region Private Properties
 
-        private BitmapText Text { get; set; }
+        private BitmapText? Text { get; set; }
 
         #endregion Private Properties
 
@@ -34,7 +34,7 @@ namespace ArcardnoidShared.Framework.Components.UI
 
         private double _cursorBlinkTime = 0.5;
         private bool _cursorVisible = true;
-        private ITexture _inputTexture;
+        private ITexture? _inputTexture;
         private double _lastCursorTime = 0;
         private DateTime _lastKeyTime = DateTime.Now;
         private string _text;
@@ -56,12 +56,12 @@ namespace ArcardnoidShared.Framework.Components.UI
 
         public override void Draw()
         {
-            _inputTexture.DrawTexture(new Rectangle((int)RealBounds.X, (int)RealBounds.Y, 64, 128), LeftRectangle, Color, 0, Point.Zero);
+            _inputTexture?.DrawTexture(new Rectangle((int)RealBounds.X, (int)RealBounds.Y, 64, 128), LeftRectangle, Color, 0, Point.Zero);
             for (int i = 0; i < InputWidth; i++)
             {
-                _inputTexture.DrawTexture(new Rectangle((int)RealBounds.X + 64 + i * 64, (int)RealBounds.Y, 64, 128), CenterRectangle, Color, 0, Point.Zero);
+                _inputTexture?.DrawTexture(new Rectangle((int)RealBounds.X + 64 + i * 64, (int)RealBounds.Y, 64, 128), CenterRectangle, Color, 0, Point.Zero);
             }
-            _inputTexture.DrawTexture(new Rectangle((int)RealBounds.X + 64 + InputWidth * 64, (int)RealBounds.Y, 64, 128), RightRectangle, Color, 0, Point.Zero);
+            _inputTexture?.DrawTexture(new Rectangle((int)RealBounds.X + 64 + InputWidth * 64, (int)RealBounds.Y, 64, 128), RightRectangle, Color, 0, Point.Zero);
             base.Draw();
         }
 
@@ -88,6 +88,7 @@ namespace ArcardnoidShared.Framework.Components.UI
         public override void Update(float delta)
         {
             base.Update(delta);
+            if (Text == null) return;
             IMouseService mouseService = GameServiceProvider.GetService<IMouseService>();
 
             Point mousePoint = ScreenManager.UIScale(mouseService.GetMousePosition());

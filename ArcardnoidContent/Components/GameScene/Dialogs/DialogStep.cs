@@ -7,13 +7,13 @@ namespace ArcardnoidContent.Components.GameScene.Dialogs
         #region Public Properties
 
         [JsonProperty("actor")]
-        public string Actor { get; set; }
+        public string? Actor { get; set; }
 
         [JsonProperty("face")]
-        public string Face { get; set; }
+        public string? Face { get; set; }
 
         [JsonProperty("text")]
-        public string Text { get; set; }
+        public string? Text { get; set; }
 
         #endregion Public Properties
     }

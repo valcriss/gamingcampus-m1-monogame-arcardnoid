@@ -14,11 +14,6 @@ namespace ArcardnoidContent.Components.Shared.Map
 {
     public class StaticMap : GameComponent
     {
-        #region Private Properties
-
-
-        #endregion Private Properties
-
         #region Protected Fields
 
         protected MapItem _mapItem;
@@ -58,12 +53,17 @@ namespace ArcardnoidContent.Components.Shared.Map
         public override void Load()
         {
             base.Load();
-            string mapContent = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), _mapAsset));
+            string location = Assembly.GetExecutingAssembly().Location;
+            string? directory = Path.GetDirectoryName(location);
+            if (directory == null) throw new Exception("Directory not found");
+            string mapContent = File.ReadAllText(Path.Combine(directory, _mapAsset));
             _mapItem = JsonConvert.DeserializeObject<MapItem>(mapContent);
+            if (_mapItem.Assets == null) throw new Exception("Map not found");
             foreach (MapAsset asset in _mapItem.Assets)
             {
                 _mapTextures.Add(GameServiceProvider.GetService<ITextureService>().Load(asset.Path));
             }
+            if (_mapItem.Layers == null) throw new Exception("Map Layers not found");
             foreach (MapLayer layer in _mapItem.Layers)
             {
                 int[,] dataLines = layer.Data.ToMapArray(_mapItem.Width, _mapItem.Height);

@@ -10,7 +10,7 @@ namespace ArcardnoidContent.Tools
     {
         #region Public Methods
 
-        public static List<MapChunk> Clone(this List<MapChunk> list)
+        public static List<MapChunk>? Clone(this List<MapChunk> list)
         {
             string content = JsonConvert.SerializeObject(list);
             return JsonConvert.DeserializeObject<List<MapChunk>>(content);
@@ -119,7 +119,7 @@ namespace ArcardnoidContent.Tools
             return layer.GetLayerData(x, y) == "";
         }
 
-        public static List<T> RandomList<T>(this List<T> list, IRandom random)
+        public static List<T>? RandomList<T>(this List<T> list, IRandom random)
         {
             if (list == null || list.Count == 0) return list;
             return list.OrderBy(c => random.Next()).ToList();

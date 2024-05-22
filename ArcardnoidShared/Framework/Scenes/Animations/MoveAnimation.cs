@@ -27,12 +27,14 @@ namespace ArcardnoidShared.Framework.Scenes.Animations
         public override void Stop()
         {
             base.Stop();
+            if (Component == null) return;
             Component.Position = _to;
         }
 
         public override void Update(float delta)
         {
             base.Update(delta);
+            if (Component == null) return;
             if (!CanStart)
             {
                 Component.Position = _from;

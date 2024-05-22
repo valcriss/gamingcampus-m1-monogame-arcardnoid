@@ -10,7 +10,7 @@ namespace ArcardnoidContent.Components.MainMenu.Frames
     {
         #region Private Properties
 
-        private Dictionary<string, string> Content { get; set; } = new Dictionary<string, string>()
+        private Dictionary<string, string?> Content { get; set; } = new Dictionary<string, string?>()
         {
             {"Assets Graphique","Tiny Swords by Pixel Frog (https://pixelfrog-assets.itch.io/tiny-swords)" },
             {"Assets Audio",null},

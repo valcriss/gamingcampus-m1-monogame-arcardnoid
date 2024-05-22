@@ -20,9 +20,9 @@ namespace ArcardnoidShared.Framework.Components.Images
 
         #region Protected Properties
 
-        protected Rectangle DrawBounds { get; set; }
+        protected Rectangle DrawBounds { get; set; } = Rectangle.Empty;
         protected Point DrawOrigin { get; set; }
-        protected Rectangle ImageBounds { get; set; }
+        protected Rectangle ImageBounds { get; set; } = Rectangle.Empty;
         protected ITexture? ImageTexture { get; set; }
         protected Point Origin { get; set; }
 

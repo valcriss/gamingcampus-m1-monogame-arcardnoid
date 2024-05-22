@@ -9,7 +9,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
     {
         #region Private Properties
 
-        private BattleField BattleField { get; set; }
+        private BattleField? BattleField { get; set; }
         private double DistanceFromStart { get; set; }
         private EncounterType EncounterType { get; set; }
 

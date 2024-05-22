@@ -3,16 +3,21 @@ using ArcardnoidContent.Components.Shared.Map.Enums;
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Animations;
 using ArcardnoidShared.Framework.Scenes.Components;
-using System.Linq;
 
 namespace ArcardnoidContent.Components.Shared.Map
 {
     public class AnimatedStaticMap : StaticMap
     {
+        #region Private Properties
+
+        private AnimatedStaticMapState AnimationState { get; set; } = AnimatedStaticMapState.WAITING;
+        private Action? MapAnimationFinished { get; set; }
+
+        #endregion Private Properties
+
         #region Private Fields
 
         private float _delay = 0f;
-        private AnimatedStaticMapState State { get; set; } = AnimatedStaticMapState.WAITING;
 
         private string[] ANIMATION_TILES_PATH = new string[]
                 {
@@ -26,7 +31,6 @@ namespace ArcardnoidContent.Components.Shared.Map
             "map/units/tnt-red-idle",
             "map/units/player-battle"
         };
-        private Action? MapAnimationFinished { get; set; }
 
         #endregion Private Fields
 
@@ -59,8 +63,22 @@ namespace ArcardnoidContent.Components.Shared.Map
                 if (gameComponent is MapCell tile && ANIMATION_TILES_PATH.Contains(tile.TextureAsset))
                     AddTileAnimation(gameComponent);
             }
-            State = AnimatedStaticMapState.ANIMATING;
+            AnimationState = AnimatedStaticMapState.ANIMATING;
             return this;
+        }
+
+        public override void Update(float delta)
+        {
+            base.Update(delta);
+            if (AnimationState == AnimatedStaticMapState.WAITING || AnimationState == AnimatedStaticMapState.FINISHED) return;
+            if (AnimationState == AnimatedStaticMapState.ANIMATING)
+            {
+                if (!GameComponents.Any(c => c.HasAnimations))
+                {
+                    MapAnimationFinished?.Invoke();
+                    AnimationState = AnimatedStaticMapState.FINISHED;
+                }
+            }
         }
 
         #endregion Public Methods
@@ -74,20 +92,6 @@ namespace ArcardnoidContent.Components.Shared.Map
 
             gameComponent.AddAnimation<GameComponent>(new MoveAnimation(1f, new Point(gameComponent.Bounds.X, -128), new Point(gameComponent.Bounds.X, gameComponent.Bounds.Y), false, true, EaseType.InOutBounce, null, _delay));
             _delay += 0.03f;
-        }
-
-        public override void Update(float delta)
-        {
-            base.Update(delta);
-            if (State == AnimatedStaticMapState.WAITING || State == AnimatedStaticMapState.FINISHED) return;
-            if(State == AnimatedStaticMapState.ANIMATING)
-            {
-                if(!GameComponents.Any(c=>c.HasAnimations))
-                {
-                    MapAnimationFinished?.Invoke();
-                    State = AnimatedStaticMapState.FINISHED;
-                }
-            }
         }
 
         #endregion Private Methods

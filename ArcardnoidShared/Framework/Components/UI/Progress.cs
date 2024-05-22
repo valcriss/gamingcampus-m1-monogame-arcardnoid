@@ -23,17 +23,17 @@ namespace ArcardnoidShared.Framework.Components.UI
         #region Private Properties
 
         private int BarWidth { get; set; }
-        private ITexture CurrentLeftTexture { get; set; }
-        private ITexture CurrentRightTexture { get; set; }
-        private ITexture HoverTexture { get; set; }
+        private ITexture? CurrentLeftTexture { get; set; }
+        private ITexture? CurrentRightTexture { get; set; }
+        private ITexture? HoverTexture { get; set; }
         private bool IsPressed { get; set; } = false;
-        private Rectangle LeftRectangle { get; set; }
-        private Rectangle MiddleRectangle { get; set; }
-        private ITexture NormalTexture { get; set; }
-        private ITexture PressedTexture { get; set; }
-        private IPrimitives2D Primitives2D { get; set; }
-        private Rectangle RightRectangle { get; set; }
-        private BitmapText Text { get; set; }
+        private Rectangle LeftRectangle { get; set; } = Rectangle.Empty;
+        private Rectangle MiddleRectangle { get; set; } = Rectangle.Empty;
+        private ITexture? NormalTexture { get; set; }
+        private ITexture? PressedTexture { get; set; }
+        private IPrimitives2D? Primitives2D { get; set; }
+        private Rectangle RightRectangle { get; set; } = Rectangle.Empty;
+        private BitmapText? Text { get; set; }
 
         #endregion Private Properties
 
@@ -55,14 +55,14 @@ namespace ArcardnoidShared.Framework.Components.UI
         public override void Draw()
         {
             base.Draw();
-            CurrentLeftTexture.DrawTexture(new Rectangle((int)RealBounds.X, (int)RealBounds.Y, 64, 64), LeftRectangle, Color, 0, Point.Zero);
-            Primitives2D.FillRectangle(new Rectangle((int)RealBounds.X + 64, (int)RealBounds.Y + 6, (BarWidth * 64), 48), new GameColor(220, 220, 220, Color.A));
-            Primitives2D.FillRectangle(new Rectangle((int)RealBounds.X + 64, (int)RealBounds.Y + 6, (int)(BarWidth * Value * 64), 48), new GameColor(187, 181, 82, Color.A));
+            CurrentLeftTexture?.DrawTexture(new Rectangle((int)RealBounds.X, (int)RealBounds.Y, 64, 64), LeftRectangle, Color, 0, Point.Zero);
+            Primitives2D?.FillRectangle(new Rectangle((int)RealBounds.X + 64, (int)RealBounds.Y + 6, (BarWidth * 64), 48), new GameColor(220, 220, 220, Color.A));
+            Primitives2D?.FillRectangle(new Rectangle((int)RealBounds.X + 64, (int)RealBounds.Y + 6, (int)(BarWidth * Value * 64), 48), new GameColor(187, 181, 82, Color.A));
             for (int i = 0; i < BarWidth; i++)
             {
-                CurrentLeftTexture.DrawTexture(new Rectangle((int)RealBounds.X + 64 + i * 64, (int)RealBounds.Y, 64, 64), MiddleRectangle, Color, 0, Point.Zero);
+                CurrentLeftTexture?.DrawTexture(new Rectangle((int)RealBounds.X + 64 + i * 64, (int)RealBounds.Y, 64, 64), MiddleRectangle, Color, 0, Point.Zero);
             }
-            CurrentRightTexture.DrawTexture(new Rectangle((int)RealBounds.X + 64 + BarWidth * 64, (int)RealBounds.Y, 64, 64), RightRectangle, Color, 0, Point.Zero);
+            CurrentRightTexture?.DrawTexture(new Rectangle((int)RealBounds.X + 64 + BarWidth * 64, (int)RealBounds.Y, 64, 64), RightRectangle, Color, 0, Point.Zero);
         }
 
         public override void Load()
@@ -83,6 +83,7 @@ namespace ArcardnoidShared.Framework.Components.UI
         public override void Update(float delta)
         {
             base.Update(delta);
+            if (Text == null) return;
             IMouseService mouseService = GameServiceProvider.GetService<IMouseService>();
 
             Point mousePoint = ScreenManager.UIScale(mouseService.GetMousePosition());

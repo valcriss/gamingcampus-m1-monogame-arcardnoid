@@ -4,9 +4,6 @@ namespace ArcardnoidContent.Components.GamePlay
 {
     public class GamePlay : IGamePlay
     {
-        private const int MAXIMUM_UNITS = 5 * 20;
-        private const int MAXIMUM_HEART = 2;
-
         #region Public Events
 
         public event Action<List<Card>>? CardChanged;
@@ -14,12 +11,15 @@ namespace ArcardnoidContent.Components.GamePlay
         public event Action<int>? GoldChanged;
 
         public event Action<int>? HeartChanged;
+
         public event Action<int>? UnitsChanged;
 
         #endregion Public Events
 
         #region Private Fields
 
+        private const int MAXIMUM_HEART = 2;
+        private const int MAXIMUM_UNITS = 5 * 20;
         private int _gold = 200;
         private int _heart = MAXIMUM_HEART;
         private int _units = MAXIMUM_UNITS;
@@ -45,6 +45,11 @@ namespace ArcardnoidContent.Components.GamePlay
             HeartChanged?.Invoke(_heart);
         }
 
+        public void AddUnits(int units)
+        {
+            _units += Math.Min(MAXIMUM_UNITS, units);
+        }
+
         public bool CanBuy(int gold)
         {
             return _gold >= gold;
@@ -65,6 +70,16 @@ namespace ArcardnoidContent.Components.GamePlay
             return _heart;
         }
 
+        public int GetMaxUnits()
+        {
+            return MAXIMUM_UNITS;
+        }
+
+        public int GetUnits()
+        {
+            return _units;
+        }
+
         public void RemoveCard(Card card)
         {
             throw new NotImplementedException();
@@ -82,29 +97,14 @@ namespace ArcardnoidContent.Components.GamePlay
             HeartChanged?.Invoke(_heart);
         }
 
-        public void UseCard(Card card)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddUnits(int units)
-        {
-            _units += Math.Min(MAXIMUM_UNITS, units);
-        }
-
-        public int GetUnits()
-        {
-           return _units;
-        }
-
         public void RemoveUnits(int units)
         {
             _units = Math.Max(0, _units - units);
         }
 
-        public int GetMaxUnits()
+        public void UseCard(Card card)
         {
-            return MAXIMUM_UNITS;
+            throw new NotImplementedException();
         }
 
         #endregion Public Methods

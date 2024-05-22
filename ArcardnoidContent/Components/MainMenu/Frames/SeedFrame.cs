@@ -12,7 +12,7 @@ namespace ArcardnoidContent.Components.MainMenu.Frames
     {
         #region Private Properties
 
-        private Input Input { get; set; }
+        private Input? Input { get; set; }
         private Action OnCancel { get; set; }
         private Action OnConfirm { get; set; }
         private IRandom Random { get; set; } = GameServiceProvider.GetService<IRandomService>().GetRandom(DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + DateTime.Now.Millisecond);
@@ -33,6 +33,7 @@ namespace ArcardnoidContent.Components.MainMenu.Frames
 
         public int GetSeed()
         {
+            if (Input == null) return 0;
             return int.Parse(Input.GetValue());
         }
 
@@ -51,7 +52,7 @@ namespace ArcardnoidContent.Components.MainMenu.Frames
         {
             string seed = Random.Next(100000, 999999).ToString();
             //seed = 123456.ToString();
-            Input.SetValue(seed);
+            Input?.SetValue(seed);
         }
 
         #endregion Public Methods

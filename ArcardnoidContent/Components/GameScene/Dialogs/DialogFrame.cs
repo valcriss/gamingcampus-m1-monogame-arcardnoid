@@ -17,24 +17,24 @@ namespace ArcardnoidContent.Components.GameScene.Dialogs
     {
         #region Private Properties
 
-        private Action<EncounterDialog> Callback { get; set; }
-        private Image OponentFaceBack { get; set; }
-        private BitmapText OponentText { get; set; }
-        private ImagePart PlayerFace { get; set; }
-        private Image PlayerFaceBack { get; set; }
-        private BitmapText PlayerText { get; set; }
+        private Action<EncounterDialog>? Callback { get; set; }
+        private Image? OponentFaceBack { get; set; }
+        private BitmapText? OponentText { get; set; }
+        private ImagePart? PlayerFace { get; set; }
+        private Image? PlayerFaceBack { get; set; }
+        private BitmapText? PlayerText { get; set; }
 
         #endregion Private Properties
 
         #region Private Fields
 
-        private Dictionary<string, GameComponent> _actorFace;
-        private EncounterDialog _currentDialog = null;
+        private Dictionary<string, GameComponent> _actorFace = new Dictionary<string, GameComponent>();
+        private EncounterDialog? _currentDialog = null;
         private int _currentDialogStep = 0;
         private PlayerFaceExpression _currentExpression = PlayerFaceExpression.Happy;
-        private DialogCollection _dialogs;
+        private DialogCollection? _dialogs;
         private IRandom _fastRandom;
-        private Dictionary<PlayerFaceExpression, Rectangle> _playerFacesRect;
+        private Dictionary<PlayerFaceExpression, Rectangle> _playerFacesRect = new Dictionary<PlayerFaceExpression, Rectangle>();
 
         #endregion Private Fields
 
@@ -94,8 +94,9 @@ namespace ArcardnoidContent.Components.GameScene.Dialogs
         public void ShowDialog(EncounterType encounterType, Action<EncounterDialog> callback)
         {
             Callback = callback;
-            EncounterDialogCollection items = _dialogs.EncounterDialogs.FirstOrDefault(c => c.Type == encounterType);
-            _currentDialog = items.EncounterDialogs[_fastRandom.Next(items.EncounterDialogs.Count - 1)];
+            if (_dialogs == null) return;
+            EncounterDialogCollection? items = _dialogs.EncounterDialogs.FirstOrDefault(c => c.Type == encounterType);
+            _currentDialog = items?.EncounterDialogs[_fastRandom.Next(items.EncounterDialogs.Count - 1)];
             _currentDialogStep = 0;
             Visible = true;
         }
@@ -103,9 +104,10 @@ namespace ArcardnoidContent.Components.GameScene.Dialogs
         public override void Update(float delta)
         {
             base.Update(delta);
-            if (_currentDialog == null) return;
+            if (_currentDialog == null || OponentFaceBack == null || OponentText == null || PlayerFaceBack == null || PlayerFace == null || PlayerText == null) return;
             // Affiche du step en cours.
             DialogStep step = _currentDialog.Steps[_currentDialogStep];
+            if (step.Text == null || step.Actor == null || (step.Actor == "Player" && step.Face == null)) return;
             if (step.Actor == "Player")
             {
                 OponentFaceBack.Visible = false;
@@ -115,7 +117,8 @@ namespace ArcardnoidContent.Components.GameScene.Dialogs
                 {
                     item.Value.Visible = false;
                 }
-                PlayerFace.SetSourceRect(_playerFacesRect[(PlayerFaceExpression)Enum.Parse(typeof(PlayerFaceExpression), step.Face)]);
+                if (step.Face != null)
+                    PlayerFace.SetSourceRect(_playerFacesRect[(PlayerFaceExpression)Enum.Parse(typeof(PlayerFaceExpression), step.Face)]);
                 PlayerFace.Visible = true;
                 PlayerText.SetText(step.Text);
                 PlayerText.Visible = true;
@@ -159,9 +162,12 @@ namespace ArcardnoidContent.Components.GameScene.Dialogs
 
         #region Private Methods
 
-        private DialogCollection LoadDialogs()
+        private DialogCollection? LoadDialogs()
         {
-            string filename = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Maps/Dialogs/dialogs.json");
+            string location = Assembly.GetExecutingAssembly().Location;
+            string? directory = Path.GetDirectoryName(location);
+            if (directory == null) throw new Exception("Base Directory not found");
+            string filename = Path.Combine(directory, "Maps/Dialogs/dialogs.json");
             return JsonConvert.DeserializeObject<DialogCollection>(File.ReadAllText(filename));
         }
 

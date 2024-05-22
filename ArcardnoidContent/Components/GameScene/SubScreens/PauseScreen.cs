@@ -10,11 +10,11 @@ namespace ArcardnoidContent.Components.GameScene.SubScreens
     {
         #region Private Properties
 
-        private DialogBackground DialogBackground { get; set; }
+        private DialogBackground? DialogBackground { get; set; }
         private Action OnDebug { get; set; }
         private Action OnQuit { get; set; }
         private Action OnResume { get; set; }
-        private PauseMenu PauseDialog { get; set; }
+        private PauseMenu? PauseDialog { get; set; }
 
         #endregion Private Properties
 
@@ -42,6 +42,7 @@ namespace ArcardnoidContent.Components.GameScene.SubScreens
 
         public void Open()
         {
+            if (DialogBackground == null) return;
             DialogBackground.Visible = true;
             DialogBackground.AddAnimation<DialogBackground>(new AlphaFadeAnimation(0.5f, 0f, 0.5f, false, true, EaseType.Linear, BackgroundAppearCompleted));
         }
@@ -52,6 +53,7 @@ namespace ArcardnoidContent.Components.GameScene.SubScreens
 
         internal bool IsOpened()
         {
+            if (PauseDialog == null) return false;
             return PauseDialog.Visible;
         }
 
@@ -61,17 +63,20 @@ namespace ArcardnoidContent.Components.GameScene.SubScreens
 
         private void BackgroundAppearCompleted()
         {
+            if (PauseDialog == null) return;
             PauseDialog.Visible = true;
             PauseDialog.AddAnimations<PauseMenu>(GetDialogAppearAnimations());
         }
 
         private void BackgroundHideStart(Action callBack)
         {
+            if (DialogBackground == null) return;
             DialogBackground.AddAnimation<DialogBackground>(new AlphaFadeAnimation(0.5f, 0.5f, 0f, false, true, EaseType.Linear, callBack));
         }
 
         private void Close(Action callBack)
         {
+            if (PauseDialog == null) return;
             PauseDialog.AddAnimations<PauseMenu>(GetDialogHideAnimations(() => BackgroundHideStart(() => { PauseDialog.Visible = false; callBack(); })));
         }
 

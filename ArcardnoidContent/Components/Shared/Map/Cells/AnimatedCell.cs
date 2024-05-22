@@ -21,7 +21,7 @@ namespace ArcardnoidContent.Components.Shared.Map.Cells
         private double _elapsedTime;
         private int _index;
         private double _pausedTime;
-        private List<Rectangle> _rects;
+        private List<Rectangle> _rects = new List<Rectangle>();
         private int _rows;
         private double _speed;
 

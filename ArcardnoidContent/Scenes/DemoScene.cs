@@ -13,9 +13,9 @@ namespace ArcardnoidContent.Scenes
     {
         #region Private Properties
 
-        private BitmapText BitmapText { get; set; }
+        private BitmapText? BitmapText { get; set; }
         private bool Debug { get; set; }
-        private DynamicGameMap DynamicGameMap { get; set; }
+        private DynamicGameMap? DynamicGameMap { get; set; }
 
         #endregion Private Properties
 
@@ -80,15 +80,15 @@ namespace ArcardnoidContent.Scenes
         private void LoadTiles()
         {
             string filter = _filters[_filterIndex];
-            DynamicGameMap.LoadTiles(filter);
-            BitmapText.SetText(filter.Replace("\\", "-").Substring(0, filter.Length - 7));
+            DynamicGameMap?.LoadTiles(filter);
+            BitmapText?.SetText(filter.Replace("\\", "-").Substring(0, filter.Length - 7));
         }
 
         private void OnDebug()
         {
             if (!_loaded) return;
             Debug = !Debug;
-            DynamicGameMap.SetForceDebug(Debug);
+            DynamicGameMap?.SetForceDebug(Debug);
             LoadTiles();
         }
 

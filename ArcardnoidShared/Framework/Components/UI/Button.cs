@@ -11,25 +11,25 @@ namespace ArcardnoidShared.Framework.Components.UI
     {
         #region Private Properties
 
-        private Rectangle CenterRectangle { get; set; }
-        private ITexture CurrentTexture { get; set; }
+        private Rectangle CenterRectangle { get; set; } = Rectangle.Empty;
+        private ITexture? CurrentTexture { get; set; }
         private string HoverAsset { get; set; }
-        private ITexture HoverTexture { get; set; }
-        private Rectangle LeftRectangle { get; set; }
+        private ITexture? HoverTexture { get; set; }
+        private Rectangle LeftRectangle { get; set; } = Rectangle.Empty;
         private string NormalAsset { get; set; }
-        private ITexture NormalTexture { get; set; }
+        private ITexture? NormalTexture { get; set; }
         private string PressedAsset { get; set; }
-        private ITexture PressedTexture { get; set; }
+        private ITexture? PressedTexture { get; set; }
         private List<Rectangle[]> Rectangles { get; set; } = new List<Rectangle[]>();
-        private Rectangle RightRectangle { get; set; }
+        private Rectangle RightRectangle { get; set; } = Rectangle.Empty;
         private string Text { get; set; }
-        private BitmapText TextComponent { get; set; }
+        private BitmapText? TextComponent { get; set; }
 
         #endregion Private Properties
 
         #region Public Constructors
 
-        public Button(string text, string normalAsset, string hoverAsset, string pressedAsset, Action onClick = null, int x = 0, int y = 0, int width = 0, int height = 0) : base(onClick, x, y, width, height)
+        public Button(string text, string normalAsset, string hoverAsset, string pressedAsset, Action? onClick = null, int x = 0, int y = 0, int width = 0, int height = 0) : base(onClick, x, y, width, height)
         {
             NormalAsset = normalAsset;
             HoverAsset = hoverAsset;
@@ -46,7 +46,7 @@ namespace ArcardnoidShared.Framework.Components.UI
             base.Draw();
             foreach (Rectangle[] rectangle in Rectangles)
             {
-                CurrentTexture.DrawTexture(rectangle[1], rectangle[0], Color, 0, Point.Zero);
+                CurrentTexture?.DrawTexture(rectangle[1], rectangle[0], Color, 0, Point.Zero);
             }
         }
 
@@ -68,6 +68,7 @@ namespace ArcardnoidShared.Framework.Components.UI
         public override void Update(float delta)
         {
             base.Update(delta);
+            if(TextComponent == null) return;
             switch (InterractState)
             {
                 case MouseInterractState.Hover:
@@ -85,7 +86,7 @@ namespace ArcardnoidShared.Framework.Components.UI
                     TextComponent.Position = new Point(TextComponent.Position.X, 22);
                     break;
             }
-
+            if (CurrentTexture == null) return;
             int width = CurrentTexture.Width / 3;
             int height = CurrentTexture.Height;
             Rectangles = new List<Rectangle[]>

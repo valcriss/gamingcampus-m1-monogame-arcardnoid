@@ -16,14 +16,13 @@ namespace ArcardnoidContent.Components.Shared.Map
     {
         #region Private Properties
 
-        private string Filter { get; set; }
-
+        private string Filter { get; set; } = string.Empty;
 
         #endregion Private Properties
 
         #region Private Fields
 
-        private ITexture _blockTexture;
+        private ITexture? _blockTexture;
         private bool _forceDebug;
         private MapItem _mapItem;
         private List<ITexture> _mapTextures = new List<ITexture>();
@@ -41,9 +40,12 @@ namespace ArcardnoidContent.Components.Shared.Map
 
         #region Public Methods
 
-        public static T LoadFromFile<T>(string filename) where T : new()
+        public static T? LoadFromFile<T>(string filename) where T : new()
         {
-            string content = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), filename));
+            string location = Assembly.GetExecutingAssembly().Location;
+            string? directory = Path.GetDirectoryName(location);
+            if (directory == null) throw new Exception("Directory not found");
+            string content = File.ReadAllText(Path.Combine(directory, filename));
             try
             {
                 return JsonConvert.DeserializeObject<T>(content);
@@ -136,27 +138,28 @@ namespace ArcardnoidContent.Components.Shared.Map
                     int assetIndex = dataLines[x, y];
                     if (assetIndex != -1)
                     {
-                        MapAsset mapAsset = _mapItem.Assets[assetIndex];
+                        MapAsset? mapAsset = _mapItem.Assets?[assetIndex];
+                        if (mapAsset == null) continue;
                         ITexture texture = _mapTextures[assetIndex];
-                        if (mapAsset.Type == "spritesheet")
+                        if (mapAsset.Value.Type == "spritesheet")
                         {
-                            AddGameComponent(new AnimatedCell(texture, mapAsset.Columns, mapAsset.Rows, mapAsset.Speed, mapAsset.DelayMin, mapAsset.DelayMax, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, mapAsset.OffsetX, mapAsset.OffsetY));
+                            AddGameComponent(new AnimatedCell(texture, mapAsset.Value.Columns, mapAsset.Value.Rows, mapAsset.Value.Speed, mapAsset.Value.DelayMin, mapAsset.Value.DelayMax, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, mapAsset.Value.OffsetX, mapAsset.Value.OffsetY));
                         }
-                        else if (mapAsset.Type == "multi")
+                        else if (mapAsset.Value.Type == "multi")
                         {
-                            AddGameComponent(new MultiCell(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, _mapItem.Size, mapAsset.OffsetX, mapAsset.OffsetY, MultiCell.GetMultiCellType(dataLines, x, y, chunk.MapChunk.Width, chunk.MapChunk.Height)));
+                            AddGameComponent(new MultiCell(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, _mapItem.Size, mapAsset.Value.OffsetX, mapAsset.Value.OffsetY, MultiCell.GetMultiCellType(dataLines, x, y, chunk.MapChunk.Width, chunk.MapChunk.Height)));
                         }
-                        else if (mapAsset.Type == "multi2")
+                        else if (mapAsset.Value.Type == "multi2")
                         {
-                            AddGameComponent(new MultiCell2(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, _mapItem.Size, mapAsset.OffsetX, mapAsset.OffsetY, MultiCell2.GetMultiCellType(dataLines, x, y, chunk.MapChunk.Width, chunk.MapChunk.Height)));
+                            AddGameComponent(new MultiCell2(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, _mapItem.Size, mapAsset.Value.OffsetX, mapAsset.Value.OffsetY, MultiCell2.GetMultiCellType(dataLines, x, y, chunk.MapChunk.Width, chunk.MapChunk.Height)));
                         }
-                        else if (mapAsset.Type == "bridge")
+                        else if (mapAsset.Value.Type == "bridge")
                         {
-                            AddGameComponent(new BridgeCell(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, _mapItem.Size, mapAsset.OffsetX, mapAsset.OffsetY, BridgeCell.GetMultiCellType(dataLines, x, y, chunk.MapChunk.Width, chunk.MapChunk.Height)));
+                            AddGameComponent(new BridgeCell(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, _mapItem.Size, mapAsset.Value.OffsetX, mapAsset.Value.OffsetY, BridgeCell.GetMultiCellType(dataLines, x, y, chunk.MapChunk.Width, chunk.MapChunk.Height)));
                         }
                         else
                         {
-                            AddGameComponent(new MapCell(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, mapAsset.OffsetX, mapAsset.OffsetY));
+                            AddGameComponent(new MapCell(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, mapAsset.Value.OffsetX, mapAsset.Value.OffsetY));
                         }
                     }
                     RealX++;
@@ -169,10 +172,11 @@ namespace ArcardnoidContent.Components.Shared.Map
         private void LoadAssets()
         {
             _mapTextures = new List<ITexture>();
-            foreach (MapAsset asset in _mapItem.Assets)
-            {
-                _mapTextures.Add(GameServiceProvider.GetService<ITextureService>().Load(asset.Path));
-            }
+            if (_mapItem.Assets != null)
+                foreach (MapAsset asset in _mapItem.Assets)
+                {
+                    _mapTextures.Add(GameServiceProvider.GetService<ITextureService>().Load(asset.Path));
+                }
         }
 
         private void LoadBlocks(ChunkLayout chunk)
@@ -187,7 +191,8 @@ namespace ArcardnoidContent.Components.Shared.Map
                     int assetIndex = dataLines[x, y];
                     if (assetIndex != -1)
                     {
-                        ITexture texture = _blockTexture;
+                        ITexture? texture = _blockTexture;
+                        if (texture == null) continue;
                         MapCell cell = new MapCell(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, 0, 0);
                         cell.Color = GameColor.Red;
                         cell.Opacity = 0.25f;
@@ -217,7 +222,10 @@ namespace ArcardnoidContent.Components.Shared.Map
         private List<MapChunk> LoadChunks()
         {
             List<MapChunk> chunks = new List<MapChunk>();
-            foreach (string file in Directory.GetFiles(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Maps/Chunks"), Filter, SearchOption.AllDirectories))
+            string location = Assembly.GetExecutingAssembly().Location;
+            string? directory = Path.GetDirectoryName(location);
+            if (directory == null) throw new Exception("Directory not found");
+            foreach (string file in Directory.GetFiles(Path.Combine(directory, "Maps/Chunks"), Filter, SearchOption.AllDirectories))
             {
                 chunks.Add(LoadFromFile<MapChunk>(file));
             }
@@ -237,7 +245,8 @@ namespace ArcardnoidContent.Components.Shared.Map
                     if (count >= 1)
                     {
                         MapChunkEntrance entrance = chunk.MapChunk.Entrances.FirstOrDefault(c => c.X == x && c.Y == y);
-                        ITexture texture = _blockTexture;
+                        ITexture? texture = _blockTexture;
+                        if (texture == null) continue;
                         MapCell cell = new MapCell(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, 0, 0);
                         cell.Color = GameColor.Cyan;
                         cell.Opacity = 0.35f;
@@ -263,7 +272,8 @@ namespace ArcardnoidContent.Components.Shared.Map
                     if (count >= 1)
                     {
                         MapChunkSpawn spawn = chunk.MapChunk.Spawns.FirstOrDefault(c => c.X == x && c.Y == y);
-                        ITexture texture = _blockTexture;
+                        ITexture? texture = _blockTexture;
+                        if (texture == null) continue;
                         MapCell cell = new MapCell(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, 0, 0);
                         cell.Color = GameColor.Yellow;
                         cell.Opacity = 0.35f;

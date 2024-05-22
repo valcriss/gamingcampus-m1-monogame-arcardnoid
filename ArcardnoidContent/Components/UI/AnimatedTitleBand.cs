@@ -12,14 +12,14 @@ namespace ArcardnoidContent.Components.UI
         #region Private Properties
 
         private string BandAsset { get; set; }
-        private ITexture BandTexture { get; set; }
-        private BitmapText BitmapText { get; set; }
+        private ITexture? BandTexture { get; set; }
+        private BitmapText? BitmapText { get; set; }
         private string CurrentText { get; set; }
         private double ElapsedTime { get; set; }
         private string FontAsset { get; set; }
         private List<Rectangle> InsideBounds { get; set; } = new List<Rectangle>();
-        private Rectangle LeftBounds { get; set; }
-        private Rectangle RightBounds { get; set; }
+        private Rectangle LeftBounds { get; set; } = Rectangle.Empty;
+        private Rectangle RightBounds { get; set; } = Rectangle.Empty;
         private double Speed { get; set; }
         private string Text { get; set; }
         private GameColor TextColor { get; set; }
@@ -72,6 +72,7 @@ namespace ArcardnoidContent.Components.UI
         public override void Update(float delta)
         {
             base.Update(delta);
+            if (BitmapText == null) return;
             if (CurrentText.Length < Text.Length)
             {
                 ElapsedTime += delta;

@@ -60,7 +60,12 @@
 
         public override bool Equals(object? obj)
         {
-            return (Point)obj == this;
+            return (obj!= null && (Point)obj == this);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
 
         public override string ToString()

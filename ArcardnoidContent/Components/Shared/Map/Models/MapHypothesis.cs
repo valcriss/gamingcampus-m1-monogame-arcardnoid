@@ -21,7 +21,7 @@ namespace ArcardnoidContent.Components.GameScene
         public List<MapChunkPosition> Chunks { get; set; } = new List<MapChunkPosition>();
         public MapChunk FinalChunk { get; set; }
         public int Height { get; set; }
-        public int[,] Map { get; set; }
+        public int[,] Map { get; set; } = new int[0, 0];
         public Queue<MapChunkDoor> OpenedDoor { get; set; }
 
         public int PlayerPositionX { get; private set; }
@@ -97,8 +97,9 @@ namespace ArcardnoidContent.Components.GameScene
             // Generation des encounters
             if (!chunk.HasEncounters() && chunk.Spawns.Count > 0)
             {
-                EncounterType encounterType = GetEncounterType();
-                AddEncounter(encounterType, chunk);
+                EncounterType? encounterType = GetEncounterType();
+                if (encounterType == null) return false;
+                AddEncounter(encounterType.Value, chunk);
             }
 
             AddChunkToMap(chunk, x, y);
@@ -212,8 +213,9 @@ namespace ArcardnoidContent.Components.GameScene
 
         private void AddEncounter(EncounterType type, MapChunk chunk)
         {
-            MapChunkSpawn spawn = chunk.Spawns.RandomList(EncountersRandom).First();
-            chunk.AddActor(type, spawn.X, spawn.Y);
+            MapChunkSpawn? spawn = chunk.Spawns.RandomList(EncountersRandom)?.First();
+            if (spawn == null) return;
+            chunk.AddActor(type, spawn.Value.X, spawn.Value.Y);
             if (type == EncounterType.Gold)
             {
                 CurrentGold = CurrentGold + 1;
@@ -341,7 +343,7 @@ namespace ArcardnoidContent.Components.GameScene
             return newLayer;
         }
 
-        private EncounterType GetEncounterType()
+        private EncounterType? GetEncounterType()
         {
             List<EncounterType> types = new List<EncounterType>() { EncounterType.Archer, EncounterType.Warrior, EncounterType.Torch, EncounterType.Tnt };
             if (CurrentGold < MAXIMUM_GOLD)
@@ -356,7 +358,7 @@ namespace ArcardnoidContent.Components.GameScene
             {
                 types.Add(EncounterType.Sheep);
             }
-            return types.RandomList(EncountersRandom).First();
+            return types.RandomList(EncountersRandom)?.First();
         }
 
         private int[,] GetInitialLayer(int width, int height)

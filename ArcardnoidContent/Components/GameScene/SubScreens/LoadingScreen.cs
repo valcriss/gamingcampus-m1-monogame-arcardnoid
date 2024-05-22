@@ -13,7 +13,7 @@ namespace ArcardnoidContent.Components.GameScene.SubScreens
     {
         #region Private Properties
 
-        private BitmapText BitmapText { get; set; } = null;
+        private BitmapText? BitmapText { get; set; } = null;
         private IPrimitives2D Primitives2D => GameServiceProvider.GetService<IPrimitives2D>();
 
         #endregion Private Properties
@@ -63,7 +63,7 @@ namespace ArcardnoidContent.Components.GameScene.SubScreens
 
         public void Close()
         {
-            BitmapText.InnerUnload();
+            BitmapText?.InnerUnload();
             AddAnimation<LoadingScreen>(new AlphaFadeAnimation(1f, 1, 0, false, true, EaseType.Linear, () => { InnerUnload(); }));
         }
 
@@ -86,7 +86,7 @@ namespace ArcardnoidContent.Components.GameScene.SubScreens
             if (_elapsedTime >= _messageChangeTime)
             {
                 _messageIndex = _messageRandom.Next(0, _loadingMessages.Length - 1);
-                BitmapText.SetText(_loadingMessages[_messageIndex]);
+                BitmapText?.SetText(_loadingMessages[_messageIndex]);
                 _elapsedTime = 0;
             }
         }

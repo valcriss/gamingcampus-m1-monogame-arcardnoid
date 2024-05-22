@@ -9,18 +9,18 @@ namespace ArcardnoidShared.Framework.Components.UI
     {
         #region Private Properties
 
-        private Rectangle Bottom { get; set; }
-        private Rectangle BottomLeft { get; set; }
-        private Rectangle BottomRight { get; set; }
-        private Rectangle Center { get; set; }
+        private Rectangle Bottom { get; set; } = Rectangle.Empty;
+        private Rectangle BottomLeft { get; set; } = Rectangle.Empty;
+        private Rectangle BottomRight { get; set; } = Rectangle.Empty;
+        private Rectangle Center { get; set; } = Rectangle.Empty;
         private string FrameAsset { get; set; }
-        private Rectangle Left { get; set; }
+        private Rectangle Left { get; set; } = Rectangle.Empty;
         private List<Rectangle[]> Rectangles { get; set; } = new List<Rectangle[]>();
-        private Rectangle Right { get; set; }
-        private ITexture Texture { get; set; }
-        private Rectangle Top { get; set; }
-        private Rectangle TopLeft { get; set; }
-        private Rectangle TopRight { get; set; }
+        private Rectangle Right { get; set; } = Rectangle.Empty;
+        private ITexture? Texture { get; set; }
+        private Rectangle Top { get; set; } = Rectangle.Empty;
+        private Rectangle TopLeft { get; set; } = Rectangle.Empty;
+        private Rectangle TopRight { get; set; } = Rectangle.Empty;
 
         #endregion Private Properties
 
@@ -40,7 +40,7 @@ namespace ArcardnoidShared.Framework.Components.UI
             base.Draw();
             foreach (Rectangle[] rectangle in Rectangles)
             {
-                Texture.DrawTexture(rectangle[1], rectangle[0], Color, 0, Point.Zero);
+                Texture?.DrawTexture(rectangle[1], rectangle[0], Color, 0, Point.Zero);
             }
         }
 
@@ -65,6 +65,7 @@ namespace ArcardnoidShared.Framework.Components.UI
         public override void Update(float delta)
         {
             base.Update(delta);
+            if(Texture == null) return;
             int width = Texture.Width / 3;
             int height = Texture.Height / 3;
             Rectangles = new List<Rectangle[]>();

@@ -12,9 +12,9 @@ namespace ArcardnoidContent.Components.GameScene.UI
         private int _currentFrame = 0;
         private double _elapsedTime = 0;
         private double _frameSpeed = 0.05;
-        private Rectangle _imageBounds;
+        private Rectangle _imageBounds = Rectangle.Empty;
         private Dictionary<HearState, List<Rectangle>> _rectangles;
-        private ITexture heartTexture;
+        private ITexture? heartTexture;
         private HearState state = HearState.Filling;
 
         #endregion Private Fields
@@ -33,6 +33,7 @@ namespace ArcardnoidContent.Components.GameScene.UI
         public override void Draw()
         {
             base.Draw();
+            if (heartTexture == null) return;
             heartTexture.DrawTexture(Bounds, _imageBounds, Color, Rotation, Point.Zero);
         }
 

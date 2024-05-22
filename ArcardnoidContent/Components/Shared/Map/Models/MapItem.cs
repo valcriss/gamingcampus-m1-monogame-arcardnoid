@@ -8,13 +8,13 @@ namespace ArcardnoidContent.Components.Shared.Map
         #region Public Properties
 
         [JsonProperty("assets")]
-        public List<MapAsset> Assets { get; set; }
+        public List<MapAsset>? Assets { get; set; }
 
         [JsonProperty("height")]
         public int Height { get; set; }
 
         [JsonProperty("layers")]
-        public List<MapLayer> Layers { get; set; }
+        public List<MapLayer>? Layers { get; set; }
 
         [JsonProperty("size")]
         public int Size { get; set; }

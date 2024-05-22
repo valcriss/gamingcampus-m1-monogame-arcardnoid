@@ -1,18 +1,17 @@
 ﻿using arcardnoid.Models.Framework.Tools;
 using arcardnoid.Models.Tools;
 using ArcardnoidShared.Framework.Drawing;
-using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended;
 
 namespace arcardnoid.Models.Services
 {
     public class Primitive2DService : IPrimitives2D
     {
-        #region Private Fields
+        #region Private Properties
 
         private ArCardNoidGame Game { get; set; }
 
-        #endregion Private Fields
+        #endregion Private Properties
 
         #region Public Constructors
 

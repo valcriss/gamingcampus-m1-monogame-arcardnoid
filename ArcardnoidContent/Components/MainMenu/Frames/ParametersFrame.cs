@@ -10,9 +10,9 @@ namespace ArcardnoidContent.Components.MainMenu.Frames
     {
         #region Private Properties
 
-        private Progress MusicVolume { get; set; }
+        private Progress? MusicVolume { get; set; }
         private Action OnClose { get; set; }
-        private Progress SoundVolume { get; set; }
+        private Progress? SoundVolume { get; set; }
 
         #endregion Private Properties
 

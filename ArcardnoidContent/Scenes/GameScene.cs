@@ -25,19 +25,19 @@ namespace ArcardnoidContent.Scenes
     {
         #region Private Properties
 
-        private DialogFrame DialogFrame { get; set; }
-        private LoadingScreen LoadingScreen { get; set; }
+        private BattleContainer? BattleContainer { get; set; }
+        private DialogFrame? DialogFrame { get; set; }
+        private GameMapBackground? GameMapBackground { get; set; }
+        private GameSceneUI? GameSceneUI { get; set; }
+        private LoadingScreen? LoadingScreen { get; set; }
         private GameSceneState LoadingState { get; set; } = GameSceneState.None;
-        private Task LoadingTask { get; set; }
-        private MainCharacter MainCharacter { get; set; }
-        private MapGenerator MapGenerator { get; set; }
-        private PauseScreen PauseScreen { get; set; }
-        private RandomMap RandomMap { get; set; }
-        private GameSceneUI GameSceneUI { get; set; }
-        private GameMapBackground GameMapBackground { get; set; }
-        private BitmapText SeedText { get; set; }
-        private BattleContainer BattleContainer { get; set; }
+        private Task? LoadingTask { get; set; }
+        private MainCharacter? MainCharacter { get; set; }
+        private MapGenerator? MapGenerator { get; set; }
+        private PauseScreen? PauseScreen { get; set; }
+        private RandomMap? RandomMap { get; set; }
         private int Seed { get; set; }
+        private BitmapText? SeedText { get; set; }
 
         #endregion Private Properties
 
@@ -74,14 +74,14 @@ namespace ArcardnoidContent.Scenes
                 LoadingState = GameSceneState.Loading;
                 LoadingTask = Task.Run(() =>
                 {
-                    MapGenerator.GenerateMap();
+                    MapGenerator?.GenerateMap();
                 });
             }
 
-            if (LoadingTask.IsCompleted && LoadingState == GameSceneState.Loading)
+            if (LoadingTask != null && LoadingTask.IsCompleted && LoadingState == GameSceneState.Loading)
             {
                 PostLoadMap();
-                LoadingScreen.Close();
+                LoadingScreen?.Close();
                 LoadingState = GameSceneState.Loaded;
             }
 
@@ -89,9 +89,9 @@ namespace ArcardnoidContent.Scenes
             {
                 if (keyboard.HasBeenPressed("Escape"))
                 {
-                    RandomMap.Enabled = false;
-                    MainCharacter.Enabled = false;
-                    PauseScreen.Open();
+                    if (RandomMap != null) RandomMap.Enabled = false;
+                    if (MainCharacter != null) MainCharacter.Enabled = false;
+                    if (PauseScreen != null) PauseScreen?.Open();
                 }
             }
         }
@@ -99,52 +99,6 @@ namespace ArcardnoidContent.Scenes
         #endregion Public Methods
 
         #region Private Methods
-
-        private void OnDebug()
-        {
-            OnResume();
-            RandomMap.ToggleDebug();
-            MainCharacter.ToggleDebug();
-        }
-
-        private void OnEncounter(EncounterType type, Point cell, double distanceFromStart)
-        {
-            System.Diagnostics.Debug.WriteLine("Encounter : " + type + " at " + distanceFromStart + " from start");
-            if (type == EncounterType.Meat && GameServiceProvider.GetService<IGamePlay>().GetHeart() == 2) return;
-            DialogFrame.ShowDialog(type, (encouterDialog) => { OnEncounterDialogEnds(encouterDialog, type, cell, distanceFromStart); });
-        }
-
-        private void OnEncounterDialogEnds(EncounterDialog encounterDialog, EncounterType type, Point cell, double distanceFromStart)
-        {
-            switch (type)
-            {
-                case EncounterType.Gold:
-                    RandomMap.ClearCell(MapCell.GOLD_ASSET, cell);
-                    GameServiceProvider.GetService<IGamePlay>().AddGold(encounterDialog.Gold);
-                    break;
-                case EncounterType.Meat:
-                    RandomMap.ClearCell(MapCell.MEAT_ASSET, cell);
-                    GameServiceProvider.GetService<IGamePlay>().AddHeart(1);
-                    break;
-                case EncounterType.Archer:
-                case EncounterType.Warrior:
-                case EncounterType.Torch:
-                case EncounterType.Tnt:
-                    StartBattle(type, cell, distanceFromStart);
-                    break;
-            }
-        }
-
-        private void StartBattle(EncounterType type, Point cell, double distanceFromStart)
-        {
-            AddHideAnimation<RandomMap>(RandomMap);
-            AddHideAnimation<MainCharacter>(MainCharacter);
-            AddHideAnimation<GameSceneUI>(GameSceneUI);
-            AddHideAnimation<BitmapText>(SeedText);
-            AddShowAnimation<BattleContainer>(BattleContainer);
-            System.Diagnostics.Debug.WriteLine("Start battle with " + type + " at " + distanceFromStart + " from start");
-            BattleContainer.Show(RandomMap.GetGroundType(cell), type, distanceFromStart);
-        }
 
         private GameComponent AddHideAnimation<T>(GameComponent component, float duration = 0.5f) where T : GameComponent
         {
@@ -164,13 +118,50 @@ namespace ArcardnoidContent.Scenes
             }));
         }
 
+        private void OnDebug()
+        {
+            OnResume();
+            RandomMap?.ToggleDebug();
+            MainCharacter?.ToggleDebug();
+        }
+
+        private void OnEncounter(EncounterType type, Point cell, double distanceFromStart)
+        {
+            System.Diagnostics.Debug.WriteLine("Encounter : " + type + " at " + distanceFromStart + " from start");
+            if (type == EncounterType.Meat && GameServiceProvider.GetService<IGamePlay>().GetHeart() == 2) return;
+            DialogFrame?.ShowDialog(type, (encouterDialog) => { OnEncounterDialogEnds(encouterDialog, type, cell, distanceFromStart); });
+        }
+
+        private void OnEncounterDialogEnds(EncounterDialog encounterDialog, EncounterType type, Point cell, double distanceFromStart)
+        {
+            switch (type)
+            {
+                case EncounterType.Gold:
+                    RandomMap?.ClearCell(MapCell.GOLD_ASSET, cell);
+                    GameServiceProvider.GetService<IGamePlay>().AddGold(encounterDialog.Gold);
+                    break;
+
+                case EncounterType.Meat:
+                    RandomMap?.ClearCell(MapCell.MEAT_ASSET, cell);
+                    GameServiceProvider.GetService<IGamePlay>().AddHeart(1);
+                    break;
+
+                case EncounterType.Archer:
+                case EncounterType.Warrior:
+                case EncounterType.Torch:
+                case EncounterType.Tnt:
+                    StartBattle(type, cell, distanceFromStart);
+                    break;
+            }
+        }
+
         private void OnMapClicked(Point point)
         {
-            if (PauseScreen.IsOpened() || DialogFrame.IsOpened())
+            if (PauseScreen != null && PauseScreen.IsOpened() || DialogFrame != null && DialogFrame.IsOpened())
             {
                 return;
             }
-            MainCharacter.SetCurrentPath(RandomMap.GetPath((int)MainCharacter.CurrentCell.X, (int)MainCharacter.CurrentCell.Y, (int)point.X, (int)point.Y));
+            MainCharacter?.SetCurrentPath(RandomMap?.GetPath((int)MainCharacter.CurrentCell.X, (int)MainCharacter.CurrentCell.Y, (int)point.X, (int)point.Y));
         }
 
         private void OnQuit()
@@ -180,12 +171,13 @@ namespace ArcardnoidContent.Scenes
 
         private void OnResume()
         {
-            RandomMap.Enabled = true;
-            MainCharacter.Enabled = true;
+            if (RandomMap != null) RandomMap.Enabled = true;
+            if (MainCharacter != null) MainCharacter.Enabled = true;
         }
 
         private void PostLoadMap()
         {
+            if (MapGenerator?.MapHypothesis == null) return;
             RandomMap = AddGameComponent(new RandomMap(MapGenerator.MapHypothesis, false));
             RandomMap.OnMapClickedEvent += OnMapClicked;
             MainCharacter = AddGameComponent(new MainCharacter(RandomMap, MapGenerator.MapHypothesis));
@@ -194,6 +186,17 @@ namespace ArcardnoidContent.Scenes
             DialogFrame = AddGameComponent(new DialogFrame());
             PauseScreen = AddGameComponent(new PauseScreen(OnResume, OnDebug, OnQuit));
             AddGameComponent(new Cursor("ui/cursors/01", new Point(12, 16)));
+        }
+
+        private void StartBattle(EncounterType type, Point cell, double distanceFromStart)
+        {
+            if (RandomMap != null) AddHideAnimation<RandomMap>(RandomMap);
+            if (MainCharacter != null) AddHideAnimation<MainCharacter>(MainCharacter);
+            if (GameSceneUI != null) AddHideAnimation<GameSceneUI>(GameSceneUI);
+            if (SeedText != null) AddHideAnimation<BitmapText>(SeedText);
+            if (BattleContainer != null) AddShowAnimation<BattleContainer>(BattleContainer);
+            System.Diagnostics.Debug.WriteLine("Start battle with " + type + " at " + distanceFromStart + " from start");
+            if (RandomMap != null) BattleContainer?.Show(RandomMap.GetGroundType(cell), type, distanceFromStart);
         }
 
         #endregion Private Methods

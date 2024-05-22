@@ -6,13 +6,13 @@ namespace ArcardnoidShared.Framework.Components.Images
     {
         #region Private Properties
 
-        private Rectangle SourceRect { get; set; }
+        private Rectangle? SourceRect { get; set; }
 
         #endregion Private Properties
 
         #region Public Constructors
 
-        public ImagePart(string spriteAsset, int x, int y, Rectangle sourceRect) : base(spriteAsset, x, y)
+        public ImagePart(string spriteAsset, int x, int y, Rectangle? sourceRect) : base(spriteAsset, x, y)
         {
             SourceRect = sourceRect;
         }

@@ -8,7 +8,7 @@ namespace ArcardnoidContent.Components.Shared.Map.Cells
         #region Private Properties
 
         private int Size { get; set; }
-        private Rectangle SourceRect { get; set; }
+        private Rectangle SourceRect { get; set; } = Rectangle.Empty;
         private BridgeCellType Type { get; set; }
 
         #endregion Private Properties

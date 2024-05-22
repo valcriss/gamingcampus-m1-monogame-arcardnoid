@@ -23,8 +23,8 @@ namespace ArcardnoidContent.Components.Shared.Map
 
         #region Private Fields
 
-        private bool _debug;
-        private string _mapAsset;
+        private readonly bool _debug;
+        private readonly string _mapAsset;
 
         #endregion Private Fields
 
@@ -54,8 +54,7 @@ namespace ArcardnoidContent.Components.Shared.Map
         {
             base.Load();
             string location = Assembly.GetExecutingAssembly().Location;
-            string? directory = Path.GetDirectoryName(location);
-            if (directory == null) throw new Exception("Directory not found");
+            string? directory = Path.GetDirectoryName(location) ?? throw new Exception("Directory not found");
             string mapContent = File.ReadAllText(Path.Combine(directory, _mapAsset));
             _mapItem = JsonConvert.DeserializeObject<MapItem>(mapContent);
             if (_mapItem.Assets == null) throw new Exception("Map not found");

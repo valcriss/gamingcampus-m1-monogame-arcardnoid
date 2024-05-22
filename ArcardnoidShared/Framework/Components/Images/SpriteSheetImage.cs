@@ -6,12 +6,12 @@ namespace ArcardnoidShared.Framework.Components.Images
     {
         #region Private Fields
 
-        private int _columns;
+        private readonly int _columns;
+        private readonly int _rows;
+        private readonly float _speed;
         private double _elapsedTime;
         private int _index;
-        private List<Rectangle> _rects = new List<Rectangle>();
-        private int _rows;
-        private float _speed;
+        private List<Rectangle> _rects = new();
 
         #endregion Private Fields
 

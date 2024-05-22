@@ -17,7 +17,7 @@ namespace arcardnoid.Models.Implementations
 
         #region Private Fields
 
-        private BitmapFont _bitmapFont;
+        private readonly BitmapFont _bitmapFont;
 
         #endregion Private Fields
 

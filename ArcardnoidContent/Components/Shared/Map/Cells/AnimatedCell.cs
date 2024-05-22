@@ -14,16 +14,16 @@ namespace ArcardnoidContent.Components.Shared.Map.Cells
 
         #region Private Fields
 
-        private int _columns;
+        private readonly int _columns;
+        private readonly int _delayMax;
+        private readonly int _delayMin;
+        private readonly int _rows;
+        private readonly double _speed;
         private double _delay;
-        private int _delayMax;
-        private int _delayMin;
         private double _elapsedTime;
         private int _index;
         private double _pausedTime;
-        private List<Rectangle> _rects = new List<Rectangle>();
-        private int _rows;
-        private double _speed;
+        private List<Rectangle> _rects = new();
 
         #endregion Private Fields
 

@@ -17,9 +17,7 @@ namespace ArcardnoidContent.Components.Shared.Map
 
         #region Private Fields
 
-        private float _delay = 0f;
-
-        private string[] ANIMATION_TILES_PATH = new string[]
+        private readonly string[] ANIMATION_TILES_PATH = new string[]
                 {
             "map/deco/05",
             "map/deco/04",
@@ -31,6 +29,8 @@ namespace ArcardnoidContent.Components.Shared.Map
             "map/units/tnt-red-idle",
             "map/units/player-battle"
         };
+
+        private float _delay = 0f;
 
         #endregion Private Fields
 

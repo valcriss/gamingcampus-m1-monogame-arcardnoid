@@ -6,7 +6,7 @@
 
         public float Height { get; set; }
 
-        public Point Position => new Point(X, Y);
+        public Point Position => new(X, Y);
 
         public float Width { get; set; }
         public float X { get; set; }
@@ -16,7 +16,7 @@
 
         #region Public Fields
 
-        public static Rectangle Empty = new Rectangle(0, 0, 0, 0);
+        public static readonly Rectangle Empty = new(0, 0, 0, 0);
 
         #endregion Public Fields
 

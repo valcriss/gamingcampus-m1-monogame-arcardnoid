@@ -129,81 +129,34 @@ namespace ArcardnoidContent.Components.Shared.Map.Cells
 
         private Rectangle CalculateRect()
         {
-            switch (Type)
+            return Type switch
             {
-                case MultiCell2Type.TopLeft:
-                    return new Rectangle(0, 0, Size, Size);
-
-                case MultiCell2Type.Top:
-                    return new Rectangle(Size, 0, Size, Size);
-
-                case MultiCell2Type.TopRight:
-                    return new Rectangle(Size * 2, 0, Size, Size);
-
-                case MultiCell2Type.Left:
-                    return new Rectangle(0, Size, Size, Size);
-
-                case MultiCell2Type.Center:
-                    return new Rectangle(Size, Size, Size, Size);
-
-                case MultiCell2Type.Right:
-                    return new Rectangle(Size * 2, Size, Size, Size);
-
-                case MultiCell2Type.BottomLeft:
-                    return new Rectangle(0, Size * 2, Size, Size);
-
-                case MultiCell2Type.Bottom:
-                    return new Rectangle(Size, Size * 2, Size, Size);
-
-                case MultiCell2Type.BottomRight:
-                    return new Rectangle(Size * 2, Size * 2, Size, Size);
-
-                case MultiCell2Type.TopLeftBottom:
-                    return new Rectangle(0, Size * 4, Size, Size);
-
-                case MultiCell2Type.TopBottom:
-                    return new Rectangle(Size, Size * 4, Size, Size);
-
-                case MultiCell2Type.TopRightBottom:
-                    return new Rectangle(Size * 2, Size * 4, Size, Size);
-
-                case MultiCell2Type.LeftRightTop:
-                    return new Rectangle(Size * 3, 0, Size, Size);
-
-                case MultiCell2Type.LeftRight:
-                    return new Rectangle(Size * 3, Size, Size, Size);
-
-                case MultiCell2Type.LeftRightBottom:
-                    return new Rectangle(Size * 3, Size * 2, Size, Size);
-
-                case MultiCell2Type.Single:
-                    return new Rectangle(Size * 3, Size * 4, Size, Size);
-
-                case MultiCell2Type.ElevationLeft:
-                    return new Rectangle(0, Size * 3, Size, Size);
-
-                case MultiCell2Type.ElevationCenter:
-                    return new Rectangle(Size, Size * 3, Size, Size);
-
-                case MultiCell2Type.ElevationRight:
-                    return new Rectangle(Size * 2, Size * 3, Size, Size);
-
-                case MultiCell2Type.ElevationSingle:
-                    return new Rectangle(Size * 3, Size * 3, Size, Size);
-
-                case MultiCell2Type.StairsLeft:
-                    return new Rectangle(0, Size * 7, Size, Size);
-
-                case MultiCell2Type.StairsCenter:
-                    return new Rectangle(Size, Size * 7, Size, Size);
-
-                case MultiCell2Type.StairsRight:
-                    return new Rectangle(Size * 2, Size * 7, Size, Size);
-
-                case MultiCell2Type.StarsSingle:
-                    return new Rectangle(Size * 3, Size * 7, Size, Size);
-            }
-            return Rectangle.Empty;
+                MultiCell2Type.TopLeft => new Rectangle(0, 0, Size, Size),
+                MultiCell2Type.Top => new Rectangle(Size, 0, Size, Size),
+                MultiCell2Type.TopRight => new Rectangle(Size * 2, 0, Size, Size),
+                MultiCell2Type.Left => new Rectangle(0, Size, Size, Size),
+                MultiCell2Type.Center => new Rectangle(Size, Size, Size, Size),
+                MultiCell2Type.Right => new Rectangle(Size * 2, Size, Size, Size),
+                MultiCell2Type.BottomLeft => new Rectangle(0, Size * 2, Size, Size),
+                MultiCell2Type.Bottom => new Rectangle(Size, Size * 2, Size, Size),
+                MultiCell2Type.BottomRight => new Rectangle(Size * 2, Size * 2, Size, Size),
+                MultiCell2Type.TopLeftBottom => new Rectangle(0, Size * 4, Size, Size),
+                MultiCell2Type.TopBottom => new Rectangle(Size, Size * 4, Size, Size),
+                MultiCell2Type.TopRightBottom => new Rectangle(Size * 2, Size * 4, Size, Size),
+                MultiCell2Type.LeftRightTop => new Rectangle(Size * 3, 0, Size, Size),
+                MultiCell2Type.LeftRight => new Rectangle(Size * 3, Size, Size, Size),
+                MultiCell2Type.LeftRightBottom => new Rectangle(Size * 3, Size * 2, Size, Size),
+                MultiCell2Type.Single => new Rectangle(Size * 3, Size * 4, Size, Size),
+                MultiCell2Type.ElevationLeft => new Rectangle(0, Size * 3, Size, Size),
+                MultiCell2Type.ElevationCenter => new Rectangle(Size, Size * 3, Size, Size),
+                MultiCell2Type.ElevationRight => new Rectangle(Size * 2, Size * 3, Size, Size),
+                MultiCell2Type.ElevationSingle => new Rectangle(Size * 3, Size * 3, Size, Size),
+                MultiCell2Type.StairsLeft => new Rectangle(0, Size * 7, Size, Size),
+                MultiCell2Type.StairsCenter => new Rectangle(Size, Size * 7, Size, Size),
+                MultiCell2Type.StairsRight => new Rectangle(Size * 2, Size * 7, Size, Size),
+                MultiCell2Type.StarsSingle => new Rectangle(Size * 3, Size * 7, Size, Size),
+                _ => Rectangle.Empty,
+            };
         }
 
         #endregion Private Methods

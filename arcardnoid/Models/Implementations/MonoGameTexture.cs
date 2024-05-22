@@ -26,8 +26,8 @@ namespace arcardnoid.Models.Implementations
 
         #region Private Fields
 
-        private string _assetPath;
-        private Texture2D _texture;
+        private readonly string _assetPath;
+        private readonly Texture2D _texture;
 
         #endregion Private Fields
 
@@ -46,7 +46,7 @@ namespace arcardnoid.Models.Implementations
 
         public void DrawTexture(ArcardnoidShared.Framework.Drawing.Rectangle destination, ArcardnoidShared.Framework.Drawing.Rectangle source, GameColor color, float rotation, ArcardnoidShared.Framework.Drawing.Point origin)
         {
-            ArcardnoidShared.Framework.Drawing.Rectangle sourceRect = source != null ? source : new ArcardnoidShared.Framework.Drawing.Rectangle(0, 0, _texture.Width, _texture.Height);
+            ArcardnoidShared.Framework.Drawing.Rectangle sourceRect = source ?? new ArcardnoidShared.Framework.Drawing.Rectangle(0, 0, _texture.Width, _texture.Height);
             Game.SpriteBatch.Draw(_texture, ScreenManager.Scale(destination).ToXnaRectangle().ToRectangle(), sourceRect.ToXnaRectangle().ToRectangle(), color.ToXnaColor(), MathHelper.ToRadians(rotation), origin.ToVector2(), SpriteEffects.None, 0);
         }
 

@@ -32,7 +32,7 @@ namespace ArcardnoidContent.Components.Shared.Map
 
         #region Private Properties
 
-        private IPrimitives2D Primitives2D => GameServiceProvider.GetService<IPrimitives2D>();
+        private static IPrimitives2D Primitives2D => GameServiceProvider.GetService<IPrimitives2D>();
 
         #endregion Private Properties
 
@@ -42,7 +42,7 @@ namespace ArcardnoidContent.Components.Shared.Map
         private DateTime _clickTime = DateTime.Now;
         private bool _forceDebug;
         private MapItem _mapItem;
-        private List<ITexture> _mapTextures = new List<ITexture>();
+        private List<ITexture> _mapTextures = new();
 
         #endregion Private Fields
 
@@ -61,8 +61,7 @@ namespace ArcardnoidContent.Components.Shared.Map
         public static T? LoadFromFile<T>(string filename) where T : class
         {
             string location = Assembly.GetExecutingAssembly().Location;
-            string? directory = Path.GetDirectoryName(location);
-            if (directory == null) throw new Exception("Directory not found");
+            string? directory = Path.GetDirectoryName(location) ?? throw new Exception("Directory not found");
             string content = File.ReadAllText(Path.Combine(directory, filename));
             try
             {
@@ -100,15 +99,15 @@ namespace ArcardnoidContent.Components.Shared.Map
 
         public List<Point>? GetPath(int playerPositionX, int playerPositionY, int x, int y)
         {
-            Point source = new Point(playerPositionX, playerPositionY);
-            Point destination = new Point(x, y);
-            if (!isValid(source) || !isValid(destination)) return null;
-            List<Point> done = new List<Point>();
-            List<Point> path = new List<Point>
+            Point source = new(playerPositionX, playerPositionY);
+            Point destination = new(x, y);
+            if (!IsValid(source) || !IsValid(destination)) return null;
+            List<Point> done = new();
+            List<Point> path = new()
             {
                 source
             };
-            Queue<List<Point>> queue = new Queue<List<Point>>();
+            Queue<List<Point>> queue = new();
             queue.Enqueue(path);
 
             while (queue.Count > 0)
@@ -120,7 +119,7 @@ namespace ArcardnoidContent.Components.Shared.Map
                 {
                     if (currentPath.Contains(point) || done.Contains(point)) continue;
                     done.Add(point);
-                    List<Point> newPath = new List<Point>(currentPath)
+                    List<Point> newPath = new(currentPath)
                     {
                         point
                     };
@@ -134,8 +133,13 @@ namespace ArcardnoidContent.Components.Shared.Map
         {
             base.Load();
             _blockTexture = GameServiceProvider.GetService<ITextureService>().Load("map/halt");
-            _mapItem = new MapItem() { Width = MapHypothesis.Width, Height = MapHypothesis.Height, Size = 64 };
-            _mapItem.Assets = LoadFromFile<List<MapAsset>>("Maps/chunkAssets.json");
+            _mapItem = new MapItem
+            {
+                Width = MapHypothesis.Width,
+                Height = MapHypothesis.Height,
+                Size = 64,
+                Assets = LoadFromFile<List<MapAsset>>("Maps/chunkAssets.json")
+            };
             LoadAssets();
             LoadTiles();
         }
@@ -258,15 +262,15 @@ namespace ArcardnoidContent.Components.Shared.Map
 
         private List<Point> GetNeighbors(Point point)
         {
-            List<Point> neighbors = new List<Point>();
-            if (isValid(new Point(point.X - 1, point.Y))) neighbors.Add(new Point(point.X - 1, point.Y));
-            if (isValid(new Point(point.X + 1, point.Y))) neighbors.Add(new Point(point.X + 1, point.Y));
-            if (isValid(new Point(point.X, point.Y - 1))) neighbors.Add(new Point(point.X, point.Y - 1));
-            if (isValid(new Point(point.X, point.Y + 1))) neighbors.Add(new Point(point.X, point.Y + 1));
+            List<Point> neighbors = new();
+            if (IsValid(new Point(point.X - 1, point.Y))) neighbors.Add(new Point(point.X - 1, point.Y));
+            if (IsValid(new Point(point.X + 1, point.Y))) neighbors.Add(new Point(point.X + 1, point.Y));
+            if (IsValid(new Point(point.X, point.Y - 1))) neighbors.Add(new Point(point.X, point.Y - 1));
+            if (IsValid(new Point(point.X, point.Y + 1))) neighbors.Add(new Point(point.X, point.Y + 1));
             return neighbors;
         }
 
-        private bool isValid(Point point)
+        private bool IsValid(Point point)
         {
             if (!(point.X >= 0 && point.X < _mapItem.Width && point.Y >= 0 && point.Y < _mapItem.Height)) return false;
             return MapHypothesis.FinalChunk.Blocks.IsEmpty((int)point.X, (int)point.Y);
@@ -296,9 +300,11 @@ namespace ArcardnoidContent.Components.Shared.Map
                     {
                         ITexture? texture = _blockTexture;
                         if (texture == null) continue;
-                        MapCell cell = new MapCell(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, 0, 0);
-                        cell.Color = GameColor.Red;
-                        cell.Opacity = 0.25f;
+                        MapCell cell = new(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, 0, 0)
+                        {
+                            Color = GameColor.Red,
+                            Opacity = 0.25f
+                        };
                         AddGameComponent(cell);
                     }
                     RealX++;
@@ -334,9 +340,11 @@ namespace ArcardnoidContent.Components.Shared.Map
                         MapChunkEntrance entrance = chunk.MapChunk.Entrances.FirstOrDefault(c => c.X == x && c.Y == y);
                         ITexture? texture = _blockTexture;
                         if (texture == null) continue;
-                        MapCell cell = new MapCell(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, 0, 0);
-                        cell.Color = GameColor.Cyan;
-                        cell.Opacity = 0.35f;
+                        MapCell cell = new(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, 0, 0)
+                        {
+                            Color = GameColor.Cyan,
+                            Opacity = 0.35f
+                        };
                         AddGameComponent(cell);
                     }
                     RealX++;
@@ -360,9 +368,11 @@ namespace ArcardnoidContent.Components.Shared.Map
                         MapChunkSpawn spawn = chunk.MapChunk.Spawns.FirstOrDefault(c => c.X == x && c.Y == y);
                         ITexture? texture = _blockTexture;
                         if (texture == null) continue;
-                        MapCell cell = new MapCell(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, 0, 0);
-                        cell.Color = GameColor.Yellow;
-                        cell.Opacity = 0.35f;
+                        MapCell cell = new(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, 0, 0)
+                        {
+                            Color = GameColor.Yellow,
+                            Opacity = 0.35f
+                        };
                         AddGameComponent(cell);
                     }
                     RealX++;

@@ -87,8 +87,8 @@ namespace ArcardnoidShared.Framework.Components.UI
             IMouseService mouseService = GameServiceProvider.GetService<IMouseService>();
 
             Point mousePoint = ScreenManager.UIScale(mouseService.GetMousePosition());
-            Rectangle LeftRealBounds = new Rectangle((int)RealBounds.X, (int)RealBounds.Y, 64, 64);
-            Rectangle RightRealBounds = new Rectangle((int)RealBounds.X + 64 + BarWidth * 64, (int)RealBounds.Y, 64, 64);
+            Rectangle LeftRealBounds = new((int)RealBounds.X, (int)RealBounds.Y, 64, 64);
+            Rectangle RightRealBounds = new((int)RealBounds.X + 64 + BarWidth * 64, (int)RealBounds.Y, 64, 64);
             if (LeftRealBounds.Contains(mousePoint))
             {
                 CurrentLeftTexture = HoverTexture;

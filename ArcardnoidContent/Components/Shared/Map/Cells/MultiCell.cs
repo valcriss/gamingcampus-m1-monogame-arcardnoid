@@ -108,57 +108,26 @@ namespace ArcardnoidContent.Components.Shared.Map.Cells
 
         private Rectangle CalculateRect()
         {
-            switch (Type)
+            return Type switch
             {
-                case MultiCellType.TopLeft:
-                    return new Rectangle(0, 0, Size, Size);
-
-                case MultiCellType.Top:
-                    return new Rectangle(Size, 0, Size, Size);
-
-                case MultiCellType.TopRight:
-                    return new Rectangle(Size * 2, 0, Size, Size);
-
-                case MultiCellType.Left:
-                    return new Rectangle(0, Size, Size, Size);
-
-                case MultiCellType.Center:
-                    return new Rectangle(Size, Size, Size, Size);
-
-                case MultiCellType.Right:
-                    return new Rectangle(Size * 2, Size, Size, Size);
-
-                case MultiCellType.BottomLeft:
-                    return new Rectangle(0, Size * 2, Size, Size);
-
-                case MultiCellType.Bottom:
-                    return new Rectangle(Size, Size * 2, Size, Size);
-
-                case MultiCellType.BottomRight:
-                    return new Rectangle(Size * 2, Size * 2, Size, Size);
-
-                case MultiCellType.TopLeftBottom:
-                    return new Rectangle(0, Size * 3, Size, Size);
-
-                case MultiCellType.TopBottom:
-                    return new Rectangle(Size, Size * 3, Size, Size);
-
-                case MultiCellType.TopRightBottom:
-                    return new Rectangle(Size * 2, Size * 3, Size, Size);
-
-                case MultiCellType.LeftRightTop:
-                    return new Rectangle(Size * 3, 0, Size, Size);
-
-                case MultiCellType.LeftRight:
-                    return new Rectangle(Size * 3, Size, Size, Size);
-
-                case MultiCellType.LeftRightBottom:
-                    return new Rectangle(Size * 3, Size * 2, Size, Size);
-
-                case MultiCellType.Single:
-                    return new Rectangle(Size * 3, Size * 3, Size, Size);
-            }
-            return Rectangle.Empty;
+                MultiCellType.TopLeft => new Rectangle(0, 0, Size, Size),
+                MultiCellType.Top => new Rectangle(Size, 0, Size, Size),
+                MultiCellType.TopRight => new Rectangle(Size * 2, 0, Size, Size),
+                MultiCellType.Left => new Rectangle(0, Size, Size, Size),
+                MultiCellType.Center => new Rectangle(Size, Size, Size, Size),
+                MultiCellType.Right => new Rectangle(Size * 2, Size, Size, Size),
+                MultiCellType.BottomLeft => new Rectangle(0, Size * 2, Size, Size),
+                MultiCellType.Bottom => new Rectangle(Size, Size * 2, Size, Size),
+                MultiCellType.BottomRight => new Rectangle(Size * 2, Size * 2, Size, Size),
+                MultiCellType.TopLeftBottom => new Rectangle(0, Size * 3, Size, Size),
+                MultiCellType.TopBottom => new Rectangle(Size, Size * 3, Size, Size),
+                MultiCellType.TopRightBottom => new Rectangle(Size * 2, Size * 3, Size, Size),
+                MultiCellType.LeftRightTop => new Rectangle(Size * 3, 0, Size, Size),
+                MultiCellType.LeftRight => new Rectangle(Size * 3, Size, Size, Size),
+                MultiCellType.LeftRightBottom => new Rectangle(Size * 3, Size * 2, Size, Size),
+                MultiCellType.Single => new Rectangle(Size * 3, Size * 3, Size, Size),
+                _ => Rectangle.Empty,
+            };
         }
 
         #endregion Private Methods

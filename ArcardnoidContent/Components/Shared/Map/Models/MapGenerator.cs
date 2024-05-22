@@ -51,7 +51,7 @@ namespace ArcardnoidContent.Components.Shared.Map.Models
         public void GenerateMap()
         {
             LoadChunks();
-            List<MapHypothesis> mapHypotesisList = new List<MapHypothesis>();
+            List<MapHypothesis> mapHypotesisList = new();
 
             while (mapHypotesisList.Count < MAP_HYPOTHESIS_COUNT)
             {
@@ -88,7 +88,7 @@ namespace ArcardnoidContent.Components.Shared.Map.Models
         private MapHypothesis? RandomMap()
         {
             Chunks = StoredChunks.Clone();
-            MapHypothesis mapHypotesis = new MapHypothesis(Seed, MAP_WIDTH, MAP_HEIGHT);
+            MapHypothesis mapHypotesis = new(Seed, MAP_WIDTH, MAP_HEIGHT);
             mapHypotesis.AddStartingChunk(StartingChunk, STARTING_CHUNK_X, STARTING_CHUNK_Y);
             while (mapHypotesis.HasOpenedDoors())
             {

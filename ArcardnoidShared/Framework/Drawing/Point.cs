@@ -4,7 +4,7 @@
     {
         #region Public Properties
 
-        public static Point Zero => new Point(0, 0);
+        public static Point Zero => new(0, 0);
         public float X { get; set; }
         public float Y { get; set; }
 
@@ -60,7 +60,7 @@
 
         public override bool Equals(object? obj)
         {
-            return (obj!= null && (Point)obj == this);
+            return (obj != null && (Point)obj == this);
         }
 
         public override int GetHashCode()

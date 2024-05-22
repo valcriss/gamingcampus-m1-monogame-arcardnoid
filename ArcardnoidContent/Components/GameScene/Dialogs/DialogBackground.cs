@@ -9,7 +9,7 @@ namespace ArcardnoidContent.Components.GameScene.Dialogs
     {
         #region Private Properties
 
-        private IPrimitives2D Primitives2D => GameServiceProvider.GetService<IPrimitives2D>();
+        private static IPrimitives2D Primitives2D => GameServiceProvider.GetService<IPrimitives2D>();
 
         #endregion Private Properties
 

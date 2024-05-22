@@ -39,7 +39,7 @@ namespace ArcardnoidShared.Framework.Components.UI
         public override void Update(float delta)
         {
             base.Update(delta);
-            if(CursorImage == null) return;
+            if (CursorImage == null) return;
             IMouseService mouseService = GameServiceProvider.GetService<IMouseService>();
             Point mousePosition = mouseService.GetMousePosition();
             Point mousePoint = ScreenManager.UIScale(mousePosition);

@@ -6,41 +6,41 @@
 
         public static float GetEase(EaseType easeType, float t)
         {
-            switch (easeType)
+            return easeType switch
             {
-                case EaseType.Linear: return Linear(t);
-                case EaseType.InQuad: return InQuad(t);
-                case EaseType.OutQuad: return OutQuad(t);
-                case EaseType.InOutQuad: return InOutQuad(t);
-                case EaseType.InCubic: return InCubic(t);
-                case EaseType.OutCubic: return OutCubic(t);
-                case EaseType.InOutCubic: return InOutCubic(t);
-                case EaseType.InQuart: return InQuart(t);
-                case EaseType.OutQuart: return OutQuart(t);
-                case EaseType.InOutQuart: return InOutQuart(t);
-                case EaseType.InQuint: return InQuint(t);
-                case EaseType.OutQuint: return OutQuint(t);
-                case EaseType.InOutQuint: return InOutQuint(t);
-                case EaseType.InSine: return InSine(t);
-                case EaseType.OutSine: return OutSine(t);
-                case EaseType.InOutSine: return InOutSine(t);
-                case EaseType.InExpo: return InExpo(t);
-                case EaseType.OutExpo: return OutExpo(t);
-                case EaseType.InOutExpo: return InOutExpo(t);
-                case EaseType.InCirc: return InCirc(t);
-                case EaseType.OutCirc: return OutCirc(t);
-                case EaseType.InOutCirc: return InOutCirc(t);
-                case EaseType.InElastic: return InElastic(t);
-                case EaseType.OutElastic: return OutElastic(t);
-                case EaseType.InOutElastic: return InOutElastic(t);
-                case EaseType.InBack: return InBack(t);
-                case EaseType.OutBack: return OutBack(t);
-                case EaseType.InOutBack: return InOutBack(t);
-                case EaseType.InBounce: return InBounce(t);
-                case EaseType.OutBounce: return OutBounce(t);
-                case EaseType.InOutBounce: return InOutBounce(t);
-                default: return Linear(t);
-            }
+                EaseType.Linear => Linear(t),
+                EaseType.InQuad => InQuad(t),
+                EaseType.OutQuad => OutQuad(t),
+                EaseType.InOutQuad => InOutQuad(t),
+                EaseType.InCubic => InCubic(t),
+                EaseType.OutCubic => OutCubic(t),
+                EaseType.InOutCubic => InOutCubic(t),
+                EaseType.InQuart => InQuart(t),
+                EaseType.OutQuart => OutQuart(t),
+                EaseType.InOutQuart => InOutQuart(t),
+                EaseType.InQuint => InQuint(t),
+                EaseType.OutQuint => OutQuint(t),
+                EaseType.InOutQuint => InOutQuint(t),
+                EaseType.InSine => InSine(t),
+                EaseType.OutSine => OutSine(t),
+                EaseType.InOutSine => InOutSine(t),
+                EaseType.InExpo => InExpo(t),
+                EaseType.OutExpo => OutExpo(t),
+                EaseType.InOutExpo => InOutExpo(t),
+                EaseType.InCirc => InCirc(t),
+                EaseType.OutCirc => OutCirc(t),
+                EaseType.InOutCirc => InOutCirc(t),
+                EaseType.InElastic => InElastic(t),
+                EaseType.OutElastic => OutElastic(t),
+                EaseType.InOutElastic => InOutElastic(t),
+                EaseType.InBack => InBack(t),
+                EaseType.OutBack => OutBack(t),
+                EaseType.InOutBack => InOutBack(t),
+                EaseType.InBounce => InBounce(t),
+                EaseType.OutBounce => OutBounce(t),
+                EaseType.InOutBounce => InOutBounce(t),
+                _ => Linear(t),
+            };
         }
 
         public static float InBack(float t)

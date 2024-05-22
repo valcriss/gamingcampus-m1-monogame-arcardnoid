@@ -6,9 +6,9 @@ namespace ArcardnoidShared.Framework.Components.Tools
     {
         #region Private Fields
 
-        private float _duration;
-        private bool _loop;
-        private Action _onComplete;
+        private readonly float _duration;
+        private readonly bool _loop;
+        private readonly Action _onComplete;
         private float _time;
 
         #endregion Private Fields

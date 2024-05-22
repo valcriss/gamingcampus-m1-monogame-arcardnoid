@@ -25,7 +25,7 @@ namespace ArcardnoidContent.Components.Shared.Map
         private ITexture? _blockTexture;
         private bool _forceDebug;
         private MapItem _mapItem;
-        private List<ITexture> _mapTextures = new List<ITexture>();
+        private List<ITexture> _mapTextures = new();
 
         #endregion Private Fields
 
@@ -43,8 +43,7 @@ namespace ArcardnoidContent.Components.Shared.Map
         public static T? LoadFromFile<T>(string filename) where T : new()
         {
             string location = Assembly.GetExecutingAssembly().Location;
-            string? directory = Path.GetDirectoryName(location);
-            if (directory == null) throw new Exception("Directory not found");
+            string? directory = Path.GetDirectoryName(location) ?? throw new Exception("Directory not found");
             string content = File.ReadAllText(Path.Combine(directory, filename));
             try
             {
@@ -71,8 +70,13 @@ namespace ArcardnoidContent.Components.Shared.Map
         {
             base.Load();
             _blockTexture = GameServiceProvider.GetService<ITextureService>().Load("map/halt");
-            _mapItem = new MapItem() { Width = 29, Height = 16, Size = 64 };
-            _mapItem.Assets = LoadFromFile<List<MapAsset>>("Maps/chunkAssets.json");
+            _mapItem = new MapItem
+            {
+                Width = 29,
+                Height = 16,
+                Size = 64,
+                Assets = LoadFromFile<List<MapAsset>>("Maps/chunkAssets.json")
+            };
             LoadAssets();
         }
 
@@ -81,7 +85,7 @@ namespace ArcardnoidContent.Components.Shared.Map
             RemoveAllGameComponents();
             Filter = filter;
             List<MapChunk> chunks = LoadChunks();
-            List<ChunkLayout> layout = new List<ChunkLayout>();
+            List<ChunkLayout> layout = new();
             int x = 0;
             int y = 0;
             foreach (MapChunk chunk in chunks)
@@ -193,9 +197,11 @@ namespace ArcardnoidContent.Components.Shared.Map
                     {
                         ITexture? texture = _blockTexture;
                         if (texture == null) continue;
-                        MapCell cell = new MapCell(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, 0, 0);
-                        cell.Color = GameColor.Red;
-                        cell.Opacity = 0.25f;
+                        MapCell cell = new(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, 0, 0)
+                        {
+                            Color = GameColor.Red,
+                            Opacity = 0.25f
+                        };
                         AddGameComponent(cell);
                     }
                     RealX++;
@@ -221,10 +227,9 @@ namespace ArcardnoidContent.Components.Shared.Map
 
         private List<MapChunk> LoadChunks()
         {
-            List<MapChunk> chunks = new List<MapChunk>();
+            List<MapChunk> chunks = new();
             string location = Assembly.GetExecutingAssembly().Location;
-            string? directory = Path.GetDirectoryName(location);
-            if (directory == null) throw new Exception("Directory not found");
+            string? directory = Path.GetDirectoryName(location) ?? throw new Exception("Directory not found");
             foreach (string file in Directory.GetFiles(Path.Combine(directory, "Maps/Chunks"), Filter, SearchOption.AllDirectories))
             {
                 chunks.Add(LoadFromFile<MapChunk>(file));
@@ -247,9 +252,11 @@ namespace ArcardnoidContent.Components.Shared.Map
                         MapChunkEntrance entrance = chunk.MapChunk.Entrances.FirstOrDefault(c => c.X == x && c.Y == y);
                         ITexture? texture = _blockTexture;
                         if (texture == null) continue;
-                        MapCell cell = new MapCell(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, 0, 0);
-                        cell.Color = GameColor.Cyan;
-                        cell.Opacity = 0.35f;
+                        MapCell cell = new(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, 0, 0)
+                        {
+                            Color = GameColor.Cyan,
+                            Opacity = 0.35f
+                        };
                         AddGameComponent(cell);
                     }
                     RealX++;
@@ -274,9 +281,11 @@ namespace ArcardnoidContent.Components.Shared.Map
                         MapChunkSpawn spawn = chunk.MapChunk.Spawns.FirstOrDefault(c => c.X == x && c.Y == y);
                         ITexture? texture = _blockTexture;
                         if (texture == null) continue;
-                        MapCell cell = new MapCell(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, 0, 0);
-                        cell.Color = GameColor.Yellow;
-                        cell.Opacity = 0.35f;
+                        MapCell cell = new(texture, RealX, RealY, RealX * _mapItem.Size + _mapItem.Size / 2, RealY * _mapItem.Size + _mapItem.Size / 2, 0, 0)
+                        {
+                            Color = GameColor.Yellow,
+                            Opacity = 0.35f
+                        };
                         AddGameComponent(cell);
                     }
                     RealX++;

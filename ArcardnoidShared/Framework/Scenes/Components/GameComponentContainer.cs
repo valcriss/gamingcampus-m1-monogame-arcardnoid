@@ -21,11 +21,16 @@ namespace ArcardnoidShared.Framework.Scenes.Components
 
         #region Public Methods
 
+        public static void RemoveGameComponent(GameComponent gameComponent)
+        {
+            gameComponent.InnerUnload();
+        }
+
         public virtual T AddGameComponent<T>(T gameComponent) where T : GameComponent
         {
-            if (this is GameComponent)
+            if (this is GameComponent component)
             {
-                gameComponent.Parent = (GameComponent)this;
+                gameComponent.Parent = component;
             }
             GameComponents.Add(gameComponent);
             return gameComponent;
@@ -92,11 +97,6 @@ namespace ArcardnoidShared.Framework.Scenes.Components
             {
                 gameComponent?.InnerUnload();
             }
-        }
-
-        public void RemoveGameComponent(GameComponent gameComponent)
-        {
-            gameComponent.InnerUnload();
         }
 
         #endregion Public Methods

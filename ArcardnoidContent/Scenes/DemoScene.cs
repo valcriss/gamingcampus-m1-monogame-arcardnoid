@@ -21,9 +21,7 @@ namespace ArcardnoidContent.Scenes
 
         #region Private Fields
 
-        private int _filterIndex = 0;
-
-        private string[] _filters = new string[]
+        private readonly string[] _filters = new string[]
         {
             "22\\0\\1\\*.json",
             "22\\0\\2\\*.json",
@@ -36,6 +34,7 @@ namespace ArcardnoidContent.Scenes
             "32\\0\\3\\*.json",
         };
 
+        private int _filterIndex = 0;
         private bool _loaded = false;
 
         #endregion Private Fields
@@ -81,7 +80,7 @@ namespace ArcardnoidContent.Scenes
         {
             string filter = _filters[_filterIndex];
             DynamicGameMap?.LoadTiles(filter);
-            BitmapText?.SetText(filter.Replace("\\", "-").Substring(0, filter.Length - 7));
+            BitmapText?.SetText(filter.Replace("\\", "-")[..(filter.Length - 7)]);
         }
 
         private void OnDebug()

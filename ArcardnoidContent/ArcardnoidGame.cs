@@ -16,7 +16,7 @@ namespace ArcardnoidContent
 
         #region Private Fields
 
-        private IScenesManager _scenesManager;
+        private readonly IScenesManager _scenesManager;
 
         #endregion Private Fields
 

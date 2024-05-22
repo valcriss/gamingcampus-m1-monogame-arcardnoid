@@ -6,8 +6,8 @@ namespace ArcardnoidShared.Framework.Scenes.Animations
     {
         #region Private Fields
 
-        private float _from;
-        private float _to;
+        private readonly float _from;
+        private readonly float _to;
 
         #endregion Private Fields
 

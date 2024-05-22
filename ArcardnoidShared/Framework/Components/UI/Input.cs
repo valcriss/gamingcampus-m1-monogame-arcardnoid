@@ -32,7 +32,7 @@ namespace ArcardnoidShared.Framework.Components.UI
 
         #region Private Fields
 
-        private double _cursorBlinkTime = 0.5;
+        private readonly double _cursorBlinkTime = 0.5;
         private bool _cursorVisible = true;
         private ITexture? _inputTexture;
         private double _lastCursorTime = 0;
@@ -99,7 +99,7 @@ namespace ArcardnoidShared.Framework.Components.UI
                 IsPressed = false;
                 return;
             }
-            Rectangle bounds = new Rectangle((int)RealBounds.X, (int)RealBounds.Y, 64 + InputWidth * 64, 128);
+            Rectangle bounds = new((int)RealBounds.X, (int)RealBounds.Y, 64 + InputWidth * 64, 128);
             IsHovered = bounds.Contains(mousePoint);
             if (IsHovered)
             {
@@ -120,7 +120,7 @@ namespace ArcardnoidShared.Framework.Components.UI
 
             if (IsFocused)
             {
-                _lastCursorTime = _lastCursorTime + delta;
+                _lastCursorTime += delta;
                 if (_lastCursorTime > _cursorBlinkTime)
                 {
                     _lastCursorTime = 0;
@@ -132,58 +132,58 @@ namespace ArcardnoidShared.Framework.Components.UI
                 if ((Keyboard.IsKeyDown("NumPad0") || Keyboard.IsKeyDown("D0")) && DateTime.Now.Subtract(_lastKeyTime).TotalMilliseconds > 100)
                 {
                     _lastKeyTime = DateTime.Now;
-                    _text = _text + "0";
+                    _text += "0";
                 }
                 if ((Keyboard.IsKeyDown("NumPad1") || Keyboard.IsKeyDown("D1")) && DateTime.Now.Subtract(_lastKeyTime).TotalMilliseconds > 100)
                 {
                     _lastKeyTime = DateTime.Now;
-                    _text = _text + "1";
+                    _text += "1";
                 }
                 if ((Keyboard.IsKeyDown("NumPad2") || Keyboard.IsKeyDown("D2")) && DateTime.Now.Subtract(_lastKeyTime).TotalMilliseconds > 100)
                 {
                     _lastKeyTime = DateTime.Now;
-                    _text = _text + "2";
+                    _text += "2";
                 }
                 if ((Keyboard.IsKeyDown("NumPad3") || Keyboard.IsKeyDown("D3")) && DateTime.Now.Subtract(_lastKeyTime).TotalMilliseconds > 100)
                 {
                     _lastKeyTime = DateTime.Now;
-                    _text = _text + "3";
+                    _text += "3";
                 }
                 if ((Keyboard.IsKeyDown("NumPad4") || Keyboard.IsKeyDown("D4")) && DateTime.Now.Subtract(_lastKeyTime).TotalMilliseconds > 100)
                 {
                     _lastKeyTime = DateTime.Now;
-                    _text = _text + "4";
+                    _text += "4";
                 }
                 if ((Keyboard.IsKeyDown("NumPad5") || Keyboard.IsKeyDown("D5")) && DateTime.Now.Subtract(_lastKeyTime).TotalMilliseconds > 100)
                 {
                     _lastKeyTime = DateTime.Now;
-                    _text = _text + "5";
+                    _text += "5";
                 }
                 if ((Keyboard.IsKeyDown("NumPad6") || Keyboard.IsKeyDown("D6")) && DateTime.Now.Subtract(_lastKeyTime).TotalMilliseconds > 100)
                 {
                     _lastKeyTime = DateTime.Now;
-                    _text = _text + "6";
+                    _text += "6";
                 }
                 if ((Keyboard.IsKeyDown("NumPad7") || Keyboard.IsKeyDown("D7")) && DateTime.Now.Subtract(_lastKeyTime).TotalMilliseconds > 100)
                 {
                     _lastKeyTime = DateTime.Now;
-                    _text = _text + "7";
+                    _text += "7";
                 }
                 if ((Keyboard.IsKeyDown("NumPad8") || Keyboard.IsKeyDown("D8")) && DateTime.Now.Subtract(_lastKeyTime).TotalMilliseconds > 100)
                 {
                     _lastKeyTime = DateTime.Now;
-                    _text = _text + "8";
+                    _text += "8";
                 }
                 if ((Keyboard.IsKeyDown("NumPad9") || Keyboard.IsKeyDown("D9")) && DateTime.Now.Subtract(_lastKeyTime).TotalMilliseconds > 100)
                 {
                     _lastKeyTime = DateTime.Now;
-                    _text = _text + "9";
+                    _text += "9";
                 }
                 if ((Keyboard.IsKeyDown("Back")) && DateTime.Now.Subtract(_lastKeyTime).TotalMilliseconds > 100)
                 {
                     _lastKeyTime = DateTime.Now;
                     if (_text.Length > 0)
-                        _text = _text.Substring(0, _text.Length - 1);
+                        _text = _text[..^1];
                 }
                 if ((Keyboard.IsKeyDown("Escape") || Keyboard.IsKeyDown("Enter") || Keyboard.IsKeyDown("Tab")) && DateTime.Now.Subtract(_lastKeyTime).TotalMilliseconds > 100)
                 {

@@ -18,7 +18,7 @@ namespace arcardnoid
 
         #region Private Properties
 
-        private IGameService GameService => GameServiceProvider.GetService<IGameService>();
+        private static IGameService GameService => GameServiceProvider.GetService<IGameService>();
 
         #endregion Private Properties
 

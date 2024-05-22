@@ -26,17 +26,19 @@ namespace ArcardnoidContent.Components.GameScene.Character
 
         #region Private Properties
 
+        private static IPrimitives2D Primitives2D => GameServiceProvider.GetService<IPrimitives2D>();
         private List<Point>? CurrentPath { get; set; } = null;
         private Point InitialCell { get; set; }
-        private IPrimitives2D Primitives2D => GameServiceProvider.GetService<IPrimitives2D>();
         private RandomMap RandomMap { get; set; }
 
         #endregion Private Properties
 
         #region Private Fields
 
-        private Dictionary<CharacterDirection, Dictionary<AnimationState, List<Rectangle>>> _animations;
-        private double _animationSpeed = 0.1;
+        private readonly Dictionary<CharacterDirection, Dictionary<AnimationState, List<Rectangle>>> _animations;
+        private readonly double _animationSpeed = 0.1;
+        private readonly MapHypothesis _mapHypotesis;
+        private readonly float _moveSpeed = 150;
         private double _animationTimer = 0;
         private int _currentFrame = 0;
         private int _currentPathIndex = 0;
@@ -44,8 +46,6 @@ namespace ArcardnoidContent.Components.GameScene.Character
         private Rectangle _drawRectangle = Rectangle.Empty;
         private bool _forceDebug = false;
         private Rectangle _imageBounds = Rectangle.Empty;
-        private MapHypothesis _mapHypotesis;
-        private float _moveSpeed = 150;
         private AnimationState _state = AnimationState.Idle;
         private ITexture? _texture;
 
@@ -126,6 +126,16 @@ namespace ArcardnoidContent.Components.GameScene.Character
 
         #region Private Methods
 
+        private static List<Rectangle> GetAnimationRectangles(int y)
+        {
+            List<Rectangle> tmp = new();
+            for (int x = 0; x < 1152; x += 192)
+            {
+                tmp.Add(new Rectangle(x, y, 192, 192));
+            }
+            return tmp;
+        }
+
         private static Rectangle GetRealPosition(float x, float y)
         {
             return new Rectangle((x * 64) - 192 / 2 + 32, (y * 64) - 192 / 2 + 16, 64, 64);
@@ -135,7 +145,7 @@ namespace ArcardnoidContent.Components.GameScene.Character
         {
             EncounterType collision = _mapHypotesis.FinalChunk.CheckCollision((int)CurrentCell.X, (int)CurrentCell.Y);
             if (collision == EncounterType.None) return false;
-            OnEncounter?.Invoke(collision, new Point(CurrentCell.X, CurrentCell.Y), InitialCell.Distance(CurrentCell));
+            OnEncounter?.Invoke(collision, new(CurrentCell.X, CurrentCell.Y), InitialCell.Distance(CurrentCell));
             return true;
         }
 
@@ -145,21 +155,11 @@ namespace ArcardnoidContent.Components.GameScene.Character
             {
                 for (int i = 0; i < CurrentPath.Count - 1; i++)
                 {
-                    Point p1 = new Point(RandomMap.Bounds.X + (CurrentPath[i].X * 64) + 32, RandomMap.Bounds.Y + (CurrentPath[i].Y * 64) + 32);
-                    Point p2 = new Point(RandomMap.Bounds.X + (CurrentPath[i + 1].X * 64) + 32, RandomMap.Bounds.Y + (CurrentPath[i + 1].Y * 64) + 32);
+                    Point p1 = new(RandomMap.Bounds.X + (CurrentPath[i].X * 64) + 32, RandomMap.Bounds.Y + (CurrentPath[i].Y * 64) + 32);
+                    Point p2 = new(RandomMap.Bounds.X + (CurrentPath[i + 1].X * 64) + 32, RandomMap.Bounds.Y + (CurrentPath[i + 1].Y * 64) + 32);
                     Primitives2D.DrawLine(ScreenManager.Scale(p1), ScreenManager.Scale(p2), GameColor.Red, 2f);
                 }
             }
-        }
-
-        private List<Rectangle> GetAnimationRectangles(int y)
-        {
-            List<Rectangle> tmp = new List<Rectangle>();
-            for (int x = 0; x < 1152; x = x + 192)
-            {
-                tmp.Add(new Rectangle(x, y, 192, 192));
-            }
-            return tmp;
         }
 
         private void UpdateMove(float delta)

@@ -11,11 +11,11 @@ namespace ArcardnoidShared.Framework.Components.Text
     {
         #region Private Fields
 
+        private readonly string _fontAsset;
+        private readonly TextHorizontalAlign _horizontalAlign;
+        private readonly TextVerticalAlign _verticalAlign;
         private IBitmapFont? _bitmapFont;
-        private string _fontAsset;
-        private TextHorizontalAlign _horizontalAlign;
         private string _text;
-        private TextVerticalAlign _verticalAlign;
 
         #endregion Private Fields
 
@@ -45,7 +45,7 @@ namespace ArcardnoidShared.Framework.Components.Text
             Point size = _bitmapFont.MeasureString(_text);
             if (_horizontalAlign == TextHorizontalAlign.Center)
             {
-                position.X = position.X - (size.X / 2);
+                position.X -= (size.X / 2);
             }
             else if (_horizontalAlign == TextHorizontalAlign.Right)
             {

@@ -61,6 +61,24 @@ namespace ArcardnoidContent.Components.GameScene.SubScreens
 
         #region Private Methods
 
+        private static AnimationChain[] GetDialogAppearAnimations()
+        {
+            return new AnimationChain[]
+           {
+                new(new Animation[] { new MoveAnimation(0.5f, new Point(672, 1381), new Point(672, 190), false, true, EaseType.InOutElastic)}, false, true),
+                new(new Animation[] { new AlphaFadeAnimation(0.5f,0, 1, false, true, EaseType.Linear) }, false, true)
+           };
+        }
+
+        private static AnimationChain[] GetDialogHideAnimations(Action onCompleted)
+        {
+            return new AnimationChain[]
+            {
+                new(new Animation[] { new MoveAnimation(0.5f, new Point(672, 190), new Point(672, 1381), false, true, EaseType.OutElastic) }, false, true),
+                new(new Animation[] { new AlphaFadeAnimation(0.5f,1, 0, false, true, EaseType.Linear, onCompleted) }, false, true)
+            };
+        }
+
         private void BackgroundAppearCompleted()
         {
             if (PauseDialog == null) return;
@@ -78,24 +96,6 @@ namespace ArcardnoidContent.Components.GameScene.SubScreens
         {
             if (PauseDialog == null) return;
             PauseDialog.AddAnimations<PauseMenu>(GetDialogHideAnimations(() => BackgroundHideStart(() => { PauseDialog.Visible = false; callBack(); })));
-        }
-
-        private AnimationChain[] GetDialogAppearAnimations()
-        {
-            return new AnimationChain[]
-           {
-                new AnimationChain(new Animation[] { new MoveAnimation(0.5f, new Point(672, 1381), new Point(672, 190), false, true, EaseType.InOutElastic)}, false, true),
-                new AnimationChain(new Animation[] { new AlphaFadeAnimation(0.5f,0, 1, false, true, EaseType.Linear) }, false, true)
-           };
-        }
-
-        private AnimationChain[] GetDialogHideAnimations(Action onCompleted)
-        {
-            return new AnimationChain[]
-            {
-                new AnimationChain(new Animation[] { new MoveAnimation(0.5f, new Point(672, 190), new Point(672, 1381), false, true, EaseType.OutElastic) }, false, true),
-                new AnimationChain(new Animation[] { new AlphaFadeAnimation(0.5f,1, 0, false, true, EaseType.Linear, onCompleted) }, false, true)
-            };
         }
 
         private void OnDebugClicked()

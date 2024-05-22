@@ -27,31 +27,31 @@ namespace ArcardnoidContent.Components.Shared.Map.Cells
 
         public static BridgeCellType GetMultiCellType(int[,] map, int x, int y, int width, int height)
         {
-            if (IsEmpty(map, x - 1, y, width, height) && !IsBorder(map, x - 1, y, width, height) && !IsBorder(map, x, y + 1, width, height) && !IsBorder(map, x, y - 1, width, height) && IsEmpty(map, x, y - 1, width, height) && IsEmpty(map, x, y + 1, width, height))
+            if (IsEmpty(map, x - 1, y, width, height) && !IsBorder(x - 1, y, width, height) && !IsBorder(x, y + 1, width, height) && !IsBorder(x, y - 1, width, height) && IsEmpty(map, x, y - 1, width, height) && IsEmpty(map, x, y + 1, width, height))
             {
                 return BridgeCellType.HorizontalLeft;
             }
-            else if ((!IsEmpty(map, x - 1, y, width, height) || IsBorder(map, x - 1, y, width, height)) && IsEmpty(map, x, y - 1, width, height) && (!IsEmpty(map, x + 1, y, width, height) || IsBorder(map, x + 1, y, width, height)))
+            else if ((!IsEmpty(map, x - 1, y, width, height) || IsBorder(x - 1, y, width, height)) && IsEmpty(map, x, y - 1, width, height) && (!IsEmpty(map, x + 1, y, width, height) || IsBorder(x + 1, y, width, height)))
             {
                 return BridgeCellType.HorizontalCenter;
             }
-            else if ((!IsEmpty(map, x - 1, y, width, height) || IsBorder(map, x - 1, y, width, height)) && IsEmpty(map, x, y - 1, width, height) && IsEmpty(map, x, y + 1, width, height) && IsEmpty(map, x + 1, y, width, height) && !IsBorder(map, x + 1, y, width, height))
+            else if ((!IsEmpty(map, x - 1, y, width, height) || IsBorder(x - 1, y, width, height)) && IsEmpty(map, x, y - 1, width, height) && IsEmpty(map, x, y + 1, width, height) && IsEmpty(map, x + 1, y, width, height) && !IsBorder(x + 1, y, width, height))
             {
                 return BridgeCellType.HorizontalRight;
             }
-            else if (IsEmpty(map, x, y - 1, width, height) && !IsBorder(map, x, y - 1, width, height) && IsEmpty(map, x - 1, y, width, height) && IsEmpty(map, x + 1, y, width, height))
+            else if (IsEmpty(map, x, y - 1, width, height) && !IsBorder(x, y - 1, width, height) && IsEmpty(map, x - 1, y, width, height) && IsEmpty(map, x + 1, y, width, height))
             {
                 return BridgeCellType.VerticalTop;
             }
-            else if ((!IsEmpty(map, x, y - 1, width, height) || IsBorder(map, x, y - 1, width, height)) && IsEmpty(map, x - 1, y, width, height) && IsEmpty(map, x + 1, y, width, height) && (!IsEmpty(map, x, y + 1, width, height) || IsBorder(map, x, y + 1, width, height)))
+            else if ((!IsEmpty(map, x, y - 1, width, height) || IsBorder(x, y - 1, width, height)) && IsEmpty(map, x - 1, y, width, height) && IsEmpty(map, x + 1, y, width, height) && (!IsEmpty(map, x, y + 1, width, height) || IsBorder(x, y + 1, width, height)))
             {
                 return BridgeCellType.VerticalCenter;
             }
-            else if ((!IsEmpty(map, x - 1, y - 1, width, height) || IsBorder(map, x - 1, y - 1, width, height) || !IsEmpty(map, x + 1, y - 1, width, height) || IsBorder(map, x + 1, y - 1, width, height)) && !IsEmpty(map, x, y - 1, width, height))
+            else if ((!IsEmpty(map, x - 1, y - 1, width, height) || IsBorder(x - 1, y - 1, width, height) || !IsEmpty(map, x + 1, y - 1, width, height) || IsBorder(x + 1, y - 1, width, height)) && !IsEmpty(map, x, y - 1, width, height))
             {
                 return BridgeCellType.BridgeShadow;
             }
-            else if ((!IsEmpty(map, x, y - 1, width, height) || IsBorder(map, x, y - 1, width, height)) && IsEmpty(map, x - 1, y, width, height) && IsEmpty(map, x + 1, y, width, height) && IsEmpty(map, x, y + 1, width, height) && !IsBorder(map, x, y + 1, width, height))
+            else if ((!IsEmpty(map, x, y - 1, width, height) || IsBorder(x, y - 1, width, height)) && IsEmpty(map, x - 1, y, width, height) && IsEmpty(map, x + 1, y, width, height) && IsEmpty(map, x, y + 1, width, height) && !IsBorder(x, y + 1, width, height))
             {
                 return BridgeCellType.VerticalBottom;
             }
@@ -79,7 +79,7 @@ namespace ArcardnoidContent.Components.Shared.Map.Cells
 
         #region Private Methods
 
-        private static bool IsBorder(int[,] map, int x, int y, int width, int height)
+        private static bool IsBorder(int x, int y, int width, int height)
         {
             return x < 0 || x >= width || y < 0 || y >= height;
         }
@@ -91,30 +91,17 @@ namespace ArcardnoidContent.Components.Shared.Map.Cells
 
         private Rectangle CalculateRect()
         {
-            switch (Type)
+            return Type switch
             {
-                case BridgeCellType.HorizontalLeft:
-                    return new Rectangle(0, 0, Size, Size);
-
-                case BridgeCellType.HorizontalCenter:
-                    return new Rectangle(Size, 0, Size, Size);
-
-                case BridgeCellType.HorizontalRight:
-                    return new Rectangle(Size * 2, 0, Size, Size);
-
-                case BridgeCellType.VerticalTop:
-                    return new Rectangle(0, Size, Size, Size);
-
-                case BridgeCellType.VerticalCenter:
-                    return new Rectangle(0, Size * 2, Size, Size);
-
-                case BridgeCellType.VerticalBottom:
-                    return new Rectangle(0, Size * 3, Size, Size);
-
-                case BridgeCellType.BridgeShadow:
-                    return new Rectangle(Size * 2, Size * 3, Size, Size);
-            }
-            return Rectangle.Empty;
+                BridgeCellType.HorizontalLeft => new Rectangle(0, 0, Size, Size),
+                BridgeCellType.HorizontalCenter => new Rectangle(Size, 0, Size, Size),
+                BridgeCellType.HorizontalRight => new Rectangle(Size * 2, 0, Size, Size),
+                BridgeCellType.VerticalTop => new Rectangle(0, Size, Size, Size),
+                BridgeCellType.VerticalCenter => new Rectangle(0, Size * 2, Size, Size),
+                BridgeCellType.VerticalBottom => new Rectangle(0, Size * 3, Size, Size),
+                BridgeCellType.BridgeShadow => new Rectangle(Size * 2, Size * 3, Size, Size),
+                _ => Rectangle.Empty,
+            };
         }
 
         #endregion Private Methods

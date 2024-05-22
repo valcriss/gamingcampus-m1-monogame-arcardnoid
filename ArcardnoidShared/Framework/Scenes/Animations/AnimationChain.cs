@@ -12,10 +12,10 @@ namespace ArcardnoidShared.Framework.Scenes.Animations
 
         #region Private Fields
 
-        private Animation[] _animations;
+        private readonly Animation[] _animations;
+        private readonly bool _loop;
+        private readonly bool _playOnStart;
         private int _currentAnimationIndex;
-        private bool _loop;
-        private bool _playOnStart;
 
         #endregion Private Fields
 

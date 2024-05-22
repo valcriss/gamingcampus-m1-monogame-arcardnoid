@@ -158,7 +158,7 @@ namespace ArcardnoidContent.Tools
 
         public static string[] ToStringData(this int[,] data)
         {
-            List<string> list = new List<string>();
+            List<string> list = new();
             for (int y = 0; y < data.GetLength(1); y++)
             {
                 string line = "";
@@ -184,7 +184,7 @@ namespace ArcardnoidContent.Tools
 
         public static MapLayer Trim(this MapLayer layer, int startX, int startY, int endX, int endY)
         {
-            List<string> lines = new List<string>();
+            List<string> lines = new();
             for (int y = 0; y < layer.Data.Length; y++)
             {
                 if (y < startY || y > endY) continue;

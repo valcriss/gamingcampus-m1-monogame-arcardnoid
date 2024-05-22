@@ -42,57 +42,57 @@ namespace ArcardnoidContent.Scenes
 
         #region Private Methods
 
-        private AnimationChain[] GetMainMenuAppearAnimations(float duration)
+        private static AnimationChain[] GetMainMenuAppearAnimations(float duration)
         {
             return new AnimationChain[]
             {
-                new AnimationChain(new Animation[] { new MoveAnimation( duration, new Point(672, 1381), new Point(672, 316), false, true, EaseType.InOutElastic)}, false, true),
-                new AnimationChain(new Animation[] { new AlphaFadeAnimation( duration, 0, 1, false, true, EaseType.Linear) }, false, true)
+                new(new Animation[] { new MoveAnimation( duration, new Point(672, 1381), new Point(672, 316), false, true, EaseType.InOutElastic)}, false, true),
+                new(new Animation[] { new AlphaFadeAnimation( duration, 0, 1, false, true, EaseType.Linear) }, false, true)
             };
         }
 
-        private AnimationChain[] GetMainMenuHideAnimations()
+        private static AnimationChain[] GetMainMenuHideAnimations()
         {
             return new AnimationChain[]
             {
-                new AnimationChain(new Animation[] { new MoveAnimation( 1f, new Point(672, 316), new Point(672, 1381), false, true, EaseType.OutElastic) }, false, true),
-                new AnimationChain(new Animation[] { new AlphaFadeAnimation( 1f,1, 0, false, true, EaseType.Linear) }, false, true)
+                new(new Animation[] { new MoveAnimation( 1f, new Point(672, 316), new Point(672, 1381), false, true, EaseType.OutElastic) }, false, true),
+                new(new Animation[] { new AlphaFadeAnimation( 1f,1, 0, false, true, EaseType.Linear) }, false, true)
             };
         }
 
-        private AnimationChain[] GetQuitGameConfirmAppearAnimations()
+        private static AnimationChain[] GetQuitGameConfirmAppearAnimations()
         {
             return new AnimationChain[]
            {
-                new AnimationChain(new Animation[] { new MoveAnimation(1f, new Point(672, 1381), new Point(672, 316), false, true, EaseType.InOutElastic)}, false, true),
-                new AnimationChain(new Animation[] { new AlphaFadeAnimation( 1f,0, 1, false, true, EaseType.Linear) }, false, true)
+                new(new Animation[] { new MoveAnimation(1f, new Point(672, 1381), new Point(672, 316), false, true, EaseType.InOutElastic)}, false, true),
+                new(new Animation[] { new AlphaFadeAnimation( 1f,0, 1, false, true, EaseType.Linear) }, false, true)
            };
         }
 
-        private AnimationChain[] GetQuitGameConfirmHideAnimations()
+        private static AnimationChain[] GetQuitGameConfirmHideAnimations()
         {
             return new AnimationChain[]
             {
-                new AnimationChain(new Animation[] { new MoveAnimation(1f, new Point(672, 316), new Point(672, 1381), false, true, EaseType.OutElastic) }, false, true),
-                new AnimationChain(new Animation[] { new AlphaFadeAnimation( 1f,1, 0, false, true, EaseType.Linear) }, false, true)
+                new(new Animation[] { new MoveAnimation(1f, new Point(672, 316), new Point(672, 1381), false, true, EaseType.OutElastic) }, false, true),
+                new(new Animation[] { new AlphaFadeAnimation( 1f,1, 0, false, true, EaseType.Linear) }, false, true)
             };
         }
 
-        private AnimationChain[] GetSubFrameAppearAnimations()
+        private static AnimationChain[] GetSubFrameAppearAnimations()
         {
             return new AnimationChain[]
            {
-                new AnimationChain(new Animation[] { new MoveAnimation( 1f, new Point(672, 1381), new Point(672, 190), false, true, EaseType.InOutElastic)}, false, true),
-                new AnimationChain(new Animation[] { new AlphaFadeAnimation(1f,0, 1, false, true, EaseType.Linear) }, false, true)
+                new(new Animation[] { new MoveAnimation( 1f, new Point(672, 1381), new Point(672, 190), false, true, EaseType.InOutElastic)}, false, true),
+                new(new Animation[] { new AlphaFadeAnimation(1f,0, 1, false, true, EaseType.Linear) }, false, true)
            };
         }
 
-        private AnimationChain[] GetSubFrameHideAnimations()
+        private static AnimationChain[] GetSubFrameHideAnimations()
         {
             return new AnimationChain[]
             {
-                new AnimationChain(new Animation[] { new MoveAnimation(1f, new Point(672, 190), new Point(672, 1381), false, true, EaseType.OutElastic) }, false, true),
-                new AnimationChain(new Animation[] { new AlphaFadeAnimation( 1f,1, 0, false, true, EaseType.Linear) }, false, true)
+                new(new Animation[] { new MoveAnimation(1f, new Point(672, 190), new Point(672, 1381), false, true, EaseType.OutElastic) }, false, true),
+                new(new Animation[] { new AlphaFadeAnimation( 1f,1, 0, false, true, EaseType.Linear) }, false, true)
             };
         }
 

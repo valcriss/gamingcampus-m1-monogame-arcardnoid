@@ -12,7 +12,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
     {
         #region Private Properties
 
-        private IGamePlay GamePlay => GameServiceProvider.GetService<IGamePlay>();
+        private static IGamePlay GamePlay => GameServiceProvider.GetService<IGamePlay>();
         private AnimatedStaticMap StaticMap { get; set; }
 
         #endregion Private Properties
@@ -28,7 +28,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
 
         #region Public Methods
 
-        public void MapAnimationEnded()
+        public static void MapAnimationEnded()
         {
             System.Diagnostics.Debug.WriteLine("Map animation ended");
         }
@@ -42,6 +42,61 @@ namespace ArcardnoidContent.Components.GameScene.Battle
         #endregion Public Methods
 
         #region Private Methods
+
+        private static string AssetPath(EncounterType encounterType)
+        {
+            return encounterType switch
+            {
+                EncounterType.Archer => "map/units/archer-blue-idle",
+                EncounterType.Warrior => "map/units/warrior-blue-idle",
+                EncounterType.Torch => "map/units/torch-red-idle",
+                EncounterType.Tnt => "map/units/tnt-red-idle",
+                _ => "map/units/archer-blue-idle",
+            };
+        }
+
+        private static int[,] GenerateField(int numberOfUnits)
+        {
+            // Répartir de maniere homogène les unités sur le terrain
+            int[,] field = new int[20, 5];
+            int left = numberOfUnits;
+            int lines = (int)Math.Ceiling(numberOfUnits / (float)20);
+            for (int y = 0; y < lines; y++)
+            {
+                int inLine = Math.Min(20, left);
+                for (int x = 10 - inLine / 2; x < 10 + inLine / 2; x++)
+                {
+                    field[x, y] = 1;
+                }
+                left -= inLine;
+            }
+            return field;
+        }
+
+        private static int GetTextureColumns(EncounterType encounterType)
+        {
+            return encounterType switch
+            {
+                EncounterType.Torch => 7,
+                _ => 6,
+            };
+        }
+
+        private static ITexture LoadAssetTexture(string asset)
+        {
+            return GameServiceProvider.GetService<ITextureService>().Load(asset);
+        }
+
+        private static int NumberOfOpponents(double distanceFromStart)
+        {
+            System.Diagnostics.Debug.WriteLine($"Distance from start: {distanceFromStart}");
+            float ratio = (float)distanceFromStart / 30;
+            System.Diagnostics.Debug.WriteLine($"Ratio: {ratio}");
+            int value = Math.Max(10, (int)Math.Min(ratio * (20 * 5), (20 * 5)));
+            System.Diagnostics.Debug.WriteLine($"Value: {value}");
+            // Si la valeur n'est pas pair on la rend pair
+            return value % 2 == 0 ? value : value + 1;
+        }
 
         private void AddUnits(EncounterType encounterType, double distanceFromStart)
         {
@@ -67,71 +122,6 @@ namespace ArcardnoidContent.Components.GameScene.Battle
                     }
                 }
             }
-        }
-
-        private string AssetPath(EncounterType encounterType)
-        {
-            switch (encounterType)
-            {
-                case EncounterType.Archer:
-                    return "map/units/archer-blue-idle";
-
-                case EncounterType.Warrior:
-                    return "map/units/warrior-blue-idle";
-
-                case EncounterType.Torch:
-                    return "map/units/torch-red-idle";
-
-                case EncounterType.Tnt:
-                    return "map/units/tnt-red-idle";
-            }
-            return "map/units/archer-blue-idle";
-        }
-
-        private int[,] GenerateField(int numberOfUnits)
-        {
-            // Répartir de maniere homogène les unités sur le terrain
-            int[,] field = new int[20, 5];
-            int left = numberOfUnits;
-            int lines = (int)Math.Ceiling(numberOfUnits / (float)20);
-            for (int y = 0; y < lines; y++)
-            {
-                int inLine = Math.Min(20, left);
-                for (int x = 10 - inLine / 2; x < 10 + inLine / 2; x++)
-                {
-                    field[x, y] = 1;
-                }
-                left -= inLine;
-            }
-            return field;
-        }
-
-        private int GetTextureColumns(EncounterType encounterType)
-        {
-            switch (encounterType)
-            {
-                case EncounterType.Torch:
-                    return 7;
-
-                default:
-                    return 6;
-            }
-        }
-
-        private ITexture LoadAssetTexture(string asset)
-        {
-            return GameServiceProvider.GetService<ITextureService>().Load(asset);
-        }
-
-        private int NumberOfOpponents(double distanceFromStart)
-        {
-            System.Diagnostics.Debug.WriteLine($"Distance from start: {distanceFromStart}");
-            float ratio = (float)distanceFromStart / 30;
-            System.Diagnostics.Debug.WriteLine($"Ratio: {ratio}");
-            int value = Math.Max(10, (int)Math.Min(ratio * (20 * 5), (20 * 5)));
-            System.Diagnostics.Debug.WriteLine($"Value: {value}");
-            // Si la valeur n'est pas pair on la rend pair
-            return value % 2 == 0 ? value : value + 1;
         }
 
         #endregion Private Methods

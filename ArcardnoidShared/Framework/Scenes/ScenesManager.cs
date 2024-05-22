@@ -7,7 +7,7 @@ namespace ArcardnoidShared.Framework.Scenes
     {
         #region Private Fields
 
-        private List<Scene> _scenes;
+        private readonly List<Scene> _scenes;
 
         #endregion Private Fields
 

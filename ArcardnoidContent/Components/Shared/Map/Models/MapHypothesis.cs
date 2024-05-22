@@ -125,15 +125,16 @@ namespace ArcardnoidContent.Components.GameScene
 
         public MapChunk ConcatenateAsChunk()
         {
-            MapChunk concatenatedChunk = new MapChunk();
+            MapChunk concatenatedChunk = new()
+            {
+                Width = Width,
+                Height = Height,
+                Level = 1,
 
-            concatenatedChunk.Width = Width;
-            concatenatedChunk.Height = Height;
-            concatenatedChunk.Level = 1;
-
-            // Mise a jour des blocs
-            concatenatedChunk.Blocks = ConcatenateLayer("blocks", c => c.Blocks);
-            concatenatedChunk.Spawns = ConcatenateSpawn();
+                // Mise a jour des blocs
+                Blocks = ConcatenateLayer("blocks", c => c.Blocks),
+                Spawns = ConcatenateSpawn()
+            };
 
             // Mise a jour des layers de base
             string[] baseLayers = new string[] { "WaterSplash", "Terrain Layer 1", "Shadow Layer", "Terrain Layer 2", "Deco Layer" };
@@ -196,6 +197,19 @@ namespace ArcardnoidContent.Components.GameScene
 
         #region Private Methods
 
+        private static int[,] GetInitialLayer(int width, int height)
+        {
+            int[,] layer = new int[width, height];
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    layer[x, y] = -1;
+                }
+            }
+            return layer;
+        }
+
         private void AddChunkToMap(MapChunk chunk, int x, int y)
         {
             for (int xx = x - 1; xx <= x + chunk.Width; xx++)
@@ -218,7 +232,7 @@ namespace ArcardnoidContent.Components.GameScene
             chunk.AddActor(type, spawn.Value.X, spawn.Value.Y);
             if (type == EncounterType.Gold)
             {
-                CurrentGold = CurrentGold + 1;
+                CurrentGold++;
             }
             else if (type == EncounterType.Meat)
             {
@@ -253,9 +267,11 @@ namespace ArcardnoidContent.Components.GameScene
                     }
                 }
             }
-            MapLayer newLayer = new MapLayer();
-            newLayer.Name = name;
-            newLayer.Data = initialLayer.ToStringData();
+            MapLayer newLayer = new()
+            {
+                Name = name,
+                Data = initialLayer.ToStringData()
+            };
             return newLayer;
         }
 
@@ -278,15 +294,17 @@ namespace ArcardnoidContent.Components.GameScene
                     }
                 }
             }
-            MapLayer newLayer = new MapLayer();
-            newLayer.Name = name;
-            newLayer.Data = initialLayer.ToStringData();
+            MapLayer newLayer = new()
+            {
+                Name = name,
+                Data = initialLayer.ToStringData()
+            };
             return newLayer;
         }
 
         private List<MapChunkSpawn> ConcatenateSpawn()
         {
-            List<MapChunkSpawn> spawns = new List<MapChunkSpawn>();
+            List<MapChunkSpawn> spawns = new();
             for (int index = 0; index < Chunks.Count; index++)
             {
                 MapChunkPosition position = Chunks[index];
@@ -305,8 +323,8 @@ namespace ArcardnoidContent.Components.GameScene
         private MapLayer CreateBridgeLayer(int index, MapBridgePosition position)
         {
             int[,] initialLayer = GetInitialLayer(Width, Height);
-            Point from = new Point(position.FromX, position.FromY);
-            Point to = new Point(position.ToX, position.ToY);
+            Point from = new(position.FromX, position.FromY);
+            Point to = new(position.ToX, position.ToY);
             switch (position.DoorType)
             {
                 case MapChunkDoorType.Top:
@@ -337,15 +355,17 @@ namespace ArcardnoidContent.Components.GameScene
                     }
                     break;
             }
-            MapLayer newLayer = new MapLayer();
-            newLayer.Name = $"Bridge-{index}";
-            newLayer.Data = initialLayer.ToStringData();
+            MapLayer newLayer = new()
+            {
+                Name = $"Bridge-{index}",
+                Data = initialLayer.ToStringData()
+            };
             return newLayer;
         }
 
         private EncounterType? GetEncounterType()
         {
-            List<EncounterType> types = new List<EncounterType>() { EncounterType.Archer, EncounterType.Warrior, EncounterType.Torch, EncounterType.Tnt };
+            List<EncounterType> types = new() { EncounterType.Archer, EncounterType.Warrior, EncounterType.Torch, EncounterType.Tnt };
             if (CurrentGold < MAXIMUM_GOLD)
             {
                 types.Add(EncounterType.Gold);
@@ -359,19 +379,6 @@ namespace ArcardnoidContent.Components.GameScene
                 types.Add(EncounterType.Sheep);
             }
             return types.RandomList(EncountersRandom)?.First();
-        }
-
-        private int[,] GetInitialLayer(int width, int height)
-        {
-            int[,] layer = new int[width, height];
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    layer[x, y] = -1;
-                }
-            }
-            return layer;
         }
 
         private void InitializeMap()
@@ -428,8 +435,6 @@ namespace ArcardnoidContent.Components.GameScene
             {
                 chunk.Layers[i] = chunk.Layers[i].Trim(startX, startY, endX, endY);
             }
-            int finalstartX = chunk.GetChunkStartX();
-            int finalstartY = chunk.GetChunkStartY();
             int finalendX = chunk.GetChunkEndX();
             int finalendY = chunk.GetChunkEndY();
             Width = finalendX + 1;

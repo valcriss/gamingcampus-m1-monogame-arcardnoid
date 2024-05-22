@@ -7,8 +7,8 @@ namespace ArcardnoidShared.Framework.Scenes.Animations
     {
         #region Private Fields
 
-        private Point _from;
-        private Point _to;
+        private readonly Point _from;
+        private readonly Point _to;
 
         #endregion Private Fields
 
@@ -43,7 +43,7 @@ namespace ArcardnoidShared.Framework.Scenes.Animations
             {
                 float x = MathF.Abs(_from.X - _to.X) > 0.01 ? MathTools.Lerp(_from.X, _to.X, Ratio) : _to.X;
                 float y = MathF.Abs(_from.Y - _to.Y) > 0.01 ? MathTools.Lerp(_from.Y, _to.Y, Ratio) : _to.Y;
-                Point newPosition = new Point(x, y);
+                Point newPosition = new(x, y);
                 Component.Visible = true;
                 Component.Position = newPosition;
             }

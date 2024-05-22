@@ -7,7 +7,7 @@ namespace arcardnoid.Models.Implementations
     {
         #region Private Fields
 
-        private FastRandom _random;
+        private readonly FastRandom _random;
 
         #endregion Private Fields
 

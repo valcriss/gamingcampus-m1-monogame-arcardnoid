@@ -25,56 +25,32 @@ namespace ArcardnoidContent.Components.Shared.Map.Models
 
         #region Public Methods
 
-        public Point GetOppositeChunkPosition(MapChunkDoorType doorType, MapChunkEntrance possibleEntrance)
+        public readonly Point GetOppositeChunkPosition(MapChunkDoorType doorType, MapChunkEntrance possibleEntrance)
         {
-            switch (doorType)
+            return doorType switch
             {
-                case MapChunkDoorType.Top:
-                    return new Point(X - possibleEntrance.X, Y - possibleEntrance.Y - 2);
-
-                case MapChunkDoorType.Bottom:
-                    return new Point(X - possibleEntrance.X, Y + possibleEntrance.Y + 2);
-
-                case MapChunkDoorType.Right:
-                    return new Point(X + possibleEntrance.X + 2, Y - possibleEntrance.Y);
-
-                case MapChunkDoorType.Left:
-                    return new Point(X - possibleEntrance.X - 2, Y - possibleEntrance.Y);
-            }
-            return Point.Zero;
+                MapChunkDoorType.Top => new Point(X - possibleEntrance.X, Y - possibleEntrance.Y - 2),
+                MapChunkDoorType.Bottom => new Point(X - possibleEntrance.X, Y + possibleEntrance.Y + 2),
+                MapChunkDoorType.Right => new Point(X + possibleEntrance.X + 2, Y - possibleEntrance.Y),
+                MapChunkDoorType.Left => new Point(X - possibleEntrance.X - 2, Y - possibleEntrance.Y),
+                _ => Point.Zero,
+            };
         }
 
-        public List<MapChunkDoorType> GetOppositeDoorTypes()
+        public readonly List<MapChunkDoorType> GetOppositeDoorTypes()
         {
-            switch (DoorType)
+            return DoorType switch
             {
-                case MapChunkDoorType.Top:
-                    return new List<MapChunkDoorType> { MapChunkDoorType.Bottom, MapChunkDoorType.BottomRight, MapChunkDoorType.BottomLeft };
-
-                case MapChunkDoorType.Right:
-                    return new List<MapChunkDoorType> { MapChunkDoorType.Left, MapChunkDoorType.TopLeft, MapChunkDoorType.BottomLeft };
-
-                case MapChunkDoorType.Bottom:
-                    return new List<MapChunkDoorType> { MapChunkDoorType.Top, MapChunkDoorType.TopRight, MapChunkDoorType.TopLeft };
-
-                case MapChunkDoorType.Left:
-                    return new List<MapChunkDoorType> { MapChunkDoorType.Right, MapChunkDoorType.TopRight, MapChunkDoorType.BottomRight };
-
-                case MapChunkDoorType.TopRight:
-                    return new List<MapChunkDoorType> { MapChunkDoorType.Bottom, MapChunkDoorType.BottomRight, MapChunkDoorType.BottomLeft, MapChunkDoorType.Left, MapChunkDoorType.TopLeft };
-
-                case MapChunkDoorType.TopLeft:
-                    return new List<MapChunkDoorType> { MapChunkDoorType.Bottom, MapChunkDoorType.BottomRight, MapChunkDoorType.BottomLeft, MapChunkDoorType.Right, MapChunkDoorType.TopRight };
-
-                case MapChunkDoorType.BottomRight:
-                    return new List<MapChunkDoorType> { MapChunkDoorType.Top, MapChunkDoorType.TopRight, MapChunkDoorType.TopLeft, MapChunkDoorType.Left, MapChunkDoorType.BottomLeft };
-
-                case MapChunkDoorType.BottomLeft:
-                    return new List<MapChunkDoorType> { MapChunkDoorType.Left, MapChunkDoorType.TopLeft, MapChunkDoorType.BottomLeft, MapChunkDoorType.Top, MapChunkDoorType.TopRight };
-
-                default:
-                    return new List<MapChunkDoorType>();
-            }
+                MapChunkDoorType.Top => new List<MapChunkDoorType> { MapChunkDoorType.Bottom, MapChunkDoorType.BottomRight, MapChunkDoorType.BottomLeft },
+                MapChunkDoorType.Right => new List<MapChunkDoorType> { MapChunkDoorType.Left, MapChunkDoorType.TopLeft, MapChunkDoorType.BottomLeft },
+                MapChunkDoorType.Bottom => new List<MapChunkDoorType> { MapChunkDoorType.Top, MapChunkDoorType.TopRight, MapChunkDoorType.TopLeft },
+                MapChunkDoorType.Left => new List<MapChunkDoorType> { MapChunkDoorType.Right, MapChunkDoorType.TopRight, MapChunkDoorType.BottomRight },
+                MapChunkDoorType.TopRight => new List<MapChunkDoorType> { MapChunkDoorType.Bottom, MapChunkDoorType.BottomRight, MapChunkDoorType.BottomLeft, MapChunkDoorType.Left, MapChunkDoorType.TopLeft },
+                MapChunkDoorType.TopLeft => new List<MapChunkDoorType> { MapChunkDoorType.Bottom, MapChunkDoorType.BottomRight, MapChunkDoorType.BottomLeft, MapChunkDoorType.Right, MapChunkDoorType.TopRight },
+                MapChunkDoorType.BottomRight => new List<MapChunkDoorType> { MapChunkDoorType.Top, MapChunkDoorType.TopRight, MapChunkDoorType.TopLeft, MapChunkDoorType.Left, MapChunkDoorType.BottomLeft },
+                MapChunkDoorType.BottomLeft => new List<MapChunkDoorType> { MapChunkDoorType.Left, MapChunkDoorType.TopLeft, MapChunkDoorType.BottomLeft, MapChunkDoorType.Top, MapChunkDoorType.TopRight },
+                _ => new List<MapChunkDoorType>(),
+            };
         }
 
         #endregion Public Methods

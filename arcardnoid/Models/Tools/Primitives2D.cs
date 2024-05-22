@@ -9,7 +9,7 @@ namespace arcardnoid.Models.Tools
     {
         #region Private Fields
 
-        private static readonly Dictionary<string, List<Vector2>> circleCache = new Dictionary<string, List<Vector2>>();
+        private static readonly Dictionary<string, List<Vector2>> circleCache = new();
 
         //private static readonly Dictionary<String, List<Vector2>> arcCache = new Dictionary<string, List<Vector2>>();
         private static Texture2D pixel;
@@ -393,7 +393,7 @@ namespace arcardnoid.Models.Tools
         /// <returns> A list of vectors that, if connected, will create an arc </returns>
         private static List<Vector2> CreateArc(float radius, int sides, float startingAngle, float radians)
         {
-            List<Vector2> points = new List<Vector2>();
+            List<Vector2> points = new();
             points.AddRange(CreateCircle(radius, sides));
             points.RemoveAt(points.Count - 1); // remove the last point because it's a duplicate of the first
 
@@ -436,7 +436,7 @@ namespace arcardnoid.Models.Tools
                 return circleCache[circleKey];
             }
 
-            List<Vector2> vectors = new List<Vector2>();
+            List<Vector2> vectors = new();
 
             const double max = 2.0 * Math.PI;
             double step = max / sides;

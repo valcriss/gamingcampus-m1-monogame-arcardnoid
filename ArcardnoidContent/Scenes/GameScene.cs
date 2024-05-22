@@ -100,7 +100,7 @@ namespace ArcardnoidContent.Scenes
 
         #region Private Methods
 
-        private GameComponent AddHideAnimation<T>(GameComponent component, float duration = 0.5f) where T : GameComponent
+        private static GameComponent AddHideAnimation<T>(GameComponent component, float duration = 0.5f) where T : GameComponent
         {
             return component.AddAnimation<T>(new AlphaFadeAnimation(duration, 1, 0, false, true, EaseType.Linear, () =>
             {
@@ -109,7 +109,7 @@ namespace ArcardnoidContent.Scenes
             }));
         }
 
-        private GameComponent AddShowAnimation<T>(GameComponent component, float duration = 0.5f) where T : GameComponent
+        private static GameComponent AddShowAnimation<T>(GameComponent component, float duration = 0.5f) where T : GameComponent
         {
             component.Enabled = true;
             component.Visible = true;

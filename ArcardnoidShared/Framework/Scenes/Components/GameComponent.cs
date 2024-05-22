@@ -118,7 +118,7 @@ namespace ArcardnoidShared.Framework.Scenes.Components
 
         public T AddAnimation<T>(Animation animation) where T : GameComponent
         {
-            AnimationChain chain = new AnimationChain(new Animation[] { animation }, animation.Loop, animation.PlayOnStart);
+            AnimationChain chain = new(new Animation[] { animation }, animation.Loop, animation.PlayOnStart);
             chain.SetComponent(this);
             Animations.Add(chain);
             return (T)this;

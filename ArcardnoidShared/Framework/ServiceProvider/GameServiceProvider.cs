@@ -6,7 +6,7 @@ namespace ArcardnoidShared.Framework.ServiceProvider
     {
         #region Private Fields
 
-        private static Dictionary<Type, object> _services = new Dictionary<Type, object>();
+        private static readonly Dictionary<Type, object> _services = new();
 
         #endregion Private Fields
 
@@ -33,7 +33,7 @@ namespace ArcardnoidShared.Framework.ServiceProvider
         public static void RegisterService(object service)
         {
             if (service == null)
-                throw new ArgumentNullException("service");
+                throw new ArgumentNullException(nameof(service));
             var interfaces = service.GetType().GetInterfaces();
             if (interfaces.Length == 0)
                 throw new InvalidOperationException("Service must implement an interface");

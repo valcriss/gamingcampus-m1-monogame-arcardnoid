@@ -30,7 +30,7 @@ namespace ArcardnoidShared.Framework.Components.Images
 
         #region Private Fields
 
-        private string _imageAsset;
+        private readonly string _imageAsset;
 
         #endregion Private Fields
 

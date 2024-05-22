@@ -4,11 +4,11 @@
     {
         #region Public Properties
 
-        public static GameColor Black => new GameColor(0, 0, 0);
-        public static GameColor Cyan => new GameColor(0, 255, 255);
-        public static GameColor Red => new GameColor(255, 0, 0);
-        public static GameColor White => new GameColor(255, 255, 255);
-        public static GameColor Yellow => new GameColor(255, 255, 0);
+        public static GameColor Black => new(0, 0, 0);
+        public static GameColor Cyan => new(0, 255, 255);
+        public static GameColor Red => new(255, 0, 0);
+        public static GameColor White => new(255, 255, 255);
+        public static GameColor Yellow => new(255, 255, 0);
         public int A { get; set; }
         public int B { get; set; }
         public int G { get; set; }
@@ -30,7 +30,7 @@
 
         #region Public Methods
 
-        public GameColor UpdateOpacity(int a)
+        public readonly GameColor UpdateOpacity(int a)
         {
             return new GameColor(R, G, B, a);
         }

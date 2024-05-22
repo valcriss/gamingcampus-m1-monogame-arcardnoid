@@ -65,32 +65,33 @@ namespace ArcardnoidShared.Framework.Components.UI
         public override void Update(float delta)
         {
             base.Update(delta);
-            if(Texture == null) return;
+            if (Texture == null) return;
             int width = Texture.Width / 3;
             int height = Texture.Height / 3;
-            Rectangles = new List<Rectangle[]>();
-
-            Rectangles.Add(new Rectangle[] { TopLeft, new Rectangle((int)RealBounds.X, (int)RealBounds.Y, width, height) });
+            Rectangles = new List<Rectangle[]>
+            {
+                new Rectangle[] { TopLeft, new((int)RealBounds.X, (int)RealBounds.Y, width, height) }
+            };
             for (int x = (int)RealBounds.X + width; x < RealBounds.X + RealBounds.Width - width; x += width)
             {
-                Rectangles.Add(new Rectangle[] { Top, new Rectangle(x, (int)RealBounds.Y, width, height) });
+                Rectangles.Add(new Rectangle[] { Top, new(x, (int)RealBounds.Y, width, height) });
             }
-            Rectangles.Add(new Rectangle[] { TopRight, new Rectangle((int)RealBounds.X + (int)RealBounds.Width - width, (int)RealBounds.Y, width, height) });
+            Rectangles.Add(new Rectangle[] { TopRight, new((int)RealBounds.X + (int)RealBounds.Width - width, (int)RealBounds.Y, width, height) });
             for (int y = (int)RealBounds.Y + height; y < Math.Floor(RealBounds.Y + RealBounds.Height - height); y += height)
             {
-                Rectangles.Add(new Rectangle[] { Left, new Rectangle((int)RealBounds.X, y, width, height) });
+                Rectangles.Add(new Rectangle[] { Left, new((int)RealBounds.X, y, width, height) });
                 for (int x = (int)RealBounds.X + width; x < RealBounds.X + RealBounds.Width - width; x += width)
                 {
-                    Rectangles.Add(new Rectangle[] { Center, new Rectangle(x, y, width, height) });
+                    Rectangles.Add(new Rectangle[] { Center, new(x, y, width, height) });
                 }
-                Rectangles.Add(new Rectangle[] { Right, new Rectangle((int)RealBounds.X + (int)RealBounds.Width - width, y, width, height) });
+                Rectangles.Add(new Rectangle[] { Right, new((int)RealBounds.X + (int)RealBounds.Width - width, y, width, height) });
             }
-            Rectangles.Add(new Rectangle[] { BottomLeft, new Rectangle((int)RealBounds.X, (int)RealBounds.Y + (int)RealBounds.Height - height, width, height) });
+            Rectangles.Add(new Rectangle[] { BottomLeft, new((int)RealBounds.X, (int)RealBounds.Y + (int)RealBounds.Height - height, width, height) });
             for (int x = (int)RealBounds.X + width; x < RealBounds.X + RealBounds.Width - width; x += width)
             {
-                Rectangles.Add(new Rectangle[] { Bottom, new Rectangle(x, (int)RealBounds.Y + (int)RealBounds.Height - height, width, height) });
+                Rectangles.Add(new Rectangle[] { Bottom, new(x, (int)RealBounds.Y + (int)RealBounds.Height - height, width, height) });
             }
-            Rectangles.Add(new Rectangle[] { BottomRight, new Rectangle((int)RealBounds.X + (int)RealBounds.Width - width, (int)RealBounds.Y + (int)RealBounds.Height - height, width, height) });
+            Rectangles.Add(new Rectangle[] { BottomRight, new((int)RealBounds.X + (int)RealBounds.Width - width, (int)RealBounds.Y + (int)RealBounds.Height - height, width, height) });
         }
 
         #endregion Public Methods

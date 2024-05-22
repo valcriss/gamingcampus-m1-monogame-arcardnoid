@@ -28,13 +28,13 @@ namespace ArcardnoidContent.Components.GameScene.Dialogs
 
         #region Private Fields
 
-        private Dictionary<string, GameComponent> _actorFace = new Dictionary<string, GameComponent>();
+        private readonly PlayerFaceExpression _currentExpression = PlayerFaceExpression.Happy;
+        private readonly IRandom _fastRandom;
+        private Dictionary<string, GameComponent> _actorFace = new();
         private EncounterDialog? _currentDialog = null;
         private int _currentDialogStep = 0;
-        private PlayerFaceExpression _currentExpression = PlayerFaceExpression.Happy;
         private DialogCollection? _dialogs;
-        private IRandom _fastRandom;
-        private Dictionary<PlayerFaceExpression, Rectangle> _playerFacesRect = new Dictionary<PlayerFaceExpression, Rectangle>();
+        private Dictionary<PlayerFaceExpression, Rectangle> _playerFacesRect = new();
 
         #endregion Private Fields
 
@@ -69,7 +69,7 @@ namespace ArcardnoidContent.Components.GameScene.Dialogs
                 { PlayerFaceExpression.Sad, new Rectangle(144*3, 0, 144, 144) },
             };
 
-            Point actorFacePosition = new Point(1650, 923);
+            Point actorFacePosition = new(1650, 923);
 
             _actorFace = new Dictionary<string, GameComponent>
             {
@@ -162,11 +162,10 @@ namespace ArcardnoidContent.Components.GameScene.Dialogs
 
         #region Private Methods
 
-        private DialogCollection? LoadDialogs()
+        private static DialogCollection? LoadDialogs()
         {
             string location = Assembly.GetExecutingAssembly().Location;
-            string? directory = Path.GetDirectoryName(location);
-            if (directory == null) throw new Exception("Base Directory not found");
+            string? directory = Path.GetDirectoryName(location) ?? throw new Exception("Base Directory not found");
             string filename = Path.Combine(directory, "Maps/Dialogs/dialogs.json");
             return JsonConvert.DeserializeObject<DialogCollection>(File.ReadAllText(filename));
         }

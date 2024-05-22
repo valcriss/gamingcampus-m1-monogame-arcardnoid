@@ -13,17 +13,16 @@ namespace ArcardnoidContent.Components.GameScene.SubScreens
     {
         #region Private Properties
 
+        private static IPrimitives2D Primitives2D => GameServiceProvider.GetService<IPrimitives2D>();
         private BitmapText? BitmapText { get; set; } = null;
-        private IPrimitives2D Primitives2D => GameServiceProvider.GetService<IPrimitives2D>();
 
         #endregion Private Properties
 
         #region Private Fields
 
         private const double _messageChangeTime = 1;
-        private double _elapsedTime = 0;
 
-        private string[] _loadingMessages = new string[]
+        private readonly string[] _loadingMessages = new string[]
         {
             "Les architectes sont encore en train de dessiner",
             "Les artistes sont en train de peindre",
@@ -43,8 +42,9 @@ namespace ArcardnoidContent.Components.GameScene.SubScreens
             "Les licornes sont au bout de ce chemin, je le promets."
         };
 
+        private readonly IRandom _messageRandom;
+        private double _elapsedTime = 0;
         private int _messageIndex = 0;
-        private IRandom _messageRandom;
 
         #endregion Private Fields
 

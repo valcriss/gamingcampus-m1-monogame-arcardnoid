@@ -68,7 +68,7 @@ namespace ArcardnoidShared.Framework.Components.UI
         public override void Update(float delta)
         {
             base.Update(delta);
-            if(TextComponent == null) return;
+            if (TextComponent == null) return;
             switch (InterractState)
             {
                 case MouseInterractState.Hover:
@@ -91,15 +91,15 @@ namespace ArcardnoidShared.Framework.Components.UI
             int height = CurrentTexture.Height;
             Rectangles = new List<Rectangle[]>
             {
-                new Rectangle[] { LeftRectangle, new Rectangle((int)RealBounds.X, (int)RealBounds.Y, LeftRectangle.Width, (int)RealBounds.Height) },
+                new Rectangle[] { LeftRectangle, new((int)RealBounds.X, (int)RealBounds.Y, LeftRectangle.Width, (int)RealBounds.Height) },
             };
 
             for (int x = (int)RealBounds.X + width; x < RealBounds.X + RealBounds.Width - width; x += width)
             {
-                Rectangles.Add(new Rectangle[] { CenterRectangle, new Rectangle(x, (int)RealBounds.Y, width, height) });
+                Rectangles.Add(new Rectangle[] { CenterRectangle, new(x, (int)RealBounds.Y, width, height) });
             }
 
-            Rectangles.Add(new Rectangle[] { RightRectangle, new Rectangle((int)RealBounds.X + (int)RealBounds.Width - RightRectangle.Width, (int)RealBounds.Y, RightRectangle.Width, (int)RealBounds.Height) });
+            Rectangles.Add(new Rectangle[] { RightRectangle, new((int)RealBounds.X + (int)RealBounds.Width - RightRectangle.Width, (int)RealBounds.Y, RightRectangle.Width, (int)RealBounds.Height) });
         }
 
         #endregion Public Methods

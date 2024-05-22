@@ -25,7 +25,7 @@ namespace ArcardnoidShared.Framework.Components.Images
         {
             base.Load();
             Bounds = new Rectangle(Bounds.X, Bounds.Y, SourceRect == null ? 0 : SourceRect.Width, SourceRect == null ? 0 : SourceRect.Height);
-            ImageBounds = SourceRect == null ? Rectangle.Empty : SourceRect;
+            ImageBounds = SourceRect ?? Rectangle.Empty;
             Origin = SourceRect == null ? Point.Zero : new Point(SourceRect.Width / 2, SourceRect.Height / 2);
             UpdateRenderBounds();
         }

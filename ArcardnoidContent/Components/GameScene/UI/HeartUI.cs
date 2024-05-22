@@ -9,11 +9,11 @@ namespace ArcardnoidContent.Components.GameScene.UI
     {
         #region Private Fields
 
+        private readonly double _frameSpeed = 0.05;
+        private readonly Dictionary<HearState, List<Rectangle>> _rectangles;
         private int _currentFrame = 0;
         private double _elapsedTime = 0;
-        private double _frameSpeed = 0.05;
         private Rectangle _imageBounds = Rectangle.Empty;
-        private Dictionary<HearState, List<Rectangle>> _rectangles;
         private ITexture? heartTexture;
         private HearState state = HearState.Filling;
 
@@ -41,20 +41,20 @@ namespace ArcardnoidContent.Components.GameScene.UI
         {
             base.Load();
             heartTexture = GameServiceProvider.GetService<ITextureService>().Load("ui/heart");
-            _rectangles.Add(HearState.Full, new List<Rectangle> { new Rectangle(260 * 4, 220 * 4, 260, 220) });
-            _rectangles.Add(HearState.Empty, new List<Rectangle> { new Rectangle(0, 0, 260, 220) });
+            _rectangles.Add(HearState.Full, new List<Rectangle> { new(260 * 4, 220 * 4, 260, 220) });
+            _rectangles.Add(HearState.Empty, new List<Rectangle> { new(0, 0, 260, 220) });
             _rectangles[HearState.Filling] = new List<Rectangle>();
             _rectangles[HearState.Emptying] = new List<Rectangle>();
-            for (int y = 0; y < 1100; y = y + 220)
+            for (int y = 0; y < 1100; y += 220)
             {
-                for (int x = 0; x < 1300; x = x + 260)
+                for (int x = 0; x < 1300; x += 260)
                 {
                     _rectangles[HearState.Filling].Add(new Rectangle(x, y, 260, 220));
                 }
             }
-            for (int y = 880; y >= 0; y = y - 220)
+            for (int y = 880; y >= 0; y -= 220)
             {
-                for (int x = 1040; x >= 0; x = x - 260)
+                for (int x = 1040; x >= 0; x -= 260)
                 {
                     _rectangles[HearState.Emptying].Add(new Rectangle(x, y, 260, 220));
                 }

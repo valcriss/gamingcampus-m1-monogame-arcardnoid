@@ -23,6 +23,13 @@ namespace ArcardnoidShared.Framework.Scenes.Animations
 
         #region Public Methods
 
+        public override void Stop()
+        {
+            base.Stop();
+            if (Component == null) return;
+            Component.Opacity = _to;
+        }
+
         public override void Update(float delta)
         {
             if (Component == null) return;

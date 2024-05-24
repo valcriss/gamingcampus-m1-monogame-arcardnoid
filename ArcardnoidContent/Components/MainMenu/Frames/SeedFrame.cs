@@ -15,7 +15,7 @@ namespace ArcardnoidContent.Components.MainMenu.Frames
         private Input? Input { get; set; }
         private Action OnCancel { get; set; }
         private Action OnConfirm { get; set; }
-        private IRandom Random { get; set; } = GameServiceProvider.GetService<IRandomService>().GetRandom(DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + DateTime.Now.Millisecond);
+        private IRandom Random { get; set; } = GameServiceProvider.GetService<IRandomService>().GetRandom();
 
         #endregion Private Properties
 

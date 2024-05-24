@@ -1,5 +1,6 @@
 ﻿using arcardnoid.Models.Implementations;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
+using System;
 
 namespace arcardnoid.Models.Services
 {
@@ -9,7 +10,7 @@ namespace arcardnoid.Models.Services
 
         public IRandom GetRandom()
         {
-            return new MonoGameRandom();
+            return new MonoGameRandom(DateTime.Now.Year + DateTime.Now.Month + DateTime.Now.Day + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + DateTime.Now.Millisecond);
         }
 
         public IRandom GetRandom(int seed)

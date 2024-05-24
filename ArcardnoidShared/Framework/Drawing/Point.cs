@@ -68,6 +68,13 @@
             return base.GetHashCode();
         }
 
+        public Point Rotate(float angle)
+        {
+            float x = X * (float)Math.Cos(angle) - Y * (float)Math.Sin(angle);
+            float y = X * (float)Math.Sin(angle) + Y * (float)Math.Cos(angle);
+            return new Point(x, y);
+        }
+
         public override string ToString()
         {
             return $"X: {X}, Y: {Y}";

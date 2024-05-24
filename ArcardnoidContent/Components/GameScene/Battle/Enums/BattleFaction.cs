@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArcardnoidContent.Components.GameScene
+namespace ArcardnoidContent.Components.GameScene.Battle.Enums
 {
-    public enum GameSceneState
+    public enum BattleFaction
     {
-        None,
-        Loading,
-        Loaded,
+        Player,
+        Opponent
     }
 }

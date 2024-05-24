@@ -11,19 +11,23 @@ namespace ArcardnoidShared.Framework.Components.Images
         private readonly float _speed;
         private double _elapsedTime;
         private int _index;
+        private bool _loop;
+        private Action? _onAnimationCompleted;
         private List<Rectangle> _rects = new();
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public SpriteSheetImage(string spriteAsset, int columns, int rows, float speed, int x, int y) : base(spriteAsset, x, y, default)
+        public SpriteSheetImage(string spriteAsset, int columns, int rows, float speed, int x, int y, bool loop = true, Action? onAnimationCompleted = null) : base(spriteAsset, x, y, default)
         {
             _columns = columns;
             _rows = rows;
             _speed = speed;
             _index = 0;
             _elapsedTime = 0;
+            _loop = loop;
+            _onAnimationCompleted = onAnimationCompleted;
         }
 
         #endregion Public Constructors
@@ -51,7 +55,15 @@ namespace ArcardnoidShared.Framework.Components.Images
                 _index++;
                 if (_index >= _columns * _rows)
                 {
-                    _index = 0;
+                    if (_loop)
+                    {
+                        _index = 0;
+                    }
+                    else
+                    {
+                        _onAnimationCompleted?.Invoke();
+                        _index = 0;
+                    }
                 }
             }
             SetSourceRect(_rects[_index]);

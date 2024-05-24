@@ -41,7 +41,8 @@ namespace ArcardnoidShared.Framework.Scenes.Components
             if (State == ElementState.Loaded && Visible)
             {
                 Draw();
-                foreach (var gameComponent in GameComponents)
+                GameComponent[] gameComponents = GameComponents.ToArray();
+                foreach (var gameComponent in gameComponents)
                 {
                     if (gameComponent.State == ElementState.Loaded)
                         gameComponent.InnerDraw();
@@ -53,7 +54,8 @@ namespace ArcardnoidShared.Framework.Scenes.Components
         {
             State = ElementState.Loading;
             Load();
-            foreach (var gameComponent in GameComponents)
+            GameComponent[] gameComponents = GameComponents.ToArray();
+            foreach (var gameComponent in gameComponents)
             {
                 gameComponent.InnerLoad();
             }
@@ -64,7 +66,8 @@ namespace ArcardnoidShared.Framework.Scenes.Components
         {
             State = ElementState.Unloading;
             Unload();
-            foreach (var gameComponent in GameComponents)
+            GameComponent[] gameComponents = GameComponents.ToArray();
+            foreach (var gameComponent in gameComponents)
             {
                 gameComponent.InnerUnload();
             }
@@ -76,7 +79,8 @@ namespace ArcardnoidShared.Framework.Scenes.Components
             if (State == ElementState.Loaded && Enabled)
             {
                 Update(delta);
-                foreach (var gameComponent in GameComponents)
+                GameComponent[] gameComponents = GameComponents.ToArray();
+                foreach (var gameComponent in gameComponents)
                 {
                     if (gameComponent.State == ElementState.Loaded && gameComponent.Enabled)
                     {

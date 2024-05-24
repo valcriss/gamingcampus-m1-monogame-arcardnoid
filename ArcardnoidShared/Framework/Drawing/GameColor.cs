@@ -1,11 +1,15 @@
-﻿namespace ArcardnoidShared.Framework.Drawing
+﻿using ArcardnoidShared.Framework.Tools;
+
+namespace ArcardnoidShared.Framework.Drawing
 {
     public struct GameColor
     {
         #region Public Properties
 
         public static GameColor Black => new(0, 0, 0);
+        public static GameColor Blue => new(0, 0, 255);
         public static GameColor Cyan => new(0, 255, 255);
+        public static GameColor LightBlue => new(173, 216, 230);
         public static GameColor Red => new(255, 0, 0);
         public static GameColor White => new(255, 255, 255);
         public static GameColor Yellow => new(255, 255, 0);
@@ -29,6 +33,11 @@
         #endregion Public Constructors
 
         #region Public Methods
+
+        public static GameColor Lerp(GameColor a, GameColor b, float t)
+        {
+            return new GameColor((int)MathTools.Lerp(a.R, b.R, t), (int)MathTools.Lerp(a.G, b.G, t), (int)MathTools.Lerp(a.B, b.B, t), (int)MathTools.Lerp(a.A, b.A, t));
+        }
 
         public readonly GameColor UpdateOpacity(int a)
         {

@@ -47,6 +47,15 @@
             return point.X >= X && point.X <= X + Width && point.Y >= Y && point.Y <= Y + Height;
         }
 
+        public Rectangle Scale(float size)
+        {
+            float width = Width * size;
+            float height = Height * size;
+            float x = X - (width / 2);
+            float y = Y - (height / 2);
+            return new Rectangle(x, y, width, height);
+        }
+
         public void SetPosition(Point position)
         {
             X = position.X;

@@ -23,8 +23,8 @@ namespace ArcardnoidContent.Components.Shared.Map
 
         #region Private Fields
 
-        private readonly bool _debug;
         private readonly string _mapAsset;
+        private bool _debug;
 
         #endregion Private Fields
 
@@ -99,6 +99,11 @@ namespace ArcardnoidContent.Components.Shared.Map
                     }
                 }
             }
+        }
+
+        public void SetDebug(bool debug)
+        {
+            _debug = debug;
         }
 
         #endregion Public Methods

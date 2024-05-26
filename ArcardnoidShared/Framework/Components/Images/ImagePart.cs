@@ -39,15 +39,11 @@ namespace ArcardnoidShared.Framework.Components.Images
             UpdateRenderBounds();
         }
 
-        #endregion Public Methods
-
-        #region Protected Methods
-
-        protected override void UpdateRenderBounds()
+        public override void UpdateRenderBounds()
         {
             DrawBounds = new Rectangle(RealBounds.X - DrawOrigin.X, RealBounds.Y - DrawOrigin.Y, ImageBounds.Width, ImageBounds.Height);
         }
 
-        #endregion Protected Methods
+        #endregion Public Methods
     }
 }

@@ -123,6 +123,7 @@ namespace ArcardnoidContent.Scenes
             OnResume();
             RandomMap?.ToggleDebug();
             MainCharacter?.ToggleDebug();
+            BattleContainer?.ToggleDebug();
         }
 
         private void OnEncounter(EncounterType type, Point cell, double distanceFromStart)

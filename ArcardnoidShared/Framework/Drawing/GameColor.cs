@@ -9,6 +9,7 @@ namespace ArcardnoidShared.Framework.Drawing
         public static GameColor Black => new(0, 0, 0);
         public static GameColor Blue => new(0, 0, 255);
         public static GameColor Cyan => new(0, 255, 255);
+        public static GameColor Green => new(0, 255, 0);
         public static GameColor LightBlue => new(173, 216, 230);
         public static GameColor Red => new(255, 0, 0);
         public static GameColor White => new(255, 255, 255);

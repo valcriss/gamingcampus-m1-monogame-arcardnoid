@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArcardnoidContent.Components.GameScene.Battle.Enums
+namespace ArcardnoidShared.Framework.Drawing
 {
-    public enum BattleFaction
+    public enum RectangleFace
     {
-        Player,
-        Opponent,
+        Top,
+        Bottom,
+        Left,
+        Right,
         None
     }
 }

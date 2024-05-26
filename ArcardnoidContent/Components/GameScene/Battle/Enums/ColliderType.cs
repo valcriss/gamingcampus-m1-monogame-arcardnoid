@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace ArcardnoidContent.Components.GameScene.Battle.Enums
 {
-    public enum BattleFaction
+    public enum ColliderType
     {
-        Player,
-        Opponent,
-        None
+        None,
+        Bar,
+        Ball,
+        Actor,
     }
 }

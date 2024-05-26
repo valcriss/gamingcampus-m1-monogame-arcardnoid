@@ -7,6 +7,12 @@ namespace ArcardnoidContent.Components.GameScene.Battle
 {
     public class BattleContainer : GameComponent
     {
+        #region Public Properties
+
+        public static bool Debug { get; set; } = false;
+
+        #endregion Public Properties
+
         #region Private Properties
 
         private BattleField? BattleField { get; set; }
@@ -27,10 +33,16 @@ namespace ArcardnoidContent.Components.GameScene.Battle
 
         public void Show(GroundType ground, EncounterType type, double distanceFromStart)
         {
+            RemoveAllGameComponents();
             EncounterType = type;
             DistanceFromStart = distanceFromStart;
             BattleField = AddGameComponent(new BattleField(ground, 0, 0));
             AddShowAnimation(BattleField);
+        }
+
+        public void ToggleDebug()
+        {
+            Debug = !Debug;
         }
 
         #endregion Public Methods

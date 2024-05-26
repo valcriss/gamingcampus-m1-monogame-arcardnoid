@@ -4,10 +4,14 @@
     {
         #region Public Properties
 
+        public Point BottomLeft => new(X, Y + Height);
+        public Point BotttomRight => new(X + Width, Y + Height);
         public float Height { get; set; }
 
         public Point Position => new(X, Y);
 
+        public Point TopLeft => new(X, Y);
+        public Point TopRight => new(X + Width, Y);
         public float Width { get; set; }
         public float X { get; set; }
         public float Y { get; set; }
@@ -42,9 +46,45 @@
 
         #region Public Methods
 
+        public RectangleFace Collide(Rectangle rectangle)
+        {
+            if (Contains(rectangle.TopLeft) || Contains(rectangle.TopRight))
+                return RectangleFace.Top;
+            if (Contains(rectangle.BottomLeft) || Contains(rectangle.BotttomRight))
+                return RectangleFace.Bottom;
+            if (Contains(rectangle.TopLeft) || Contains(rectangle.BottomLeft))
+                return RectangleFace.Left;
+            if (Contains(rectangle.TopRight) || Contains(rectangle.BotttomRight))
+                return RectangleFace.Right;
+            return RectangleFace.None;
+        }
+
+        public RectangleFace Collide(Point point)
+        {
+            if (!Contains(point))
+                return RectangleFace.None;
+
+            Dictionary<RectangleFace, float> dict = new Dictionary<RectangleFace, float>();
+
+            dict.Add(RectangleFace.Left, point.X - X);
+            dict.Add(RectangleFace.Right, X + Width - point.X);
+            dict.Add(RectangleFace.Top, point.Y - Y);
+            dict.Add(RectangleFace.Bottom, Y + Height - point.Y);
+
+            return dict.Count > 0 ? dict.OrderBy(x => x.Value).First().Key : RectangleFace.None;
+        }
+
         public bool Contains(Point point)
         {
             return point.X >= X && point.X <= X + Width && point.Y >= Y && point.Y <= Y + Height;
+        }
+
+        public bool Intersects(Rectangle rectangle)
+        {
+            return Contains(rectangle.TopLeft) ||
+                   Contains(rectangle.TopRight) ||
+                   Contains(rectangle.BottomLeft) ||
+                   Contains(rectangle.BotttomRight);
         }
 
         public Rectangle Scale(float size)

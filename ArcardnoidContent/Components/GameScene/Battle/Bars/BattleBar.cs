@@ -1,4 +1,5 @@
 ﻿using ArcardnoidContent.Components.GameScene.Battle.Enums;
+using ArcardnoidShared.Framework.Components.Images;
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Animations;
 using ArcardnoidShared.Framework.Scenes.Components;
@@ -9,21 +10,33 @@ namespace ArcardnoidContent.Components.GameScene.Battle.Bars
 {
     public class BattleBar : GameComponent
     {
+        #region Public Properties
+
+        public virtual Point BarPosition { get; } = Point.Zero;
+
+        public Rectangle CollidingBounds { get; set; } = Rectangle.Empty;
+
+        #endregion Public Properties
+
         #region Protected Properties
 
         protected virtual Point AnimationOffset { get; } = Point.Zero;
-        protected virtual Point BarPosition { get; } = Point.Zero;
         protected BattleFaction Faction { get; }
         protected Rectangle GameBounds { get; set; } = Rectangle.Empty;
-        protected virtual float Speed { get; set; } = 200;
+        protected virtual float Speed { get; set; } = 300;
         protected virtual int Width { get; set; } = 10;
 
         #endregion Protected Properties
 
+        #region Private Properties
+
+        private Primitive2D Primitive2D { get; set; }
+
+        #endregion Private Properties
+
         #region Private Fields
 
         private ITexture? barTexture;
-
         private Rectangle centerBar = Rectangle.Empty;
         private Rectangle drawCenterBar = Rectangle.Empty;
         private Rectangle drawLeftBar = Rectangle.Empty;
@@ -40,6 +53,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle.Bars
             Faction = faction;
             GameBounds = gameBounds;
             this.Bounds.SetPosition(this.BarPosition);
+            Primitive2D = AddGameComponent(new Primitive2D());
         }
 
         #endregion Public Constructors
@@ -48,10 +62,10 @@ namespace ArcardnoidContent.Components.GameScene.Battle.Bars
 
         public override void Draw()
         {
-            base.Draw();
             barTexture?.DrawTexture(drawLeftBar, leftBar, Color, 0, Point.Zero);
             barTexture?.DrawTexture(drawCenterBar, centerBar, Color, 0, Point.Zero);
             barTexture?.DrawTexture(drawRightBar, rightBar, Color, 0, Point.Zero);
+            base.Draw();
         }
 
         public override void Load()
@@ -79,6 +93,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle.Bars
             drawLeftBar = new Rectangle(RealBounds.X - ((barWidth / 2)) - leftBar.Width, RealBounds.Y, leftBar.Width, leftBar.Height);
             drawRightBar = new Rectangle(RealBounds.X + ((barWidth / 2)), RealBounds.Y, rightBar.Width, rightBar.Height);
             drawCenterBar = new Rectangle(drawLeftBar.X + drawLeftBar.Width, RealBounds.Y, barWidth, centerBar.Height);
+            CollidingBounds = new Rectangle(drawLeftBar.X, drawLeftBar.Y, drawLeftBar.Width + drawCenterBar.Width + drawRightBar.Width, drawLeftBar.Height);
         }
 
         #endregion Public Methods

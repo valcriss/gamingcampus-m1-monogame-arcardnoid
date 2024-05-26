@@ -43,6 +43,16 @@
             return new Point(a.X * b, a.Y * b);
         }
 
+        public static Point operator *(float a, Point b)
+        {
+            return new Point(a * b.X, a * b.Y);
+        }
+
+        public static float operator *(Point a, Point b)
+        {
+            return a.X * b.X + a.Y * b.Y;
+        }
+
         public static Point operator /(Point a, float b)
         {
             return new Point(a.X / b, a.Y / b);
@@ -66,6 +76,19 @@
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public Point Normalize()
+        {
+            return Point.Normalize(this);
+        }
+
+        public Point Reflect(Point planeVector)
+        {
+            // calculate the projection of this vector on the plane vector
+            Point projection = (this * planeVector) / (planeVector * planeVector) * planeVector;
+            // calculate the reflection vector
+            return this - 2f * projection;
         }
 
         public Point Rotate(float angle)

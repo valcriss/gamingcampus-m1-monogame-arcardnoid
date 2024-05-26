@@ -9,10 +9,15 @@ namespace ArcardnoidContent.Components.GameScene.Battle
 {
     public class PlayerBattleBar : BattleBar
     {
+        #region Public Properties
+
+        public override Point BarPosition => new Point(960, 1000);
+
+        #endregion Public Properties
+
         #region Protected Properties
 
         protected override Point AnimationOffset => new Point(0, 300);
-        protected override Point BarPosition => new Point(960, 1000);
 
         #endregion Protected Properties
 
@@ -38,19 +43,12 @@ namespace ArcardnoidContent.Components.GameScene.Battle
             {
                 return;
             }
-            IMouseService mouseService = GameServiceProvider.GetService<IMouseService>();
-            Point mousePosition = mouseService.GetMousePosition();
-            if (GameBounds.Contains(mousePosition))
+            IKeyboardService keyboardService = GameServiceProvider.GetService<IKeyboardService>();
+            if (keyboardService.IsKeyDown("Q") || keyboardService.IsKeyDown("D"))
             {
+                float direction = keyboardService.IsKeyDown("Q") ? -1 : 1;
                 Point position = Bounds.Position;
-                if (mousePosition.X < 960)
-                {
-                    position.X = position.X - Speed * delta;
-                }
-                else
-                {
-                    position.X = position.X + Speed * delta;
-                }
+                position.X = position.X + (Speed * delta) * direction;
                 position.X = MathTools.Clamp(position.X, GameBounds.X + ((Width * 8) + 16), GameBounds.X + GameBounds.Width - ((Width * 8) + 16));
                 Bounds.SetPosition(position);
             }

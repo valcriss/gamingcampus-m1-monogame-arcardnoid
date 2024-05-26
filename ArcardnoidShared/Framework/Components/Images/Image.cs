@@ -65,15 +65,11 @@ namespace ArcardnoidShared.Framework.Components.Images
             base.Load();
         }
 
-        #endregion Public Methods
-
-        #region Protected Methods
-
-        protected virtual void UpdateRenderBounds()
+        public virtual void UpdateRenderBounds()
         {
             DrawBounds = new Rectangle(RealBounds.X - DrawOrigin.X, RealBounds.Y - DrawOrigin.Y, RealBounds.Width, RealBounds.Height);
         }
 
-        #endregion Protected Methods
+        #endregion Public Methods
     }
 }

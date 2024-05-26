@@ -68,6 +68,12 @@ namespace ArcardnoidContent.Components.GameScene.Battle.Bars
             Direction = Direction.Reflect(planeVector == CollidingPlane.Horizontal ? new Point(0, 1) : new Point(1, 0)).Normalize();
         }
 
+        public void Reset()
+        {
+            this.Bounds.SetPosition(GetStartPosition());
+            this.Attached = true;
+        }
+
         public void Shoot(float angle)
         {
             CollideTime = DateTime.Now;

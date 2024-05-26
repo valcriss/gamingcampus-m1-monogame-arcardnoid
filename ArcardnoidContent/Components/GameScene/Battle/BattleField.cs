@@ -7,6 +7,7 @@ using ArcardnoidContent.Components.Shared.Map.Enums;
 using ArcardnoidShared.Framework.Components.Images;
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Components;
+using ArcardnoidShared.Framework.Scenes.Element;
 using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using ArcardnoidShared.Framework.Tools;
@@ -18,6 +19,8 @@ namespace ArcardnoidContent.Components.GameScene.Battle
         #region Private Properties
 
         private static IGamePlay GamePlay => GameServiceProvider.GetService<IGamePlay>();
+        private static IRandom Random => GameServiceProvider.GetService<IRandomService>().GetRandom();
+
         private List<BattleColliderItem> ColliderItems { get; set; } = new List<BattleColliderItem>();
         private Rectangle GameBounds { get; set; } = Rectangle.Empty;
         private bool OponentBallAttached => OponentFireBall == null || OponentFireBall.Attached;
@@ -124,7 +127,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
         private static int NumberOfOpponents(double distanceFromStart)
         {
             System.Diagnostics.Debug.WriteLine($"Distance from start: {distanceFromStart}");
-            float ratio = (float)distanceFromStart / 30;
+            float ratio = (float)distanceFromStart / 20;
             System.Diagnostics.Debug.WriteLine($"Ratio: {ratio}");
             int value = Math.Max(10, (int)Math.Min(ratio * (20 * 5), (20 * 5)));
             System.Diagnostics.Debug.WriteLine($"Value: {value}");
@@ -176,11 +179,16 @@ namespace ArcardnoidContent.Components.GameScene.Battle
                 OponentFireBall = AddGameComponent(new FireBall(BattleFaction.Opponent));
         }
 
-        private void CheckCollisionWithOthers(FireBall ball, BattleFaction faction, ColliderType type, out bool destroy)
+        private void CheckCollisionWithOthers(FireBall ball, BattleFaction faction, ColliderType type, out bool destroy, out GameComponent? collidingComponent)
         {
             destroy = false;
+            collidingComponent = null;
             foreach (BattleColliderItem item in ColliderItems)
             {
+                if (item.Component.State == ElementState.Unloaded)
+                {
+                    continue;
+                }
                 if ((item.BounceFaction == faction && item.BounceType == type) || (item.DestroyFaction == faction && item.DestroyType == type))
                 {
                     RectangleFace face = item.Bounds.Collide(ball.RealBounds);
@@ -188,6 +196,8 @@ namespace ArcardnoidContent.Components.GameScene.Battle
                     {
                         CollidingPlane plane = face == RectangleFace.Left || face == RectangleFace.Right ? CollidingPlane.Vertical : CollidingPlane.Horizontal;
                         ball.ColideWithPlane(plane, false);
+                        destroy = item.DestroyFaction == faction;
+                        collidingComponent = item.Component;
                         return;
                     }
                 }
@@ -288,7 +298,38 @@ namespace ArcardnoidContent.Components.GameScene.Battle
                 PlayerFireBall.ColideWithPlane(CollideWithGameBounds(PlayerFireBall.RealBounds, BattleFaction.Player), true);
                 if (PlayerFireBall.CanCollide)
                 {
-                    CheckCollisionWithOthers(PlayerFireBall, BattleFaction.Player, ColliderType.Ball, out bool destroy);
+                    CheckCollisionWithOthers(PlayerFireBall, BattleFaction.Player, ColliderType.Ball, out bool destroy, out GameComponent? component);
+                    if (component != null && destroy)
+                    {
+                        int gridX = ((MapCell)component).GridX;
+                        int gridY = ((MapCell)component).GridY;
+                        AddGameComponent(new AnimatedCell(LoadAssetTexture("map/units/dead-1"), 7, 1, 80, 0, 0, gridX, gridY, (int)component.RealBounds.X, (int)component.RealBounds.Y, 0, 0, false));
+
+                        MoveToFront(PlayerFireBall);
+
+                        MoveToFront(OponentFireBall);
+
+                        component.InnerUnload();
+                        ColliderItems.RemoveAll(x => x.Component == component);
+                    }
+                }
+
+                // Check if this ball is outside the screen
+                if (PlayerFireBall.RealBounds.X < 0 || PlayerFireBall.RealBounds.X > 1920 || PlayerFireBall.RealBounds.Y < 0 || PlayerFireBall.RealBounds.Y > 1080)
+                {
+                    BattleColliderItem[] items = ColliderItems.Where(c => c.ColliderType == ColliderType.Actor && c.Faction == BattleFaction.Player).ToArray();
+                    if (items.Length > 0)
+                    {
+                        int index = Random.Next(0, items.Length - 1);
+                        BattleColliderItem item = items[index];
+                        int gridX = ((MapCell)item.Component).GridX;
+                        int gridY = ((MapCell)item.Component).GridY;
+                        AddGameComponent(new AnimatedCell(LoadAssetTexture("map/units/dead-1"), 7, 1, 80, 0, 0, gridX, gridY, (int)item.Component.RealBounds.X, (int)item.Component.RealBounds.Y, 0, 0, false));
+                        item.Component.InnerUnload();
+                        GamePlay.RemoveUnits(1);
+                        ColliderItems.RemoveAll(x => x.Component == item.Component);
+                        PlayerFireBall.Reset();
+                    }
                 }
             }
         }

@@ -20,7 +20,6 @@ namespace ArcardnoidContent.Components.GameScene.Battle
 
         private static IGamePlay GamePlay => GameServiceProvider.GetService<IGamePlay>();
         private static IRandom Random => GameServiceProvider.GetService<IRandomService>().GetRandom();
-
         private List<BattleColliderItem> ColliderItems { get; set; } = new List<BattleColliderItem>();
         private Rectangle GameBounds { get; set; } = Rectangle.Empty;
         private bool OponentBallAttached => OponentFireBall == null || OponentFireBall.Attached;
@@ -36,6 +35,9 @@ namespace ArcardnoidContent.Components.GameScene.Battle
 
         #region Private Fields
 
+        private const double CORPSE_DURATION = 5;
+        private const double CORPSE_HIDE_DURATION = 0.5f;
+        private List<BattleFieldCorpse> _battleFieldCorpses = new List<BattleFieldCorpse>();
         private List<GameComponent> _oponentComponents = new List<GameComponent>();
         private List<GameComponent> _playerComponents = new List<GameComponent>();
 
@@ -63,6 +65,9 @@ namespace ArcardnoidContent.Components.GameScene.Battle
 
         public void ShowMap(EncounterType encounterType, double distanceFromStart)
         {
+            _oponentComponents.Clear();
+            _playerComponents.Clear();
+            _battleFieldCorpses.Clear();
             AddUnits(encounterType, distanceFromStart);
             StaticMap.AddTilesAnimation();
         }
@@ -70,11 +75,11 @@ namespace ArcardnoidContent.Components.GameScene.Battle
         public override void Update(float delta)
         {
             base.Update(delta);
-
             UpdateColliders();
             UpdatePlayerBall();
-            UpdateOponentBall();
+            UpdateOponentBall(delta);
             UpdateDebug();
+            UpdateCorpses();
         }
 
         #endregion Public Methods
@@ -261,6 +266,27 @@ namespace ArcardnoidContent.Components.GameScene.Battle
             }
         }
 
+        private void UpdateCorpses()
+        {
+            BattleFieldCorpse[] corpses = _battleFieldCorpses.ToArray();
+            foreach (BattleFieldCorpse corpse in corpses)
+            {
+                if ((DateTime.Now - corpse.CreationTime).TotalSeconds > corpse.Duration)
+                {
+                    corpse.Component.InnerUnload();
+                    _battleFieldCorpses.Remove(corpse);
+                    if (corpse.BattleFieldCorpseElapsedAction == BattleFieldCorpseElapsedAction.Disappear)
+                    {
+                        var component = corpse.Component;
+                        int gridX = ((MapCell)component).GridX;
+                        int gridY = ((MapCell)component).GridY;
+                        AnimatedCell c = AddGameComponent(new AnimatedCell(LoadAssetTexture("map/units/dead-2"), 7, 1, 80, 0, 0, gridX, gridY, (int)component.RealBounds.X, (int)component.RealBounds.Y, 0, 0, false));
+                        _battleFieldCorpses.Add(new BattleFieldCorpse() { Component = c, CreationTime = DateTime.Now, Duration = CORPSE_HIDE_DURATION, BattleFieldCorpseElapsedAction = BattleFieldCorpseElapsedAction.Unload });
+                    }
+                }
+            }
+        }
+
         private void UpdateDebug()
         {
             if (BattleContainer.Debug)
@@ -277,6 +303,58 @@ namespace ArcardnoidContent.Components.GameScene.Battle
             else
             {
                 Primitive2D.SetDrawAction(null);
+            }
+        }
+
+        private void UpdateOponentBall(float delta)
+        {
+            if (OponentBattleBar != null && OponentFireBall != null && OponentBallAttached)
+            {
+                OponentFireBall.ForcePosition(OponentBattleBar.Bounds, OponentBattleBar.BarPosition);
+                int targetX = Random.Next(0, 1920);
+                Point mousePosition = new Point(targetX, 1080);
+                float angle = MathTools.AngleBetweenTwoPoints(OponentFireBall.Position, mousePosition);
+                OponentFireBall.Shoot(angle, BattleFaction.Opponent);
+            }
+            else if (OponentBattleBar != null && OponentFireBall != null && !OponentBallAttached)
+            {
+                // Check collision with battlefield bounds
+                OponentFireBall.ColideWithPlane(CollideWithGameBounds(OponentFireBall.RealBounds, BattleFaction.Opponent), true);
+                if (OponentFireBall.CanCollide)
+                {
+                    CheckCollisionWithOthers(OponentFireBall, BattleFaction.Opponent, ColliderType.Ball, out bool destroy, out GameComponent? component);
+                    if (component != null && destroy)
+                    {
+                        int gridX = ((MapCell)component).GridX;
+                        int gridY = ((MapCell)component).GridY;
+                        AnimatedCell corpse = AddGameComponent(new AnimatedCell(LoadAssetTexture("map/units/dead-1"), 7, 1, 80, 0, 0, gridX, gridY, (int)component.RealBounds.X, (int)component.RealBounds.Y, 0, 0, false));
+                        _battleFieldCorpses.Add(new BattleFieldCorpse() { Component = corpse, CreationTime = DateTime.Now, Duration = CORPSE_DURATION, BattleFieldCorpseElapsedAction = BattleFieldCorpseElapsedAction.Disappear });
+                        MoveToFront(PlayerFireBall);
+                        MoveToFront(OponentFireBall);
+                        component.InnerUnload();
+                        ColliderItems.RemoveAll(x => x.Component == component);
+                    }
+                }
+
+                // Check if this ball is outside the screen
+                if (OponentFireBall.RealBounds.X < 0 || OponentFireBall.RealBounds.X > 1920 || OponentFireBall.RealBounds.Y < 0 || OponentFireBall.RealBounds.Y > 1080)
+                {
+                    BattleColliderItem[] items = ColliderItems.Where(c => c.Component.State != ElementState.Unloaded && c.ColliderType == ColliderType.Actor && c.Faction == BattleFaction.Opponent).ToArray();
+                    if (items.Length > 0)
+                    {
+                        int index = Random.Next(0, items.Length - 1);
+                        BattleColliderItem item = items[index];
+                        int gridX = ((MapCell)item.Component).GridX;
+                        int gridY = ((MapCell)item.Component).GridY;
+                        AnimatedCell corpse = AddGameComponent(new AnimatedCell(LoadAssetTexture("map/units/dead-1"), 7, 1, 80, 0, 0, gridX, gridY, (int)item.Component.RealBounds.X, (int)item.Component.RealBounds.Y, 0, 0, false));
+                        _battleFieldCorpses.Add(new BattleFieldCorpse() { Component = corpse, CreationTime = DateTime.Now, Duration = CORPSE_DURATION, BattleFieldCorpseElapsedAction = BattleFieldCorpseElapsedAction.Disappear });
+
+                        item.Component.InnerUnload();
+                        ColliderItems.RemoveAll(x => x.Component == item.Component);
+                        OponentFireBall.Reset();
+                    }
+                }
+                OponentBattleBar.UpdateBarPosition(delta, OponentFireBall);
             }
         }
 
@@ -304,7 +382,8 @@ namespace ArcardnoidContent.Components.GameScene.Battle
                     {
                         int gridX = ((MapCell)component).GridX;
                         int gridY = ((MapCell)component).GridY;
-                        AddGameComponent(new AnimatedCell(LoadAssetTexture("map/units/dead-1"), 7, 1, 80, 0, 0, gridX, gridY, (int)component.RealBounds.X, (int)component.RealBounds.Y, 0, 0, false));
+                        AnimatedCell corpse = AddGameComponent(new AnimatedCell(LoadAssetTexture("map/units/dead-1"), 7, 1, 80, 0, 0, gridX, gridY, (int)component.RealBounds.X, (int)component.RealBounds.Y, 0, 0, false));
+                        _battleFieldCorpses.Add(new BattleFieldCorpse() { Component = corpse, CreationTime = DateTime.Now, Duration = CORPSE_DURATION, BattleFieldCorpseElapsedAction = BattleFieldCorpseElapsedAction.Disappear });
 
                         MoveToFront(PlayerFireBall);
 
@@ -325,7 +404,8 @@ namespace ArcardnoidContent.Components.GameScene.Battle
                         BattleColliderItem item = items[index];
                         int gridX = ((MapCell)item.Component).GridX;
                         int gridY = ((MapCell)item.Component).GridY;
-                        AddGameComponent(new AnimatedCell(LoadAssetTexture("map/units/dead-1"), 7, 1, 80, 0, 0, gridX, gridY, (int)item.Component.RealBounds.X, (int)item.Component.RealBounds.Y, 0, 0, false));
+                        AnimatedCell corpse = AddGameComponent(new AnimatedCell(LoadAssetTexture("map/units/dead-1"), 7, 1, 80, 0, 0, gridX, gridY, (int)item.Component.RealBounds.X, (int)item.Component.RealBounds.Y, 0, 0, false));
+                        _battleFieldCorpses.Add(new BattleFieldCorpse() { Component = corpse, CreationTime = DateTime.Now, Duration = CORPSE_DURATION, BattleFieldCorpseElapsedAction = BattleFieldCorpseElapsedAction.Disappear });
                         item.Component.InnerUnload();
                         GamePlay.RemoveUnits(1);
                         ColliderItems.RemoveAll(x => x.Component == item.Component);
@@ -335,54 +415,6 @@ namespace ArcardnoidContent.Components.GameScene.Battle
             }
         }
 
-        private void UpdateOponentBall()
-        {
-            if (OponentBattleBar != null && OponentFireBall != null && OponentBallAttached)
-            {
-                OponentFireBall.ForcePosition(OponentBattleBar.Bounds, OponentBattleBar.BarPosition);
-                int targetX = Random.Next(0, 1920);
-                Point mousePosition = new Point(targetX, 1080);
-                float angle = MathTools.AngleBetweenTwoPoints(OponentFireBall.Position, mousePosition);
-                OponentFireBall.Shoot(angle, BattleFaction.Opponent);
-            }
-            else if (OponentBattleBar != null && OponentFireBall != null && !OponentBallAttached)
-            {
-                // Check collision with battlefield bounds
-                OponentFireBall.ColideWithPlane(CollideWithGameBounds(OponentFireBall.RealBounds, BattleFaction.Opponent), true);
-                if (OponentFireBall.CanCollide)
-                {
-                    CheckCollisionWithOthers(OponentFireBall, BattleFaction.Opponent, ColliderType.Ball, out bool destroy, out GameComponent? component);
-                    if (component != null && destroy)
-                    {
-                        int gridX = ((MapCell)component).GridX;
-                        int gridY = ((MapCell)component).GridY;
-                        AddGameComponent(new AnimatedCell(LoadAssetTexture("map/units/dead-1"), 7, 1, 80, 0, 0, gridX, gridY, (int)component.RealBounds.X, (int)component.RealBounds.Y, 0, 0, false));
-
-                        MoveToFront(PlayerFireBall);
-                        MoveToFront(OponentFireBall);
-                        component.InnerUnload();
-                        ColliderItems.RemoveAll(x => x.Component == component);
-                    }
-                }
-
-                // Check if this ball is outside the screen
-                if (OponentFireBall.RealBounds.X < 0 || OponentFireBall.RealBounds.X > 1920 || OponentFireBall.RealBounds.Y < 0 || OponentFireBall.RealBounds.Y > 1080)
-                {
-                    BattleColliderItem[] items = ColliderItems.Where(c => c.Component.State != ElementState.Unloaded && c.ColliderType == ColliderType.Actor && c.Faction == BattleFaction.Opponent).ToArray();
-                    if (items.Length > 0)
-                    {
-                        int index = Random.Next(0, items.Length - 1);
-                        BattleColliderItem item = items[index];
-                        int gridX = ((MapCell)item.Component).GridX;
-                        int gridY = ((MapCell)item.Component).GridY;
-                        AddGameComponent(new AnimatedCell(LoadAssetTexture("map/units/dead-1"), 7, 1, 80, 0, 0, gridX, gridY, (int)item.Component.RealBounds.X, (int)item.Component.RealBounds.Y, 0, 0, false));
-                        item.Component.InnerUnload();
-                        ColliderItems.RemoveAll(x => x.Component == item.Component);
-                        OponentFireBall.Reset();
-                    }
-                }
-            }
-        }
         #endregion Private Methods
     }
 }

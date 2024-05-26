@@ -1,6 +1,7 @@
 ﻿using ArcardnoidContent.Components.GameScene.Battle.Bars;
 using ArcardnoidContent.Components.GameScene.Battle.Enums;
 using ArcardnoidShared.Framework.Drawing;
+using ArcardnoidShared.Framework.Tools;
 
 namespace ArcardnoidContent.Components.GameScene.Battle
 {
@@ -31,6 +32,27 @@ namespace ArcardnoidContent.Components.GameScene.Battle
         public virtual OponentBattleBar Show(Action? onAnimationCompleted = null)
         {
             return base.Show<OponentBattleBar>(onAnimationCompleted);
+        }
+
+        public void UpdateBarPosition(float delta, FireBall fireball)
+        {
+            if (HasAnimations)
+            {
+                return;
+            }
+
+            Point position = Bounds.Position;
+            if (fireball.RealBounds.X < position.X)
+            {
+                position.X = position.X + (Speed * delta) * -1;
+            }
+            else if (fireball.RealBounds.X > position.X)
+            {
+                position.X = position.X + (Speed * delta) * 1;
+            }
+
+            position.X = MathTools.Clamp(position.X, GameBounds.X + ((Width * 8) + 16), GameBounds.X + GameBounds.Width - ((Width * 8) + 16));
+            Bounds.SetPosition(position);
         }
 
         #endregion Public Methods

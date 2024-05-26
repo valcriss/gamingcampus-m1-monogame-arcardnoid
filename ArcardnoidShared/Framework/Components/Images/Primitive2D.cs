@@ -18,6 +18,15 @@ namespace ArcardnoidShared.Framework.Components.Images
 
         #endregion Private Fields
 
+        #region Public Constructors
+
+        public Primitive2D(Action<IPrimitives2D>? drawAction = null)
+        {
+            _drawAction = drawAction;
+        }
+
+        #endregion Public Constructors
+
         #region Public Methods
 
         public override void Draw()
@@ -26,9 +35,10 @@ namespace ArcardnoidShared.Framework.Components.Images
             _drawAction?.Invoke(Primitives2D);
         }
 
-        public void SetDrawAction(Action<IPrimitives2D>? drawAction)
+        public Primitive2D SetDrawAction(Action<IPrimitives2D>? drawAction)
         {
             _drawAction = drawAction;
+            return this;
         }
 
         #endregion Public Methods

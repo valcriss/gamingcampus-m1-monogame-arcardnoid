@@ -41,6 +41,12 @@ namespace ArcardnoidContent.Scenes
 
         #endregion Private Properties
 
+        #region Private Fields
+
+        private bool _battleStarted = false;
+
+        #endregion Private Fields
+
         #region Public Constructors
 
         public GameScene(int seed = 1)
@@ -116,6 +122,25 @@ namespace ArcardnoidContent.Scenes
             return component.AddAnimation<T>(new AlphaFadeAnimation(duration, 0, 1, false, true, EaseType.Linear, () =>
             {
             }));
+        }
+
+        private void EndBattle(bool victory, Point cell)
+        {
+            if (BattleContainer != null) AddHideAnimation<BattleContainer>(BattleContainer);
+            if (RandomMap != null) AddShowAnimation<RandomMap>(RandomMap);
+            if (MainCharacter != null) AddShowAnimation<MainCharacter>(MainCharacter);
+            if (GameSceneUI != null) AddShowAnimation<GameSceneUI>(GameSceneUI);
+            if (SeedText != null) AddShowAnimation<BitmapText>(SeedText);
+            if (victory)
+            {
+                AnimatedCell? animatedCell = RandomMap?.GetActorCell(cell);
+                if (animatedCell == null) return;
+                int gridX = animatedCell.GridX;
+                int gridY = animatedCell.GridY;
+                AnimatedCell corpse = AddGameComponent(new AnimatedCell(BattleField.LoadAssetTexture("map/units/dead-1"), 7, 1, 80, 0, 0, gridX, gridY, MapGenerator.MapHypothesis.PositionX + gridX * 64, MapGenerator.MapHypothesis.PositionY + gridY * 64, 32, 16, false));
+                RandomMap?.ReplaceActorCell(animatedCell.TextureAsset, corpse, cell);
+                this.MoveToFront<MainCharacter>(MainCharacter);
+            }
         }
 
         private void OnDebug()
@@ -197,7 +222,8 @@ namespace ArcardnoidContent.Scenes
             if (SeedText != null) AddHideAnimation<BitmapText>(SeedText);
             if (BattleContainer != null) AddShowAnimation<BattleContainer>(BattleContainer);
             System.Diagnostics.Debug.WriteLine("Start battle with " + type + " at " + distanceFromStart + " from start");
-            if (RandomMap != null) BattleContainer?.Show(RandomMap.GetGroundType(cell), type, distanceFromStart);
+            this.MoveToFront(BattleContainer);
+            if (RandomMap != null) BattleContainer?.Show(RandomMap.GetGroundType(cell), type, distanceFromStart, cell, EndBattle);
         }
 
         #endregion Private Methods

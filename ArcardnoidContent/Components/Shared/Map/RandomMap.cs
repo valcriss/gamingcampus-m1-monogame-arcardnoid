@@ -97,6 +97,30 @@ namespace ArcardnoidContent.Components.Shared.Map
             }
         }
 
+        public AnimatedCell? GetActorCell(Point cell)
+        {
+            string[] actorsAssets = new string[] { MapCell.ARCHER_ASSET, MapCell.WARRIOR_ASSET, MapCell.TORCH_ASSET, MapCell.TNT_ASSET, MapCell.SHEEP_ASSET };
+            foreach (GameComponent component in GameComponents)
+            {
+                if (component is AnimatedCell mapCell && mapCell.GridX == cell.X && mapCell.GridY == cell.Y && actorsAssets.Contains(((AnimatedCell)component).TextureAsset))
+                {
+                    return (AnimatedCell)component;
+                }
+            }
+            return null;
+        }
+
+        public GroundType GetGroundType(Point cell)
+        {
+            MapLayer terrainLayer1 = MapHypothesis.FinalChunk.Layers.FirstOrDefault(c => c.Name == "Terrain Layer 1");
+            string value = terrainLayer1.GetLayerData((int)cell.X, (int)cell.Y);
+            if (value != string.Empty) { return int.Parse(value) == 1 ? GroundType.Sand : GroundType.Grass; }
+            MapLayer terrainLayer2 = MapHypothesis.FinalChunk.Layers.FirstOrDefault(c => c.Name == "Terrain Layer 2");
+            string value2 = terrainLayer2.GetLayerData((int)cell.X, (int)cell.Y);
+            if (value2 != string.Empty) { return int.Parse(value2) == 1 ? GroundType.Sand : GroundType.Grass; }
+            return GroundType.Grass;
+        }
+
         public List<Point>? GetPath(int playerPositionX, int playerPositionY, int x, int y)
         {
             Point source = new(playerPositionX, playerPositionY);
@@ -150,6 +174,12 @@ namespace ArcardnoidContent.Components.Shared.Map
             LoadChunkLayer(new ChunkLayout() { MapChunk = MapHypothesis.FinalChunk, X = 0, Y = 0 });
         }
 
+        public void ReplaceActorCell(string textureAsset, AnimatedCell corpse, Point cell)
+        {
+            ClearCell(textureAsset, cell);
+            GameComponents.Add(corpse);
+        }
+
         public void ToggleDebug()
         {
             _forceDebug = !_forceDebug;
@@ -179,21 +209,6 @@ namespace ArcardnoidContent.Components.Shared.Map
         }
 
         #endregion Public Methods
-
-        #region Internal Methods
-
-        internal GroundType GetGroundType(Point cell)
-        {
-            MapLayer terrainLayer1 = MapHypothesis.FinalChunk.Layers.FirstOrDefault(c => c.Name == "Terrain Layer 1");
-            string value = terrainLayer1.GetLayerData((int)cell.X, (int)cell.Y);
-            if (value != string.Empty) { return int.Parse(value) == 1 ? GroundType.Sand : GroundType.Grass; }
-            MapLayer terrainLayer2 = MapHypothesis.FinalChunk.Layers.FirstOrDefault(c => c.Name == "Terrain Layer 2");
-            string value2 = terrainLayer2.GetLayerData((int)cell.X, (int)cell.Y);
-            if (value2 != string.Empty) { return int.Parse(value2) == 1 ? GroundType.Sand : GroundType.Grass; }
-            return GroundType.Grass;
-        }
-
-        #endregion Internal Methods
 
         #region Private Methods
 

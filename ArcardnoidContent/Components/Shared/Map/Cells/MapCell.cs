@@ -28,8 +28,14 @@ namespace ArcardnoidContent.Components.Shared.Map.Cells
 
         #region Public Fields
 
+        public static string ARCHER_ASSET = "map/units/archer-blue-idle";
         public static string GOLD_ASSET = "map/units/gold";
         public static string MEAT_ASSET = "map/units/meat";
+
+        public static string SHEEP_ASSET = "map/units/sheep-idle";
+        public static string TNT_ASSET = "map/units/tnt-red-idle";
+        public static string TORCH_ASSET = "map/units/torch-red-idle";
+        public static string WARRIOR_ASSET = "map/units/warrior-blue-idle";
 
         #endregion Public Fields
 

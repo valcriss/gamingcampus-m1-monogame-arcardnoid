@@ -78,8 +78,8 @@ namespace ArcardnoidContent.Components.GameScene.Battle.Bars
         {
             CollideTime = DateTime.Now;
             _collideTimeOut = 1f;
-            Direction = MathTools.VectorFromAngle(angle).Normalize();           
-            Direction.Y = (faction == BattleFaction.Player) ? (float)Math.Min(-0.1,Direction.Y) : (float)Math.Max(0.1, Direction.Y);
+            Direction = MathTools.VectorFromAngle(angle).Normalize();
+            Direction.Y = (faction == BattleFaction.Player) ? (float)Math.Min(-0.1, Direction.Y) : (float)Math.Max(0.1, Direction.Y);
             Angle = angle;
             Attached = false;
         }

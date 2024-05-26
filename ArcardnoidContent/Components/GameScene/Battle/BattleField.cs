@@ -22,6 +22,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
         private static IRandom Random => GameServiceProvider.GetService<IRandomService>().GetRandom();
         private List<BattleColliderItem> ColliderItems { get; set; } = new List<BattleColliderItem>();
         private Rectangle GameBounds { get; set; } = Rectangle.Empty;
+        private Action<bool>? OnBattleEnded { get; set; } = null;
         private bool OponentBallAttached => OponentFireBall == null || OponentFireBall.Attached;
         private OponentBattleBar? OponentBattleBar { get; set; }
         private FireBall? OponentFireBall { get; set; }
@@ -38,6 +39,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
         private const double CORPSE_DURATION = 5;
         private const double CORPSE_HIDE_DURATION = 0.5f;
         private List<BattleFieldCorpse> _battleFieldCorpses = new List<BattleFieldCorpse>();
+        private bool _battleStarted = false;
         private List<GameComponent> _oponentComponents = new List<GameComponent>();
         private List<GameComponent> _playerComponents = new List<GameComponent>();
 
@@ -45,8 +47,9 @@ namespace ArcardnoidContent.Components.GameScene.Battle
 
         #region Public Constructors
 
-        public BattleField(GroundType ground, int x, int y) : base(x, y, 1664, 1080)
+        public BattleField(GroundType ground, int x, int y, Action<bool>? onBattleEnded) : base(x, y, 1664, 1080)
         {
+            OnBattleEnded = onBattleEnded;
             GameBounds = new Rectangle(x + 256, y + 60, 22 * 64, 15 * 64);
             StaticMap = AddGameComponent(new AnimatedStaticMap(ground == GroundType.Grass ? "Maps/grassmap.json" : "Maps/sandmap.json", 256, 60, MapAnimationEnded, true));
             Primitive2D = AddGameComponent(new Primitive2D());
@@ -55,6 +58,11 @@ namespace ArcardnoidContent.Components.GameScene.Battle
         #endregion Public Constructors
 
         #region Public Methods
+
+        public static ITexture LoadAssetTexture(string asset)
+        {
+            return GameServiceProvider.GetService<ITextureService>().Load(asset);
+        }
 
         public void MapAnimationEnded()
         {
@@ -80,6 +88,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
             UpdateOponentBall(delta);
             UpdateDebug();
             UpdateCorpses();
+            CheckBattleEnded();
         }
 
         #endregion Public Methods
@@ -123,11 +132,6 @@ namespace ArcardnoidContent.Components.GameScene.Battle
                 EncounterType.Torch => 7,
                 _ => 6,
             };
-        }
-
-        private static ITexture LoadAssetTexture(string asset)
-        {
-            return GameServiceProvider.GetService<ITextureService>().Load(asset);
         }
 
         private static int NumberOfOpponents(double distanceFromStart)
@@ -183,6 +187,21 @@ namespace ArcardnoidContent.Components.GameScene.Battle
                 PlayerFireBall = AddGameComponent(new FireBall(BattleFaction.Player));
             else
                 OponentFireBall = AddGameComponent(new FireBall(BattleFaction.Opponent));
+        }
+
+        private void CheckBattleEnded()
+        {
+            if (PlayerFireBall == null || OponentFireBall == null) return;
+            int playerUnitsCount = ColliderItems.Where(c => c.Faction == BattleFaction.Player && c.ColliderType == ColliderType.Actor && c.Component.State != ElementState.Unloaded).Count();
+            int oponentUnitsCount = ColliderItems.Where(c => c.Faction == BattleFaction.Opponent && c.ColliderType == ColliderType.Actor && c.Component.State != ElementState.Unloaded).Count();
+            if (playerUnitsCount == 0)
+            {
+                OnBattleEnded?.Invoke(false);
+            }
+            else if (oponentUnitsCount == 0)
+            {
+                OnBattleEnded?.Invoke(true);
+            }
         }
 
         private void CheckCollisionWithOthers(FireBall ball, BattleFaction faction, ColliderType type, out bool destroy, out GameComponent? collidingComponent)
@@ -327,6 +346,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
                     {
                         int gridX = ((MapCell)component).GridX;
                         int gridY = ((MapCell)component).GridY;
+                        GamePlay.RemoveUnits(1);
                         AnimatedCell corpse = AddGameComponent(new AnimatedCell(LoadAssetTexture("map/units/dead-1"), 7, 1, 80, 0, 0, gridX, gridY, (int)component.RealBounds.X, (int)component.RealBounds.Y, 0, 0, false));
                         _battleFieldCorpses.Add(new BattleFieldCorpse() { Component = corpse, CreationTime = DateTime.Now, Duration = CORPSE_DURATION, BattleFieldCorpseElapsedAction = BattleFieldCorpseElapsedAction.Disappear });
                         MoveToFront(PlayerFireBall);

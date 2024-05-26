@@ -73,6 +73,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
 
             UpdateColliders();
             UpdatePlayerBall();
+            UpdateOponentBall();
             UpdateDebug();
         }
 
@@ -289,7 +290,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
                 float angle = MathTools.AngleBetweenTwoPoints(PlayerFireBall.Position, mousePosition);
                 if (mouseService.IsMouseLeftButtonPressed())
                 {
-                    PlayerFireBall.Shoot(angle);
+                    PlayerFireBall.Shoot(angle, BattleFaction.Player);
                 }
             }
             else if (PlayerBattleBar != null && PlayerFireBall != null && !PlayerBallAttached)
@@ -334,6 +335,54 @@ namespace ArcardnoidContent.Components.GameScene.Battle
             }
         }
 
+        private void UpdateOponentBall()
+        {
+            if (OponentBattleBar != null && OponentFireBall != null && OponentBallAttached)
+            {
+                OponentFireBall.ForcePosition(OponentBattleBar.Bounds, OponentBattleBar.BarPosition);
+                int targetX = Random.Next(0, 1920);
+                Point mousePosition = new Point(targetX, 1080);
+                float angle = MathTools.AngleBetweenTwoPoints(OponentFireBall.Position, mousePosition);
+                OponentFireBall.Shoot(angle, BattleFaction.Opponent);
+            }
+            else if (OponentBattleBar != null && OponentFireBall != null && !OponentBallAttached)
+            {
+                // Check collision with battlefield bounds
+                OponentFireBall.ColideWithPlane(CollideWithGameBounds(OponentFireBall.RealBounds, BattleFaction.Opponent), true);
+                if (OponentFireBall.CanCollide)
+                {
+                    CheckCollisionWithOthers(OponentFireBall, BattleFaction.Opponent, ColliderType.Ball, out bool destroy, out GameComponent? component);
+                    if (component != null && destroy)
+                    {
+                        int gridX = ((MapCell)component).GridX;
+                        int gridY = ((MapCell)component).GridY;
+                        AddGameComponent(new AnimatedCell(LoadAssetTexture("map/units/dead-1"), 7, 1, 80, 0, 0, gridX, gridY, (int)component.RealBounds.X, (int)component.RealBounds.Y, 0, 0, false));
+
+                        MoveToFront(PlayerFireBall);
+                        MoveToFront(OponentFireBall);
+                        component.InnerUnload();
+                        ColliderItems.RemoveAll(x => x.Component == component);
+                    }
+                }
+
+                // Check if this ball is outside the screen
+                if (OponentFireBall.RealBounds.X < 0 || OponentFireBall.RealBounds.X > 1920 || OponentFireBall.RealBounds.Y < 0 || OponentFireBall.RealBounds.Y > 1080)
+                {
+                    BattleColliderItem[] items = ColliderItems.Where(c => c.Component.State != ElementState.Unloaded && c.ColliderType == ColliderType.Actor && c.Faction == BattleFaction.Opponent).ToArray();
+                    if (items.Length > 0)
+                    {
+                        int index = Random.Next(0, items.Length - 1);
+                        BattleColliderItem item = items[index];
+                        int gridX = ((MapCell)item.Component).GridX;
+                        int gridY = ((MapCell)item.Component).GridY;
+                        AddGameComponent(new AnimatedCell(LoadAssetTexture("map/units/dead-1"), 7, 1, 80, 0, 0, gridX, gridY, (int)item.Component.RealBounds.X, (int)item.Component.RealBounds.Y, 0, 0, false));
+                        item.Component.InnerUnload();
+                        ColliderItems.RemoveAll(x => x.Component == item.Component);
+                        OponentFireBall.Reset();
+                    }
+                }
+            }
+        }
         #endregion Private Methods
     }
 }

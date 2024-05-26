@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Comment CommentText="BitmapFont">
+    <Position X="3.5" Y="0.5" Height="0.306" Width="3.756" />
+  </Comment>
+  <Comment CommentText="Random">
+    <Position X="7.736" Y="0.542" Height="0.306" Width="4.763" />
+  </Comment>
+  <Comment CommentText="Texture">
+    <Position X="7.736" Y="2.611" Height="0.306" Width="3.776" />
+  </Comment>
+  <Comment CommentText="Keyboard and Mouse">
+    <Position X="0.5" Y="2.778" Height="0.306" Width="4.735" />
+  </Comment>
+  <Comment CommentText="Scene Manager">
+    <Position X="7.722" Y="5.354" Height="0.306" Width="1.797" />
+  </Comment>
+  <Comment CommentText="Screen Manager">
+    <Position X="9.75" Y="5.319" Height="0.306" Width="1.797" />
+  </Comment>
+  <Comment CommentText="Game Service">
+    <Position X="2.757" Y="5.347" Height="0.306" Width="1.999" />
+  </Comment>
+  <Comment CommentText="Draw Primitives">
+    <Position X="5.021" Y="5.354" Height="0.306" Width="2.478" />
+  </Comment>
+  <Class Name="ArcardnoidShared.Framework.ServiceProvider.GameServiceProvider">
+    <Position X="0.5" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAAAAAAAACAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Framework\ServiceProvider\GameServiceProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="ArcardnoidShared.Framework.ServiceProvider.Interfaces.IBitmapFont">
+    <Position X="5.5" Y="1" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Framework\ServiceProvider\Interfaces\IBitmapFont.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ArcardnoidShared.Framework.ServiceProvider.Interfaces.IBitmapFontService">
+    <Position X="3.5" Y="1" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Framework\ServiceProvider\Interfaces\IBitmapFontService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ArcardnoidShared.Framework.ServiceProvider.Interfaces.IGameService">
+    <Position X="2.75" Y="5.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAIABAAAAAAEAAAAAAFAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Framework\ServiceProvider\Interfaces\IGameService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ArcardnoidShared.Framework.ServiceProvider.Interfaces.IKeyboardService">
+    <Position X="0.5" Y="3.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAIAAAA=</HashCode>
+      <FileName>Framework\ServiceProvider\Interfaces\IKeyboardService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ArcardnoidShared.Framework.ServiceProvider.Interfaces.IMouseService">
+    <Position X="3" Y="3.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAEAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Framework\ServiceProvider\Interfaces\IMouseService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="arcardnoid.Models.Framework.Tools.IPrimitives2D">
+    <Position X="5" Y="5.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAIAAAAAACAAABABAEAAAAAAAAA=</HashCode>
+      <FileName>Framework\ServiceProvider\Interfaces\IPrimitives2D.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ArcardnoidShared.Framework.ServiceProvider.Interfaces.IRandom">
+    <Position X="10.5" Y="1" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Framework\ServiceProvider\Interfaces\IRandom.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ArcardnoidShared.Framework.ServiceProvider.Interfaces.IRandomService">
+    <Position X="7.75" Y="1" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Framework\ServiceProvider\Interfaces\IRandomService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ArcardnoidShared.Framework.ServiceProvider.Interfaces.IScenesManager">
+    <Position X="7.75" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAEAAAAAAAQAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Framework\ServiceProvider\Interfaces\IScenesManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ArcardnoidShared.Framework.ServiceProvider.Interfaces.IScreenManager">
+    <Position X="9.75" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAIAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Framework\ServiceProvider\Interfaces\IScreenManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ArcardnoidShared.Framework.ServiceProvider.Interfaces.ITexture">
+    <Position X="9.75" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABABAAAAAAAAAAAAEAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Framework\ServiceProvider\Interfaces\ITexture.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ArcardnoidShared.Framework.ServiceProvider.Interfaces.ITextureService">
+    <Position X="7.75" Y="3" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Framework\ServiceProvider\Interfaces\ITextureService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

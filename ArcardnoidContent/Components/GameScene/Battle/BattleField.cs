@@ -406,7 +406,6 @@ namespace ArcardnoidContent.Components.GameScene.Battle
                         _battleFieldCorpses.Add(new BattleFieldCorpse() { Component = corpse, CreationTime = DateTime.Now, Duration = CORPSE_DURATION, BattleFieldCorpseElapsedAction = BattleFieldCorpseElapsedAction.Disappear });
 
                         MoveToFront(PlayerFireBall);
-
                         MoveToFront(OponentFireBall);
 
                         component.InnerUnload();

@@ -26,6 +26,7 @@ namespace ArcardnoidContent.Scenes
         #region Private Properties
 
         private BattleContainer? BattleContainer { get; set; }
+        private Cursor? Cursor { get; set; }
         private DialogFrame? DialogFrame { get; set; }
         private GameMapBackground? GameMapBackground { get; set; }
         private GameSceneUI? GameSceneUI { get; set; }
@@ -139,7 +140,8 @@ namespace ArcardnoidContent.Scenes
                 int gridY = animatedCell.GridY;
                 AnimatedCell corpse = AddGameComponent(new AnimatedCell(BattleField.LoadAssetTexture("map/units/dead-1"), 7, 1, 80, 0, 0, gridX, gridY, MapGenerator.MapHypothesis.PositionX + gridX * 64, MapGenerator.MapHypothesis.PositionY + gridY * 64, 32, 16, false));
                 RandomMap?.ReplaceActorCell(animatedCell.TextureAsset, corpse, cell);
-                this.MoveToFront<MainCharacter>(MainCharacter);
+                this.MoveToFront(MainCharacter);
+                this.MoveToFront(Cursor);
             }
         }
 
@@ -211,7 +213,7 @@ namespace ArcardnoidContent.Scenes
             GameSceneUI = AddGameComponent(new GameSceneUI());
             DialogFrame = AddGameComponent(new DialogFrame());
             PauseScreen = AddGameComponent(new PauseScreen(OnResume, OnDebug, OnQuit));
-            AddGameComponent(new Cursor("ui/cursors/01", new Point(12, 16)));
+            Cursor = AddGameComponent(new Cursor("ui/cursors/01", new Point(12, 16)));
         }
 
         private void StartBattle(EncounterType type, Point cell, double distanceFromStart)
@@ -223,6 +225,7 @@ namespace ArcardnoidContent.Scenes
             if (BattleContainer != null) AddShowAnimation<BattleContainer>(BattleContainer);
             System.Diagnostics.Debug.WriteLine("Start battle with " + type + " at " + distanceFromStart + " from start");
             this.MoveToFront(BattleContainer);
+            this.MoveToFront(Cursor);
             if (RandomMap != null) BattleContainer?.Show(RandomMap.GetGroundType(cell), type, distanceFromStart, cell, EndBattle);
         }
 

@@ -63,7 +63,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle.Bars
             if (!wall)
             {
                 CollideTime = DateTime.Now;
-                _collideTimeOut = 0.5f;
+                _collideTimeOut = 0.1f;
             }
             Direction = Direction.Reflect(planeVector == CollidingPlane.Horizontal ? new Point(0, 1) : new Point(1, 0)).Normalize();
         }

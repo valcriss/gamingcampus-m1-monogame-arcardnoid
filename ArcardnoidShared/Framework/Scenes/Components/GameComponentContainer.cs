@@ -94,8 +94,9 @@ namespace ArcardnoidShared.Framework.Scenes.Components
             }
         }
 
-        public virtual T MoveToFront<T>(T gameComponent) where T : GameComponent?
+        public virtual T? MoveToFront<T>(T? gameComponent) where T : GameComponent?
         {
+            if (gameComponent == null) return null;
             GameComponents.Remove(gameComponent);
             GameComponents.Add(gameComponent);
             return gameComponent;

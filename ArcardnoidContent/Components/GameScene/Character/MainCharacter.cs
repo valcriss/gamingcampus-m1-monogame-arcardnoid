@@ -5,6 +5,7 @@ using ArcardnoidContent.Tools;
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.ServiceProvider;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using ArcardnoidShared.Framework.Tools;
 
@@ -78,7 +79,7 @@ namespace ArcardnoidContent.Components.GameScene.Character
         public override void Load()
         {
             base.Load();
-            _texture = GameServiceProvider.GetService<ITextureService>().Load("map/units/player");
+            _texture = GameServiceProvider.GetService<ITextureService>().Load(TextureType.MAP_UNITS_PLAYER);
             _animations.Add(CharacterDirection.Left, new Dictionary<AnimationState, List<Rectangle>>
             {
                 { AnimationState.Idle, GetAnimationRectangles(192) },

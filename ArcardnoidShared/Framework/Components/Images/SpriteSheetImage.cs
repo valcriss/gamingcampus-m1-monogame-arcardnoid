@@ -1,4 +1,5 @@
 ﻿using ArcardnoidShared.Framework.Drawing;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 
 namespace ArcardnoidShared.Framework.Components.Images
 {
@@ -19,7 +20,7 @@ namespace ArcardnoidShared.Framework.Components.Images
 
         #region Public Constructors
 
-        public SpriteSheetImage(string spriteAsset, int columns, int rows, float speed, int x, int y, bool loop = true, Action? onAnimationCompleted = null) : base(spriteAsset, x, y, default)
+        public SpriteSheetImage(TextureType spriteAsset, int columns, int rows, float speed, int x, int y, bool loop = true, Action? onAnimationCompleted = null) : base(spriteAsset, x, y, default)
         {
             _columns = columns;
             _rows = rows;

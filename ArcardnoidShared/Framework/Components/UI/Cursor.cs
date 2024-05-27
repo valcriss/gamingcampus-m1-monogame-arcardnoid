@@ -2,6 +2,7 @@
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.ServiceProvider;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using ArcardnoidShared.Framework.Tools;
 
@@ -11,7 +12,7 @@ namespace ArcardnoidShared.Framework.Components.UI
     {
         #region Private Properties
 
-        private string CursorAsset { get; set; }
+        private TextureType CursorAsset { get; set; }
         private Image? CursorImage { get; set; }
 
         private Point Offset { get; set; }
@@ -20,7 +21,7 @@ namespace ArcardnoidShared.Framework.Components.UI
 
         #region Public Constructors
 
-        public Cursor(string cursorAsset, Point offset) : base()
+        public Cursor(TextureType cursorAsset, Point offset) : base()
         {
             CursorAsset = cursorAsset;
             Offset = offset;

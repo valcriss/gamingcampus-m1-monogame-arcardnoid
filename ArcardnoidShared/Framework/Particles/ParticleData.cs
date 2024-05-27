@@ -1,5 +1,6 @@
 ﻿using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.ServiceProvider;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
 namespace ArcardnoidShared.Framework.Particles
@@ -28,7 +29,7 @@ namespace ArcardnoidShared.Framework.Particles
 
         #region Public Constructors
 
-        public ParticleData(string asset, GameColor? colorStart = null, GameColor? colorEnd = null, float sizeStart = 1, float sizeEnd = 1, float opacityStart = 1, float opacityEnd = 1, float rotationMin = 0, float rotationMax = 0, float speedMin = 0, float speedMax = 0, float lifeTime = 2, int maximumParticules = 100, float creationDelay = 0.016f)
+        public ParticleData(TextureType asset, GameColor? colorStart = null, GameColor? colorEnd = null, float sizeStart = 1, float sizeEnd = 1, float opacityStart = 1, float opacityEnd = 1, float rotationMin = 0, float rotationMax = 0, float speedMin = 0, float speedMax = 0, float lifeTime = 2, int maximumParticules = 100, float creationDelay = 0.016f)
         {
             Texture = GameServiceProvider.GetService<ITextureService>().Load(asset);
             Bounds = new Rectangle(0, 0, Texture.Width, Texture.Height);

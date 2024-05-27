@@ -54,12 +54,12 @@ namespace ArcardnoidContent.Scenes
         {
             base.Load();
             DynamicGameMap = AddGameComponent(new DynamicGameMap());
-            AddGameComponent(new Button("Precedent", "ui/buttons/button-yellow-normal", "ui/buttons/button-yellow-hover", "ui/buttons/button-yellow-pressed", OnPrevious, 50, 1080 - 80, 210, 64));
-            AddGameComponent(new Button("Suivant", "ui/buttons/button-yellow-normal", "ui/buttons/button-yellow-hover", "ui/buttons/button-yellow-pressed", OnNext, 260, 1080 - 80, 210, 64));
-            AddGameComponent(new Button("Retour", "ui/buttons/button-red-normal", "ui/buttons/button-red-hover", "ui/buttons/button-red-pressed", OnReturn, 1450, 1080 - 80, 210, 64));
-            AddGameComponent(new Button("Debug", "ui/buttons/button-blue-normal", "ui/buttons/button-blue-hover", "ui/buttons/button-blue-pressed", OnDebug, 1920 - (260), 1080 - 80, 210, 64));
-            BitmapText = AddGameComponent(new BitmapText("fonts/band", "", 960, 1025, TextHorizontalAlign.Center, TextVerticalAlign.Center, GameColor.Black));
-            AddGameComponent(new Cursor("ui/cursors/01", new Point(12, 16)));
+            AddGameComponent(new Button("Precedent", TextureType.UI_BUTTONS_BUTTON_YELLOW_NORMAL, TextureType.UI_BUTTONS_BUTTON_YELLOW_HOVER, TextureType.UI_BUTTONS_BUTTON_YELLOW_PRESSED, OnPrevious, 50, 1080 - 80, 210, 64));
+            AddGameComponent(new Button("Suivant", TextureType.UI_BUTTONS_BUTTON_YELLOW_NORMAL, TextureType.UI_BUTTONS_BUTTON_YELLOW_HOVER, TextureType.UI_BUTTONS_BUTTON_YELLOW_PRESSED, OnNext, 260, 1080 - 80, 210, 64));
+            AddGameComponent(new Button("Retour", TextureType.UI_BUTTONS_BUTTON_RED_NORMAL, TextureType.UI_BUTTONS_BUTTON_RED_HOVER, TextureType.UI_BUTTONS_BUTTON_RED_PRESSED, OnReturn, 1450, 1080 - 80, 210, 64));
+            AddGameComponent(new Button("Debug", TextureType.UI_BUTTONS_BUTTON_BLUE_NORMAL, TextureType.UI_BUTTONS_BUTTON_BLUE_HOVER, TextureType.UI_BUTTONS_BUTTON_BLUE_PRESSED, OnDebug, 1920 - (260), 1080 - 80, 210, 64));
+            BitmapText = AddGameComponent(new BitmapText(BitmapFontType.Default, "", 960, 1025, TextHorizontalAlign.Center, TextVerticalAlign.Center, GameColor.Black));
+            AddGameComponent(new Cursor(TextureType.UI_CURSOR, new Point(12, 16)));
         }
 
         public override void Update(float delta)

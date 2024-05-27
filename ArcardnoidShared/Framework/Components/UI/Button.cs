@@ -13,12 +13,12 @@ namespace ArcardnoidShared.Framework.Components.UI
 
         private Rectangle CenterRectangle { get; set; } = Rectangle.Empty;
         private ITexture? CurrentTexture { get; set; }
-        private string HoverAsset { get; set; }
+        private TextureType HoverAsset { get; set; }
         private ITexture? HoverTexture { get; set; }
         private Rectangle LeftRectangle { get; set; } = Rectangle.Empty;
-        private string NormalAsset { get; set; }
+        private TextureType NormalAsset { get; set; }
         private ITexture? NormalTexture { get; set; }
-        private string PressedAsset { get; set; }
+        private TextureType PressedAsset { get; set; }
         private ITexture? PressedTexture { get; set; }
         private List<Rectangle[]> Rectangles { get; set; } = new List<Rectangle[]>();
         private Rectangle RightRectangle { get; set; } = Rectangle.Empty;
@@ -29,7 +29,7 @@ namespace ArcardnoidShared.Framework.Components.UI
 
         #region Public Constructors
 
-        public Button(string text, string normalAsset, string hoverAsset, string pressedAsset, Action? onClick = null, int x = 0, int y = 0, int width = 0, int height = 0) : base(onClick, x, y, width, height)
+        public Button(string text, TextureType normalAsset, TextureType hoverAsset, TextureType pressedAsset, Action? onClick = null, int x = 0, int y = 0, int width = 0, int height = 0) : base(onClick, x, y, width, height)
         {
             NormalAsset = normalAsset;
             HoverAsset = hoverAsset;
@@ -53,7 +53,7 @@ namespace ArcardnoidShared.Framework.Components.UI
         public override void Load()
         {
             base.Load();
-            TextComponent = AddGameComponent(new BitmapText("fonts/band", Text, (int)Bounds.Width / 2, 22, TextHorizontalAlign.Center, TextVerticalAlign.Center));
+            TextComponent = AddGameComponent(new BitmapText(BitmapFontType.Default, Text, (int)Bounds.Width / 2, 22, TextHorizontalAlign.Center, TextVerticalAlign.Center));
             TextComponent.Color = GameColor.Black;
             NormalTexture = GameServiceProvider.GetService<ITextureService>().Load(NormalAsset);
             HoverTexture = GameServiceProvider.GetService<ITextureService>().Load(HoverAsset);

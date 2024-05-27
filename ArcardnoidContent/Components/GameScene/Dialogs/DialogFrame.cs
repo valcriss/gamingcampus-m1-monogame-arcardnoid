@@ -55,12 +55,12 @@ namespace ArcardnoidContent.Components.GameScene.Dialogs
 
             _dialogs = LoadDialogs();
 
-            AddGameComponent(new Frame("ui/banner", 100, 760, 1720, 320));
-            AddGameComponent(new Frame("ui/page", 170, 830, 1580, 188));
-            PlayerFaceBack = AddGameComponent(new Image("map/units/face-back", 270, 925));
-            OponentFaceBack = AddGameComponent(new Image("map/units/face-back", 1650, 925));
-            PlayerText = AddGameComponent(new BitmapText("fonts/band", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec nunc et tellus sollicitudin porttitor non id turpis. Nunc nec faucibus est.", 370, 920, TextHorizontalAlign.Left, TextVerticalAlign.Center, GameColor.Black));
-            OponentText = AddGameComponent(new BitmapText("fonts/band", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec nunc et tellus sollicitudin porttitor non id turpis. Nunc nec faucibus est.", 1550, 920, TextHorizontalAlign.Right, TextVerticalAlign.Center, GameColor.Black));
+            AddGameComponent(new Frame(TextureType.UI_BANNER, 100, 760, 1720, 320));
+            AddGameComponent(new Frame(TextureType.UI_PAGE, 170, 830, 1580, 188));
+            PlayerFaceBack = AddGameComponent(new Image(TextureType.MAP_UNITS_FACE_BACK, 270, 925));
+            OponentFaceBack = AddGameComponent(new Image(TextureType.MAP_UNITS_FACE_BACK, 1650, 925));
+            PlayerText = AddGameComponent(new BitmapText(BitmapFontType.Default, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec nunc et tellus sollicitudin porttitor non id turpis. Nunc nec faucibus est.", 370, 920, TextHorizontalAlign.Left, TextVerticalAlign.Center, GameColor.Black));
+            OponentText = AddGameComponent(new BitmapText(BitmapFontType.Default, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam nec nunc et tellus sollicitudin porttitor non id turpis. Nunc nec faucibus est.", 1550, 920, TextHorizontalAlign.Right, TextVerticalAlign.Center, GameColor.Black));
             _playerFacesRect = new Dictionary<PlayerFaceExpression, Rectangle>
             {
                 { PlayerFaceExpression.None, new Rectangle(0, 0, 144, 144) },
@@ -73,11 +73,11 @@ namespace ArcardnoidContent.Components.GameScene.Dialogs
 
             _actorFace = new Dictionary<string, GameComponent>
             {
-                {"Archer",AddGameComponent(new Image("map/units/archer-face",(int)actorFacePosition.X,(int) actorFacePosition.Y)) },
-                {"Warrior",AddGameComponent(new Image("map/units/warrior-face",(int) actorFacePosition.X,(int) actorFacePosition.Y)) },
-                {"Torch",AddGameComponent(new Image("map/units/torch-face",(int) actorFacePosition.X,(int) actorFacePosition.Y)) },
-                {"Tnt",AddGameComponent(new Image("map/units/tnt-face",(int) actorFacePosition.X,(int) actorFacePosition.Y)) },
-                {"Sheep",AddGameComponent(new Image("map/units/sheep-face",(int) actorFacePosition.X,(int) actorFacePosition.Y)) }
+                {"Archer",AddGameComponent(new Image(TextureType.MAP_UNITS_ARCHER_FACE,(int)actorFacePosition.X,(int) actorFacePosition.Y)) },
+                {"Warrior",AddGameComponent(new Image(TextureType.MAP_UNITS_WARRIOR_FACE,(int) actorFacePosition.X,(int) actorFacePosition.Y)) },
+                {"Torch",AddGameComponent(new Image(TextureType.MAP_UNITS_TORCH_FACE,(int) actorFacePosition.X,(int) actorFacePosition.Y)) },
+                {"Tnt",AddGameComponent(new Image(TextureType.MAP_UNITS_TNT_FACE,(int) actorFacePosition.X,(int) actorFacePosition.Y)) },
+                {"Sheep",AddGameComponent(new Image(TextureType.MAP_UNITS_SHEEP_FACE,(int) actorFacePosition.X,(int) actorFacePosition.Y)) }
             };
 
             foreach (var item in _actorFace)
@@ -85,7 +85,7 @@ namespace ArcardnoidContent.Components.GameScene.Dialogs
                 item.Value.Visible = false;
             }
 
-            PlayerFace = AddGameComponent(new ImagePart("map/units/player-faces", 269, 924, _playerFacesRect[_currentExpression]));
+            PlayerFace = AddGameComponent(new ImagePart(TextureType.MAP_UNITS_PLAYER_FACES, 269, 924, _playerFacesRect[_currentExpression]));
             PlayerText.Visible = false;
             OponentFaceBack.Visible = false;
             Visible = false;

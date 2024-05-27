@@ -13,9 +13,9 @@ namespace ArcardnoidShared.Framework.Components.UI
     {
         #region Public Properties
 
-        public string HoverAsset { get; set; }
-        public string NormalAsset { get; set; }
-        public string PressedAsset { get; set; }
+        public TextureType HoverAsset { get; set; }
+        public TextureType NormalAsset { get; set; }
+        public TextureType PressedAsset { get; set; }
         public float Value { get; set; } = 0;
 
         #endregion Public Properties
@@ -39,7 +39,7 @@ namespace ArcardnoidShared.Framework.Components.UI
 
         #region Public Constructors
 
-        public Progress(string normalAsset, string hoverAsset, string pressedAsset, float value, int x = 0, int y = 0, int width = 0) : base(x, y, (width + 2) * 64, 64)
+        public Progress(TextureType normalAsset, TextureType hoverAsset, TextureType pressedAsset, float value, int x = 0, int y = 0, int width = 0) : base(x, y, (width + 2) * 64, 64)
         {
             NormalAsset = normalAsset;
             HoverAsset = hoverAsset;
@@ -76,7 +76,7 @@ namespace ArcardnoidShared.Framework.Components.UI
             LeftRectangle = new Rectangle(0, 0, 64, 64);
             MiddleRectangle = new Rectangle(64, 0, 64, 64);
             RightRectangle = new Rectangle(128, 0, 64, 64);
-            Text = AddGameComponent(new BitmapText("fonts/band", GetValueAsString(), 64 + ((BarWidth / 2) * 64), 28, TextHorizontalAlign.Center, TextVerticalAlign.Center, GameColor.Black));
+            Text = AddGameComponent(new BitmapText(BitmapFontType.Default, GetValueAsString(), 64 + ((BarWidth / 2) * 64), 28, TextHorizontalAlign.Center, TextVerticalAlign.Center, GameColor.Black));
             Primitives2D = GameServiceProvider.GetService<IPrimitives2D>();
         }
 

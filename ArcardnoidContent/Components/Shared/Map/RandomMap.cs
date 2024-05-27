@@ -7,6 +7,7 @@ using ArcardnoidContent.Tools;
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.ServiceProvider;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using ArcardnoidShared.Framework.Tools;
 using Newtonsoft.Json;
@@ -75,7 +76,7 @@ namespace ArcardnoidContent.Components.Shared.Map
             }
         }
 
-        public void ClearCell(string asset, Point cell)
+        public void ClearCell(TextureType? asset, Point cell)
         {
             MapHypothesis.FinalChunk.ClearActor((int)cell.X, (int)cell.Y);
             foreach (GameComponent component in GameComponents)
@@ -99,10 +100,10 @@ namespace ArcardnoidContent.Components.Shared.Map
 
         public AnimatedCell? GetActorCell(Point cell)
         {
-            string[] actorsAssets = new string[] { MapCell.ARCHER_ASSET, MapCell.WARRIOR_ASSET, MapCell.TORCH_ASSET, MapCell.TNT_ASSET, MapCell.SHEEP_ASSET };
+            TextureType[] actorsAssets = new TextureType[] { TextureType.MAP_UNITS_ARCHER_BLUE_IDLE, TextureType.MAP_UNITS_WARRIOR_BLUE_IDLE, TextureType.MAP_UNITS_TORCH_RED_IDLE, TextureType.MAP_UNITS_TNT_RED_IDLE, TextureType.MAP_UNITS_SHEEP_IDLE };
             foreach (GameComponent component in GameComponents)
             {
-                if (component is AnimatedCell mapCell && mapCell.GridX == cell.X && mapCell.GridY == cell.Y && actorsAssets.Contains(((AnimatedCell)component).TextureAsset))
+                if (component is AnimatedCell mapCell && mapCell.GridX == cell.X && mapCell.GridY == cell.Y && actorsAssets.Count(c => c == ((AnimatedCell)component).TextureAsset) > 0)
                 {
                     return (AnimatedCell)component;
                 }
@@ -156,7 +157,7 @@ namespace ArcardnoidContent.Components.Shared.Map
         public override void Load()
         {
             base.Load();
-            _blockTexture = GameServiceProvider.GetService<ITextureService>().Load("map/halt");
+            _blockTexture = GameServiceProvider.GetService<ITextureService>().Load(TextureType.MAP_HALT);
             _mapItem = new MapItem
             {
                 Width = MapHypothesis.Width,
@@ -174,7 +175,7 @@ namespace ArcardnoidContent.Components.Shared.Map
             LoadChunkLayer(new ChunkLayout() { MapChunk = MapHypothesis.FinalChunk, X = 0, Y = 0 });
         }
 
-        public void ReplaceActorCell(string textureAsset, AnimatedCell corpse, Point cell)
+        public void ReplaceActorCell(TextureType? textureAsset, AnimatedCell corpse, Point cell)
         {
             ClearCell(textureAsset, cell);
             GameComponents.Add(corpse);
@@ -297,7 +298,7 @@ namespace ArcardnoidContent.Components.Shared.Map
             if (_mapItem.Assets != null)
                 foreach (MapAsset asset in _mapItem.Assets)
                 {
-                    _mapTextures.Add(GameServiceProvider.GetService<ITextureService>().Load(asset.Path));
+                    _mapTextures.Add(GameServiceProvider.GetService<ITextureService>().Load((TextureType)Enum.Parse(typeof(TextureType), asset.Path)));
                 }
         }
 

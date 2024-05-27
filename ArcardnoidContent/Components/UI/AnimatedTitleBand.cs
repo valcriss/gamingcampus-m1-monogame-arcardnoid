@@ -11,12 +11,12 @@ namespace ArcardnoidContent.Components.UI
     {
         #region Private Properties
 
-        private string BandAsset { get; set; }
+        private TextureType BandAsset { get; set; }
         private ITexture? BandTexture { get; set; }
         private BitmapText? BitmapText { get; set; }
         private string CurrentText { get; set; }
         private double ElapsedTime { get; set; }
-        private string FontAsset { get; set; }
+        private BitmapFontType FontAsset { get; set; }
         private List<Rectangle> InsideBounds { get; set; } = new List<Rectangle>();
         private Rectangle LeftBounds { get; set; } = Rectangle.Empty;
         private Rectangle RightBounds { get; set; } = Rectangle.Empty;
@@ -34,7 +34,7 @@ namespace ArcardnoidContent.Components.UI
 
         #region Public Constructors
 
-        public AnimatedTitleBand(string bandAsset, string fontAsset, string text, double speed, int x, int y, GameColor textColor) : base(x, y)
+        public AnimatedTitleBand(TextureType bandAsset, BitmapFontType fontAsset, string text, double speed, int x, int y, GameColor textColor) : base(x, y)
         {
             BandAsset = bandAsset;
             FontAsset = fontAsset;

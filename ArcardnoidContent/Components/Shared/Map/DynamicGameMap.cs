@@ -5,6 +5,7 @@ using ArcardnoidContent.Tools;
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.ServiceProvider;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using ArcardnoidShared.Framework.Tools;
 using Newtonsoft.Json;
@@ -69,7 +70,7 @@ namespace ArcardnoidContent.Components.Shared.Map
         public override void Load()
         {
             base.Load();
-            _blockTexture = GameServiceProvider.GetService<ITextureService>().Load("map/halt");
+            _blockTexture = GameServiceProvider.GetService<ITextureService>().Load(TextureType.MAP_HALT);
             _mapItem = new MapItem
             {
                 Width = 29,
@@ -179,7 +180,7 @@ namespace ArcardnoidContent.Components.Shared.Map
             if (_mapItem.Assets != null)
                 foreach (MapAsset asset in _mapItem.Assets)
                 {
-                    _mapTextures.Add(GameServiceProvider.GetService<ITextureService>().Load(asset.Path));
+                    _mapTextures.Add(GameServiceProvider.GetService<ITextureService>().Load((TextureType)Enum.Parse(typeof(TextureType), asset.Path)));
                 }
         }
 

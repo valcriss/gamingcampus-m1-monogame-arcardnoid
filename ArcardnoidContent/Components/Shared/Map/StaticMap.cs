@@ -5,6 +5,7 @@ using ArcardnoidContent.Tools;
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.ServiceProvider;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using ArcardnoidShared.Framework.Tools;
 using Newtonsoft.Json;
@@ -60,7 +61,7 @@ namespace ArcardnoidContent.Components.Shared.Map
             if (_mapItem.Assets == null) throw new Exception("Map not found");
             foreach (MapAsset asset in _mapItem.Assets)
             {
-                _mapTextures.Add(GameServiceProvider.GetService<ITextureService>().Load(asset.Path));
+                _mapTextures.Add(GameServiceProvider.GetService<ITextureService>().Load((TextureType)Enum.Parse(typeof(TextureType), asset.Path)));
             }
             if (_mapItem.Layers == null) throw new Exception("Map Layers not found");
             foreach (MapLayer layer in _mapItem.Layers)

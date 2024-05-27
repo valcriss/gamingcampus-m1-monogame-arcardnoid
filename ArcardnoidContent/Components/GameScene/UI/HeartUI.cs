@@ -1,6 +1,7 @@
 ﻿using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.ServiceProvider;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
 namespace ArcardnoidContent.Components.GameScene.UI
@@ -40,7 +41,7 @@ namespace ArcardnoidContent.Components.GameScene.UI
         public override void Load()
         {
             base.Load();
-            heartTexture = GameServiceProvider.GetService<ITextureService>().Load("ui/heart");
+            heartTexture = GameServiceProvider.GetService<ITextureService>().Load(TextureType.UI_HEART);
             _rectangles.Add(HearState.Full, new List<Rectangle> { new(260 * 4, 220 * 4, 260, 220) });
             _rectangles.Add(HearState.Empty, new List<Rectangle> { new(0, 0, 260, 220) });
             _rectangles[HearState.Filling] = new List<Rectangle>();

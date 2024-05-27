@@ -1,5 +1,6 @@
 ﻿using arcardnoid.Models.Tools;
 using ArcardnoidShared.Framework.Drawing;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using ArcardnoidShared.Framework.Tools;
 using Microsoft.Xna.Framework;
@@ -12,8 +13,8 @@ namespace arcardnoid.Models.Implementations
     {
         #region Public Properties
 
-        public string AssetPath => _assetPath;
         public int Height => _texture.Height;
+        public TextureType TextureType => _textureType;
         public int Width => _texture.Width;
 
         #endregion Public Properties
@@ -26,16 +27,16 @@ namespace arcardnoid.Models.Implementations
 
         #region Private Fields
 
-        private readonly string _assetPath;
         private readonly Texture2D _texture;
+        private readonly TextureType _textureType;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public MonoGameTexture(ArCardNoidGame game, Texture2D texture, string assetPath)
+        public MonoGameTexture(ArCardNoidGame game, Texture2D texture, TextureType textureType)
         {
-            _assetPath = assetPath;
+            _textureType = textureType;
             _texture = texture;
             Game = game;
         }

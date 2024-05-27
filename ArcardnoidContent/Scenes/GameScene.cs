@@ -65,7 +65,7 @@ namespace ArcardnoidContent.Scenes
         {
             base.Load();
             GameMapBackground = AddGameComponent(new GameMapBackground());
-            SeedText = AddGameComponent(new BitmapText("fonts/regular", $"Graine : {Seed}", 10, 1050, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.White));
+            SeedText = AddGameComponent(new BitmapText(BitmapFontType.Regular, $"Graine : {Seed}", 10, 1050, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.White));
             LoadingScreen = AddGameComponent(new LoadingScreen());
             BattleContainer = AddGameComponent(new BattleContainer());
             BattleContainer.Visible = BattleContainer.Enabled = false;
@@ -127,6 +127,7 @@ namespace ArcardnoidContent.Scenes
 
         private void EndBattle(bool victory, Point cell)
         {
+            if (MapGenerator == null || MapGenerator.MapHypothesis == null) return;
             if (BattleContainer != null) AddHideAnimation<BattleContainer>(BattleContainer);
             if (RandomMap != null) AddShowAnimation<RandomMap>(RandomMap);
             if (MainCharacter != null) AddShowAnimation<MainCharacter>(MainCharacter);
@@ -135,10 +136,10 @@ namespace ArcardnoidContent.Scenes
             if (victory)
             {
                 AnimatedCell? animatedCell = RandomMap?.GetActorCell(cell);
-                if (animatedCell == null) return;
+                if (animatedCell == null || animatedCell.TextureAsset == null) return;
                 int gridX = animatedCell.GridX;
                 int gridY = animatedCell.GridY;
-                AnimatedCell corpse = AddGameComponent(new AnimatedCell(BattleField.LoadAssetTexture("map/units/dead-1"), 7, 1, 80, 0, 0, gridX, gridY, MapGenerator.MapHypothesis.PositionX + gridX * 64, MapGenerator.MapHypothesis.PositionY + gridY * 64, 32, 16, false));
+                AnimatedCell corpse = AddGameComponent(new AnimatedCell(BattleField.LoadAssetTexture(TextureType.MAP_UNITS_DEAD_1), 7, 1, 80, 0, 0, gridX, gridY, MapGenerator.MapHypothesis.PositionX + gridX * 64, MapGenerator.MapHypothesis.PositionY + gridY * 64, 32, 16, false));
                 RandomMap?.ReplaceActorCell(animatedCell.TextureAsset, corpse, cell);
                 this.MoveToFront(MainCharacter);
                 this.MoveToFront(Cursor);
@@ -165,12 +166,12 @@ namespace ArcardnoidContent.Scenes
             switch (type)
             {
                 case EncounterType.Gold:
-                    RandomMap?.ClearCell(MapCell.GOLD_ASSET, cell);
+                    RandomMap?.ClearCell(TextureType.MAP_UNITS_GOLD, cell);
                     GameServiceProvider.GetService<IGamePlay>().AddGold(encounterDialog.Gold);
                     break;
 
                 case EncounterType.Meat:
-                    RandomMap?.ClearCell(MapCell.MEAT_ASSET, cell);
+                    RandomMap?.ClearCell(TextureType.MAP_UNITS_MEAT, cell);
                     GameServiceProvider.GetService<IGamePlay>().AddHeart(1);
                     break;
 
@@ -213,7 +214,7 @@ namespace ArcardnoidContent.Scenes
             GameSceneUI = AddGameComponent(new GameSceneUI());
             DialogFrame = AddGameComponent(new DialogFrame());
             PauseScreen = AddGameComponent(new PauseScreen(OnResume, OnDebug, OnQuit));
-            Cursor = AddGameComponent(new Cursor("ui/cursors/01", new Point(12, 16)));
+            Cursor = AddGameComponent(new Cursor(TextureType.UI_CURSOR, new Point(12, 16)));
         }
 
         private void StartBattle(EncounterType type, Point cell, double distanceFromStart)

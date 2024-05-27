@@ -11,7 +11,7 @@ namespace ArcardnoidShared.Framework.Components.Text
     {
         #region Private Fields
 
-        private readonly string _fontAsset;
+        private readonly BitmapFontType _fontType;
         private readonly TextHorizontalAlign _horizontalAlign;
         private readonly TextVerticalAlign _verticalAlign;
         private IBitmapFont? _bitmapFont;
@@ -21,9 +21,9 @@ namespace ArcardnoidShared.Framework.Components.Text
 
         #region Public Constructors
 
-        public BitmapText(string fontAsset, string text, int x, int y, TextHorizontalAlign horizontalAlign = TextHorizontalAlign.Left, TextVerticalAlign verticalAlign = TextVerticalAlign.Top, GameColor? color = null) : base(x, y)
+        public BitmapText(BitmapFontType fontType, string text, int x, int y, TextHorizontalAlign horizontalAlign = TextHorizontalAlign.Left, TextVerticalAlign verticalAlign = TextVerticalAlign.Top, GameColor? color = null) : base(x, y)
         {
-            _fontAsset = fontAsset;
+            _fontType = fontType;
             _text = text;
             _horizontalAlign = horizontalAlign;
             _verticalAlign = verticalAlign;
@@ -67,7 +67,7 @@ namespace ArcardnoidShared.Framework.Components.Text
 
         public override void Load()
         {
-            _bitmapFont = GameServiceProvider.GetService<IBitmapFontService>().Load(_fontAsset);
+            _bitmapFont = GameServiceProvider.GetService<IBitmapFontService>().Load(_fontType);
             base.Load();
         }
 

@@ -40,11 +40,11 @@ namespace ArcardnoidContent.Components.MainMenu.Frames
         public override void Load()
         {
             base.Load();
-            AddGameComponent(new Frame("ui/banner", 0, 0, 576, 512));
-            AddGameComponent(new BitmapText("fonts/band", "Graine de la partie", 288, 90, TextHorizontalAlign.Center, TextVerticalAlign.Center, GameColor.Black));
-            Input = AddGameComponent(new Input("ui/input", "", 95, 140, 4));
-            AddGameComponent(new Button("Confirmer", "ui/buttons/button-green-normal", "ui/buttons/button-green-hover", "ui/buttons/button-green-pressed", OnConfirm, 80, 300, 410, 64));
-            AddGameComponent(new Button("Annuler", "ui/buttons/button-red-normal", "ui/buttons/button-red-hover", "ui/buttons/button-red-pressed", OnCancel, 80, 370, 410, 64));
+            AddGameComponent(new Frame(TextureType.UI_BANNER, 0, 0, 576, 512));
+            AddGameComponent(new BitmapText(BitmapFontType.Default, "Graine de la partie", 288, 90, TextHorizontalAlign.Center, TextVerticalAlign.Center, GameColor.Black));
+            Input = AddGameComponent(new Input(TextureType.UI_INPUT, "", 95, 140, 4));
+            AddGameComponent(new Button("Confirmer", TextureType.UI_BUTTONS_BUTTON_GREEN_NORMAL, TextureType.UI_BUTTONS_BUTTON_GREEN_HOVER, TextureType.UI_BUTTONS_BUTTON_GREEN_PRESSED, OnConfirm, 80, 300, 410, 64));
+            AddGameComponent(new Button("Annuler", TextureType.UI_BUTTONS_BUTTON_RED_NORMAL, TextureType.UI_BUTTONS_BUTTON_RED_HOVER, TextureType.UI_BUTTONS_BUTTON_RED_PRESSED, OnCancel, 80, 370, 410, 64));
             NewSeed();
         }
 

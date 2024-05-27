@@ -1,5 +1,6 @@
 ﻿using ArcardnoidShared.Framework.Components.UI;
 using ArcardnoidShared.Framework.Scenes.Components;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 
 namespace ArcardnoidContent.Components.MainMenu
 {
@@ -33,12 +34,12 @@ namespace ArcardnoidContent.Components.MainMenu
         public override void Load()
         {
             base.Load();
-            AddGameComponent(new Frame("ui/banner", 0, 0, 576, 576));
-            AddGameComponent(new Button("Commencer une partie", "ui/buttons/button-green-normal", "ui/buttons/button-green-hover", "ui/buttons/button-green-pressed", OnNewGame, 80, 75, 410, 64));
-            AddGameComponent(new Button("Crédits", "ui/buttons/button-yellow-normal", "ui/buttons/button-yellow-hover", "ui/buttons/button-yellow-pressed", OnCredits, 80, 155, 410, 64));
-            AddGameComponent(new Button("Parametres", "ui/buttons/button-blue-normal", "ui/buttons/button-blue-hover", "ui/buttons/button-blue-pressed", OnParameters, 80, 235, 410, 64));
-            AddGameComponent(new Button("Démo", "ui/buttons/button-green-normal", "ui/buttons/button-green-hover", "ui/buttons/button-green-pressed", OnDemo, 80, 315, 410, 64));
-            AddGameComponent(new Button("Quitter", "ui/buttons/button-red-normal", "ui/buttons/button-red-hover", "ui/buttons/button-red-pressed", OnQuit, 80, 425, 410, 64));
+            AddGameComponent(new Frame(TextureType.UI_BANNER, 0, 0, 576, 576));
+            AddGameComponent(new Button("Commencer une partie", TextureType.UI_BUTTONS_BUTTON_GREEN_NORMAL, TextureType.UI_BUTTONS_BUTTON_GREEN_HOVER, TextureType.UI_BUTTONS_BUTTON_GREEN_PRESSED, OnNewGame, 80, 75, 410, 64));
+            AddGameComponent(new Button("Crédits", TextureType.UI_BUTTONS_BUTTON_YELLOW_NORMAL, TextureType.UI_BUTTONS_BUTTON_YELLOW_HOVER, TextureType.UI_BUTTONS_BUTTON_YELLOW_PRESSED, OnCredits, 80, 155, 410, 64));
+            AddGameComponent(new Button("Parametres", TextureType.UI_BUTTONS_BUTTON_BLUE_NORMAL, TextureType.UI_BUTTONS_BUTTON_BLUE_HOVER, TextureType.UI_BUTTONS_BUTTON_BLUE_PRESSED, OnParameters, 80, 235, 410, 64));
+            AddGameComponent(new Button("Démo", TextureType.UI_BUTTONS_BUTTON_GREEN_NORMAL, TextureType.UI_BUTTONS_BUTTON_GREEN_HOVER, TextureType.UI_BUTTONS_BUTTON_GREEN_PRESSED, OnDemo, 80, 315, 410, 64));
+            AddGameComponent(new Button("Quitter", TextureType.UI_BUTTONS_BUTTON_RED_NORMAL, TextureType.UI_BUTTONS_BUTTON_RED_HOVER, TextureType.UI_BUTTONS_BUTTON_RED_PRESSED, OnQuit, 80, 425, 410, 64));
         }
 
         #endregion Public Methods

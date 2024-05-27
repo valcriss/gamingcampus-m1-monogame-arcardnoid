@@ -9,6 +9,7 @@ using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.Scenes.Element;
 using ArcardnoidShared.Framework.ServiceProvider;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using ArcardnoidShared.Framework.Tools;
 
@@ -59,7 +60,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
 
         #region Public Methods
 
-        public static ITexture LoadAssetTexture(string asset)
+        public static ITexture LoadAssetTexture(TextureType asset)
         {
             return GameServiceProvider.GetService<ITextureService>().Load(asset);
         }
@@ -95,15 +96,15 @@ namespace ArcardnoidContent.Components.GameScene.Battle
 
         #region Private Methods
 
-        private static string AssetPath(EncounterType encounterType)
+        private static TextureType AssetPath(EncounterType encounterType)
         {
             return encounterType switch
             {
-                EncounterType.Archer => "map/units/archer-blue-idle",
-                EncounterType.Warrior => "map/units/warrior-blue-idle",
-                EncounterType.Torch => "map/units/torch-red-idle",
-                EncounterType.Tnt => "map/units/tnt-red-idle",
-                _ => "map/units/archer-blue-idle",
+                EncounterType.Archer => TextureType.MAP_UNITS_ARCHER_BLUE_IDLE,
+                EncounterType.Warrior => TextureType.MAP_UNITS_WARRIOR_BLUE_IDLE,
+                EncounterType.Torch => TextureType.MAP_UNITS_TORCH_RED_IDLE,
+                EncounterType.Tnt => TextureType.MAP_UNITS_TNT_RED_IDLE,
+                _ => TextureType.MAP_UNITS_ARCHER_BLUE_IDLE,
             };
         }
 
@@ -149,7 +150,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
         {
             _playerComponents.Clear();
             _oponentComponents.Clear();
-            ITexture playerAsset = LoadAssetTexture("map/units/player-battle");
+            ITexture playerAsset = LoadAssetTexture(TextureType.MAP_UNITS_PLAYER_BATTLE);
             ITexture opponentAsset = LoadAssetTexture(AssetPath(encounterType));
             int numberOfOpponents = NumberOfOpponents(distanceFromStart);
             int[,] opponentField = GenerateField(numberOfOpponents);
@@ -299,7 +300,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
                         var component = corpse.Component;
                         int gridX = ((MapCell)component).GridX;
                         int gridY = ((MapCell)component).GridY;
-                        AnimatedCell c = AddGameComponent(new AnimatedCell(LoadAssetTexture("map/units/dead-2"), 7, 1, 80, 0, 0, gridX, gridY, (int)component.RealBounds.X, (int)component.RealBounds.Y, 0, 0, false));
+                        AnimatedCell c = AddGameComponent(new AnimatedCell(LoadAssetTexture(TextureType.MAP_UNITS_DEAD_2), 7, 1, 80, 0, 0, gridX, gridY, (int)component.RealBounds.X, (int)component.RealBounds.Y, 0, 0, false));
                         _battleFieldCorpses.Add(new BattleFieldCorpse() { Component = c, CreationTime = DateTime.Now, Duration = CORPSE_HIDE_DURATION, BattleFieldCorpseElapsedAction = BattleFieldCorpseElapsedAction.Unload });
                     }
                 }
@@ -347,7 +348,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
                         int gridX = ((MapCell)component).GridX;
                         int gridY = ((MapCell)component).GridY;
                         GamePlay.RemoveUnits(1);
-                        AnimatedCell corpse = AddGameComponent(new AnimatedCell(LoadAssetTexture("map/units/dead-1"), 7, 1, 80, 0, 0, gridX, gridY, (int)component.RealBounds.X, (int)component.RealBounds.Y, 0, 0, false));
+                        AnimatedCell corpse = AddGameComponent(new AnimatedCell(LoadAssetTexture(TextureType.MAP_UNITS_DEAD_1), 7, 1, 80, 0, 0, gridX, gridY, (int)component.RealBounds.X, (int)component.RealBounds.Y, 0, 0, false));
                         _battleFieldCorpses.Add(new BattleFieldCorpse() { Component = corpse, CreationTime = DateTime.Now, Duration = CORPSE_DURATION, BattleFieldCorpseElapsedAction = BattleFieldCorpseElapsedAction.Disappear });
                         MoveToFront(PlayerFireBall);
                         MoveToFront(OponentFireBall);
@@ -366,7 +367,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
                         BattleColliderItem item = items[index];
                         int gridX = ((MapCell)item.Component).GridX;
                         int gridY = ((MapCell)item.Component).GridY;
-                        AnimatedCell corpse = AddGameComponent(new AnimatedCell(LoadAssetTexture("map/units/dead-1"), 7, 1, 80, 0, 0, gridX, gridY, (int)item.Component.RealBounds.X, (int)item.Component.RealBounds.Y, 0, 0, false));
+                        AnimatedCell corpse = AddGameComponent(new AnimatedCell(LoadAssetTexture(TextureType.MAP_UNITS_DEAD_1), 7, 1, 80, 0, 0, gridX, gridY, (int)item.Component.RealBounds.X, (int)item.Component.RealBounds.Y, 0, 0, false));
                         _battleFieldCorpses.Add(new BattleFieldCorpse() { Component = corpse, CreationTime = DateTime.Now, Duration = CORPSE_DURATION, BattleFieldCorpseElapsedAction = BattleFieldCorpseElapsedAction.Disappear });
 
                         item.Component.InnerUnload();
@@ -402,7 +403,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
                     {
                         int gridX = ((MapCell)component).GridX;
                         int gridY = ((MapCell)component).GridY;
-                        AnimatedCell corpse = AddGameComponent(new AnimatedCell(LoadAssetTexture("map/units/dead-1"), 7, 1, 80, 0, 0, gridX, gridY, (int)component.RealBounds.X, (int)component.RealBounds.Y, 0, 0, false));
+                        AnimatedCell corpse = AddGameComponent(new AnimatedCell(LoadAssetTexture(TextureType.MAP_UNITS_DEAD_1), 7, 1, 80, 0, 0, gridX, gridY, (int)component.RealBounds.X, (int)component.RealBounds.Y, 0, 0, false));
                         _battleFieldCorpses.Add(new BattleFieldCorpse() { Component = corpse, CreationTime = DateTime.Now, Duration = CORPSE_DURATION, BattleFieldCorpseElapsedAction = BattleFieldCorpseElapsedAction.Disappear });
 
                         MoveToFront(PlayerFireBall);
@@ -423,7 +424,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
                         BattleColliderItem item = items[index];
                         int gridX = ((MapCell)item.Component).GridX;
                         int gridY = ((MapCell)item.Component).GridY;
-                        AnimatedCell corpse = AddGameComponent(new AnimatedCell(LoadAssetTexture("map/units/dead-1"), 7, 1, 80, 0, 0, gridX, gridY, (int)item.Component.RealBounds.X, (int)item.Component.RealBounds.Y, 0, 0, false));
+                        AnimatedCell corpse = AddGameComponent(new AnimatedCell(LoadAssetTexture(TextureType.MAP_UNITS_DEAD_1), 7, 1, 80, 0, 0, gridX, gridY, (int)item.Component.RealBounds.X, (int)item.Component.RealBounds.Y, 0, 0, false));
                         _battleFieldCorpses.Add(new BattleFieldCorpse() { Component = corpse, CreationTime = DateTime.Now, Duration = CORPSE_DURATION, BattleFieldCorpseElapsedAction = BattleFieldCorpseElapsedAction.Disappear });
                         item.Component.InnerUnload();
                         GamePlay.RemoveUnits(1);

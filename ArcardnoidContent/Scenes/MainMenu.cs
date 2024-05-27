@@ -6,6 +6,7 @@ using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes;
 using ArcardnoidShared.Framework.Scenes.Animations;
 using ArcardnoidShared.Framework.ServiceProvider;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
 namespace ArcardnoidContent.Scenes
@@ -28,14 +29,14 @@ namespace ArcardnoidContent.Scenes
         {
             BackgroundColor = new GameColor(71, 171, 169);
             AddGameComponent(new MainMenuBackground());
-            AddGameComponent(new AnimatedTitleBand("ui/bandeau", "fonts/band", "ArCardNoid : La bataille des balles rebondissantes", 0.05f, 960, 100, new GameColor(75, 30, 0)));
+            AddGameComponent(new AnimatedTitleBand(TextureType.UI_BANDEAU, BitmapFontType.Default, "ArCardNoid : La bataille des balles rebondissantes", 0.05f, 960, 100, new GameColor(75, 30, 0)));
             MainGameMenu = AddGameComponent(new MainGameMenu(OnNewGameButtonClicked, OnCreditsButtonClicked, OnParametersButtonClicked, OnDemoButtonClicked, OnQuitButtonClicked)).AddAnimations<MainGameMenu>(GetMainMenuAppearAnimations(3f));
             QuitGameConfirm = AddGameComponent(new QuitGameConfirm(OnQuitConfirmButtonClicked, OnQuitConfirmCancelClicked));
             CreditFrame = AddGameComponent(new CreditFrame(OnCreditFrameCancelClicked));
             ParametersFrame = AddGameComponent(new ParametersFrame(OnParametersFrameCancelClicked));
             SeedFrame = AddGameComponent(new SeedFrame(OnNewGameConfirmButtonClicked, OnSeedFrameCancelClicked));
 
-            AddGameComponent(new Cursor("ui/cursors/01", new Point(12, 16)));
+            AddGameComponent(new Cursor(TextureType.UI_CURSOR, new Point(12, 16)));
         }
 
         #endregion Public Constructors

@@ -2,6 +2,7 @@
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Animations;
 using ArcardnoidShared.Framework.Scenes.Components;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 
 namespace ArcardnoidContent.Components.GameScene
 {
@@ -30,7 +31,7 @@ namespace ArcardnoidContent.Components.GameScene
         public override void Load()
         {
             base.Load();
-            AddGameComponent(new Image("mainmenu/left", 444, 540)).AddAnimations<Image>(new AnimationChain(new Animation[]
+            AddGameComponent(new Image(TextureType.MAINMENU_LEFT, 444, 540)).AddAnimations<Image>(new AnimationChain(new Animation[]
             {
                 new AlphaFadeAnimation(BORDERS_FADE_DURATION,BORDERS_OPACITY_MIN,BORDERS_OPACITY_MAX),
                 new AlphaFadeAnimation(BORDERS_FADE_DURATION,BORDERS_OPACITY_MAX,BORDERS_OPACITY_MIN)
@@ -41,7 +42,7 @@ namespace ArcardnoidContent.Components.GameScene
                 new MoveAnimation(BORDERS_MOVE_DURATION,new Point(444,540),new Point(444-BORDERS_MOVE_OFFSET,540))
             }, true, true));
 
-            AddGameComponent(new Image("mainmenu/right", 1476, 540)).AddAnimations<Image>(new AnimationChain(new Animation[]
+            AddGameComponent(new Image(TextureType.MAINMENU_RIGHT, 1476, 540)).AddAnimations<Image>(new AnimationChain(new Animation[]
             {
                 new AlphaFadeAnimation(BORDERS_FADE_DURATION,BORDERS_OPACITY_MIN,BORDERS_OPACITY_MAX),
                 new AlphaFadeAnimation(BORDERS_FADE_DURATION,BORDERS_OPACITY_MAX,BORDERS_OPACITY_MIN)

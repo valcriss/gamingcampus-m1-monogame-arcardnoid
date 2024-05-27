@@ -2,6 +2,7 @@
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Animations;
 using ArcardnoidShared.Framework.Scenes.Components;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 
 namespace ArcardnoidContent.Components.GameScene.Battle
 {
@@ -25,7 +26,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
             {
                 primitive.FillRectangle(new Rectangle(0, 0, 1920, 1080), new GameColor(0, 0, 0, 128));
             }));
-            Image = AddGameComponent(new Image(victory ? "ui/victory" : "ui/defeated", 0, 0));
+            Image = AddGameComponent(new Image(victory ? TextureType.UI_VICTORY : TextureType.UI_DEFEATED, 0, 0));
             Image.AddAnimation<Image>(new AlphaFadeAnimation(2, 0, 1, false, true, EaseType.Linear));
         }
 

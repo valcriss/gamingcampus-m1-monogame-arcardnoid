@@ -1,5 +1,6 @@
 ﻿using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Components;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
 namespace ArcardnoidContent.Components.Shared.Map.Cells
@@ -10,7 +11,7 @@ namespace ArcardnoidContent.Components.Shared.Map.Cells
 
         public int GridX { get; set; }
         public int GridY { get; set; }
-        public string? TextureAsset => Texture2D?.AssetPath;
+        public TextureType? TextureAsset => Texture2D?.TextureType;
 
         #endregion Public Properties
 

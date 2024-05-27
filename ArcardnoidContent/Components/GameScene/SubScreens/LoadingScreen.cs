@@ -76,7 +76,7 @@ namespace ArcardnoidContent.Components.GameScene.SubScreens
         public override void Load()
         {
             base.Load();
-            BitmapText = AddGameComponent(new BitmapText("fonts/band", _loadingMessages[_messageIndex], 1920 / 2, 1080 / 2, TextHorizontalAlign.Center, TextVerticalAlign.Center, GameColor.White));
+            BitmapText = AddGameComponent(new BitmapText(BitmapFontType.Default, _loadingMessages[_messageIndex], 1920 / 2, 1080 / 2, TextHorizontalAlign.Center, TextVerticalAlign.Center, GameColor.White));
         }
 
         public override void Update(float delta)

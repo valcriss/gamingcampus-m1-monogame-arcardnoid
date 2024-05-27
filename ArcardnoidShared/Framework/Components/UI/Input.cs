@@ -13,7 +13,7 @@ namespace ArcardnoidShared.Framework.Components.UI
         #region Public Properties
 
         public Rectangle CenterRectangle { get; set; } = Rectangle.Empty;
-        public string InputAsset { get; set; }
+        public TextureType InputAsset { get; set; }
         public int InputWidth { get; set; }
         public bool IsDisabled { get; set; }
         public bool IsFocused { get; set; }
@@ -43,7 +43,7 @@ namespace ArcardnoidShared.Framework.Components.UI
 
         #region Public Constructors
 
-        public Input(string inputAsset, string value = "", int x = 0, int y = 0, int width = 0) : base(x, y, width * 64, 128)
+        public Input(TextureType inputAsset, string value = "", int x = 0, int y = 0, int width = 0) : base(x, y, width * 64, 128)
         {
             InputWidth = width;
             InputAsset = inputAsset;
@@ -77,7 +77,7 @@ namespace ArcardnoidShared.Framework.Components.UI
             LeftRectangle = new Rectangle(0, 0, 64, 128);
             CenterRectangle = new Rectangle(64, 0, 64, 128);
             RightRectangle = new Rectangle(128, 0, 64, 128);
-            Text = AddGameComponent(new BitmapText("fonts/band", _text, 64 + ((InputWidth / 2) * 64), 50, TextHorizontalAlign.Center, TextVerticalAlign.Center, GameColor.Black));
+            Text = AddGameComponent(new BitmapText(BitmapFontType.Default, _text, 64 + ((InputWidth / 2) * 64), 50, TextHorizontalAlign.Center, TextVerticalAlign.Center, GameColor.Black));
         }
 
         public void SetValue(string value)

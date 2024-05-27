@@ -3,6 +3,7 @@ using ArcardnoidShared.Framework.Components.Images;
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Animations;
 using ArcardnoidShared.Framework.Scenes.Components;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 
 namespace ArcardnoidContent.Components.MainMenu
 {
@@ -25,7 +26,7 @@ namespace ArcardnoidContent.Components.MainMenu
         public override void Load()
         {
             base.Load();
-            AddGameComponent(new Image("mainmenu/left", 444, 540)).AddAnimations<Image>(new AnimationChain(new Animation[]
+            AddGameComponent(new Image(TextureType.MAINMENU_LEFT, 444, 540)).AddAnimations<Image>(new AnimationChain(new Animation[]
             {
                 new AlphaFadeAnimation(BORDERS_FADE_DURATION,BORDERS_OPACITY_MIN,BORDERS_OPACITY_MAX),
                 new AlphaFadeAnimation( BORDERS_FADE_DURATION,BORDERS_OPACITY_MAX,BORDERS_OPACITY_MIN)
@@ -36,7 +37,7 @@ namespace ArcardnoidContent.Components.MainMenu
                 new MoveAnimation(BORDERS_MOVE_DURATION,new Point(444,540),new Point(444-BORDERS_MOVE_OFFSET,540))
             }, true, true));
 
-            AddGameComponent(new Image("mainmenu/right", 1476, 540)).AddAnimations<Image>(new AnimationChain(new Animation[]
+            AddGameComponent(new Image(TextureType.MAINMENU_RIGHT, 1476, 540)).AddAnimations<Image>(new AnimationChain(new Animation[]
             {
                 new AlphaFadeAnimation(BORDERS_FADE_DURATION,BORDERS_OPACITY_MIN,BORDERS_OPACITY_MAX),
                 new AlphaFadeAnimation(BORDERS_FADE_DURATION,BORDERS_OPACITY_MAX,BORDERS_OPACITY_MIN)
@@ -58,7 +59,7 @@ namespace ArcardnoidContent.Components.MainMenu
                 Point from = i % 2 == 0 ? new Point(-106, y) : new Point(2020, y);
                 Point to = i % 2 == 0 ? new Point(2020, y) : new Point(-106, y);
                 float speed = CLOUD_MOVE_SPEED + (i * CLOUD_MOVE_SPEED_OFFSET);
-                AddGameComponent(new Image("mainmenu/cloud1", 0, y)).AddAnimation<Image>(new MoveAnimation(speed, from, to, true, true));
+                AddGameComponent(new Image(TextureType.MAINMENU_CLOUD1, 0, y)).AddAnimation<Image>(new MoveAnimation(speed, from, to, true, true));
             }
 
             for (int i = 0; i < cloud2PositionY.Length; i++)
@@ -67,7 +68,7 @@ namespace ArcardnoidContent.Components.MainMenu
                 Point from = i % 2 == 0 ? new Point(-166, y) : new Point(2086, y);
                 Point to = i % 2 == 0 ? new Point(2086, y) : new Point(-166, y);
                 float speed = CLOUD_MOVE_SPEED + (i * CLOUD_MOVE_SPEED_OFFSET);
-                AddGameComponent(new Image("mainmenu/cloud2", 0, y)).AddAnimation<Image>(new MoveAnimation(speed, from, to, true, true));
+                AddGameComponent(new Image(TextureType.MAINMENU_CLOUD2, 0, y)).AddAnimation<Image>(new MoveAnimation(speed, from, to, true, true));
             }
         }
 

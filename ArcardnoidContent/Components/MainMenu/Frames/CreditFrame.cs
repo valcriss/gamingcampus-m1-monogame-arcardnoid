@@ -38,19 +38,19 @@ namespace ArcardnoidContent.Components.MainMenu.Frames
         {
             base.Load();
             int height = 684;
-            AddGameComponent(new Frame("ui/banner", -195, 0, 960, height));
-            AddGameComponent(new BitmapText("fonts/band", "Credits", 288, 90, TextHorizontalAlign.Center, TextVerticalAlign.Center, GameColor.Black));
+            AddGameComponent(new Frame(TextureType.UI_BANNER, -195, 0, 960, height));
+            AddGameComponent(new BitmapText(BitmapFontType.Default, "Credits", 288, 90, TextHorizontalAlign.Center, TextVerticalAlign.Center, GameColor.Black));
             int y = 115;
             int categoryX = -90;
             int categoryContentX = categoryX + 20;
             foreach (var item in Content)
             {
                 if (item.Value == null) continue;
-                AddGameComponent(new BitmapText("fonts/band", item.Key, categoryX, y, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.Black));
-                AddGameComponent(new BitmapText("fonts/ken", item.Value, categoryContentX, y + 45, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.Black));
+                AddGameComponent(new BitmapText(BitmapFontType.Default, item.Key, categoryX, y, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.Black));
+                AddGameComponent(new BitmapText(BitmapFontType.Simple, item.Value, categoryContentX, y + 45, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.Black));
                 y += (item.Value.Split('\n').Length - 1) * 22 + 70;
             }
-            AddGameComponent(new Button("Annuler", "ui/buttons/button-red-normal", "ui/buttons/button-red-hover", "ui/buttons/button-red-pressed", OnClose, 490, height - 124, 210, 64));
+            AddGameComponent(new Button("Annuler", TextureType.UI_BUTTONS_BUTTON_RED_NORMAL, TextureType.UI_BUTTONS_BUTTON_RED_HOVER, TextureType.UI_BUTTONS_BUTTON_RED_PRESSED, OnClose, 490, height - 124, 210, 64));
         }
 
         #endregion Public Methods

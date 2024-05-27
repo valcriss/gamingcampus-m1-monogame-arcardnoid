@@ -3,6 +3,7 @@ using ArcardnoidShared.Framework.Components.Images;
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Particles;
 using ArcardnoidShared.Framework.Scenes.Components;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.Tools;
 
 namespace ArcardnoidContent.Components.GameScene.Battle.Bars
@@ -46,9 +47,9 @@ namespace ArcardnoidContent.Components.GameScene.Battle.Bars
             GameColor blue = GameColor.Blue;
             GameColor lightBlue = GameColor.LightBlue;
             GameColor white = GameColor.White;
-            ParticleData data = new ParticleData("particles/particleWhite_4", this.Faction == BattleFaction.Player ? red : blue, this.Faction == BattleFaction.Player ? yellow : lightBlue, .05f, .05f, 1, 1, 0, 360, 22, 22, 1, 200, 0.016f);
+            ParticleData data = new ParticleData(TextureType.PARTICLES_PARTICLEWHITE_4, this.Faction == BattleFaction.Player ? red : blue, this.Faction == BattleFaction.Player ? yellow : lightBlue, .05f, .05f, 1, 1, 0, 360, 22, 22, 1, 200, 0.016f);
             ParticuleEmitter = AddGameComponent(new ParticuleEmitter(data, true));
-            BallImage = AddGameComponent(new Image(faction == BattleFaction.Player ? "battle/player-ball" : "battle/oponent-ball", 16, 16));
+            BallImage = AddGameComponent(new Image(faction == BattleFaction.Player ? TextureType.BATTLE_PLAYER_BALL : TextureType.BATTLE_OPONENT_BALL, 16, 16));
 
             ParticuleEmitter.Start();
         }

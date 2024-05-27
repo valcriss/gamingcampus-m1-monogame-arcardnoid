@@ -1,4 +1,5 @@
 ﻿using ArcardnoidShared.Framework.Drawing;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 
 namespace ArcardnoidShared.Framework.Components.Images
 {
@@ -12,7 +13,7 @@ namespace ArcardnoidShared.Framework.Components.Images
 
         #region Public Constructors
 
-        public ImagePart(string spriteAsset, int x, int y, Rectangle? sourceRect) : base(spriteAsset, x, y)
+        public ImagePart(TextureType spriteAsset, int x, int y, Rectangle? sourceRect) : base(spriteAsset, x, y)
         {
             SourceRect = sourceRect;
         }

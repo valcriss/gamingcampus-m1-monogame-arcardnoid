@@ -1,4 +1,5 @@
 ﻿using ArcardnoidShared.Framework.Drawing;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 
 namespace ArcardnoidShared.Framework.ServiceProvider.Interfaces
 {
@@ -6,8 +7,8 @@ namespace ArcardnoidShared.Framework.ServiceProvider.Interfaces
     {
         #region Public Properties
 
-        string AssetPath { get; }
         int Height { get; }
+        TextureType TextureType { get; }
         int Width { get; }
 
         #endregion Public Properties

@@ -6,25 +6,25 @@
     "columns": 8,
     "rows": 1,
     "speed": 90,
-    "path": "map/water_splash"
+    "path": "MAP_WATER_SPLASH"
   },
   {
     "id": 1,
     "name": "Sand",
     "type": "multi",
-    "path": "map/sand"
+    "path": "MAP_SAND"
   },
   {
     "id": 2,
     "name": "Elevation",
     "type": "multi2",
-    "path": "map/elevation"
+    "path": "MAP_ELEVATION"
   },
   {
     "id": 3,
     "name": "Grass",
     "type": "multi",
-    "path": "map/grass"
+    "path": "MAP_GRASS"
   },
   {
     "id": 4,
@@ -33,31 +33,31 @@
     "columns": 8,
     "rows": 1,
     "speed": 90,
-    "path": "map/deco/rocks_water_big"
+    "path": "MAP_DECO_ROCKS_WATER_BIG"
   },
   {
     "id": 5,
     "name": "Medium Rock",
     "type": "normal",
-    "path": "map/deco/05"
+    "path": "MAP_DECO_05"
   },
   {
     "id": 6,
     "name": "Small Rock",
     "type": "normal",
-    "path": "map/deco/04"
+    "path": "MAP_DECO_04"
   },
   {
     "id": 7,
     "name": "Small Grass",
     "type": "normal",
-    "path": "map/deco/10"
+    "path": "MAP_DECO_10"
   },
   {
     "id": 8,
     "name": "Medium Grass",
     "type": "normal",
-    "path": "map/deco/11"
+    "path": "MAP_DECO_11"
   },
   {
     "id": 9,
@@ -66,7 +66,7 @@
     "columns": 8,
     "rows": 1,
     "speed": 90,
-    "path": "map/deco/rocks_water_medium"
+    "path": "MAP_DECO_ROCKS_WATER_MEDIUM"
   },
   {
     "id": 10,
@@ -75,7 +75,7 @@
     "columns": 8,
     "rows": 1,
     "speed": 90,
-    "path": "map/deco/rocks_water_small"
+    "path": "MAP_DECO_ROCKS_WATER_SMALL"
   },
   {
     "id": 11,
@@ -85,14 +85,14 @@
     "rows": 1,
     "speed": 120,
     "offsetX": 34,
-    "offsetY": 0,
-    "path": "map/building/wood-tower-red"
+    "offsetY": -16,
+    "path": "MAP_BUILDING_WOOD_TOWER_RED"
   },
   {
     "id": 12,
     "name": "Goblin house",
     "type": "normal",
-    "path": "map/building/goblin_house",
+    "path": "MAP_BUILDING_GOBLIN_HOUSE",
     "offsetX": 34,
     "offsetY": -16
   },
@@ -100,7 +100,7 @@
     "id": 13,
     "name": "Tower blue",
     "type": "normal",
-    "path": "map/building/tower_blue",
+    "path": "MAP_BUILDING_TOWER_BLUE",
     "offsetX": 34,
     "offsetY": -24
   },
@@ -111,7 +111,7 @@
     "columns": 6,
     "rows": 1,
     "speed": 120,
-    "path": "map/units/archer-blue-idle",
+    "path": "MAP_UNITS_ARCHER_BLUE_IDLE",
     "offsetX": -32,
     "offsetY": -78
   },
@@ -122,7 +122,7 @@
     "columns": 6,
     "rows": 1,
     "speed": 120,
-    "path": "map/units/warrior-blue-idle",
+    "path": "MAP_UNITS_WARRIOR_BLUE_IDLE",
     "offsetX": 6,
     "offsetY": 0
   },
@@ -133,7 +133,7 @@
     "columns": 8,
     "rows": 1,
     "speed": 120,
-    "path": "map/units/sheep-idle",
+    "path": "MAP_UNITS_SHEEP_IDLE",
     "offsetX": 0,
     "offsetY": -10
   },
@@ -144,7 +144,7 @@
     "columns": 7,
     "rows": 1,
     "speed": 120,
-    "path": "map/units/torch-red-idle",
+    "path": "MAP_UNITS_TORCH_RED_IDLE",
     "offsetX": -32,
     "offsetY": -64
   },
@@ -155,7 +155,7 @@
     "columns": 6,
     "rows": 1,
     "speed": 120,
-    "path": "map/units/tnt-red-idle",
+    "path": "MAP_UNITS_TNT_RED_IDLE",
     "offsetX": 16,
     "offsetY": -16
   },
@@ -163,13 +163,13 @@
     "id": 19,
     "name": "Rock Shadow",
     "type": "normal",
-    "path": "map/shadows"
+    "path": "MAP_SHADOWS"
   },
   {
     "id": 20,
     "name": "Bridge",
     "type": "bridge",
-    "path": "map/bridge"
+    "path": "MAP_BRIDGE"
   },
   {
     "id": 21,
@@ -178,7 +178,7 @@
     "columns": 4,
     "rows": 1,
     "speed": 220,
-    "path": "map/deco/tree",
+    "path": "MAP_DECO_TREE",
     "offsetX": 16,
     "offsetY": -16
   },
@@ -186,7 +186,7 @@
     "id": 22,
     "name": "Tower blue",
     "type": "normal",
-    "path": "map/building/tower_blue",
+    "path": "MAP_BUILDING_TOWER_BLUE",
     "offsetX": 34,
     "offsetY": -48
   },
@@ -197,7 +197,7 @@
     "columns": 6,
     "rows": 1,
     "speed": 120,
-    "path": "map/units/warrior-blue-idle",
+    "path": "MAP_UNITS_WARRIOR_BLUE_IDLE",
     "offsetX": 6,
     "offsetY": -24
   },
@@ -210,7 +210,7 @@
     "speed": 120,
     "offsetX": 34,
     "offsetY": 0,
-    "path": "map/building/wood-tower-red"
+    "path": "MAP_BUILDING_WOOD_TOWER_RED"
   },
   {
     "id": 25,
@@ -219,7 +219,7 @@
     "columns": 7,
     "rows": 1,
     "speed": 120,
-    "path": "map/units/torch-red-idle",
+    "path": "MAP_UNITS_TORCH_RED_IDLE",
     "offsetX": 32,
     "offsetY": -128
   },
@@ -227,7 +227,7 @@
     "id": 26,
     "name": "Goblin house",
     "type": "normal",
-    "path": "map/building/goblin_house",
+    "path": "MAP_BUILDING_GOBLIN_HOUSE",
     "offsetX": 34,
     "offsetY": -16
   },
@@ -238,7 +238,7 @@
     "columns": 6,
     "rows": 1,
     "speed": 120,
-    "path": "map/units/tnt-red-idle",
+    "path": "MAP_UNITS_TNT_RED_IDLE",
     "offsetX": 16,
     "offsetY": -16
   },
@@ -249,7 +249,7 @@
     "columns": 7,
     "rows": 1,
     "speed": 120,
-    "path": "map/units/torch-red-idle",
+    "path": "MAP_UNITS_TORCH_RED_IDLE",
     "offsetX": 6,
     "offsetY": -20
   },
@@ -260,7 +260,7 @@
     "columns": 6,
     "rows": 1,
     "speed": 120,
-    "path": "map/units/warrior-blue-idle",
+    "path": "MAP_UNITS_WARRIOR_BLUE_IDLE",
     "offsetX": 0,
     "offsetY": -20
   },
@@ -271,7 +271,7 @@
     "columns": 6,
     "rows": 1,
     "speed": 120,
-    "path": "map/units/tnt-red-idle",
+    "path": "MAP_UNITS_TNT_RED_IDLE",
     "offsetX": 6,
     "offsetY": -20
   },
@@ -284,7 +284,7 @@
     "speed": 120,
     "delayMin": 1000,
     "delayMax": 4000,
-    "path": "map/units/gold",
+    "path": "MAP_UNITS_GOLD",
     "offsetX": 0,
     "offsetY": -20
   },
@@ -297,7 +297,7 @@
     "speed": 120,
     "delayMin": 1000,
     "delayMax": 4000,
-    "path": "map/units/meat",
+    "path": "MAP_UNITS_MEAT",
     "offsetX": 0,
     "offsetY": -10
   },
@@ -308,7 +308,7 @@
     "columns": 6,
     "rows": 1,
     "speed": 120,
-    "path": "map/units/archer-blue-idle",
+    "path": "MAP_UNITS_ARCHER_BLUE_IDLE",
     "offsetX": 0,
     "offsetY": -20
   }

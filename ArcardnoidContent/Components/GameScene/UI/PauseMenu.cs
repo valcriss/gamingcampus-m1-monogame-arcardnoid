@@ -32,12 +32,12 @@ namespace ArcardnoidContent.Components.GameScene.UI
         public override void Load()
         {
             base.Load();
-            AddGameComponent(new Frame("ui/banner", 0, 0, 576, 448));
-            AddGameComponent(new BitmapText("fonts/band", "Jeu en pause", 288, 90, TextHorizontalAlign.Center, TextVerticalAlign.Center, GameColor.Black));
+            AddGameComponent(new Frame(TextureType.UI_BANNER, 0, 0, 576, 448));
+            AddGameComponent(new BitmapText(BitmapFontType.Default, "Jeu en pause", 288, 90, TextHorizontalAlign.Center, TextVerticalAlign.Center, GameColor.Black));
             int buttonStartY = 150;
-            AddGameComponent(new Button("Reprendre", "ui/buttons/button-green-normal", "ui/buttons/button-green-hover", "ui/buttons/button-green-pressed", OnResume, 80, buttonStartY, 410, 64));
-            AddGameComponent(new Button("Debug", "ui/buttons/button-blue-normal", "ui/buttons/button-blue-hover", "ui/buttons/button-blue-pressed", OnDebug, 80, buttonStartY + (70), 410, 64));
-            AddGameComponent(new Button("Quitter", "ui/buttons/button-red-normal", "ui/buttons/button-red-hover", "ui/buttons/button-red-pressed", OnQuit, 80, buttonStartY + (70 * 2), 410, 64));
+            AddGameComponent(new Button("Reprendre", TextureType.UI_BUTTONS_BUTTON_GREEN_NORMAL, TextureType.UI_BUTTONS_BUTTON_GREEN_HOVER, TextureType.UI_BUTTONS_BUTTON_GREEN_PRESSED, OnResume, 80, buttonStartY, 410, 64));
+            AddGameComponent(new Button("Debug", TextureType.UI_BUTTONS_BUTTON_BLUE_NORMAL, TextureType.UI_BUTTONS_BUTTON_BLUE_HOVER, TextureType.UI_BUTTONS_BUTTON_BLUE_PRESSED, OnDebug, 80, buttonStartY + (70), 410, 64));
+            AddGameComponent(new Button("Quitter", TextureType.UI_BUTTONS_BUTTON_RED_NORMAL, TextureType.UI_BUTTONS_BUTTON_RED_HOVER, TextureType.UI_BUTTONS_BUTTON_RED_PRESSED, OnQuit, 80, buttonStartY + (70 * 2), 410, 64));
         }
 
         #endregion Public Methods

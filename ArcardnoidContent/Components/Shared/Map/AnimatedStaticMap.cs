@@ -3,6 +3,7 @@ using ArcardnoidContent.Components.Shared.Map.Enums;
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Animations;
 using ArcardnoidShared.Framework.Scenes.Components;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 
 namespace ArcardnoidContent.Components.Shared.Map
 {
@@ -17,17 +18,16 @@ namespace ArcardnoidContent.Components.Shared.Map
 
         #region Private Fields
 
-        private readonly string[] ANIMATION_TILES_PATH = new string[]
-                {
-            "map/deco/05",
-            "map/deco/04",
-            "map/deco/10",
-            "map/deco/11",
-            "map/units/archer-blue-idle",
-            "map/units/warrior-blue-idle",
-            "map/units/torch-red-idle",
-            "map/units/tnt-red-idle",
-            "map/units/player-battle"
+        private readonly TextureType[] ANIMATION_TILES_PATH = new TextureType[] {
+            TextureType.MAP_DECO_05,
+            TextureType.MAP_DECO_04,
+            TextureType.MAP_DECO_10,
+            TextureType.MAP_DECO_11,
+            TextureType.MAP_UNITS_ARCHER_BLUE_IDLE,
+            TextureType.MAP_UNITS_WARRIOR_BLUE_IDLE,
+            TextureType.MAP_UNITS_TORCH_RED_IDLE,
+            TextureType.MAP_UNITS_TNT_RED_IDLE,
+            TextureType.MAP_UNITS_PLAYER_BATTLE
         };
 
         private float _delay = 0f;
@@ -48,7 +48,7 @@ namespace ArcardnoidContent.Components.Shared.Map
         public override T AddGameComponent<T>(T gameComponent)
         {
             gameComponent = base.AddGameComponent(gameComponent);
-            if (gameComponent is MapCell tile && ANIMATION_TILES_PATH.Contains(tile.TextureAsset))
+            if (gameComponent is MapCell tile && ANIMATION_TILES_PATH.Count(c => c == tile.TextureAsset) > 0)
             {
                 gameComponent.Enabled = false;
                 gameComponent.Visible = false;
@@ -60,7 +60,7 @@ namespace ArcardnoidContent.Components.Shared.Map
         {
             foreach (GameComponent gameComponent in GameComponents)
             {
-                if (gameComponent is MapCell tile && ANIMATION_TILES_PATH.Contains(tile.TextureAsset))
+                if (gameComponent is MapCell tile && ANIMATION_TILES_PATH.Count(c => c == tile.TextureAsset) > 0)
                     AddTileAnimation(gameComponent);
             }
             AnimationState = AnimatedStaticMapState.ANIMATING;

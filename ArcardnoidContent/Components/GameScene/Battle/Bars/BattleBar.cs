@@ -4,6 +4,7 @@ using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Animations;
 using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.ServiceProvider;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
 namespace ArcardnoidContent.Components.GameScene.Battle.Bars
@@ -71,7 +72,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle.Bars
         public override void Load()
         {
             base.Load();
-            barTexture = GameServiceProvider.GetService<ITextureService>().Load(Faction == BattleFaction.Player ? "battle/bar-player" : "battle/bar-opponent");
+            barTexture = GameServiceProvider.GetService<ITextureService>().Load(Faction == BattleFaction.Player ? TextureType.BATTLE_BAR_PLAYER : TextureType.BATTLE_BAR_OPONENT);
             leftBar = new Rectangle(0, 0, 16, 32);
             rightBar = new Rectangle(32, 0, 16, 32);
             centerBar = new Rectangle(16, 0, 16, 32);

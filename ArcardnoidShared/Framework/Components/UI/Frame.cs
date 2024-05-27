@@ -1,6 +1,7 @@
 ﻿using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.ServiceProvider;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
 namespace ArcardnoidShared.Framework.Components.UI
@@ -13,7 +14,7 @@ namespace ArcardnoidShared.Framework.Components.UI
         private Rectangle BottomLeft { get; set; } = Rectangle.Empty;
         private Rectangle BottomRight { get; set; } = Rectangle.Empty;
         private Rectangle Center { get; set; } = Rectangle.Empty;
-        private string FrameAsset { get; set; }
+        private TextureType FrameAsset { get; set; }
         private Rectangle Left { get; set; } = Rectangle.Empty;
         private List<Rectangle[]> Rectangles { get; set; } = new List<Rectangle[]>();
         private Rectangle Right { get; set; } = Rectangle.Empty;
@@ -26,7 +27,7 @@ namespace ArcardnoidShared.Framework.Components.UI
 
         #region Public Constructors
 
-        public Frame(string frameAsset, int x = 0, int y = 0, int width = 0, int height = 0) : base(x, y, width, height)
+        public Frame(TextureType frameAsset, int x = 0, int y = 0, int width = 0, int height = 0) : base(x, y, width, height)
         {
             FrameAsset = frameAsset;
         }

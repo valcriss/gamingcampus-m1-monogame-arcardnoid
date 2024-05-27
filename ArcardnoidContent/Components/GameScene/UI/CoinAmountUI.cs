@@ -33,9 +33,9 @@ namespace ArcardnoidContent.Components.GameScene.UI
             IGamePlay gamePlay = GameServiceProvider.GetService<IGamePlay>();
             gamePlay.GoldChanged += GamePlay_GoldChanged;
             CoinAmount = gamePlay.GetGold();
-            AddGameComponent(new Image("ui/coin", 0, 25));
-            BitmapTexts[0] = AddGameComponent(new BitmapText("fonts/band", CoinAmount.ToString() + " Or", 42, 17, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.Black));
-            BitmapTexts[1] = AddGameComponent(new BitmapText("fonts/band", CoinAmount.ToString() + " Or", 40, 15, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.White));
+            AddGameComponent(new Image(TextureType.UI_COIN, 0, 25));
+            BitmapTexts[0] = AddGameComponent(new BitmapText(BitmapFontType.Default, CoinAmount.ToString() + " Or", 42, 17, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.Black));
+            BitmapTexts[1] = AddGameComponent(new BitmapText(BitmapFontType.Default, CoinAmount.ToString() + " Or", 40, 15, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.White));
         }
 
         #endregion Public Methods

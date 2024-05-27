@@ -1,6 +1,7 @@
 ﻿using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.ServiceProvider;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 using ArcardnoidShared.Framework.Tools;
 
@@ -30,15 +31,15 @@ namespace ArcardnoidShared.Framework.Components.Images
 
         #region Private Fields
 
-        private readonly string _imageAsset;
+        private readonly TextureType _textureType;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public Image(string imageAsset, int x, int y) : base(x, y)
+        public Image(TextureType textureType, int x, int y) : base(x, y)
         {
-            _imageAsset = imageAsset;
+            _textureType = textureType;
             DrawOrigin = Point.Zero;
             Origin = Point.Zero;
         }
@@ -56,7 +57,7 @@ namespace ArcardnoidShared.Framework.Components.Images
 
         public override void Load()
         {
-            ImageTexture = GameServiceProvider.GetService<ITextureService>().Load(_imageAsset);
+            ImageTexture = GameServiceProvider.GetService<ITextureService>().Load(_textureType);
             Bounds = new Rectangle(Bounds.X, Bounds.Y, ImageTexture.Width, ImageTexture.Height);
             ImageBounds = new Rectangle(0, 0, ImageTexture.Width, ImageTexture.Height);
             Origin = new Point(ImageTexture.Width / 2, ImageTexture.Height / 2);

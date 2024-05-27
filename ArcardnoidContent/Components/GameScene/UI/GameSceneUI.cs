@@ -1,5 +1,6 @@
 ﻿using ArcardnoidShared.Framework.Components.Images;
 using ArcardnoidShared.Framework.Scenes.Components;
+using ArcardnoidShared.Framework.ServiceProvider.Enums;
 
 namespace ArcardnoidContent.Components.GameScene.UI
 {
@@ -18,7 +19,7 @@ namespace ArcardnoidContent.Components.GameScene.UI
         public override void Load()
         {
             base.Load();
-            AddGameComponent(new Image("ui/header", 300, 55));
+            AddGameComponent(new Image(TextureType.UI_HEADER, 300, 55));
             AddGameComponent(new HeartUI(120, 17));
             AddGameComponent(new HeartUI(195, 17));
             AddGameComponent(new CoinAmountUI(300, 5));

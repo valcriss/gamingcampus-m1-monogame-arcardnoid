@@ -600,9 +600,6 @@
     <None Update="Maps\Dialogs\dialogs.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Maps\emptymap.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Maps\sandmap.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

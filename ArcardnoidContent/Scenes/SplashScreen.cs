@@ -16,9 +16,9 @@ namespace ArcardnoidContent.Scenes
         public SplashScreen()
         {
             BackgroundColor = new GameColor(127, 178, 255);
-            AddGameComponent(new BitmapText("Fonts/title-font", "Daniel Silvestre", 960, 700, TextHorizontalAlign.Center, TextVerticalAlign.Center));
-            AddGameComponent(new BitmapText("Fonts/subtitle-font", "Programmation avancée C# et Monogame", 960, 850, TextHorizontalAlign.Center, TextVerticalAlign.Center));
-            AddGameComponent(new SpriteSheetImage("logo/logo", 6, 5, 0.03f, 960, 400));
+            AddGameComponent(new BitmapText(BitmapFontType.Title, "Daniel Silvestre", 960, 700, TextHorizontalAlign.Center, TextVerticalAlign.Center));
+            AddGameComponent(new BitmapText(BitmapFontType.Subtitle, "Programmation avancée C# et Monogame", 960, 850, TextHorizontalAlign.Center, TextVerticalAlign.Center));
+            AddGameComponent(new SpriteSheetImage(TextureType.LOGO_LOGO, 6, 5, 0.03f, 960, 400));
             AddGameComponent(new TimeOutAction(4, ChangeScene));
         }
 

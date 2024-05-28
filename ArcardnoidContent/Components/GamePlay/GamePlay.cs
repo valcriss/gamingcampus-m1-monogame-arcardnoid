@@ -20,6 +20,7 @@ namespace ArcardnoidContent.Components.GamePlay
 
         private const int MAXIMUM_HEART = 2;
         private const int MAXIMUM_UNITS = 5 * 20;
+        private readonly List<Card> _cards = new List<Card>();
         private int _gold = 200;
         private int _heart = MAXIMUM_HEART;
         private int _units = MAXIMUM_UNITS;
@@ -57,7 +58,7 @@ namespace ArcardnoidContent.Components.GamePlay
 
         public List<Card> GetCards()
         {
-            throw new NotImplementedException();
+            return _cards;
         }
 
         public int GetGold()
@@ -82,7 +83,7 @@ namespace ArcardnoidContent.Components.GamePlay
 
         public void RemoveCard(Card card)
         {
-            throw new NotImplementedException();
+            _cards.Remove(card);
         }
 
         public void RemoveGold(int gold)
@@ -104,7 +105,6 @@ namespace ArcardnoidContent.Components.GamePlay
 
         public void UseCard(Card card)
         {
-            throw new NotImplementedException();
         }
 
         #endregion Public Methods

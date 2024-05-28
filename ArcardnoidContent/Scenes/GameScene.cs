@@ -25,6 +25,7 @@ namespace ArcardnoidContent.Scenes
     {
         #region Private Properties
 
+        private static IGamePlay GamePlay => GameServiceProvider.GetService<IGamePlay>();
         private BattleContainer? BattleContainer { get; set; }
         private Cursor? Cursor { get; set; }
         private DialogFrame? DialogFrame { get; set; }
@@ -204,6 +205,13 @@ namespace ArcardnoidContent.Scenes
             if (MainCharacter != null) MainCharacter.Enabled = true;
         }
 
+        private void OpenObtainDialog(ObtainType obtainType = ObtainType.RANDOM)
+        {
+            AddGameComponent(new ObtainDialog(obtainType, StartingObtain))
+                .AddAnimation<ObtainDialog>(new MoveAnimation(0.5f, new Point(-1920, 0), new Point(0, 0), false, true, EaseType.Linear))
+                .AddAnimation<ObtainDialog>(new AlphaFadeAnimation(0.5f, 0, 1f, false, true, EaseType.Linear)); ;
+        }
+
         private void PostLoadMap()
         {
             if (MapGenerator?.MapHypothesis == null) return;
@@ -215,6 +223,7 @@ namespace ArcardnoidContent.Scenes
             DialogFrame = AddGameComponent(new DialogFrame());
             PauseScreen = AddGameComponent(new PauseScreen(OnResume, OnDebug, OnQuit));
             Cursor = AddGameComponent(new Cursor(TextureType.UI_CURSOR, new Point(12, 16)));
+            StartingObtain();
         }
 
         private void StartBattle(EncounterType type, Point cell, double distanceFromStart)
@@ -228,6 +237,14 @@ namespace ArcardnoidContent.Scenes
             this.MoveToFront(BattleContainer);
             this.MoveToFront(Cursor);
             if (RandomMap != null) BattleContainer?.Show(RandomMap.GetGroundType(cell), type, distanceFromStart, cell, EndBattle);
+        }
+
+        private void StartingObtain()
+        {
+            if (GamePlay.GetCards().Count < 2)
+            {
+                OpenObtainDialog(ObtainType.CARD);
+            }
         }
 
         #endregion Private Methods

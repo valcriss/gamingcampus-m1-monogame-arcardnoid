@@ -12,5 +12,6 @@ namespace ArcardnoidContent.Components.GameScene.Dialogs
         GOLD,
         RANDOM,
         UNITS,
+        START,
     }
 }

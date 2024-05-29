@@ -86,13 +86,13 @@ namespace ArcardnoidContent.Components.UI
                 Point size = BitmapText.MeasureString();
                 int numberOfCenters = (int)Math.Ceiling(size.X / 64);
                 int sizeOfCenters = numberOfCenters * 64;
-                LeftBounds = new Rectangle((int)Bounds.X - 64 - (sizeOfCenters / 2), (int)Bounds.Y - OffsetY, 64, 64);
+                LeftBounds = new Rectangle((int)RealBounds.X - 64 - (sizeOfCenters / 2), (int)RealBounds.Y - OffsetY, 64, 64);
                 InsideBounds = new List<Rectangle>();
-                for (int x = (int)Bounds.X - 64 - (sizeOfCenters / 2) + 64; x < (int)Bounds.X + (sizeOfCenters / 2); x += 64)
+                for (int x = (int)RealBounds.X - 64 - (sizeOfCenters / 2) + 64; x < (int)RealBounds.X + (sizeOfCenters / 2); x += 64)
                 {
-                    InsideBounds.Add(new Rectangle(x, (int)Bounds.Y - OffsetY, 64, 64));
+                    InsideBounds.Add(new Rectangle(x, (int)RealBounds.Y - OffsetY, 64, 64));
                 }
-                RightBounds = new Rectangle((int)Bounds.X + (sizeOfCenters / 2), (int)Bounds.Y - OffsetY, 64, 64);
+                RightBounds = new Rectangle((int)RealBounds.X + (sizeOfCenters / 2), (int)RealBounds.Y - OffsetY, 64, 64);
             }
         }
 

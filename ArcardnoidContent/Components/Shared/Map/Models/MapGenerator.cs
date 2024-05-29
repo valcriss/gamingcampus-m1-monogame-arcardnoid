@@ -1,7 +1,6 @@
 ﻿using ArcardnoidContent.Components.GameScene;
 using ArcardnoidContent.Tools;
 using ArcardnoidShared.Framework.Drawing;
-using ArcardnoidShared.Framework.ServiceProvider;
 using ArcardnoidShared.Framework.ServiceProvider.Interfaces;
 
 namespace ArcardnoidContent.Components.Shared.Map.Models
@@ -37,11 +36,11 @@ namespace ArcardnoidContent.Components.Shared.Map.Models
 
         #region Public Constructors
 
-        public MapGenerator(int seed = 123456)
+        public MapGenerator(IRandom random, int seed = 123456)
         {
             Seed = seed;
             Chunks = new List<MapChunk>();
-            Random = GameServiceProvider.GetService<IRandomService>().GetRandom(seed);
+            Random = random;
         }
 
         #endregion Public Constructors

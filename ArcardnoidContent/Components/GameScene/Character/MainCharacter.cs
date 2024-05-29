@@ -92,6 +92,7 @@ namespace ArcardnoidContent.Components.GameScene.Character
                 { AnimationState.Walking,GetAnimationRectangles(384) },
                 { AnimationState.Attacking, GetAnimationRectangles(768) }
             });
+            _drawRectangle = _animations[_direction][_state][_currentFrame];
         }
 
         public void SetCurrentPath(List<Point>? path)

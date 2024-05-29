@@ -37,6 +37,7 @@ namespace ArcardnoidContent.Scenes
         private MainCharacter? MainCharacter { get; set; }
         private MapGenerator? MapGenerator { get; set; }
         private PauseScreen? PauseScreen { get; set; }
+        private IRandom Random { get; set; }
         private RandomMap? RandomMap { get; set; }
         private int Seed { get; set; }
         private BitmapText? SeedText { get; set; }
@@ -53,9 +54,10 @@ namespace ArcardnoidContent.Scenes
 
         public GameScene(int seed = 1)
         {
+            Random = GameServiceProvider.GetService<IRandomService>().GetRandom(seed);
             BackgroundColor = new GameColor(71, 171, 169, 255);
             Seed = seed;
-            MapGenerator = new MapGenerator(Seed);
+            MapGenerator = new MapGenerator(Random, Seed);
         }
 
         #endregion Public Constructors
@@ -129,11 +131,7 @@ namespace ArcardnoidContent.Scenes
         private void EndBattle(bool victory, Point cell)
         {
             if (MapGenerator == null || MapGenerator.MapHypothesis == null) return;
-            if (BattleContainer != null) AddHideAnimation<BattleContainer>(BattleContainer);
-            if (RandomMap != null) AddShowAnimation<RandomMap>(RandomMap);
-            if (MainCharacter != null) AddShowAnimation<MainCharacter>(MainCharacter);
-            if (GameSceneUI != null) AddShowAnimation<GameSceneUI>(GameSceneUI);
-            if (SeedText != null) AddShowAnimation<BitmapText>(SeedText);
+            HideBattleContainer();
             if (victory)
             {
                 AnimatedCell? animatedCell = RandomMap?.GetActorCell(cell);
@@ -145,6 +143,15 @@ namespace ArcardnoidContent.Scenes
                 this.MoveToFront(MainCharacter);
                 this.MoveToFront(Cursor);
             }
+        }
+
+        private void HideBattleContainer()
+        {
+            if (BattleContainer != null) AddHideAnimation<BattleContainer>(BattleContainer);
+            if (RandomMap != null) AddShowAnimation<RandomMap>(RandomMap);
+            if (MainCharacter != null) AddShowAnimation<MainCharacter>(MainCharacter);
+            if (GameSceneUI != null) AddShowAnimation<GameSceneUI>(GameSceneUI);
+            if (SeedText != null) AddShowAnimation<BitmapText>(SeedText);
         }
 
         private void OnDebug()
@@ -207,9 +214,17 @@ namespace ArcardnoidContent.Scenes
 
         private void OpenObtainDialog(ObtainType obtainType = ObtainType.RANDOM)
         {
-            AddGameComponent(new ObtainDialog(obtainType, StartingObtain))
+            AddGameComponent(new ObtainDialog(Random, obtainType, StartingObtain))
                 .AddAnimation<ObtainDialog>(new MoveAnimation(0.5f, new Point(-1920, 0), new Point(0, 0), false, true, EaseType.Linear))
-                .AddAnimation<ObtainDialog>(new AlphaFadeAnimation(0.5f, 0, 1f, false, true, EaseType.Linear)); ;
+                .AddAnimation<ObtainDialog>(new AlphaFadeAnimation(0.5f, 0, 1f, false, true, EaseType.Linear));
+            this.MoveToFront(Cursor);
+        }
+
+        private void PauseMap()
+        {
+            if (RandomMap != null) RandomMap.Enabled = false;
+            if (MainCharacter != null) MainCharacter.Enabled = false;
+            if (GameSceneUI != null) GameSceneUI.Enabled = false;
         }
 
         private void PostLoadMap()
@@ -226,13 +241,25 @@ namespace ArcardnoidContent.Scenes
             StartingObtain();
         }
 
-        private void StartBattle(EncounterType type, Point cell, double distanceFromStart)
+        private void ResumeMap()
+        {
+            if (RandomMap != null) RandomMap.Enabled = true;
+            if (MainCharacter != null) MainCharacter.Enabled = true;
+            if (GameSceneUI != null) GameSceneUI.Enabled = true;
+        }
+
+        private void ShowBattleContainer()
         {
             if (RandomMap != null) AddHideAnimation<RandomMap>(RandomMap);
             if (MainCharacter != null) AddHideAnimation<MainCharacter>(MainCharacter);
             if (GameSceneUI != null) AddHideAnimation<GameSceneUI>(GameSceneUI);
             if (SeedText != null) AddHideAnimation<BitmapText>(SeedText);
             if (BattleContainer != null) AddShowAnimation<BattleContainer>(BattleContainer);
+        }
+
+        private void StartBattle(EncounterType type, Point cell, double distanceFromStart)
+        {
+            ShowBattleContainer();
             System.Diagnostics.Debug.WriteLine("Start battle with " + type + " at " + distanceFromStart + " from start");
             this.MoveToFront(BattleContainer);
             this.MoveToFront(Cursor);
@@ -241,9 +268,17 @@ namespace ArcardnoidContent.Scenes
 
         private void StartingObtain()
         {
+            System.Diagnostics.Debug.WriteLine("Starting obtain");
+
             if (GamePlay.GetCards().Count < 2)
             {
-                OpenObtainDialog(ObtainType.CARD);
+                PauseMap();
+                System.Diagnostics.Debug.WriteLine("Need cards");
+                OpenObtainDialog(ObtainType.START);
+            }
+            else
+            {
+                ResumeMap();
             }
         }
 

@@ -9,5 +9,9 @@ namespace ArcardnoidContent.Components.GamePlay.Cards
     public enum CardType
     {
         None,
+        AttackSpell,
+        Money,
+        Units,
+        Speed,
     }
 }

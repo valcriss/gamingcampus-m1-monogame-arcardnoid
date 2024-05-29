@@ -91,6 +91,7 @@ namespace ArcardnoidShared.Framework.Scenes.Components
                         gameComponent.InnerLoad();
                     }
                 }
+                GameComponents.RemoveAll(x => x.State == ElementState.Unloaded);
             }
         }
 

@@ -1,0 +1,56 @@
+﻿[
+  {
+    "id": "cataclysm",
+    "cost": 600,
+    "param": 20,
+    "type": "AttackSpell",
+    "rarity": "Legendary",
+    "reusable": true,
+    "texture": "CARDS_CATACLYSM"
+  },
+  {
+    "id": "200-gold",
+    "cost": 0,
+    "param": 200,
+    "type": "Money",
+    "rarity": "Common",
+    "reusable": false,
+    "texture": "CARDS_200_GOLD"
+  },
+  {
+    "id": "11-units",
+    "cost": 300,
+    "param": 11,
+    "type": "Units",
+    "rarity": "Uncommon",
+    "reusable": false,
+    "texture": "CARDS_11_UNITS"
+  },
+  {
+    "id": "22-units",
+    "cost": 450,
+    "param": 22,
+    "type": "Units",
+    "rarity": "Rare",
+    "reusable": false,
+    "texture": "CARDS_22_UNITS"
+  },
+  {
+    "id": "mana-storm",
+    "cost": 450,
+    "param": 10,
+    "type": "AttackSpell",
+    "rarity": "Rare",
+    "reusable": true,
+    "texture": "CARDS_MANA_STORM"
+  },
+  {
+    "id": "super-speed",
+    "cost": 350,
+    "param": 10,
+    "type": "Speed",
+    "rarity": "Uncommon",
+    "reusable": true,
+    "texture": "CARDS_SUPER_SPEED"
+  }
+]

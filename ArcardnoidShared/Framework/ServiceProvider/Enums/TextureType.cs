@@ -92,5 +92,11 @@ namespace ArcardnoidShared.Framework.ServiceProvider.Enums
         MAP_UNITS_GOLD, // "map/units/gold"
         MAP_UNITS_MEAT, //  "map/units/meat"
 
+        CARDS_11_UNITS, // "cards/11_units"
+        CARDS_22_UNITS, // "cards/22_units"
+        CARDS_200_GOLD, // "cards/200_gold"
+        CARDS_CATACLYSM, // "cards/cataclysm"
+        CARDS_MANA_STORM, // "cards/mana-storm"
+        CARDS_SUPER_SPEED, // "cards/super-speed"
     }
 }

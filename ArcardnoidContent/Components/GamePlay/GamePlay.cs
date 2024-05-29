@@ -31,7 +31,7 @@ namespace ArcardnoidContent.Components.GamePlay
 
         public void AddCard(Card card)
         {
-            throw new NotImplementedException();
+            _cards.Add(card);
         }
 
         public void AddGold(int gold)

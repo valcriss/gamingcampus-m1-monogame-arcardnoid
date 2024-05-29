@@ -15,6 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Cards\cards.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Maps\chunkAssets.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

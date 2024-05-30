@@ -12,6 +12,10 @@ namespace ArcardnoidContent.Components.GamePlay
 
         event Action<int>? HeartChanged;
 
+        event Action<float, float>? OponentSpeedChanged;
+
+        event Action<float, float>? PlayerSpeedChanged;
+
         event Action<int>? UnitsChanged;
 
         #endregion Public Events
@@ -28,6 +32,10 @@ namespace ArcardnoidContent.Components.GamePlay
 
         bool CanBuy(int gold);
 
+        void ChangeOponentSpeed(float speed, float duration);
+
+        void ChangePlayerSpeed(float speed, float duration);
+
         List<Card> GetCards();
 
         int GetGold();
@@ -35,6 +43,8 @@ namespace ArcardnoidContent.Components.GamePlay
         int GetHeart();
 
         int GetMaxUnits();
+
+        float GetSpeed();
 
         int GetUnits();
 
@@ -45,6 +55,8 @@ namespace ArcardnoidContent.Components.GamePlay
         void RemoveHeart(int heart);
 
         void RemoveUnits(int units);
+
+        void Update(float delta);
 
         void UseCard(Card card);
 

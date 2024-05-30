@@ -21,20 +21,35 @@ namespace ArcardnoidContent.Components.GameScene.Battle.Cards
         {
             GamePlay.CardChanged += GamePlay_CardChanged;
             CardImages = new List<CardImage>();
-            List<Card> cards = GamePlay.GetCards();
-            int innerY = 200;
+            List<Card> cards = GamePlay.GetCards().Where(c => c.InBattle).ToList();
+            int innerY = 64;
             foreach (var card in cards)
             {
-                var cardImage = new CardImage(card, 130, innerY, true);
+                var cardImage = new CardImage(card, 30, innerY, true, CardClicked);
                 CardImages.Add(cardImage);
                 AddGameComponent(cardImage);
-                innerY += 300;
+                innerY += 310;
             }
         }
 
         #endregion Public Constructors
 
         #region Private Methods
+
+        private void CardClicked(CardImage card)
+        {
+            switch (card.Card.CardType)
+            {
+                case CardType.Speed:
+                    GamePlay.ChangePlayerSpeed(card.Card.CardParam, 30);
+                    break;
+            }
+            if (!card.Card.Reusable)
+            {
+                GamePlay.RemoveCard(card.Card);
+                card.InnerUnload();
+            }
+        }
 
         private void GamePlay_CardChanged(List<Card> cards)
         {

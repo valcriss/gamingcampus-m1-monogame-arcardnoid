@@ -30,7 +30,7 @@ namespace ArcardnoidContent.Components.GameScene.Dialogs
             _onClose = onClose;
             _card = GetObtainedCard();
             AddGameComponent(new DialogBackground(0.75f));
-            AddGameComponent(new CardImage(_card, 960, 550));
+            AddGameComponent(new CardImage(_card, 704, 191));
             AddGameComponent(new AnimatedTitleBand(TextureType.UI_BANDEAU, BitmapFontType.Default, "Vous avez obtenu", 0.05f, 960, 180, new GameColor(75, 30, 0)));
         }
 

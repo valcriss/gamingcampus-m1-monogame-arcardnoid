@@ -12,6 +12,10 @@ namespace ArcardnoidContent.Components.GamePlay
 
         public event Action<int>? HeartChanged;
 
+        public event Action<float, float>? OponentSpeedChanged;
+
+        public event Action<float, float>? PlayerSpeedChanged;
+
         public event Action<int>? UnitsChanged;
 
         #endregion Public Events
@@ -23,6 +27,10 @@ namespace ArcardnoidContent.Components.GamePlay
         private readonly List<Card> _cards = new List<Card>();
         private int _gold = 200;
         private int _heart = MAXIMUM_HEART;
+        private float _opponentSpeed = 1;
+        private float _opponentSpeedDuration = 0;
+        private float _playerSpeed = 1;
+        private float _playerSpeedDuration = 0;
         private int _units = MAXIMUM_UNITS;
 
         #endregion Private Fields
@@ -56,6 +64,20 @@ namespace ArcardnoidContent.Components.GamePlay
             return _gold >= gold;
         }
 
+        public void ChangeOponentSpeed(float speed, float duration)
+        {
+            _opponentSpeed = speed;
+            _opponentSpeedDuration = duration;
+            OponentSpeedChanged?.Invoke(_opponentSpeed, duration);
+        }
+
+        public void ChangePlayerSpeed(float speed, float duration)
+        {
+            _playerSpeed = speed;
+            _playerSpeedDuration = duration;
+            PlayerSpeedChanged?.Invoke(_playerSpeed, duration);
+        }
+
         public List<Card> GetCards()
         {
             return _cards;
@@ -74,6 +96,11 @@ namespace ArcardnoidContent.Components.GamePlay
         public int GetMaxUnits()
         {
             return MAXIMUM_UNITS;
+        }
+
+        public float GetSpeed()
+        {
+            return _playerSpeed;
         }
 
         public int GetUnits()
@@ -101,6 +128,30 @@ namespace ArcardnoidContent.Components.GamePlay
         public void RemoveUnits(int units)
         {
             _units = Math.Max(0, _units - units);
+        }
+
+        public void Update(float delta)
+        {
+            if (_playerSpeedDuration > 0)
+            {
+                _playerSpeedDuration -= delta;
+                if (_playerSpeedDuration <= 0)
+                {
+                    _playerSpeed = 1;
+                    _playerSpeedDuration = 0;
+                    PlayerSpeedChanged?.Invoke(_playerSpeed, 0);
+                }
+            }
+            if (_opponentSpeedDuration > 0)
+            {
+                _opponentSpeedDuration -= delta;
+                if (_opponentSpeedDuration <= 0)
+                {
+                    _opponentSpeed = 1;
+                    _opponentSpeedDuration = 0;
+                    OponentSpeedChanged?.Invoke(_opponentSpeed, 0);
+                }
+            }
         }
 
         public void UseCard(Card card)

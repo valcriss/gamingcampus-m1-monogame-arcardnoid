@@ -1,4 +1,5 @@
-﻿using ArcardnoidContent.Components.GameScene.Battle.Enums;
+﻿using ArcardnoidContent.Components.GamePlay;
+using ArcardnoidContent.Components.GameScene.Battle.Enums;
 using ArcardnoidShared.Framework.Components.Images;
 using ArcardnoidShared.Framework.Drawing;
 using ArcardnoidShared.Framework.Scenes.Animations;
@@ -14,7 +15,6 @@ namespace ArcardnoidContent.Components.GameScene.Battle.Bars
         #region Public Properties
 
         public virtual Point BarPosition { get; } = Point.Zero;
-
         public Rectangle CollidingBounds { get; set; } = Rectangle.Empty;
 
         #endregion Public Properties
@@ -22,8 +22,10 @@ namespace ArcardnoidContent.Components.GameScene.Battle.Bars
         #region Protected Properties
 
         protected virtual Point AnimationOffset { get; } = Point.Zero;
+        protected virtual float CurrentSpeed { get; set; } = 300;
         protected BattleFaction Faction { get; }
         protected Rectangle GameBounds { get; set; } = Rectangle.Empty;
+        protected IGamePlay GamePlay { get; set; } = GameServiceProvider.GetService<IGamePlay>();
         protected virtual float Speed { get; set; } = 300;
         protected virtual int Width { get; set; } = 10;
 

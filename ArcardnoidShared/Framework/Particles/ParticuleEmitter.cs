@@ -81,6 +81,11 @@ namespace ArcardnoidShared.Framework.Particles
             _position = position;
         }
 
+        public void UpdateParticuleEmitterData(ParticleData particleData)
+        {
+            _particuleData = particleData;
+        }
+
         #endregion Public Methods
     }
 }

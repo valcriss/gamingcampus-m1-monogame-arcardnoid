@@ -28,6 +28,12 @@ namespace ArcardnoidContent.Components.GamePlay.Cards
         [JsonProperty("type")]
         public CardType CardType { get; set; } = CardType.None;
 
+        [JsonProperty("inBattle")]
+        public bool InBattle { get; set; }
+
+        [JsonProperty("maxUnits")]
+        public int MaxUnits { get; set; } = 0;
+
         [JsonProperty("reusable")]
         public bool Reusable { get; set; }
 

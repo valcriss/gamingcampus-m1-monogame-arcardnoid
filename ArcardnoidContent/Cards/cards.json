@@ -5,7 +5,8 @@
     "param": 20,
     "type": "AttackSpell",
     "rarity": "Legendary",
-    "reusable": true,
+    "reusable": false,
+    "inBattle": true,
     "texture": "CARDS_CATACLYSM",
     "smalltexture": "CARDS_CATACLYSM_SMALL"
   },
@@ -16,6 +17,7 @@
     "type": "Money",
     "rarity": "Common",
     "reusable": false,
+    "inBattle": false,
     "texture": "CARDS_200_GOLD",
     "smalltexture": "CARDS_200_GOLD_SMALL"
   },
@@ -26,6 +28,8 @@
     "type": "Units",
     "rarity": "Uncommon",
     "reusable": false,
+    "inBattle": true,
+    "maxUnits": 90,
     "texture": "CARDS_11_UNITS",
     "smalltexture": "CARDS_11_UNITS_SMALL"
   },
@@ -36,6 +40,8 @@
     "type": "Units",
     "rarity": "Rare",
     "reusable": false,
+    "inBattle": true,
+    "maxUnits": 80,
     "texture": "CARDS_22_UNITS",
     "smalltexture": "CARDS_22_UNITS_SMALL"
   },
@@ -46,16 +52,18 @@
     "type": "AttackSpell",
     "rarity": "Rare",
     "reusable": true,
+    "inBattle": true,
     "texture": "CARDS_MANA_STORM",
     "smalltexture": "CARDS_MANA_STORM_SMALL"
   },
   {
     "id": "super-speed",
     "cost": 350,
-    "param": 10,
+    "param": 2,
     "type": "Speed",
     "rarity": "Uncommon",
     "reusable": true,
+    "inBattle": true,
     "texture": "CARDS_SUPER_SPEED",
     "smalltexture": "CARDS_SUPER_SPEED_SMALL"
   }

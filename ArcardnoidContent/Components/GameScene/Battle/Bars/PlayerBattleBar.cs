@@ -25,6 +25,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
 
         public PlayerBattleBar(Rectangle gameBounds) : base(BattleFaction.Player, gameBounds)
         {
+            GamePlay.PlayerSpeedChanged += (speed, duration) => CurrentSpeed = Speed * speed;
         }
 
         #endregion Public Constructors
@@ -48,7 +49,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
             {
                 float direction = keyboardService.IsKeyDown("Q") ? -1 : 1;
                 Point position = Bounds.Position;
-                position.X = position.X + (Speed * delta) * direction;
+                position.X = position.X + (CurrentSpeed * delta) * direction;
                 position.X = MathTools.Clamp(position.X, GameBounds.X + ((Width * 8) + 16), GameBounds.X + GameBounds.Width - ((Width * 8) + 16));
                 Bounds.SetPosition(position);
             }

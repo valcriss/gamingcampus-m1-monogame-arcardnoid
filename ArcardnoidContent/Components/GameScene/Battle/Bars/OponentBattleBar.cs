@@ -23,6 +23,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
 
         public OponentBattleBar(Rectangle gameBounds) : base(BattleFaction.Opponent, gameBounds)
         {
+            GamePlay.OponentSpeedChanged += (speed, duration) => CurrentSpeed = Speed * speed;
         }
 
         #endregion Public Constructors
@@ -44,11 +45,11 @@ namespace ArcardnoidContent.Components.GameScene.Battle
             Point position = Bounds.Position;
             if (fireball.RealBounds.X < position.X)
             {
-                position.X = position.X + (Speed * delta) * -1;
+                position.X = position.X + (CurrentSpeed * delta) * -1;
             }
             else if (fireball.RealBounds.X > position.X)
             {
-                position.X = position.X + (Speed * delta) * 1;
+                position.X = position.X + (CurrentSpeed * delta) * 1;
             }
 
             position.X = MathTools.Clamp(position.X, GameBounds.X + ((Width * 8) + 16), GameBounds.X + GameBounds.Width - ((Width * 8) + 16));

@@ -104,6 +104,8 @@ namespace ArcardnoidContent.Scenes
                     if (PauseScreen != null) PauseScreen?.Open();
                 }
             }
+
+            GamePlay.Update(delta);
         }
 
         #endregion Public Methods

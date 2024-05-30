@@ -19,6 +19,9 @@ namespace ArcardnoidContent.Components.GamePlay.Cards
         [JsonProperty("rarity")]
         public CardRarity CardRarity { get; set; } = CardRarity.None;
 
+        [JsonProperty("smalltexture")]
+        public TextureType CardSmallTexture { get; set; }
+
         [JsonProperty("texture")]
         public TextureType CardTexture { get; set; }
 

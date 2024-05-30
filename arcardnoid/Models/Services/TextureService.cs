@@ -116,6 +116,12 @@ namespace arcardnoid.Models.Services
                 TextureType.CARDS_CATACLYSM => "cards/cataclysm",
                 TextureType.CARDS_MANA_STORM => "cards/mana-storm",
                 TextureType.CARDS_SUPER_SPEED => "cards/super-speed",
+                TextureType.CARDS_11_UNITS_SMALL => "cards/11-units-small",
+                TextureType.CARDS_22_UNITS_SMALL => "cards/22-units-small",
+                TextureType.CARDS_200_GOLD_SMALL => "cards/200-gold-small",
+                TextureType.CARDS_CATACLYSM_SMALL => "cards/cataclysm-small",
+                TextureType.CARDS_MANA_STORM_SMALL => "cards/mana-storm-small",
+                TextureType.CARDS_SUPER_SPEED_SMALL => "cards/super-speed-small",
                 _ => null
             };
         }

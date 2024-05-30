@@ -6,7 +6,8 @@
     "type": "AttackSpell",
     "rarity": "Legendary",
     "reusable": true,
-    "texture": "CARDS_CATACLYSM"
+    "texture": "CARDS_CATACLYSM",
+    "smalltexture": "CARDS_CATACLYSM_SMALL"
   },
   {
     "id": "200-gold",
@@ -15,7 +16,8 @@
     "type": "Money",
     "rarity": "Common",
     "reusable": false,
-    "texture": "CARDS_200_GOLD"
+    "texture": "CARDS_200_GOLD",
+    "smalltexture": "CARDS_200_GOLD_SMALL"
   },
   {
     "id": "11-units",
@@ -24,7 +26,8 @@
     "type": "Units",
     "rarity": "Uncommon",
     "reusable": false,
-    "texture": "CARDS_11_UNITS"
+    "texture": "CARDS_11_UNITS",
+    "smalltexture": "CARDS_11_UNITS_SMALL"
   },
   {
     "id": "22-units",
@@ -33,7 +36,8 @@
     "type": "Units",
     "rarity": "Rare",
     "reusable": false,
-    "texture": "CARDS_22_UNITS"
+    "texture": "CARDS_22_UNITS",
+    "smalltexture": "CARDS_22_UNITS_SMALL"
   },
   {
     "id": "mana-storm",
@@ -42,7 +46,8 @@
     "type": "AttackSpell",
     "rarity": "Rare",
     "reusable": true,
-    "texture": "CARDS_MANA_STORM"
+    "texture": "CARDS_MANA_STORM",
+    "smalltexture": "CARDS_MANA_STORM_SMALL"
   },
   {
     "id": "super-speed",
@@ -51,6 +56,7 @@
     "type": "Speed",
     "rarity": "Uncommon",
     "reusable": true,
-    "texture": "CARDS_SUPER_SPEED"
+    "texture": "CARDS_SUPER_SPEED",
+    "smalltexture": "CARDS_SUPER_SPEED_SMALL"
   }
 ]

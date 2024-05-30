@@ -1,11 +1,13 @@
 ﻿using ArcardnoidContent.Components.GamePlay;
 using ArcardnoidContent.Components.GameScene.Battle.Bars;
+using ArcardnoidContent.Components.GameScene.Battle.Cards;
 using ArcardnoidContent.Components.GameScene.Battle.Enums;
 using ArcardnoidContent.Components.Shared.Map;
 using ArcardnoidContent.Components.Shared.Map.Cells;
 using ArcardnoidContent.Components.Shared.Map.Enums;
 using ArcardnoidShared.Framework.Components.Images;
 using ArcardnoidShared.Framework.Drawing;
+using ArcardnoidShared.Framework.Scenes.Animations;
 using ArcardnoidShared.Framework.Scenes.Components;
 using ArcardnoidShared.Framework.Scenes.Element;
 using ArcardnoidShared.Framework.ServiceProvider;
@@ -21,6 +23,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
 
         private static IGamePlay GamePlay => GameServiceProvider.GetService<IGamePlay>();
         private static IRandom Random => GameServiceProvider.GetService<IRandomService>().GetRandom();
+        private BattleCardsDeck BattleCardsDeck { get; set; }
         private List<BattleColliderItem> ColliderItems { get; set; } = new List<BattleColliderItem>();
         private Rectangle GameBounds { get; set; } = Rectangle.Empty;
         private Action<bool>? OnBattleEnded { get; set; } = null;
@@ -70,6 +73,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle
             System.Diagnostics.Debug.WriteLine("Map animation ended");
             PlayerBattleBar = AddGameComponent(new PlayerBattleBar(GameBounds)).Show(() => { BarAnimationCompleted(BattleFaction.Player); });
             OponentBattleBar = AddGameComponent(new OponentBattleBar(GameBounds)).Show(() => { BarAnimationCompleted(BattleFaction.Opponent); });
+            BattleCardsDeck = AddGameComponent(new BattleCardsDeck(-300, 0)).AddAnimation<BattleCardsDeck>(new MoveAnimation(0.5f, new Point(-300, 0), new Point(0, 0), false, true, EaseType.InOutBounce));
         }
 
         public void ShowMap(EncounterType encounterType, double distanceFromStart)

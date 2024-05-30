@@ -35,7 +35,7 @@ namespace ArcardnoidContent.Components.GameScene.SubScreens
             "Suis le lapin blanc",
             "Nous sommes en train de construire votre monde",
             "Pourquoi ne commandes-tu pas un sandwich ?",
-            "Pendant que le satellite se met en position",
+            "Le satellite se met en position",
             "C'est toujours plus rapide que tu ne pourrais le dessiner",
             "La derniere fois que j'ai essaye, le singe n'a pas survecu. Esperons que cela fonctionnera mieux cette fois.",
             "All your bases are belong to us",

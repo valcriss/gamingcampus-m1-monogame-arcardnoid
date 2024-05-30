@@ -13,10 +13,17 @@ namespace ArcardnoidContent.Components.GameScene.Cards
 
         #endregion Private Properties
 
+        #region Private Fields
+
+        private bool _small;
+
+        #endregion Private Fields
+
         #region Public Constructors
 
-        public CardImage(Card card, int x, int y) : base(x, y)
+        public CardImage(Card card, int x, int y, bool small = false) : base(x, y)
         {
+            _small = small;
             Card = card;
         }
 
@@ -27,7 +34,7 @@ namespace ArcardnoidContent.Components.GameScene.Cards
         public override void Load()
         {
             base.Load();
-            Image = AddGameComponent(new Image(Card.CardTexture, 0, 0));
+            Image = AddGameComponent(new Image(_small ? Card.CardSmallTexture : Card.CardTexture, 0, 0));
         }
 
         public override void Update(float delta)

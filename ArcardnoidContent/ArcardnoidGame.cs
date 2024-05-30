@@ -51,7 +51,7 @@ namespace ArcardnoidContent
 
         public void LoadGameContent()
         {
-            _scenesManager.AddScene(new GameScene());
+            _scenesManager.AddScene(new SplashScreen());
         }
 
         public void UpdateGame(float delta)

@@ -23,12 +23,17 @@ namespace ArcardnoidContent.Components.GameScene.Battle.Cards
             CardImages = new List<CardImage>();
             List<Card> cards = GamePlay.GetCards().Where(c => c.InBattle).ToList();
             int innerY = 64;
-            foreach (var card in cards)
+            for (int i = 0; i < cards.Count; i++)
             {
-                var cardImage = new CardImage(card, 30, innerY, true, CardClicked);
+                Card? card = cards[i];
+                var cardImage = new CardImage(card, i<3 ? 30: 1700, innerY, true, CardClicked);
                 CardImages.Add(cardImage);
                 AddGameComponent(cardImage);
                 innerY += 310;
+                if(i == 2)
+                {
+                    innerY = 64;
+                }
             }
         }
 
@@ -42,6 +47,9 @@ namespace ArcardnoidContent.Components.GameScene.Battle.Cards
             {
                 case CardType.Speed:
                     GamePlay.ChangePlayerSpeed(card.Card.CardParam, 30);
+                    break;
+                case CardType.AttackSpell:
+                    GamePlay.CastAttackSpell(card.Card);
                     break;
             }
             if (!card.Card.Reusable)

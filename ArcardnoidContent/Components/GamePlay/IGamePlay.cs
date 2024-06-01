@@ -18,6 +18,8 @@ namespace ArcardnoidContent.Components.GamePlay
 
         event Action<int>? UnitsChanged;
 
+        event Action<Card>? AttackSpellCasted;
+
         #endregion Public Events
 
         #region Public Methods
@@ -31,7 +33,7 @@ namespace ArcardnoidContent.Components.GamePlay
         void AddUnits(int units);
 
         bool CanBuy(int gold);
-
+        void CastAttackSpell(Card card);
         void ChangeOponentSpeed(float speed, float duration);
 
         void ChangePlayerSpeed(float speed, float duration);

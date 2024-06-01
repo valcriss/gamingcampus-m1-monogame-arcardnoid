@@ -17,6 +17,7 @@ namespace ArcardnoidContent.Components.GamePlay
         public event Action<float, float>? PlayerSpeedChanged;
 
         public event Action<int>? UnitsChanged;
+        public event Action<Card>? AttackSpellCasted;
 
         #endregion Public Events
 
@@ -156,6 +157,11 @@ namespace ArcardnoidContent.Components.GamePlay
 
         public void UseCard(Card card)
         {
+        }
+
+        public void CastAttackSpell(Card card)
+        {
+            AttackSpellCasted?.Invoke(card);
         }
 
         #endregion Public Methods

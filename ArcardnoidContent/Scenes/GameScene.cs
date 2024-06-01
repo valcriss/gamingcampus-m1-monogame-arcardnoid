@@ -272,7 +272,7 @@ namespace ArcardnoidContent.Scenes
         {
             System.Diagnostics.Debug.WriteLine("Starting obtain");
 
-            if (GamePlay.GetCards().Count < 2)
+            if (GamePlay.GetCards().Count < 5)
             {
                 PauseMap();
                 System.Diagnostics.Debug.WriteLine("Need cards");

@@ -25,12 +25,13 @@ namespace ArcardnoidContent.Components.Shared.Map.Cells
         private bool _loop = true;
         private double _pausedTime;
         private List<Rectangle> _rects = new();
+        private Action<AnimatedCell>? _onCompleted = null;
 
         #endregion Private Fields
 
         #region Public Constructors
 
-        public AnimatedCell(ITexture texture, int columns, int rows, double speed, int delayMin, int delayMax, int x, int y, int realX, int realY, int offsetX, int offsetY, bool loop = true) : base(texture, x, y, realX, realY, offsetX, offsetY)
+        public AnimatedCell(ITexture texture, int columns, int rows, double speed, int delayMin, int delayMax, int x, int y, int realX, int realY, int offsetX, int offsetY, bool loop = true, Action<AnimatedCell>? onCompleted = null) : base(texture, x, y, realX, realY, offsetX, offsetY)
         {
             _columns = columns;
             _rows = rows;
@@ -40,6 +41,7 @@ namespace ArcardnoidContent.Components.Shared.Map.Cells
             _delayMin = delayMin;
             _delayMax = delayMax;
             _loop = loop;
+            _onCompleted = onCompleted;
         }
 
         #endregion Public Constructors
@@ -79,6 +81,7 @@ namespace ArcardnoidContent.Components.Shared.Map.Cells
                     if (!_loop)
                     {
                         _index = _columns * _rows - 1;
+                        _onCompleted?.Invoke(this);
                     }
                     else if (_delay > 0 && _pausedTime < _delay)
                     {

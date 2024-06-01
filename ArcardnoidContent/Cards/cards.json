@@ -8,7 +8,11 @@
     "reusable": false,
     "inBattle": true,
     "texture": "CARDS_CATACLYSM",
-    "smalltexture": "CARDS_CATACLYSM_SMALL"
+    "smalltexture": "CARDS_CATACLYSM_SMALL",
+    "spelltexture": "SPELL_CATACLYSM",
+    "spellrows": 6,
+    "spellcols": 5,
+    "spellspeed": 30
   },
   {
     "id": "200-gold",
@@ -54,7 +58,11 @@
     "reusable": true,
     "inBattle": true,
     "texture": "CARDS_MANA_STORM",
-    "smalltexture": "CARDS_MANA_STORM_SMALL"
+    "smalltexture": "CARDS_MANA_STORM_SMALL",
+    "spelltexture": "SPELL_MANA_STORM",
+    "spellrows": 3,
+    "spellcols": 5,
+    "spellspeed": 60
   },
   {
     "id": "super-speed",

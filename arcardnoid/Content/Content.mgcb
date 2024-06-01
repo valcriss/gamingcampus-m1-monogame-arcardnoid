@@ -86,18 +86,6 @@
 /processorParam:TextureFormat=Color
 /build:cards/11-units.png
 
-#begin cards/11-units.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:cards/11-units.png
-
 #begin cards/200-gold-small.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -109,18 +97,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:cards/200-gold-small.png
-
-#begin cards/200-gold.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:cards/200-gold.png
 
 #begin cards/200-gold.png
 /importer:TextureImporter
@@ -158,18 +134,6 @@
 /processorParam:TextureFormat=Color
 /build:cards/22-units.png
 
-#begin cards/22-units.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:cards/22-units.png
-
 #begin cards/cataclysm-small.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -181,18 +145,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:cards/cataclysm-small.png
-
-#begin cards/cataclysm.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:cards/cataclysm.png
 
 #begin cards/cataclysm.png
 /importer:TextureImporter
@@ -230,18 +182,6 @@
 /processorParam:TextureFormat=Color
 /build:cards/mana-storm.png
 
-#begin cards/mana-storm.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:cards/mana-storm.png
-
 #begin cards/super-speed-small.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -253,18 +193,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:cards/super-speed-small.png
-
-#begin cards/super-speed.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:cards/super-speed.png
 
 #begin cards/super-speed.png
 /importer:TextureImporter
@@ -1154,6 +1082,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:particles/particleWhite_7.png
+
+#begin spells/cataclysm-spell.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:spells/cataclysm-spell.png
+
+#begin spells/mana-storm-spell.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:spells/mana-storm-spell.png
 
 #begin ui/bandeau.png
 /importer:TextureImporter

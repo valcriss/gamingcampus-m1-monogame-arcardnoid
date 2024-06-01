@@ -122,6 +122,8 @@ namespace arcardnoid.Models.Services
                 TextureType.CARDS_CATACLYSM_SMALL => "cards/cataclysm-small",
                 TextureType.CARDS_MANA_STORM_SMALL => "cards/mana-storm-small",
                 TextureType.CARDS_SUPER_SPEED_SMALL => "cards/super-speed-small",
+                TextureType.SPELL_CATACLYSM => "spells/cataclysm-spell",
+                TextureType.SPELL_MANA_STORM => "spells/mana-storm-spell",
                 _ => null
             };
         }

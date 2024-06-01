@@ -104,5 +104,8 @@ namespace ArcardnoidShared.Framework.ServiceProvider.Enums
         CARDS_CATACLYSM_SMALL, // "cards/cataclysm-small"
         CARDS_MANA_STORM_SMALL, // "cards/mana-storm-small"
         CARDS_SUPER_SPEED_SMALL, // "cards/super-speed-small"
+
+        SPELL_MANA_STORM, // "spells/mana-storm"
+        SPELL_CATACLYSM // "spells/cataclysm"
     }
 }

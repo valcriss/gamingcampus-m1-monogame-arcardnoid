@@ -83,7 +83,7 @@ namespace ArcardnoidContent.Components.GameScene.Cards
 
             if (InterractState == MouseInterractState.Hover)
             {
-                Image.Color = GameColor.Red;
+                Image.Color = GameColor.LightRed;
             }
             else
             {

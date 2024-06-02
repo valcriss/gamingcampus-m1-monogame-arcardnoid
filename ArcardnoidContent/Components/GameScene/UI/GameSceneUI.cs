@@ -34,7 +34,7 @@ namespace ArcardnoidContent.Components.GameScene.UI
             HeartUI1 = AddGameComponent(new HeartUI(180, 17));
             HeartUI2 = AddGameComponent(new HeartUI(255, 17));
             AddGameComponent(new CoinAmountUI(350, 10));
-            AddGameComponent(new UnitsCountUI(540, 10));
+            AddGameComponent(new UnitsCountUI(550, 10));
             AddGameComponent(new CardsCountUI(770, 10));
         }
 

@@ -34,6 +34,11 @@ namespace ArcardnoidContent.Components.GameScene.Battle
 
         #region Public Methods
 
+        public void SetDebug(bool value)
+        {
+            Debug = value;
+        }
+
         public void Show(GroundType ground, EncounterType type, double distanceFromStart, Point cell, Action<bool, Point>? battleEnded)
         {
             RemoveAllGameComponents();
@@ -44,11 +49,6 @@ namespace ArcardnoidContent.Components.GameScene.Battle
             BattleField = AddGameComponent(new BattleField(ground, 0, 0, OnBattleEnded));
             BattleEnd = AddGameComponent(new BattleEnd());
             AddShowAnimation(BattleField);
-        }
-
-        public void ToggleDebug()
-        {
-            Debug = !Debug;
         }
 
         #endregion Public Methods

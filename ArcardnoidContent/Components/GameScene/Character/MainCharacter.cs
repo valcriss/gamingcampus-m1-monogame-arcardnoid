@@ -101,9 +101,9 @@ namespace ArcardnoidContent.Components.GameScene.Character
             _currentPathIndex = 0;
         }
 
-        public void ToggleDebug()
+        public void SetDebug(bool debug)
         {
-            _forceDebug = !_forceDebug;
+            _forceDebug = debug;
         }
 
         public override void Update(float delta)

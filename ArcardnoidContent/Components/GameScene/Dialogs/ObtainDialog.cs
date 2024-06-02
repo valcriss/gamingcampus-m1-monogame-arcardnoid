@@ -45,7 +45,14 @@ namespace ArcardnoidContent.Components.GameScene.Dialogs
             if (mouseService.IsMouseLeftButtonPressed())
             {
                 IGamePlay gamePlay = GameServiceProvider.GetService<IGamePlay>();
-                gamePlay.AddCard(_card);
+                if (_card.CardType == CardType.Money)
+                {
+                    gamePlay.AddGold((int)_card.CardParam);
+                }
+                else
+                {
+                    gamePlay.AddCard(_card);
+                }
                 _onClose();
                 this.InnerUnload();
             }

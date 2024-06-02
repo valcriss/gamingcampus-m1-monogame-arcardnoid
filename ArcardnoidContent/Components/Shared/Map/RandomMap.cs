@@ -181,9 +181,9 @@ namespace ArcardnoidContent.Components.Shared.Map
             GameComponents.Add(corpse);
         }
 
-        public void ToggleDebug()
+        public void SetDebug(bool value)
         {
-            _forceDebug = !_forceDebug;
+            _forceDebug = value;
             LoadTiles();
         }
 

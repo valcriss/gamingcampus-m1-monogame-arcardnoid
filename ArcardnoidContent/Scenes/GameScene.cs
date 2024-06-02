@@ -47,6 +47,7 @@ namespace ArcardnoidContent.Scenes
         #region Private Fields
 
         private bool _battleStarted = false;
+        private bool _debug = false;
 
         #endregion Private Fields
 
@@ -101,6 +102,9 @@ namespace ArcardnoidContent.Scenes
                 {
                     if (RandomMap != null) RandomMap.Enabled = false;
                     if (MainCharacter != null) MainCharacter.Enabled = false;
+                    if (BattleContainer != null) BattleContainer.Enabled = false;
+                    MoveToFront(PauseScreen);
+                    MoveToFront(Cursor);
                     if (PauseScreen != null) PauseScreen?.Open();
                 }
             }
@@ -142,6 +146,7 @@ namespace ArcardnoidContent.Scenes
                 int gridY = animatedCell.GridY;
                 AnimatedCell corpse = AddGameComponent(new AnimatedCell(BattleField.LoadAssetTexture(TextureType.MAP_UNITS_DEAD_1), 7, 1, 80, 0, 0, gridX, gridY, MapGenerator.MapHypothesis.PositionX + gridX * 64, MapGenerator.MapHypothesis.PositionY + gridY * 64, 32, 16, false));
                 RandomMap?.ReplaceActorCell(animatedCell.TextureAsset, corpse, cell);
+                OpenObtainDialog(ObtainType.RANDOM);
                 this.MoveToFront(MainCharacter);
                 this.MoveToFront(Cursor);
             }
@@ -164,9 +169,10 @@ namespace ArcardnoidContent.Scenes
         private void OnDebug()
         {
             OnResume();
-            RandomMap?.ToggleDebug();
-            MainCharacter?.ToggleDebug();
-            BattleContainer?.ToggleDebug();
+            _debug = !_debug;
+            RandomMap?.SetDebug(_debug);
+            MainCharacter?.SetDebug(_debug);
+            BattleContainer?.SetDebug(_debug);
         }
 
         private void OnEncounter(EncounterType type, Point cell, double distanceFromStart)
@@ -217,6 +223,7 @@ namespace ArcardnoidContent.Scenes
         {
             if (RandomMap != null) RandomMap.Enabled = true;
             if (MainCharacter != null) MainCharacter.Enabled = true;
+            if (BattleContainer != null) BattleContainer.Enabled = true;
         }
 
         private void OpenObtainDialog(ObtainType obtainType = ObtainType.RANDOM)

@@ -367,6 +367,10 @@ namespace ArcardnoidContent.Components.GameScene.Battle
                     primitives2D.DrawRectangle(GameBounds, GameColor.Red, 3f);
                     foreach (BattleColliderItem item in ColliderItems)
                     {
+                        if (item.Component.State == ElementState.Unloaded)
+                        {
+                            continue;
+                        }
                         primitives2D.DrawRectangle(item.Bounds, GetColliderColor(item.ColliderType), 2f);
                     }
                 });

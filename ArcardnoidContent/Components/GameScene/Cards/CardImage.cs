@@ -49,10 +49,6 @@ namespace ArcardnoidContent.Components.GameScene.Cards
         {
             base.Load();
             Image = AddGameComponent(new Image(_small ? Card.CardSmallTexture : Card.CardTexture, _small ? 106 : 256, _small ? 148 : 359));
-            AddGameComponent(new Primitive2D((primitive) =>
-            {
-                primitive.DrawRectangle(RealBounds, GameColor.Red, 2f);
-            }));
         }
 
         public void OnCardClicked()

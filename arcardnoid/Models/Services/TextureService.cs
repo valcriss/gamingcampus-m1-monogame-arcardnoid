@@ -54,6 +54,8 @@ namespace arcardnoid.Models.Services
                 TextureType.UI_HEART => "ui/heart",
                 TextureType.UI_HEADER => "ui/header",
                 TextureType.UI_INPUT => "ui/input",
+                TextureType.UI_UNITS => "ui/units",
+                TextureType.UI_CARDS => "ui/cards",
                 TextureType.UI_BUTTONS_BUTTON_GREEN_NORMAL => "ui/buttons/button-green-normal",
                 TextureType.UI_BUTTONS_BUTTON_GREEN_HOVER => "ui/buttons/button-green-hover",
                 TextureType.UI_BUTTONS_BUTTON_GREEN_PRESSED => "ui/buttons/button-green-pressed",

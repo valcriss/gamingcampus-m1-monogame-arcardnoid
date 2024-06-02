@@ -59,35 +59,12 @@ namespace ArcardnoidContent.Components.GameScene.Battle
             StaticMap = AddGameComponent(new AnimatedStaticMap(ground == GroundType.Grass ? "Maps/grassmap.json" : "Maps/sandmap.json", 256, 60, MapAnimationEnded, true));
             Primitive2D = AddGameComponent(new Primitive2D());
             GamePlay.AttackSpellCasted += AttackSpellCasted;
+            GamePlay.UnitsSpawned += UnitsSpawned;
         }
 
         #endregion Public Constructors
 
         #region Public Methods
-        private void AttackSpellCasted(Card card)
-        {
-            if (card.SpellTexture == null) return;
-            List<BattleColliderItem> items = ColliderItems.Where(c => c.Faction == BattleFaction.Opponent && c.ColliderType == ColliderType.Actor && c.Component.State != ElementState.Unloaded).Take((int)card.CardParam).ToList();
-            items = items.OrderBy(items => Random.Next()).ToList();
-
-            foreach (var item in items)
-            {
-                var component = item.Component;
-                int gridX = ((MapCell)component).GridX;
-                int gridY = ((MapCell)component).GridY;
-                AnimatedCell c = AddGameComponent(new AnimatedCell(LoadAssetTexture(card.SpellTexture.Value), card.SpellCols, card.SpellRows, card.SpellSpeed, 0, 0, gridX, gridY, (int)component.RealBounds.X, (int)component.RealBounds.Y, 0, 0, false, (animatedCell) =>
-                {
-                    AnimatedCell corpse = AddGameComponent(new AnimatedCell(LoadAssetTexture(TextureType.MAP_UNITS_DEAD_1), 7, 1, 80, 0, 0, gridX, gridY, (int)component.RealBounds.X, (int)component.RealBounds.Y, 0, 0, false));
-                    _battleFieldCorpses.Add(new BattleFieldCorpse() { Component = corpse, CreationTime = DateTime.Now, Duration = CORPSE_DURATION, BattleFieldCorpseElapsedAction = BattleFieldCorpseElapsedAction.Disappear });
-                    MoveToFront(PlayerFireBall);
-                    MoveToFront(OponentFireBall);
-                    component.InnerUnload();
-                    animatedCell.InnerUnload();
-                    ColliderItems.RemoveAll(x => x.Component == component);
-                }));
-            }
-
-        }
 
         public static ITexture LoadAssetTexture(TextureType asset)
         {
@@ -212,6 +189,30 @@ namespace ArcardnoidContent.Components.GameScene.Battle
             }
         }
 
+        private void AttackSpellCasted(Card card)
+        {
+            if (card.SpellTexture == null) return;
+            List<BattleColliderItem> items = ColliderItems.Where(c => c.Faction == BattleFaction.Opponent && c.ColliderType == ColliderType.Actor && c.Component.State != ElementState.Unloaded).Take((int)card.CardParam).ToList();
+            items = items.OrderBy(items => Random.Next()).ToList();
+
+            foreach (var item in items)
+            {
+                var component = item.Component;
+                int gridX = ((MapCell)component).GridX;
+                int gridY = ((MapCell)component).GridY;
+                AnimatedCell c = AddGameComponent(new AnimatedCell(LoadAssetTexture(card.SpellTexture.Value), card.SpellCols, card.SpellRows, card.SpellSpeed, 0, 0, gridX, gridY, (int)component.RealBounds.X, (int)component.RealBounds.Y, 0, 0, false, (animatedCell) =>
+                {
+                    AnimatedCell corpse = AddGameComponent(new AnimatedCell(LoadAssetTexture(TextureType.MAP_UNITS_DEAD_1), 7, 1, 80, 0, 0, gridX, gridY, (int)component.RealBounds.X, (int)component.RealBounds.Y, 0, 0, false));
+                    _battleFieldCorpses.Add(new BattleFieldCorpse() { Component = corpse, CreationTime = DateTime.Now, Duration = CORPSE_DURATION, BattleFieldCorpseElapsedAction = BattleFieldCorpseElapsedAction.Disappear });
+                    MoveToFront(PlayerFireBall);
+                    MoveToFront(OponentFireBall);
+                    component.InnerUnload();
+                    animatedCell.InnerUnload();
+                    ColliderItems.RemoveAll(x => x.Component == component);
+                }));
+            }
+        }
+
         private void BarAnimationCompleted(BattleFaction faction)
         {
             if (faction == BattleFaction.Player)
@@ -285,6 +286,26 @@ namespace ArcardnoidContent.Components.GameScene.Battle
                 ColliderType.Ball => GameColor.Cyan,
                 _ => GameColor.Blue,
             };
+        }
+
+        private void UnitsSpawned(int num)
+        {
+            ITexture playerAsset = LoadAssetTexture(TextureType.MAP_UNITS_PLAYER_BATTLE);
+            int positionX = 96;
+            int positionY = 576;
+            for (int x = 0; x < 20; x++)
+            {
+                for (int y = 0; y < 5; y++)
+                {
+                    bool isFree = StaticMap.IsFree(TextureType.MAP_UNITS_PLAYER_BATTLE, x, y);
+                    if (isFree)
+                    {
+                        var c = StaticMap.AddGameComponent(new AnimatedCell(playerAsset, GetTextureColumns(EncounterType.None), 1, 120, 0, 0, x, y, positionX + x * 64, positionY + y * 64, 0, 0));
+                        _playerComponents.Add(c);
+                        StaticMap.AddTileAnimation(c);
+                    }
+                }
+            }
         }
 
         private void UpdateColliders()

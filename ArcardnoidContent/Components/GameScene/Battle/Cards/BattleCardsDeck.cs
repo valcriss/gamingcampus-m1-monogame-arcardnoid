@@ -26,11 +26,11 @@ namespace ArcardnoidContent.Components.GameScene.Battle.Cards
             for (int i = 0; i < cards.Count; i++)
             {
                 Card? card = cards[i];
-                var cardImage = new CardImage(card, i<3 ? 30: 1700, innerY, true, CardClicked);
+                var cardImage = new CardImage(card, i < 3 ? 30 : 1700, innerY, true, CardClicked);
                 CardImages.Add(cardImage);
                 AddGameComponent(cardImage);
                 innerY += 310;
-                if(i == 2)
+                if (i == 2)
                 {
                     innerY = 64;
                 }
@@ -48,8 +48,13 @@ namespace ArcardnoidContent.Components.GameScene.Battle.Cards
                 case CardType.Speed:
                     GamePlay.ChangePlayerSpeed(card.Card.CardParam, 30);
                     break;
+
                 case CardType.AttackSpell:
                     GamePlay.CastAttackSpell(card.Card);
+                    break;
+
+                case CardType.Units:
+                    GamePlay.SpawnUnits((int)card.Card.CardParam);
                     break;
             }
             if (!card.Card.Reusable)

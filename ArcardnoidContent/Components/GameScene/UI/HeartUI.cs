@@ -8,6 +8,12 @@ namespace ArcardnoidContent.Components.GameScene.UI
 {
     public class HeartUI : GameComponent
     {
+        #region Public Properties
+
+        public HearState HeartState { get; set; } = HearState.Filling;
+
+        #endregion Public Properties
+
         #region Private Fields
 
         private readonly double _frameSpeed = 0.05;
@@ -16,7 +22,6 @@ namespace ArcardnoidContent.Components.GameScene.UI
         private double _elapsedTime = 0;
         private Rectangle _imageBounds = Rectangle.Empty;
         private ITexture? heartTexture;
-        private HearState state = HearState.Filling;
 
         #endregion Private Fields
 
@@ -35,7 +40,7 @@ namespace ArcardnoidContent.Components.GameScene.UI
         {
             base.Draw();
             if (heartTexture == null) return;
-            heartTexture.DrawTexture(Bounds, _imageBounds, Color, Rotation, Point.Zero);
+            heartTexture.DrawTexture(RealBounds, _imageBounds, Color, Rotation, Point.Zero);
         }
 
         public override void Load()
@@ -60,12 +65,13 @@ namespace ArcardnoidContent.Components.GameScene.UI
                     _rectangles[HearState.Emptying].Add(new Rectangle(x, y, 260, 220));
                 }
             }
+            _imageBounds = _rectangles[HeartState][_currentFrame];
         }
 
         public override void Update(float delta)
         {
             base.Update(delta);
-            Rectangle[] rectangles = _rectangles[state].ToArray();
+            Rectangle[] rectangles = _rectangles[HeartState].ToArray();
             _elapsedTime += delta;
             if (_elapsedTime >= _frameSpeed)
             {
@@ -74,17 +80,17 @@ namespace ArcardnoidContent.Components.GameScene.UI
                 if (_currentFrame >= rectangles.Length)
                 {
                     _currentFrame = 0;
-                    if (state == HearState.Filling)
+                    if (HeartState == HearState.Filling)
                     {
-                        state = HearState.Full;
+                        HeartState = HearState.Full;
                     }
-                    if (state == HearState.Emptying)
+                    if (HeartState == HearState.Emptying)
                     {
-                        state = HearState.Empty;
+                        HeartState = HearState.Empty;
                     }
                 }
             }
-            _imageBounds = _rectangles[state][_currentFrame];
+            _imageBounds = _rectangles[HeartState][_currentFrame];
         }
 
         #endregion Public Methods

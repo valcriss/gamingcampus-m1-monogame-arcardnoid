@@ -23,9 +23,9 @@ namespace ArcardnoidContent.Components.Shared.Map.Cells
         private double _elapsedTime;
         private int _index;
         private bool _loop = true;
+        private Action<AnimatedCell>? _onCompleted = null;
         private double _pausedTime;
         private List<Rectangle> _rects = new();
-        private Action<AnimatedCell>? _onCompleted = null;
 
         #endregion Private Fields
 

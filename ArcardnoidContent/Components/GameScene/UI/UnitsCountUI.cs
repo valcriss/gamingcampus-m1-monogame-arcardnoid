@@ -8,18 +8,18 @@ using ArcardnoidShared.Framework.ServiceProvider.Enums;
 
 namespace ArcardnoidContent.Components.GameScene.UI
 {
-    public class CoinAmountUI : GameComponent
+    public class UnitsCountUI : GameComponent
     {
         #region Private Properties
 
         private BitmapText[] BitmapTexts { get; set; } = new BitmapText[2];
-        private int CoinAmount { get; set; } = 0;
+        private int UnitsCount { get; set; } = 0;
 
         #endregion Private Properties
 
         #region Public Constructors
 
-        public CoinAmountUI(int x, int y) : base(x, y)
+        public UnitsCountUI(int x, int y) : base(x, y)
         {
         }
 
@@ -31,22 +31,22 @@ namespace ArcardnoidContent.Components.GameScene.UI
         {
             base.Load();
             IGamePlay gamePlay = GameServiceProvider.GetService<IGamePlay>();
-            gamePlay.GoldChanged += GamePlay_GoldChanged;
-            CoinAmount = gamePlay.GetGold();
-            AddGameComponent(new Image(TextureType.UI_COIN, 5, 25));
-            BitmapTexts[0] = AddGameComponent(new BitmapText(BitmapFontType.Default, CoinAmount.ToString() + " Or", 42, 17, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.Black));
-            BitmapTexts[1] = AddGameComponent(new BitmapText(BitmapFontType.Default, CoinAmount.ToString() + " Or", 40, 15, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.White));
+            gamePlay.UnitsChanged += GamePlay_UnitsChanged;
+            UnitsCount = gamePlay.GetUnits();
+            AddGameComponent(new Image(TextureType.UI_UNITS, 0, 30));
+            BitmapTexts[0] = AddGameComponent(new BitmapText(BitmapFontType.Default, UnitsCount.ToString() + " Soldats", 35, 17, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.Black));
+            BitmapTexts[1] = AddGameComponent(new BitmapText(BitmapFontType.Default, UnitsCount.ToString() + " Soldats", 33, 15, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.White));
         }
 
         #endregion Public Methods
 
         #region Private Methods
 
-        private void GamePlay_GoldChanged(int gold)
+        private void GamePlay_UnitsChanged(int units)
         {
             for (int i = 0; i < BitmapTexts.Length; i++)
             {
-                BitmapTexts[i].SetText(gold.ToString() + " Or");
+                BitmapTexts[i].SetText(units.ToString() + " Soldats");
             }
         }
 

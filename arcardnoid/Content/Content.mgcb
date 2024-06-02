@@ -1419,6 +1419,18 @@
 /processorParam:TextureFormat=Color
 /build:ui/buttons/single/button-single-yellow-pressed.png
 
+#begin ui/cards.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ui/cards.png
+
 #begin ui/coin.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1598,6 +1610,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:ui/progress/progress-pressed.png
+
+#begin ui/units.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:ui/units.png
 
 #begin ui/victory.png
 /importer:TextureImporter

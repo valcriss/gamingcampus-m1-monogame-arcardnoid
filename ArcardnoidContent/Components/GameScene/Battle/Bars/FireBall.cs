@@ -21,7 +21,7 @@ namespace ArcardnoidContent.Components.GameScene.Battle.Bars
 
         #region Protected Properties
 
-        protected virtual float CurrentSpeed { get; set; } = 300;
+        protected virtual float CurrentSpeed { get; set; } = 500;
         protected float Speed { get; set; } = 500;
 
         #endregion Protected Properties

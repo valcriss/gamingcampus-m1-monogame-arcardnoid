@@ -25,18 +25,6 @@ namespace ArcardnoidContent.Components.GamePlay.Cards
         [JsonProperty("texture")]
         public TextureType CardTexture { get; set; }
 
-        [JsonProperty("spelltexture")]
-        public TextureType? SpellTexture { get; set; } = null;
-
-        [JsonProperty("spellrows")]
-        public int SpellRows { get; set; } = 0;
-
-        [JsonProperty("spellcols")]
-        public int SpellCols { get; set; } = 0;
-
-        [JsonProperty("spellspeed")]
-        public float SpellSpeed { get; set; } = 0;
-
         [JsonProperty("type")]
         public CardType CardType { get; set; } = CardType.None;
 
@@ -48,6 +36,18 @@ namespace ArcardnoidContent.Components.GamePlay.Cards
 
         [JsonProperty("reusable")]
         public bool Reusable { get; set; }
+
+        [JsonProperty("spellcols")]
+        public int SpellCols { get; set; } = 0;
+
+        [JsonProperty("spellrows")]
+        public int SpellRows { get; set; } = 0;
+
+        [JsonProperty("spellspeed")]
+        public float SpellSpeed { get; set; } = 0;
+
+        [JsonProperty("spelltexture")]
+        public TextureType? SpellTexture { get; set; } = null;
 
         #endregion Public Properties
     }

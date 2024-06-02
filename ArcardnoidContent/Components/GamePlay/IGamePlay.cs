@@ -6,11 +6,13 @@ namespace ArcardnoidContent.Components.GamePlay
     {
         #region Public Events
 
+        event Action<Card>? AttackSpellCasted;
+
         event Action<List<Card>>? CardChanged;
 
         event Action<int>? GoldChanged;
 
-        event Action<int>? HeartChanged;
+        event Action<int, int>? HeartChanged;
 
         event Action<float, float>? OponentSpeedChanged;
 
@@ -18,7 +20,7 @@ namespace ArcardnoidContent.Components.GamePlay
 
         event Action<int>? UnitsChanged;
 
-        event Action<Card>? AttackSpellCasted;
+        event Action<int>? UnitsSpawned;
 
         #endregion Public Events
 
@@ -33,7 +35,9 @@ namespace ArcardnoidContent.Components.GamePlay
         void AddUnits(int units);
 
         bool CanBuy(int gold);
+
         void CastAttackSpell(Card card);
+
         void ChangeOponentSpeed(float speed, float duration);
 
         void ChangePlayerSpeed(float speed, float duration);
@@ -57,6 +61,8 @@ namespace ArcardnoidContent.Components.GamePlay
         void RemoveHeart(int heart);
 
         void RemoveUnits(int units);
+
+        void SpawnUnits(int num);
 
         void Update(float delta);
 

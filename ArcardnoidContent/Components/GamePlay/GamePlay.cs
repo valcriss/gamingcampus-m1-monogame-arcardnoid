@@ -6,18 +6,21 @@ namespace ArcardnoidContent.Components.GamePlay
     {
         #region Public Events
 
+        public event Action<Card>? AttackSpellCasted;
+
         public event Action<List<Card>>? CardChanged;
 
         public event Action<int>? GoldChanged;
 
-        public event Action<int>? HeartChanged;
+        public event Action<int, int>? HeartChanged;
 
         public event Action<float, float>? OponentSpeedChanged;
 
         public event Action<float, float>? PlayerSpeedChanged;
 
         public event Action<int>? UnitsChanged;
-        public event Action<Card>? AttackSpellCasted;
+
+        public event Action<int>? UnitsSpawned;
 
         #endregion Public Events
 
@@ -41,6 +44,7 @@ namespace ArcardnoidContent.Components.GamePlay
         public void AddCard(Card card)
         {
             _cards.Add(card);
+            CardChanged?.Invoke(_cards);
         }
 
         public void AddGold(int gold)
@@ -52,17 +56,25 @@ namespace ArcardnoidContent.Components.GamePlay
         public void AddHeart(int heart)
         {
             _heart = Math.Min(MAXIMUM_HEART, _heart + heart);
-            HeartChanged?.Invoke(_heart);
+            _units = MAXIMUM_UNITS;
+            UnitsChanged?.Invoke(_units);
+            HeartChanged?.Invoke(_heart, heart);
         }
 
         public void AddUnits(int units)
         {
             _units += Math.Min(MAXIMUM_UNITS, units);
+            UnitsChanged?.Invoke(_units);
         }
 
         public bool CanBuy(int gold)
         {
             return _gold >= gold;
+        }
+
+        public void CastAttackSpell(Card card)
+        {
+            AttackSpellCasted?.Invoke(card);
         }
 
         public void ChangeOponentSpeed(float speed, float duration)
@@ -112,6 +124,7 @@ namespace ArcardnoidContent.Components.GamePlay
         public void RemoveCard(Card card)
         {
             _cards.Remove(card);
+            CardChanged?.Invoke(_cards);
         }
 
         public void RemoveGold(int gold)
@@ -123,12 +136,21 @@ namespace ArcardnoidContent.Components.GamePlay
         public void RemoveHeart(int heart)
         {
             _heart = Math.Max(0, _heart - heart);
-            HeartChanged?.Invoke(_heart);
+            _units = MAXIMUM_UNITS;
+            UnitsChanged?.Invoke(_units);
+            HeartChanged?.Invoke(_heart, -heart);
         }
 
         public void RemoveUnits(int units)
         {
             _units = Math.Max(0, _units - units);
+            UnitsChanged?.Invoke(_units);
+        }
+
+        public void SpawnUnits(int num)
+        {
+            AddUnits(num);
+            UnitsSpawned?.Invoke(num);
         }
 
         public void Update(float delta)
@@ -157,11 +179,6 @@ namespace ArcardnoidContent.Components.GamePlay
 
         public void UseCard(Card card)
         {
-        }
-
-        public void CastAttackSpell(Card card)
-        {
-            AttackSpellCasted?.Invoke(card);
         }
 
         #endregion Public Methods

@@ -145,6 +145,11 @@ namespace ArcardnoidContent.Scenes
                 this.MoveToFront(MainCharacter);
                 this.MoveToFront(Cursor);
             }
+            else
+            {
+                GamePlay.RemoveHeart(1);
+                // TODO: Gerer le fait que si il n'y a plus de vie on perd le jeu.
+            }
         }
 
         private void HideBattleContainer()

@@ -1,4 +1,5 @@
 ﻿using ArcardnoidContent.Components.GamePlay;
+using ArcardnoidContent.Components.GamePlay.Cards;
 using ArcardnoidShared.Framework.Components.Images;
 using ArcardnoidShared.Framework.Components.Text;
 using ArcardnoidShared.Framework.Drawing;
@@ -8,18 +9,18 @@ using ArcardnoidShared.Framework.ServiceProvider.Enums;
 
 namespace ArcardnoidContent.Components.GameScene.UI
 {
-    public class CoinAmountUI : GameComponent
+    public class CardsCountUI : GameComponent
     {
         #region Private Properties
 
         private BitmapText[] BitmapTexts { get; set; } = new BitmapText[2];
-        private int CoinAmount { get; set; } = 0;
+        private int CardsCount { get; set; } = 0;
 
         #endregion Private Properties
 
         #region Public Constructors
 
-        public CoinAmountUI(int x, int y) : base(x, y)
+        public CardsCountUI(int x, int y) : base(x, y)
         {
         }
 
@@ -31,22 +32,22 @@ namespace ArcardnoidContent.Components.GameScene.UI
         {
             base.Load();
             IGamePlay gamePlay = GameServiceProvider.GetService<IGamePlay>();
-            gamePlay.GoldChanged += GamePlay_GoldChanged;
-            CoinAmount = gamePlay.GetGold();
-            AddGameComponent(new Image(TextureType.UI_COIN, 5, 25));
-            BitmapTexts[0] = AddGameComponent(new BitmapText(BitmapFontType.Default, CoinAmount.ToString() + " Or", 42, 17, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.Black));
-            BitmapTexts[1] = AddGameComponent(new BitmapText(BitmapFontType.Default, CoinAmount.ToString() + " Or", 40, 15, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.White));
+            gamePlay.CardChanged += GamePlay_CardChanged;
+            CardsCount = gamePlay.GetCards().Count;
+            AddGameComponent(new Image(TextureType.UI_CARDS, 10, 35));
+            BitmapTexts[0] = AddGameComponent(new BitmapText(BitmapFontType.Default, CardsCount.ToString() + " Sorts", 42, 17, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.Black));
+            BitmapTexts[1] = AddGameComponent(new BitmapText(BitmapFontType.Default, CardsCount.ToString() + " Sorts", 40, 15, TextHorizontalAlign.Left, TextVerticalAlign.Top, GameColor.White));
         }
 
         #endregion Public Methods
 
         #region Private Methods
 
-        private void GamePlay_GoldChanged(int gold)
+        private void GamePlay_CardChanged(List<Card> cards)
         {
             for (int i = 0; i < BitmapTexts.Length; i++)
             {
-                BitmapTexts[i].SetText(gold.ToString() + " Or");
+                BitmapTexts[i].SetText(cards.Count.ToString() + " Sorts");
             }
         }
 

@@ -56,6 +56,15 @@ namespace ArcardnoidContent.Components.Shared.Map
             return gameComponent;
         }
 
+        public void AddTileAnimation(GameComponent gameComponent)
+        {
+            gameComponent.Visible = false;
+            gameComponent.Enabled = true;
+
+            gameComponent.AddAnimation<GameComponent>(new MoveAnimation(0.5f, new Point(gameComponent.Bounds.X, -128), new Point(gameComponent.Bounds.X, gameComponent.Bounds.Y), false, true, EaseType.InBounce, null, _delay));
+            _delay += 0.03f;
+        }
+
         public AnimatedStaticMap AddTilesAnimation()
         {
             foreach (GameComponent gameComponent in GameComponents)
@@ -65,6 +74,11 @@ namespace ArcardnoidContent.Components.Shared.Map
             }
             AnimationState = AnimatedStaticMapState.ANIMATING;
             return this;
+        }
+
+        public bool IsFree(TextureType texture, int x, int y)
+        {
+            return !GameComponents.Where(c => c is AnimatedCell && ((AnimatedCell)c).TextureAsset == texture && ((AnimatedCell)c).GridX == x && ((AnimatedCell)c).GridY == y).Any();
         }
 
         public override void Update(float delta)
@@ -82,18 +96,5 @@ namespace ArcardnoidContent.Components.Shared.Map
         }
 
         #endregion Public Methods
-
-        #region Private Methods
-
-        private void AddTileAnimation(GameComponent gameComponent)
-        {
-            gameComponent.Visible = false;
-            gameComponent.Enabled = true;
-
-            gameComponent.AddAnimation<GameComponent>(new MoveAnimation(1f, new Point(gameComponent.Bounds.X, -128), new Point(gameComponent.Bounds.X, gameComponent.Bounds.Y), false, true, EaseType.InOutBounce, null, _delay));
-            _delay += 0.03f;
-        }
-
-        #endregion Private Methods
     }
 }

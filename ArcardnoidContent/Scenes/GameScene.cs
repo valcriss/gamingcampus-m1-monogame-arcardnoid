@@ -56,6 +56,7 @@ namespace ArcardnoidContent.Scenes
         public GameScene(int seed = 1)
         {
             Random = GameServiceProvider.GetService<IRandomService>().GetRandom(seed);
+            GameServiceProvider.GetService<IGamePlay>().Reset();
             BackgroundColor = new GameColor(71, 171, 169, 255);
             Seed = seed;
             MapGenerator = new MapGenerator(Random, Seed);

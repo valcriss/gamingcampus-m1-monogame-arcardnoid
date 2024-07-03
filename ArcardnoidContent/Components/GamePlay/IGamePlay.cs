@@ -68,6 +68,8 @@ namespace ArcardnoidContent.Components.GamePlay
 
         void UseCard(Card card);
 
+        void Reset();
+
         #endregion Public Methods
     }
 }

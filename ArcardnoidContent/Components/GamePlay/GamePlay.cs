@@ -181,6 +181,13 @@ namespace ArcardnoidContent.Components.GamePlay
         {
         }
 
+        public void Reset()
+        {
+            _cards.Clear();
+            _units = MAXIMUM_UNITS;
+            _heart = MAXIMUM_HEART;
+        }
+
         #endregion Public Methods
     }
 }
